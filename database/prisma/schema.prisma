@@ -1,0 +1,340 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum RolUsuario {
+  SUPER_ADMIN
+  ADMIN_CONTENIDO
+  TUTOR
+  PREMIUM
+  FREE
+}
+
+enum EstadoUsuario {
+  ACTIVO
+  SUSPENDIDO
+  PENDIENTE_VERIFICACION
+}
+
+enum EstadoContenido {
+  BORRADOR
+  PENDIENTE
+  PUBLICADA
+  ARCHIVADA
+  RECHAZADA
+}
+
+enum TipoMaterial {
+  PDF
+  VIDEO
+  INFOGRAFIA
+  DOCUMENTO
+}
+
+enum TipoPregunta {
+  MULTIPLE
+  VERDADERO_FALSO
+  DESARROLLO
+}
+
+model Usuario {
+  id                  String             @id @default(uuid())
+  email               String             @unique
+  passwordHash        String             @map("password_hash")
+  nombre              String?
+  apellido            String?
+  rol                 RolUsuario         @default(FREE)
+  estado              EstadoUsuario      @default(ACTIVO)
+  fechaRegistro       DateTime           @default(now()) @map("fecha_registro")
+  ultimoAcceso        DateTime?          @map("ultimo_acceso")
+  
+  // Relaciones
+  perfilTutor         PerfilTutor?
+  suscripciones       Suscripcion[]
+  progresoUsuario     ProgresoUsuario[]
+  forosCreados        Foro[]
+  comentariosForo     ComentarioForo[]
+  preguntasCreadas    Pregunta[]         @relation("PreguntasCreadas")
+  preguntasAprobadas  Pregunta[]         @relation("PreguntasAprobadas")
+  materialesCreados   MaterialEstudio[]  @relation("MaterialesCreados")
+  materialesAprobados MaterialEstudio[]  @relation("MaterialesAprobados")
+  cursosCreados       Curso[]            @relation("CursosCreados")
+  contenidoPendiente  ContenidoPendiente[]
+  actividadesTutor    ActividadTutor[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("usuarios")
+}
+
+model PerfilTutor {
+  id                      String   @id @default(uuid())
+  usuarioId               String   @unique @map("usuario_id")
+  especialidad            String
+  biografia               String?  @db.Text
+  verificado              Boolean  @default(false)
+  contenidoAprobadoCount  Int      @default(0) @map("contenido_aprobado_count")
+  ratingPromedio          Float    @default(0) @map("rating_promedio")
+  
+  usuario Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("perfiles_tutor")
+}
+
+model CategoriaDerecho {
+  id          String   @id @default(uuid())
+  nombre      String   @unique
+  descripcion String?  @db.Text
+  icono       String?
+  orden       Int      @default(0)
+  
+  subcategorias   Subcategoria[]
+  preguntas       Pregunta[]
+  materiales      MaterialEstudio[]
+  cursos          Curso[]
+  foros           Foro[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("categorias_derecho")
+}
+
+model Subcategoria {
+  id          String   @id @default(uuid())
+  categoriaId String   @map("categoria_id")
+  nombre      String
+  descripcion String?  @db.Text
+  orden       Int      @default(0)
+  
+  categoria CategoriaDerecho @relation(fields: [categoriaId], references: [id], onDelete: Cascade)
+  preguntas Pregunta[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("subcategorias")
+}
+
+model Pregunta {
+  id                  String          @id @default(uuid())
+  subcategoriaId      String          @map("subcategoria_id")
+  creadorId           String          @map("creador_id")
+  aprobadaPorId       String?         @map("aprobada_por_id")
+  categoriaId         String          @map("categoria_id")
+  
+  texto               String          @db.Text
+  tipo                TipoPregunta
+  dificultad          Int             @default(1) // 1-5
+  explicacion         String?         @db.Text
+  referenciasLegales  String?         @db.Text
+  estado              EstadoContenido @default(BORRADOR)
+  
+  subcategoria  Subcategoria       @relation(fields: [subcategoriaId], references: [id])
+  categoria     CategoriaDerecho   @relation(fields: [categoriaId], references: [id])
+  creador       Usuario            @relation("PreguntasCreadas", fields: [creadorId], references: [id])
+  aprobadaPor   Usuario?           @relation("PreguntasAprobadas", fields: [aprobadaPorId], references: [id])
+  opciones      OpcionRespuesta[]
+  progreso      ProgresoUsuario[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("preguntas")
+}
+
+model OpcionRespuesta {
+  id          String  @id @default(uuid())
+  preguntaId  String  @map("pregunta_id")
+  texto       String  @db.Text
+  esCorrecta  Boolean @default(false) @map("es_correcta")
+  orden       Int     @default(0)
+  
+  pregunta Pregunta @relation(fields: [preguntaId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("opciones_respuesta")
+}
+
+model ProgresoUsuario {
+  id                String   @id @default(uuid())
+  usuarioId         String   @map("usuario_id")
+  preguntaId        String   @map("pregunta_id")
+  intentos          Int      @default(0)
+  acertada          Boolean  @default(false)
+  fechaUltimoIntento DateTime @default(now()) @map("fecha_ultimo_intento")
+  tiempoRespuesta   Int?     @map("tiempo_respuesta") // en segundos
+  
+  usuario  Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  pregunta Pregunta @relation(fields: [preguntaId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([usuarioId, preguntaId])
+  @@map("progreso_usuario")
+}
+
+model MaterialEstudio {
+  id              String          @id @default(uuid())
+  creadorId       String          @map("creador_id")
+  aprobadoPorId   String?         @map("aprobado_por_id")
+  categoriaId     String          @map("categoria_id")
+  
+  tipo            TipoMaterial
+  titulo          String
+  descripcion     String?         @db.Text
+  urlArchivo      String          @map("url_archivo")
+  esPremium       Boolean         @default(false) @map("es_premium")
+  descargasCount  Int             @default(0) @map("descargas_count")
+  estado          EstadoContenido @default(BORRADOR)
+  
+  categoria    CategoriaDerecho @relation(fields: [categoriaId], references: [id])
+  creador      Usuario          @relation("MaterialesCreados", fields: [creadorId], references: [id])
+  aprobadoPor  Usuario?         @relation("MaterialesAprobados", fields: [aprobadoPorId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("material_estudio")
+}
+
+model Curso {
+  id          String   @id @default(uuid())
+  creadorId   String   @map("creador_id")
+  categoriaId String   @map("categoria_id")
+  
+  titulo      String
+  descripcion String?  @db.Text
+  esPremium   Boolean  @default(true) @map("es_premium")
+  precio      Float?   @default(0)
+  publicado   Boolean  @default(false)
+  thumbnail   String?
+  
+  categoria CategoriaDerecho @relation(fields: [categoriaId], references: [id])
+  creador   Usuario          @relation("CursosCreados", fields: [creadorId], references: [id])
+  modulos   ModuloCurso[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("cursos")
+}
+
+model ModuloCurso {
+  id                String  @id @default(uuid())
+  cursoId           String  @map("curso_id")
+  orden             Int
+  titulo            String
+  contenido         String? @db.Text
+  duracionEstimada  Int?    @map("duracion_estimada") // en minutos
+  
+  curso Curso @relation(fields: [cursoId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("modulos_curso")
+}
+
+model Foro {
+  id          String   @id @default(uuid())
+  usuarioId   String   @map("usuario_id")
+  categoriaId String   @map("categoria_id")
+  
+  titulo      String
+  contenido   String   @db.Text
+  vistas      Int      @default(0)
+  cerrado     Boolean  @default(false)
+  
+  usuario     Usuario          @relation(fields: [usuarioId], references: [id])
+  categoria   CategoriaDerecho @relation(fields: [categoriaId], references: [id])
+  comentarios ComentarioForo[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("foros")
+}
+
+model ComentarioForo {
+  id        String   @id @default(uuid())
+  foroId    String   @map("foro_id")
+  usuarioId String   @map("usuario_id")
+  
+  contenido String   @db.Text
+  editado   Boolean  @default(false)
+  
+  foro    Foro    @relation(fields: [foroId], references: [id], onDelete: Cascade)
+  usuario Usuario @relation(fields: [usuarioId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("comentarios_foro")
+}
+
+model Suscripcion {
+  id          String   @id @default(uuid())
+  usuarioId   String   @map("usuario_id")
+  
+  plan        String   // FREE, PREMIUM_MENSUAL, PREMIUM_ANUAL
+  fechaInicio DateTime @default(now()) @map("fecha_inicio")
+  fechaFin    DateTime? @map("fecha_fin")
+  estado      String   @default("ACTIVA") // ACTIVA, CANCELADA, EXPIRADA
+  stripeSubscriptionId String? @unique @map("stripe_subscription_id")
+  
+  usuario Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("suscripciones")
+}
+
+model ContenidoPendiente {
+  id                   String          @id @default(uuid())
+  tutorId              String          @map("tutor_id")
+  adminRevisorId       String?         @map("admin_revisor_id")
+  
+  tipo                 String          // PREGUNTA, MATERIAL, CURSO
+  contenidoJson        String          @db.Text @map("contenido_json")
+  estado               EstadoContenido @default(PENDIENTE)
+  comentariosRevision  String?         @db.Text @map("comentarios_revision")
+  fechaRevision        DateTime?       @map("fecha_revision")
+  
+  tutor         Usuario  @relation(fields: [tutorId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("contenido_pendiente")
+}
+
+model ActividadTutor {
+  id             String   @id @default(uuid())
+  tutorId        String   @map("tutor_id")
+  
+  tipoActividad  String   // PREGUNTA_SUBIDA, MATERIAL_SUBIDO, RESPUESTA_FORO
+  aprobado       Boolean  @default(false)
+  referenciaId   String?  @map("referencia_id") // ID del contenido relacionado
+  
+  tutor Usuario @relation(fields: [tutorId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@map("actividad_tutores")
+}
+
+
