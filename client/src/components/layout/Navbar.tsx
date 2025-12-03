@@ -43,18 +43,18 @@ export default function Navbar() {
             {!isAuthenticated ? (
               <>
                 <Link
-                  to="/login"
-                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-[#16324f] hover:text-[#13293d] transition-colors"
-                >
-                  <LogIn className="h-4 w-4 mr-1" />
-                  Iniciar Sesión
-                </Link>
-                <Link
                   to="/registro"
                   className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-[#2a628f] hover:bg-[#18435a] transition-colors"
                 >
                   <UserPlus className="h-4 w-4 mr-1" />
                   Registrarse
+                </Link>
+                <Link
+                  to="/login"
+                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-[#16324f] hover:text-[#13293d] transition-colors"
+                >
+                  <LogIn className="h-4 w-4 mr-1" />
+                  Iniciar Sesión
                 </Link>
               </>
             ) : (

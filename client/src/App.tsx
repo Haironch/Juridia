@@ -1,7 +1,10 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import MainLayout from './components/layout/MainLayout';
-import Home from './pages/public/Home';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MainLayout from "./components/layout/MainLayout";
+import Home from "./pages/public/Home";
+import Cursos from "./pages/public/Cursos";
+import Foros from "./pages/public/Foros";
+import MaterialEstudio from "./pages/public/MaterialEstudio";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,7 +22,9 @@ function App() {
         <Routes>
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
-            {/* Rutas adicionales se agregarán aquí */}
+            <Route path="/cursos" element={<Cursos />} />
+            <Route path="/foros" element={<Foros />} />
+            <Route path="/material" element={<MaterialEstudio />} />
           </Route>
         </Routes>
       </BrowserRouter>
