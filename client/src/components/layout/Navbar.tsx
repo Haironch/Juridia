@@ -9,6 +9,7 @@ import {
   X,
   MessageSquare,
   FileText,
+  Brain,
 } from "lucide-react";
 import { useAuthStore } from "../../store/authStore";
 
@@ -50,6 +51,13 @@ export default function Navbar() {
               >
                 <FileText className="h-4 w-4 mr-1" />
                 Material de Estudio
+              </Link>
+              <Link
+                to="/constituquiz"
+                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-[#16324f] hover:text-[#13293d] transition-colors"
+              >
+                <Brain className="h-4 w-4 mr-1" />
+                ConstituQuiz
               </Link>
             </div>
           </div>
@@ -137,6 +145,14 @@ export default function Navbar() {
             >
               <FileText className="h-5 w-5 mr-2" />
               Material de Estudio
+            </Link>
+            <Link
+              to="/constituquiz"
+              className="flex items-center px-3 py-2 rounded-md text-base font-medium text-[#16324f] hover:text-[#13293d] hover:bg-[#67a2d3] transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <Brain className="h-5 w-5 mr-2" />
+              ConstituQuiz
             </Link>
           </div>
 

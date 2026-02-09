@@ -7,6 +7,10 @@ import Foros from "./pages/public/Foros";
 import MaterialEstudio from "./pages/public/MaterialEstudio";
 import Premium from "./pages/public/Premium";
 import Registro from "./pages/auth/Registro";
+import ConstituQuizHome from "./pages/quiz/ConstituQuizHome";
+import QuizStudyMode from "./pages/quiz/QuizStudyMode";
+import QuizPracticeMode from "./pages/quiz/QuizPracticeMode";
+import QuizResults from "./pages/quiz/QuizResults";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,6 +33,10 @@ function App() {
             <Route path="/material" element={<MaterialEstudio />} />
             <Route path="/premium" element={<Premium />} />
             <Route path="/registro" element={<Registro />} />
+            <Route path="/constituquiz" element={<ConstituQuizHome />} />
+            <Route path="/constituquiz/estudio/:temaId" element={<QuizStudyMode />} />
+            <Route path="/constituquiz/practica/:temaId" element={<QuizPracticeMode />} />
+            <Route path="/constituquiz/resultados/:temaId" element={<QuizResults />} />
           </Route>
         </Routes>
       </BrowserRouter>
