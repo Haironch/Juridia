@@ -1,86 +1,113 @@
-import { Clock, Users, Star } from "lucide-react";
+import { useState } from "react";
+import { Clock, Users, Star, Lock } from "lucide-react";
+
+const cursos = [
+  {
+    id: 1,
+    titulo: "Derecho Penal Guatemalteco",
+    descripcion:
+      "Domina los fundamentos del derecho penal, desde delitos hasta procedimientos judiciales.",
+    nivel: "Intermedio",
+    area: "Derecho Penal",
+    duracion: "8 semanas",
+    estudiantes: 245,
+    rating: 4.8,
+    imagen:
+      "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400",
+    premium: true,
+  },
+  {
+    id: 2,
+    titulo: "Derecho Civil — Obligaciones y Contratos",
+    descripcion:
+      "Aprende sobre obligaciones, contratos y su aplicación en el sistema legal guatemalteco.",
+    nivel: "Básico",
+    area: "Derecho Civil",
+    duracion: "6 semanas",
+    estudiantes: 189,
+    rating: 4.6,
+    imagen:
+      "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400",
+    premium: false,
+  },
+  {
+    id: 3,
+    titulo: "Derecho Laboral",
+    descripcion:
+      "Conoce los derechos y obligaciones en las relaciones laborales según la legislación guatemalteca.",
+    nivel: "Intermedio",
+    area: "Derecho Laboral",
+    duracion: "7 semanas",
+    estudiantes: 312,
+    rating: 4.9,
+    imagen:
+      "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=400",
+    premium: true,
+  },
+  {
+    id: 4,
+    titulo: "Derecho Constitucional",
+    descripcion:
+      "Estudia la Constitución Política de Guatemala y sus principios fundamentales.",
+    nivel: "Avanzado",
+    area: "Derecho Constitucional",
+    duracion: "10 semanas",
+    estudiantes: 156,
+    rating: 4.7,
+    imagen:
+      "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=400",
+    premium: true,
+  },
+  {
+    id: 5,
+    titulo: "Introducción al Derecho",
+    descripcion:
+      "Curso fundamental para entender los conceptos básicos del sistema jurídico guatemalteco.",
+    nivel: "Básico",
+    area: "General",
+    duracion: "4 semanas",
+    estudiantes: 478,
+    rating: 4.5,
+    imagen:
+      "https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=400",
+    premium: false,
+  },
+  {
+    id: 6,
+    titulo: "Derecho Mercantil",
+    descripcion:
+      "Comprende las leyes que regulan las actividades comerciales y empresariales en Guatemala.",
+    nivel: "Intermedio",
+    area: "Derecho Mercantil",
+    duracion: "9 semanas",
+    estudiantes: 203,
+    rating: 4.6,
+    imagen:
+      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400",
+    premium: true,
+  },
+];
+
+const rutaAprendizaje = [
+  { paso: 1, titulo: "Introducción al Derecho" },
+  { paso: 2, titulo: "Derecho Constitucional" },
+  { paso: 3, titulo: "Derecho Civil" },
+  { paso: 4, titulo: "Derecho Penal" },
+  { paso: 5, titulo: "Derecho Laboral" },
+  { paso: 6, titulo: "Derecho Mercantil" },
+];
 
 export default function Cursos() {
-  const cursos = [
-    {
-      id: 1,
-      titulo: "Derecho Penal Guatemalteco",
-      descripcion:
-        "Domina los fundamentos del derecho penal, desde delitos hasta procedimientos judiciales.",
-      nivel: "Intermedio",
-      duracion: "8 semanas",
-      estudiantes: 245,
-      rating: 4.8,
-      imagen:
-        "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400",
-      premium: true,
-    },
-    {
-      id: 2,
-      titulo: "Derecho Civil - Obligaciones y Contratos",
-      descripcion:
-        "Aprende sobre obligaciones, contratos y su aplicación en el sistema legal guatemalteco.",
-      nivel: "Básico",
-      duracion: "6 semanas",
-      estudiantes: 189,
-      rating: 4.6,
-      imagen:
-        "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400",
-      premium: false,
-    },
-    {
-      id: 3,
-      titulo: "Derecho Laboral",
-      descripcion:
-        "Conoce los derechos y obligaciones en las relaciones laborales según la legislación guatemalteca.",
-      nivel: "Intermedio",
-      duracion: "7 semanas",
-      estudiantes: 312,
-      rating: 4.9,
-      imagen:
-        "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=400",
-      premium: true,
-    },
-    {
-      id: 4,
-      titulo: "Derecho Constitucional",
-      descripcion:
-        "Estudia la Constitución Política de Guatemala y sus principios fundamentales.",
-      nivel: "Avanzado",
-      duracion: "10 semanas",
-      estudiantes: 156,
-      rating: 4.7,
-      imagen:
-        "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=400",
-      premium: true,
-    },
-    {
-      id: 5,
-      titulo: "Introducción al Derecho",
-      descripcion:
-        "Curso fundamental para entender los conceptos básicos del sistema jurídico guatemalteco.",
-      nivel: "Básico",
-      duracion: "4 semanas",
-      estudiantes: 478,
-      rating: 4.5,
-      imagen:
-        "https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=400",
-      premium: false,
-    },
-    {
-      id: 6,
-      titulo: "Derecho Mercantil",
-      descripcion:
-        "Comprende las leyes que regulan las actividades comerciales y empresariales en Guatemala.",
-      nivel: "Intermedio",
-      duracion: "9 semanas",
-      estudiantes: 203,
-      rating: 4.6,
-      imagen:
-        "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400",
-      premium: true,
-    },
-  ];
+  const [selectedNivel, setSelectedNivel] = useState("Todos");
+  const [selectedArea, setSelectedArea] = useState("Todas");
+  const [soloGratis, setSoloGratis] = useState(false);
+
+  const cursosFiltrados = cursos.filter((c) => {
+    if (selectedNivel !== "Todos" && c.nivel !== selectedNivel) return false;
+    if (selectedArea !== "Todas" && c.area !== selectedArea) return false;
+    if (soloGratis && c.premium) return false;
+    return true;
+  });
 
   return (
     <div className="min-h-screen bg-[#d8e9f5]">
@@ -98,88 +125,159 @@ export default function Cursos() {
         </div>
       </div>
 
-      {/* Filters */}
+      {/* Ruta de aprendizaje sugerida */}
       <div className="bg-white border-b border-[#9ac1e2]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-wrap gap-4">
-            <select className="px-4 py-2 border border-[#9ac1e2] rounded-md text-[#16324f] focus:outline-none focus:ring-2 focus:ring-[#2a628f]">
-              <option>Todos los niveles</option>
-              <option>Básico</option>
-              <option>Intermedio</option>
-              <option>Avanzado</option>
+          <p className="text-xs font-semibold text-[#18435a] uppercase tracking-wider mb-3">
+            Ruta de aprendizaje sugerida
+          </p>
+          <div className="flex flex-wrap gap-2 items-center">
+            {rutaAprendizaje.map((paso, idx) => (
+              <div key={paso.paso} className="flex items-center gap-2">
+                <div className="flex items-center gap-2 bg-[#d8e9f5] border border-[#9ac1e2] rounded-full px-3 py-1.5">
+                  <span className="w-5 h-5 rounded-full bg-[#2a628f] text-white text-xs flex items-center justify-center font-bold flex-shrink-0">
+                    {paso.paso}
+                  </span>
+                  <span className="text-sm text-[#13293d] font-medium whitespace-nowrap">
+                    {paso.titulo}
+                  </span>
+                </div>
+                {idx < rutaAprendizaje.length - 1 && (
+                  <span className="text-[#9ac1e2] font-bold hidden sm:inline">→</span>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Filters */}
+      <div className="bg-white border-b border-[#9ac1e2]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+          <div className="flex flex-wrap gap-4 items-center">
+            <select
+              value={selectedNivel}
+              onChange={(e) => setSelectedNivel(e.target.value)}
+              className="px-4 py-2 border border-[#9ac1e2] rounded-md text-[#16324f] focus:outline-none focus:ring-2 focus:ring-[#2a628f] bg-white"
+            >
+              <option value="Todos">Todos los niveles</option>
+              <option value="Básico">Básico</option>
+              <option value="Intermedio">Intermedio</option>
+              <option value="Avanzado">Avanzado</option>
             </select>
-            <select className="px-4 py-2 border border-[#9ac1e2] rounded-md text-[#16324f] focus:outline-none focus:ring-2 focus:ring-[#2a628f]">
-              <option>Todas las áreas</option>
-              <option>Derecho Penal</option>
-              <option>Derecho Civil</option>
-              <option>Derecho Laboral</option>
-              <option>Derecho Constitucional</option>
+            <select
+              value={selectedArea}
+              onChange={(e) => setSelectedArea(e.target.value)}
+              className="px-4 py-2 border border-[#9ac1e2] rounded-md text-[#16324f] focus:outline-none focus:ring-2 focus:ring-[#2a628f] bg-white"
+            >
+              <option value="Todas">Todas las áreas</option>
+              <option value="General">General</option>
+              <option value="Derecho Penal">Derecho Penal</option>
+              <option value="Derecho Civil">Derecho Civil</option>
+              <option value="Derecho Laboral">Derecho Laboral</option>
+              <option value="Derecho Constitucional">Derecho Constitucional</option>
+              <option value="Derecho Mercantil">Derecho Mercantil</option>
             </select>
-            <button className="px-4 py-2 bg-[#2a628f] text-white rounded-md hover:bg-[#18435a] transition-colors">
-              Aplicar filtros
-            </button>
+            <label className="flex items-center gap-2 cursor-pointer text-sm text-[#16324f]">
+              <input
+                type="checkbox"
+                checked={soloGratis}
+                onChange={(e) => setSoloGratis(e.target.checked)}
+                className="w-4 h-4 rounded border-[#9ac1e2] accent-[#2a628f]"
+              />
+              Solo cursos gratuitos
+            </label>
+            {(selectedNivel !== "Todos" || selectedArea !== "Todas" || soloGratis) && (
+              <button
+                onClick={() => { setSelectedNivel("Todos"); setSelectedArea("Todas"); setSoloGratis(false); }}
+                className="text-sm text-[#2a628f] hover:underline"
+              >
+                Limpiar filtros
+              </button>
+            )}
           </div>
         </div>
       </div>
 
       {/* Courses Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {cursos.map((curso) => (
-            <div
-              key={curso.id}
-              className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow border border-[#9ac1e2] overflow-hidden"
-            >
-              <div className="relative h-48 bg-[#cce0f0]">
-                <img
-                  src={curso.imagen}
-                  alt={curso.titulo}
-                  className="w-full h-full object-cover"
-                />
-                {curso.premium && (
-                  <span className="absolute top-4 right-4 bg-[#18435a] text-white px-3 py-1 rounded-full text-xs font-medium">
-                    Premium
-                  </span>
-                )}
-              </div>
+        {cursosFiltrados.length === 0 ? (
+          <div className="text-center py-16">
+            <p className="text-[#13293d] text-lg font-semibold mb-2">
+              No hay cursos con esos filtros
+            </p>
+            <p className="text-[#67a2d3] text-sm">Intenta con otros criterios de búsqueda.</p>
+          </div>
+        ) : (
+          <>
+            <p className="text-sm text-[#67a2d3] mb-6">
+              Mostrando {cursosFiltrados.length} de {cursos.length} cursos
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {cursosFiltrados.map((curso) => (
+                <div
+                  key={curso.id}
+                  className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow border border-[#9ac1e2] overflow-hidden"
+                >
+                  <div className="relative h-48 bg-[#cce0f0]">
+                    <img
+                      src={curso.imagen}
+                      alt={curso.titulo}
+                      className="w-full h-full object-cover"
+                    />
+                    {curso.premium && (
+                      <span className="absolute top-4 right-4 bg-[#18435a] text-white px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1">
+                        <Lock className="h-3 w-3" />
+                        Premium
+                      </span>
+                    )}
+                  </div>
 
-              <div className="p-6">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-medium text-[#2a628f] bg-[#d8e9f5] px-2 py-1 rounded">
-                    {curso.nivel}
-                  </span>
-                  <div className="flex items-center text-sm text-[#16324f]">
-                    <Star className="h-4 w-4 text-yellow-500 fill-yellow-500 mr-1" />
-                    {curso.rating}
+                  <div className="p-6">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-xs font-medium text-[#2a628f] bg-[#d8e9f5] px-2 py-1 rounded">
+                        {curso.nivel}
+                      </span>
+                      <div className="flex items-center text-sm text-[#16324f]">
+                        <Star className="h-4 w-4 text-yellow-500 fill-yellow-500 mr-1" />
+                        {curso.rating}
+                      </div>
+                    </div>
+
+                    <h3 className="text-lg font-semibold text-[#13293d] mb-2">
+                      {curso.titulo}
+                    </h3>
+
+                    <p className="text-sm text-[#2a628f] mb-4">
+                      {curso.descripcion}
+                    </p>
+
+                    <div className="flex items-center justify-between text-sm text-[#16324f] mb-4">
+                      <div className="flex items-center">
+                        <Clock className="h-4 w-4 mr-1" />
+                        {curso.duracion}
+                      </div>
+                      <div className="flex items-center">
+                        <Users className="h-4 w-4 mr-1" />
+                        {curso.estudiantes} estudiantes
+                      </div>
+                    </div>
+
+                    <button
+                      className={`w-full py-2 rounded-md transition-colors font-medium ${
+                        curso.premium
+                          ? "bg-[#18435a] text-white hover:bg-[#13293d]"
+                          : "bg-[#2a628f] text-white hover:bg-[#18435a]"
+                      }`}
+                    >
+                      {curso.premium ? "Ver en Premium" : "Ver curso"}
+                    </button>
                   </div>
                 </div>
-
-                <h3 className="text-lg font-semibold text-[#13293d] mb-2">
-                  {curso.titulo}
-                </h3>
-
-                <p className="text-sm text-[#2a628f] mb-4">
-                  {curso.descripcion}
-                </p>
-
-                <div className="flex items-center justify-between text-sm text-[#16324f] mb-4">
-                  <div className="flex items-center">
-                    <Clock className="h-4 w-4 mr-1" />
-                    {curso.duracion}
-                  </div>
-                  <div className="flex items-center">
-                    <Users className="h-4 w-4 mr-1" />
-                    {curso.estudiantes} estudiantes
-                  </div>
-                </div>
-
-                <button className="w-full py-2 bg-[#2a628f] text-white rounded-md hover:bg-[#18435a] transition-colors font-medium">
-                  Ver curso
-                </button>
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </>
+        )}
       </div>
     </div>
   );

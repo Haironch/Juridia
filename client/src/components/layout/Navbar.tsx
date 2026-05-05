@@ -10,6 +10,7 @@ import {
   MessageSquare,
   FileText,
   Brain,
+  BarChart2,
 } from "lucide-react";
 import { useAuthStore } from "../../store/authStore";
 
@@ -22,7 +23,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-2">
+            <Link to="/inicio" className="flex items-center space-x-2">
               <Scale className="h-8 w-8 text-[#13293d]" />
               <span className="text-xl font-semibold text-[#13293d]">
                 Derecho GT
@@ -58,6 +59,13 @@ export default function Navbar() {
               >
                 <Brain className="h-4 w-4 mr-1" />
                 ConstituQuiz
+              </Link>
+              <Link
+                to="/progreso"
+                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-[#16324f] hover:text-[#13293d] transition-colors"
+              >
+                <BarChart2 className="h-4 w-4 mr-1" />
+                Mi Progreso
               </Link>
             </div>
           </div>
@@ -153,6 +161,14 @@ export default function Navbar() {
             >
               <Brain className="h-5 w-5 mr-2" />
               ConstituQuiz
+            </Link>
+            <Link
+              to="/progreso"
+              className="flex items-center px-3 py-2 rounded-md text-base font-medium text-[#16324f] hover:text-[#13293d] hover:bg-[#67a2d3] transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <BarChart2 className="h-5 w-5 mr-2" />
+              Mi Progreso
             </Link>
           </div>
 

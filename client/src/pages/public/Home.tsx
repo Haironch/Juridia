@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { BookOpen, Users, Award, TrendingUp } from "lucide-react";
+import { BookOpen, Users, Award, TrendingUp, Brain, BarChart2, MessageSquare, ArrowRight } from "lucide-react";
 
 export default function Home() {
   return (
@@ -103,24 +103,110 @@ export default function Home() {
         </div>
       </div>
 
+      {/* Quick Access Section */}
+      <div className="py-16 bg-[#d8e9f5]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-extrabold text-[#13293d]">
+              Acceso rápido
+            </h2>
+            <p className="mt-3 text-lg text-[#16324f]">
+              Todo lo que necesitas, a un clic de distancia
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <Link
+              to="/constituquiz"
+              className="group bg-gradient-to-br from-[#2a628f] to-[#18435a] rounded-2xl p-6 text-white hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+            >
+              <Brain className="h-10 w-10 mb-4 opacity-90" />
+              <h3 className="text-lg font-bold mb-1">ConstituQuiz</h3>
+              <p className="text-sm text-[#b2d3ea] mb-4">
+                Practica con quizzes y tarjetas de estudio interactivas.
+              </p>
+              <div className="flex items-center text-sm font-medium">
+                Empezar ahora <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </Link>
+
+            <Link
+              to="/progreso"
+              className="group bg-white rounded-2xl p-6 border border-[#9ac1e2] hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+            >
+              <BarChart2 className="h-10 w-10 mb-4 text-[#2a628f]" />
+              <h3 className="text-lg font-bold text-[#13293d] mb-1">Mi Progreso</h3>
+              <p className="text-sm text-[#16324f] mb-4">
+                Revisa tus estadísticas, puntajes y áreas de mejora.
+              </p>
+              <div className="flex items-center text-sm font-medium text-[#2a628f]">
+                Ver estadísticas <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </Link>
+
+            <Link
+              to="/foros"
+              className="group bg-white rounded-2xl p-6 border border-[#9ac1e2] hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+            >
+              <MessageSquare className="h-10 w-10 mb-4 text-[#2a628f]" />
+              <h3 className="text-lg font-bold text-[#13293d] mb-1">Foros</h3>
+              <p className="text-sm text-[#16324f] mb-4">
+                Comparte dudas y aprende con otros estudiantes de derecho.
+              </p>
+              <div className="flex items-center text-sm font-medium text-[#2a628f]">
+                Ver foros <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Stats Bar */}
+      <div className="bg-[#13293d] py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div>
+              <p className="text-3xl font-extrabold text-white">3</p>
+              <p className="text-sm text-[#b2d3ea] mt-1">Temas de quiz disponibles</p>
+            </div>
+            <div>
+              <p className="text-3xl font-extrabold text-white">15+</p>
+              <p className="text-sm text-[#b2d3ea] mt-1">Preguntas de práctica</p>
+            </div>
+            <div>
+              <p className="text-3xl font-extrabold text-white">6</p>
+              <p className="text-sm text-[#b2d3ea] mt-1">Cursos disponibles</p>
+            </div>
+            <div>
+              <p className="text-3xl font-extrabold text-white">100%</p>
+              <p className="text-sm text-[#b2d3ea] mt-1">Gratuito para estudiantes</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* CTA Section */}
       <div className="bg-[#18435a]">
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
           <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-            <span className="block">Listo para comenzar?</span>
+            <span className="block">¿Listo para comenzar?</span>
             <span className="block text-[#81bdde]">
               Inicia hoy mismo de forma gratuita
             </span>
           </h2>
-          <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
-            <div className="inline-flex rounded-md shadow">
-              <Link
-                to="/registro"
-                className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-[#13293d] bg-white hover:bg-[#bdd5eb] transition-colors"
-              >
-                Crear cuenta gratuita
-              </Link>
-            </div>
+          <div className="mt-8 flex gap-4 lg:mt-0 lg:flex-shrink-0">
+            <Link
+              to="/constituquiz"
+              className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-[#13293d] bg-white hover:bg-[#bdd5eb] transition-colors"
+            >
+              <Brain className="h-5 w-5 mr-2" />
+              Ir a ConstituQuiz
+            </Link>
+            <Link
+              to="/cursos"
+              className="inline-flex items-center justify-center px-5 py-3 border-2 border-white text-base font-medium rounded-md text-white hover:bg-[#2a628f] transition-colors"
+            >
+              Ver cursos
+            </Link>
           </div>
         </div>
       </div>
