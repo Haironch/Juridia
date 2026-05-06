@@ -25,7 +25,7 @@ export default function ConstituQuizHome() {
               <Brain className="h-9 w-9 text-white" />
             </div>
           </div>
-          <h1 className="text-4xl font-bold text-white mb-3">ConstituQuiz</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">ConstituQuiz</h1>
           <p className="text-lg text-[#b2d3ea] max-w-2xl mx-auto">
             Pon a prueba tus conocimientos sobre la Constitucion Politica de Guatemala.
             Estudia con tarjetas y practica con quizzes interactivos.

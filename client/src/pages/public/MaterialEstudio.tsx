@@ -69,7 +69,7 @@ export default function MaterialEstudio() {
       {/* Header */}
       <div className="bg-gradient-to-r from-[#2a628f] to-[#18435a] py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold text-white mb-4">
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
             Material de Estudio
           </h1>
           <p className="text-lg text-[#b2d3ea] max-w-3xl">

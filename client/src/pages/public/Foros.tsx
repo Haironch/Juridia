@@ -68,7 +68,7 @@ export default function Foros() {
       {/* Header */}
       <div className="bg-gradient-to-r from-[#2a628f] to-[#18435a] py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold text-white mb-4">
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
             Foros de Discusión
           </h1>
           <p className="text-lg text-[#b2d3ea] max-w-3xl">
@@ -80,7 +80,7 @@ export default function Foros() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Sidebar */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 order-2 lg:order-1">
             <div className="bg-white rounded-lg shadow-sm border border-[#9ac1e2] p-6">
               <h3 className="text-lg font-semibold text-[#13293d] mb-4">
                 Categorías
@@ -102,7 +102,7 @@ export default function Foros() {
           </div>
 
           {/* Main Content */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-3 order-1 lg:order-2">
             {/* Search and filters */}
             <div className="bg-white rounded-lg shadow-sm border border-[#9ac1e2] p-4 mb-6">
               <div className="flex gap-4">
@@ -142,7 +142,7 @@ export default function Foros() {
                         {tema.titulo}
                       </h3>
 
-                      <div className="flex items-center gap-4 text-sm text-[#16324f]">
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-[#16324f]">
                         <div className="flex items-center">
                           <User className="h-4 w-4 mr-1" />
                           {tema.autor}

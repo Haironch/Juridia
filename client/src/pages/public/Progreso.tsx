@@ -72,7 +72,7 @@ export default function Progreso() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 mb-3">
             <BarChart2 className="h-8 w-8 text-white" />
-            <h1 className="text-4xl font-bold text-white">Mi Progreso</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold text-white">Mi Progreso</h1>
           </div>
           <p className="text-lg text-[#b2d3ea] max-w-3xl">
             Visualiza tu avance en cada tema, revisa tus intentos anteriores y
@@ -148,7 +148,7 @@ export default function Progreso() {
                   {temasCompletados}/{quizTemas.length}
                 </p>
                 <p className="text-sm text-[#67a2d3] mt-1">
-                  Temas dominados (≥70%)
+                  Temas dominados
                 </p>
               </div>
             </div>

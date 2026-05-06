@@ -8,7 +8,7 @@ export default function Home() {
       <div className="relative bg-gradient-to-br from-[#2a628f] to-[#13293d]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">
-            <h1 className="text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl">
+            <h1 className="text-3xl tracking-tight font-extrabold text-white sm:text-4xl md:text-5xl lg:text-6xl">
               <span className="block">Domina el Derecho</span>
               <span className="block text-[#8bbde0]">Guatemalteco</span>
             </h1>
@@ -17,7 +17,7 @@ export default function Home() {
               expertos. Practica con preguntas, accede a material de estudio y
               participa en foros especializados.
             </p>
-            <div className="mt-10 flex justify-center gap-4">
+            <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
               <Link
                 to="/registro"
                 className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-[#13293d] bg-white hover:bg-[#d8e9f5] transition-colors md:py-4 md:text-lg md:px-10"
@@ -193,7 +193,7 @@ export default function Home() {
               Inicia hoy mismo de forma gratuita
             </span>
           </h2>
-          <div className="mt-8 flex gap-4 lg:mt-0 lg:flex-shrink-0">
+          <div className="mt-8 flex flex-col sm:flex-row gap-4 lg:mt-0 lg:flex-shrink-0">
             <Link
               to="/constituquiz"
               className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-[#13293d] bg-white hover:bg-[#bdd5eb] transition-colors"
