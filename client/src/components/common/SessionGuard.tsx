@@ -6,6 +6,6 @@ import { Navigate, Outlet } from "react-router-dom";
  * Designed to be replaced later with real auth logic.
  */
 export default function SessionGuard() {
-  const hasEntered = sessionStorage.getItem("hasEntered") === "true";
+  const hasEntered = localStorage.getItem("hasEntered") === "true";
   return hasEntered ? <Outlet /> : <Navigate to="/" replace />;
 }

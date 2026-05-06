@@ -5,7 +5,7 @@ export default function BetaLanding() {
   const navigate = useNavigate();
 
   const handleEnter = () => {
-    sessionStorage.setItem("hasEntered", "true");
+    localStorage.setItem("hasEntered", "true");
     navigate("/inicio");
   };
 
