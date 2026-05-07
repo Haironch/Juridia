@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
 }
 
 enum RolUsuario {
@@ -51,8 +51,7 @@ model Usuario {
   estado              EstadoUsuario      @default(ACTIVO)
   fechaRegistro       DateTime           @default(now()) @map("fecha_registro")
   ultimoAcceso        DateTime?          @map("ultimo_acceso")
-  
-  // Relaciones
+
   perfilTutor         PerfilTutor?
   suscripciones       Suscripcion[]
   progresoUsuario     ProgresoUsuario[]
@@ -76,11 +75,11 @@ model PerfilTutor {
   id                      String   @id @default(uuid())
   usuarioId               String   @unique @map("usuario_id")
   especialidad            String
-  biografia               String?  @db.Text
+  biografia               String?
   verificado              Boolean  @default(false)
   contenidoAprobadoCount  Int      @default(0) @map("contenido_aprobado_count")
   ratingPromedio          Float    @default(0) @map("rating_promedio")
-  
+
   usuario Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
@@ -92,10 +91,10 @@ model PerfilTutor {
 model CategoriaDerecho {
   id          String   @id @default(uuid())
   nombre      String   @unique
-  descripcion String?  @db.Text
+  descripcion String?
   icono       String?
   orden       Int      @default(0)
-  
+
   subcategorias   Subcategoria[]
   preguntas       Pregunta[]
   materiales      MaterialEstudio[]
@@ -112,9 +111,9 @@ model Subcategoria {
   id          String   @id @default(uuid())
   categoriaId String   @map("categoria_id")
   nombre      String
-  descripcion String?  @db.Text
+  descripcion String?
   orden       Int      @default(0)
-  
+
   categoria CategoriaDerecho @relation(fields: [categoriaId], references: [id], onDelete: Cascade)
   preguntas Pregunta[]
 
@@ -130,14 +129,13 @@ model Pregunta {
   creadorId           String          @map("creador_id")
   aprobadaPorId       String?         @map("aprobada_por_id")
   categoriaId         String          @map("categoria_id")
-  
-  texto               String          @db.Text
+  texto               String
   tipo                TipoPregunta
-  dificultad          Int             @default(1) // 1-5
-  explicacion         String?         @db.Text
-  referenciasLegales  String?         @db.Text
+  dificultad          Int             @default(1)
+  explicacion         String?
+  referenciasLegales  String?
   estado              EstadoContenido @default(BORRADOR)
-  
+
   subcategoria  Subcategoria       @relation(fields: [subcategoriaId], references: [id])
   categoria     CategoriaDerecho   @relation(fields: [categoriaId], references: [id])
   creador       Usuario            @relation("PreguntasCreadas", fields: [creadorId], references: [id])
@@ -154,10 +152,10 @@ model Pregunta {
 model OpcionRespuesta {
   id          String  @id @default(uuid())
   preguntaId  String  @map("pregunta_id")
-  texto       String  @db.Text
+  texto       String
   esCorrecta  Boolean @default(false) @map("es_correcta")
   orden       Int     @default(0)
-  
+
   pregunta Pregunta @relation(fields: [preguntaId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
@@ -167,14 +165,14 @@ model OpcionRespuesta {
 }
 
 model ProgresoUsuario {
-  id                String   @id @default(uuid())
-  usuarioId         String   @map("usuario_id")
-  preguntaId        String   @map("pregunta_id")
-  intentos          Int      @default(0)
-  acertada          Boolean  @default(false)
+  id                 String   @id @default(uuid())
+  usuarioId          String   @map("usuario_id")
+  preguntaId         String   @map("pregunta_id")
+  intentos           Int      @default(0)
+  acertada           Boolean  @default(false)
   fechaUltimoIntento DateTime @default(now()) @map("fecha_ultimo_intento")
-  tiempoRespuesta   Int?     @map("tiempo_respuesta") // en segundos
-  
+  tiempoRespuesta    Int?     @map("tiempo_respuesta")
+
   usuario  Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
   pregunta Pregunta @relation(fields: [preguntaId], references: [id], onDelete: Cascade)
 
@@ -190,15 +188,14 @@ model MaterialEstudio {
   creadorId       String          @map("creador_id")
   aprobadoPorId   String?         @map("aprobado_por_id")
   categoriaId     String          @map("categoria_id")
-  
   tipo            TipoMaterial
   titulo          String
-  descripcion     String?         @db.Text
+  descripcion     String?
   urlArchivo      String          @map("url_archivo")
   esPremium       Boolean         @default(false) @map("es_premium")
   descargasCount  Int             @default(0) @map("descargas_count")
   estado          EstadoContenido @default(BORRADOR)
-  
+
   categoria    CategoriaDerecho @relation(fields: [categoriaId], references: [id])
   creador      Usuario          @relation("MaterialesCreados", fields: [creadorId], references: [id])
   aprobadoPor  Usuario?         @relation("MaterialesAprobados", fields: [aprobadoPorId], references: [id])
@@ -213,14 +210,15 @@ model Curso {
   id          String   @id @default(uuid())
   creadorId   String   @map("creador_id")
   categoriaId String   @map("categoria_id")
-  
   titulo      String
-  descripcion String?  @db.Text
+  descripcion String?
   esPremium   Boolean  @default(true) @map("es_premium")
   precio      Float?   @default(0)
   publicado   Boolean  @default(false)
   thumbnail   String?
-  
+  nivel       String   @default("Básico")
+  duracion    String?
+
   categoria CategoriaDerecho @relation(fields: [categoriaId], references: [id])
   creador   Usuario          @relation("CursosCreados", fields: [creadorId], references: [id])
   modulos   ModuloCurso[]
@@ -232,13 +230,13 @@ model Curso {
 }
 
 model ModuloCurso {
-  id                String  @id @default(uuid())
-  cursoId           String  @map("curso_id")
-  orden             Int
-  titulo            String
-  contenido         String? @db.Text
-  duracionEstimada  Int?    @map("duracion_estimada") // en minutos
-  
+  id               String  @id @default(uuid())
+  cursoId          String  @map("curso_id")
+  orden            Int
+  titulo           String
+  contenido        String?
+  duracionEstimada Int?    @map("duracion_estimada")
+
   curso Curso @relation(fields: [cursoId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
@@ -251,12 +249,11 @@ model Foro {
   id          String   @id @default(uuid())
   usuarioId   String   @map("usuario_id")
   categoriaId String   @map("categoria_id")
-  
   titulo      String
-  contenido   String   @db.Text
+  contenido   String
   vistas      Int      @default(0)
   cerrado     Boolean  @default(false)
-  
+
   usuario     Usuario          @relation(fields: [usuarioId], references: [id])
   categoria   CategoriaDerecho @relation(fields: [categoriaId], references: [id])
   comentarios ComentarioForo[]
@@ -271,10 +268,9 @@ model ComentarioForo {
   id        String   @id @default(uuid())
   foroId    String   @map("foro_id")
   usuarioId String   @map("usuario_id")
-  
-  contenido String   @db.Text
+  contenido String
   editado   Boolean  @default(false)
-  
+
   foro    Foro    @relation(fields: [foroId], references: [id], onDelete: Cascade)
   usuario Usuario @relation(fields: [usuarioId], references: [id])
 
@@ -285,15 +281,14 @@ model ComentarioForo {
 }
 
 model Suscripcion {
-  id          String   @id @default(uuid())
-  usuarioId   String   @map("usuario_id")
-  
-  plan        String   // FREE, PREMIUM_MENSUAL, PREMIUM_ANUAL
-  fechaInicio DateTime @default(now()) @map("fecha_inicio")
+  id          String    @id @default(uuid())
+  usuarioId   String    @map("usuario_id")
+  plan        String
+  fechaInicio DateTime  @default(now()) @map("fecha_inicio")
   fechaFin    DateTime? @map("fecha_fin")
-  estado      String   @default("ACTIVA") // ACTIVA, CANCELADA, EXPIRADA
+  estado      String    @default("ACTIVA")
   stripeSubscriptionId String? @unique @map("stripe_subscription_id")
-  
+
   usuario Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
@@ -306,14 +301,13 @@ model ContenidoPendiente {
   id                   String          @id @default(uuid())
   tutorId              String          @map("tutor_id")
   adminRevisorId       String?         @map("admin_revisor_id")
-  
-  tipo                 String          // PREGUNTA, MATERIAL, CURSO
-  contenidoJson        String          @db.Text @map("contenido_json")
+  tipo                 String
+  contenidoJson        String          @map("contenido_json")
   estado               EstadoContenido @default(PENDIENTE)
-  comentariosRevision  String?         @db.Text @map("comentarios_revision")
+  comentariosRevision  String?         @map("comentarios_revision")
   fechaRevision        DateTime?       @map("fecha_revision")
-  
-  tutor         Usuario  @relation(fields: [tutorId], references: [id])
+
+  tutor Usuario @relation(fields: [tutorId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -324,16 +318,13 @@ model ContenidoPendiente {
 model ActividadTutor {
   id             String   @id @default(uuid())
   tutorId        String   @map("tutor_id")
-  
-  tipoActividad  String   // PREGUNTA_SUBIDA, MATERIAL_SUBIDO, RESPUESTA_FORO
+  tipoActividad  String
   aprobado       Boolean  @default(false)
-  referenciaId   String?  @map("referencia_id") // ID del contenido relacionado
-  
+  referenciaId   String?  @map("referencia_id")
+
   tutor Usuario @relation(fields: [tutorId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
 
   @@map("actividad_tutores")
 }
-
-

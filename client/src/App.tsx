@@ -5,6 +5,7 @@ import SessionGuard from "./components/common/SessionGuard";
 import BetaLanding from "./pages/public/BetaLanding";
 import Home from "./pages/public/Home";
 import Cursos from "./pages/public/Cursos";
+import CursoDetalle from "./pages/public/CursoDetalle";
 import Foros from "./pages/public/Foros";
 import MaterialEstudio from "./pages/public/MaterialEstudio";
 import Premium from "./pages/public/Premium";
@@ -37,6 +38,7 @@ function App() {
             <Route element={<MainLayout />}>
               <Route path="/inicio" element={<Home />} />
               <Route path="/cursos" element={<Cursos />} />
+              <Route path="/cursos/:id" element={<CursoDetalle />} />
               <Route path="/foros" element={<Foros />} />
               <Route path="/material" element={<MaterialEstudio />} />
               <Route path="/premium" element={<Premium />} />

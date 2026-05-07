@@ -1,7 +1,9 @@
-import { PrismaClient } from '@prisma/client';
+import { createClient } from "@libsql/client";
+import dotenv from "dotenv";
 
-const prisma = new PrismaClient({
-  log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+dotenv.config();
+
+export const db = createClient({
+  url: process.env.TURSO_DATABASE_URL!,
+  authToken: process.env.TURSO_AUTH_TOKEN,
 });
-
-export default prisma;
