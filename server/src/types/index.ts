@@ -1,5 +1,6 @@
 import { Request } from 'express';
-import { RolUsuario } from '@prisma/client';
+
+export type RolUsuario = 'SUPER_ADMIN' | 'ADMIN_CONTENIDO' | 'TUTOR' | 'PREMIUM' | 'FREE';
 
 export interface AuthRequest extends Request {
   user?: {
