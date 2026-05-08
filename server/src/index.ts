@@ -37,4 +37,17 @@ app.use((err: Error, req: Request, res: Response, next: any) => {
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
   console.log(`📚 Ambiente: ${process.env.NODE_ENV}`);
+
+  // Auto-ping cada 10 min para evitar sleep en Render free tier
+  if (process.env.NODE_ENV === 'production' && process.env.RENDER_EXTERNAL_URL) {
+    const url = `${process.env.RENDER_EXTERNAL_URL}/health`;
+    setInterval(async () => {
+      try {
+        await fetch(url);
+        console.log(`[keep-alive] ping ok`);
+      } catch {
+        console.log(`[keep-alive] ping fallido`);
+      }
+    }, 10 * 60 * 1000);
+  }
 });
