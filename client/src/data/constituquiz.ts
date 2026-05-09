@@ -192,5 +192,197 @@ export const quizTemas: QuizTema[] = [
         explicacion: "La prescripción extintiva (artículo 1501 y siguientes del Código Civil) extingue el derecho a ejercer una acción judicial por el transcurso del tiempo. No extingue la obligación en sí, sino la acción para exigirla. No debe confundirse con la usucapión, que es la prescripción adquisitiva de dominio."
       }
     ]
+  },
+  {
+    id: "derecho-laboral",
+    tema: "Derecho Laboral Guatemalteco",
+    descripcion: "Prestaciones, jornadas, salario mínimo y despido según el Código de Trabajo (Decreto 1441) de Guatemala.",
+    icono: "Briefcase",
+    totalPreguntas: 5,
+    preguntas: [
+      {
+        id: 1,
+        pregunta: "¿Cuántas horas comprende la jornada ordinaria diurna de trabajo según el Código de Trabajo de Guatemala?",
+        opciones: {
+          A: "8 horas diarias y 44 horas semanales como máximo.",
+          B: "10 horas diarias y 50 horas semanales como máximo.",
+          C: "6 horas diarias y 36 horas semanales como máximo."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 116 del Código de Trabajo fija la jornada ordinaria diurna en 8 horas diarias y 44 horas semanales. La jornada nocturna es de 6 horas diarias y 36 semanales, y la mixta de 7 horas diarias y 42 semanales."
+      },
+      {
+        id: 2,
+        pregunta: "¿Qué prestaciones tiene derecho a recibir un trabajador despedido sin causa justificada en Guatemala?",
+        opciones: {
+          A: "Únicamente el pago de los días trabajados del mes en curso.",
+          B: "Solo un mes de salario adicional sin importar el tiempo laborado.",
+          C: "Indemnización de un mes de salario por cada año de trabajo, más vacaciones, aguinaldo y bono 14 proporcionales."
+        },
+        respuestaCorrecta: "C",
+        explicacion: "El artículo 82 del Código de Trabajo establece que el despido injustificado genera el pago de una indemnización de un mes de salario por cada año laborado. A ello se suman las prestaciones proporcionales: vacaciones, aguinaldo y bono 14 pendientes de pago."
+      },
+      {
+        id: 3,
+        pregunta: "¿Cuándo se paga el aguinaldo en Guatemala y a cuánto equivale?",
+        opciones: {
+          A: "Se paga íntegramente el 15 de noviembre y equivale a dos salarios mensuales.",
+          B: "50% en la primera quincena de diciembre y 50% en la primera quincena de enero; equivale a un salario mensual.",
+          C: "Se paga en julio de cada año y equivale al 25% del salario anual."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "La Ley de Aguinaldo (Decreto 76-78) establece que los trabajadores tienen derecho a recibir un salario mensual adicional como aguinaldo, pagado en dos partes: el 50% en la primera quincena de diciembre y el restante 50% en la primera quincena de enero."
+      },
+      {
+        id: 4,
+        pregunta: "¿Quién tiene la facultad de fijar el salario mínimo en Guatemala?",
+        opciones: {
+          A: "El Organismo Ejecutivo, a propuesta de la Comisión Nacional del Salario.",
+          B: "El Congreso de la República mediante decreto legislativo.",
+          C: "Los sindicatos de trabajadores en conjunto con las cámaras empresariales."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Según el artículo 113 del Código de Trabajo, la Comisión Nacional del Salario estudia y propone los salarios mínimos, pero es el Organismo Ejecutivo (mediante Acuerdo Gubernativo) quien los fija oficialmente, generalmente con vigencia a partir del 1 de enero de cada año."
+      },
+      {
+        id: 5,
+        pregunta: "¿Cuántos días de vacaciones anuales corresponden a un trabajador con más de un año de relación laboral continua?",
+        opciones: {
+          A: "30 días hábiles.",
+          B: "10 días hábiles.",
+          C: "15 días hábiles."
+        },
+        respuestaCorrecta: "C",
+        explicacion: "El artículo 130 del Código de Trabajo reconoce a todo trabajador el derecho a 15 días hábiles de vacaciones remuneradas al año, siempre que haya cumplido un año de servicio continuo con el mismo patrono. Este derecho es irrenunciable."
+      }
+    ]
+  },
+  {
+    id: "derecho-mercantil",
+    tema: "Derecho Mercantil Guatemalteco",
+    descripcion: "Sociedades mercantiles, títulos de crédito y registro según el Código de Comercio (Decreto 2-70) de Guatemala.",
+    icono: "Building2",
+    totalPreguntas: 5,
+    preguntas: [
+      {
+        id: 1,
+        pregunta: "¿Cuáles son las sociedades mercantiles reconocidas en el Código de Comercio de Guatemala (Decreto 2-70)?",
+        opciones: {
+          A: "Solo la sociedad anónima y la sociedad de responsabilidad limitada.",
+          B: "Sociedad colectiva, en comandita simple, de responsabilidad limitada, anónima y en comandita por acciones.",
+          C: "Sociedad civil, comercial y cooperativa de consumo."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El artículo 10 del Código de Comercio enumera cinco tipos de sociedades mercantiles: colectiva, en comandita simple, de responsabilidad limitada (S.R.L.), anónima (S.A.) y en comandita por acciones. La más utilizada en la práctica es la Sociedad Anónima."
+      },
+      {
+        id: 2,
+        pregunta: "¿Qué es un título de crédito según el Código de Comercio de Guatemala?",
+        opciones: {
+          A: "El documento necesario para ejercitar el derecho literal y autónomo expresado en el mismo.",
+          B: "Cualquier documento que acredite una deuda entre dos personas naturales.",
+          C: "El recibo que emite el vendedor al comprador como comprobante de pago."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 385 del Código de Comercio define el título de crédito como el documento necesario para ejercitar el derecho literal y autónomo en él expresado. Sus características esenciales son: incorporación, literalidad, autonomía y legitimación. Los más comunes son la letra de cambio, el pagaré y el cheque."
+      },
+      {
+        id: 3,
+        pregunta: "¿Ante quién deben inscribirse los comerciantes y las empresas mercantiles en Guatemala?",
+        opciones: {
+          A: "Ante el Ministerio de Economía mediante declaración jurada notarial.",
+          B: "Ante la Superintendencia de Administración Tributaria (SAT).",
+          C: "Ante el Registro Mercantil de la República, dependencia del Ministerio de Economía."
+        },
+        respuestaCorrecta: "C",
+        explicacion: "El artículo 334 del Código de Comercio establece la obligación de los comerciantes de inscribirse en el Registro Mercantil de la República. Este registro da publicidad a los actos mercantiles, otorga personalidad jurídica a las sociedades y es requisito previo para operar legalmente."
+      },
+      {
+        id: 4,
+        pregunta: "¿Qué es la quiebra en el Derecho Mercantil guatemalteco?",
+        opciones: {
+          A: "La liquidación voluntaria que realiza un comerciante al cerrar su negocio.",
+          B: "El estado jurídico del comerciante que ha cesado en el pago de sus obligaciones mercantiles, declarado judicialmente.",
+          C: "La multa que impone el Registro Mercantil a las empresas con deudas fiscales."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "La quiebra es el estado de insolvencia declarado judicialmente que afecta a un comerciante que ha cesado el pago generalizado de sus obligaciones. Implica el desapoderamiento de sus bienes, la formación de una masa activa para pagar a los acreedores y la intervención de un síndico administrador."
+      },
+      {
+        id: 5,
+        pregunta: "¿Qué característica fundamental distingue a la Sociedad Anónima en el Código de Comercio guatemalteco?",
+        opciones: {
+          A: "Los socios responden solidariamente con su patrimonio personal por las deudas sociales.",
+          B: "El capital está dividido en acciones y la responsabilidad de cada socio se limita al monto de sus aportaciones.",
+          C: "Requiere un mínimo de diez socios fundadores y capital mínimo de un millón de quetzales."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El artículo 86 del Código de Comercio define la Sociedad Anónima como aquella en que el capital está dividido y representado por acciones. La responsabilidad de cada accionista queda limitada al pago de las acciones que haya suscrito, sin comprometer su patrimonio personal."
+      }
+    ]
+  },
+  {
+    id: "derecho-procesal-penal",
+    tema: "Derecho Procesal Penal",
+    descripcion: "Etapas del proceso, medidas desjudicializadoras y garantías procesales del CPP guatemalteco (Decreto 51-92).",
+    icono: "Gavel",
+    totalPreguntas: 5,
+    preguntas: [
+      {
+        id: 1,
+        pregunta: "¿Cuáles son las etapas del proceso penal ordinario en Guatemala según el Código Procesal Penal (Decreto 51-92)?",
+        opciones: {
+          A: "Preparatoria (investigación), intermedia, debate oral y público, e impugnaciones.",
+          B: "Denuncia, instrucción, sentencia y apelación.",
+          C: "Investigación preliminar, juicio sumario y ejecución de sentencia."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El CPP estructura el proceso en cuatro fases: la etapa preparatoria (investigación a cargo del MP con control del juez), la etapa intermedia (donde el juez decide si hay mérito para juicio), el debate oral y público (juicio ante tribunal de sentencia) y las impugnaciones (apelación, casación, etc.)."
+      },
+      {
+        id: 2,
+        pregunta: "¿Qué es el criterio de oportunidad en el proceso penal guatemalteco?",
+        opciones: {
+          A: "El derecho del sindicado a elegir al juez que conocerá su caso.",
+          B: "La posibilidad de que la víctima abandone el proceso una vez iniciado.",
+          C: "La facultad del Ministerio Público de abstenerse de ejercitar la acción penal en delitos de menor gravedad, previa autorización judicial."
+        },
+        respuestaCorrecta: "C",
+        explicacion: "El artículo 25 del CPP establece el criterio de oportunidad como una medida desjudicializadora: el Ministerio Público puede solicitar al juez autorización para no perseguir penalmente ciertos delitos de menor impacto social, siempre que el sindicado repare el daño causado a la víctima."
+      },
+      {
+        id: 3,
+        pregunta: "¿Cuál es la función del Juez de Primera Instancia Penal (juez contralor) durante la etapa preparatoria?",
+        opciones: {
+          A: "Dirigir personalmente la investigación del Ministerio Público.",
+          B: "Controlar la legalidad de la investigación, autorizar medidas que afecten derechos fundamentales y dictar el auto de procesamiento.",
+          C: "Dictar la sentencia condenatoria o absolutoria al concluir el debate oral."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El juez contralor no investiga; su rol es garantizar el respeto a los derechos fundamentales del sindicado durante la investigación. Autoriza allanamientos, intervenciones telefónicas, ordena la prisión preventiva y al concluir la etapa preparatoria decide en la audiencia intermedia si el caso pasa a juicio."
+      },
+      {
+        id: 4,
+        pregunta: "¿En qué consiste la suspensión condicional de la persecución penal?",
+        opciones: {
+          A: "Una medida alternativa al juicio: el proceso se suspende si el imputado cumple condiciones durante un período de prueba; al cumplirlas se dicta sobreseimiento.",
+          B: "La interrupción temporal del proceso por enfermedad grave del sindicado hasta su recuperación.",
+          C: "La suspensión de la pena impuesta cuando el condenado demuestra buena conducta ante el juez de ejecución."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 27 del CPP regula la suspensión condicional de la persecución penal: el juez puede suspender el proceso hasta por 5 años si el imputado acepta reglas de conducta (reparar el daño, no reincidir, etc.). Si las cumple, se sobresee el caso. Es otra medida desjudicializadora que descarga el sistema."
+      },
+      {
+        id: 5,
+        pregunta: "¿Qué límite establece el CPP para la duración máxima de la prisión preventiva en Guatemala?",
+        opciones: {
+          A: "No existe límite temporal mientras dure la investigación del Ministerio Público.",
+          B: "Un máximo de seis meses improrrogables en todos los casos.",
+          C: "No puede exceder de un año; con prórroga justificada hasta dos años, debiendo cesar si no se ha dictado sentencia."
+        },
+        respuestaCorrecta: "C",
+        explicacion: "El artículo 268 del CPP establece que la prisión preventiva no puede exceder de un año. Con resolución motivada, el tribunal puede prorrogarla hasta dos años en casos de especial complejidad. Vencido ese plazo sin sentencia, el imputado debe ser puesto en libertad, siendo sustituida por medidas sustitutivas."
+      }
+    ]
   }
 ];
