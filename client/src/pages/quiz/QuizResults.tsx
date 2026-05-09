@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Trophy, ThumbsUp, BookOpen, TrendingUp, AlertCircle, Check, X, RotateCcw, ArrowLeft } from 'lucide-react';
 import { quizTemas } from '../../data/constituquiz';
@@ -8,6 +9,13 @@ export default function QuizResults() {
   const { temaId } = useParams<{ temaId: string }>();
   const navigate = useNavigate();
   const { getScore, respuestas, preguntas, resetQuiz } = useQuizStore();
+
+  // Reset store when leaving Results regardless of how the user navigates away.
+  // Without this, quizCompleted stays true and QuizPracticeMode immediately
+  // redirects back to Results before the new quiz can start.
+  useEffect(() => {
+    return () => resetQuiz();
+  }, []);
 
   const tema = quizTemas.find(t => t.id === temaId);
   const score = getScore();
