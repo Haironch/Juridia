@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { X, AlertTriangle } from 'lucide-react';
 import { quizTemas } from '../../data/constituquiz';
 import { useQuizStore } from '../../store/quizStore';
+import { useShuffledOptions } from '../../hooks/useShuffledOptions';
 import QuizProgressBar from '../../components/quiz/QuizProgressBar';
 import QuizOptionButton from '../../components/quiz/QuizOptionButton';
 
@@ -25,6 +26,13 @@ export default function QuizPracticeMode() {
   } = useQuizStore();
 
   const tema = quizTemas.find(t => t.id === temaId);
+  const currentQuestion = preguntas[currentQuestionIndex];
+
+  // Must be called before any early returns to satisfy Rules of Hooks
+  const shuffledOptions = useShuffledOptions(
+    currentQuestion?.opciones ?? {},
+    currentQuestion?.id ?? -1
+  );
 
   useEffect(() => {
     if (tema) {
@@ -43,7 +51,6 @@ export default function QuizPracticeMode() {
     return null;
   }
 
-  const currentQuestion = preguntas[currentQuestionIndex];
   if (!currentQuestion) return null;
 
   const handleExit = () => {
@@ -81,7 +88,7 @@ export default function QuizPracticeMode() {
 
         {/* Options */}
         <div className="space-y-4 mb-8">
-          {Object.entries(currentQuestion.opciones).map(([key, text]) => (
+          {shuffledOptions.map(({ key, text }) => (
             <QuizOptionButton
               key={key}
               optionKey={key}
