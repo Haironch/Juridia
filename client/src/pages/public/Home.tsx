@@ -1,21 +1,16 @@
 import { Link } from "react-router-dom";
-import { BookOpen, Users, Award, TrendingUp, Brain, BarChart2, MessageSquare, ArrowRight } from "lucide-react";
+import { BookOpen, Users, Award, TrendingUp, Brain, BarChart2, MessageSquare, ArrowRight, Target, Eye } from "lucide-react";
 
 export default function Home() {
   return (
     <div className="bg-[#d8e9f5]">
       {/* Hero Section */}
       <div className="relative bg-gradient-to-br from-[#2a628f] to-[#13293d]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
-            <h1 className="text-3xl tracking-tight font-extrabold text-white sm:text-4xl md:text-5xl lg:text-6xl">
-              <span className="block">Domina el Derecho</span>
-              <span className="block text-[#8bbde0]">Guatemalteco</span>
-            </h1>
-            <p className="mt-3 max-w-md mx-auto text-base text-[#b2d3ea] sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-              Plataforma de aprendizaje interactivo con contenido verificado por
-              expertos. Practica con preguntas, accede a material de estudio y
-              participa en foros especializados.
+            <p className="text-base sm:text-lg text-[#b2d3ea] font-medium tracking-wide">
+              Este es un proyecto desarrollado por el programador{" "}
+              <span className="text-white font-semibold">Hairch.dev</span>
             </p>
             <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
               <Link
@@ -31,6 +26,47 @@ export default function Home() {
                 Ver Premium
               </Link>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mission & Vision Cards */}
+      <div className="bg-[#d8e9f5] py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            {/* Misión */}
+            <div className="group bg-white rounded-2xl border border-[#9ac1e2] shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden">
+              <div className="h-1 w-full bg-gradient-to-r from-[#2a628f] to-[#18435a]" />
+              <div className="p-8">
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-10 h-10 rounded-xl bg-[#d8e9f5] flex items-center justify-center flex-shrink-0 group-hover:bg-[#2a628f] transition-colors duration-300">
+                    <Target className="h-5 w-5 text-[#2a628f] group-hover:text-white transition-colors duration-300" />
+                  </div>
+                  <span className="text-xs font-bold tracking-widest text-[#2a628f] uppercase">Misión</span>
+                </div>
+                <p className="text-[#13293d] text-base leading-relaxed font-medium">
+                  Hacer que estudiar Derecho sea más práctico, accesible y efectivo mediante tecnología diseñada para estudiantes y profesionales jurídicos.
+                </p>
+              </div>
+            </div>
+
+            {/* Visión */}
+            <div className="group bg-white rounded-2xl border border-[#9ac1e2] shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden">
+              <div className="h-1 w-full bg-gradient-to-r from-[#18435a] to-[#2a628f]" />
+              <div className="p-8">
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-10 h-10 rounded-xl bg-[#d8e9f5] flex items-center justify-center flex-shrink-0 group-hover:bg-[#2a628f] transition-colors duration-300">
+                    <Eye className="h-5 w-5 text-[#2a628f] group-hover:text-white transition-colors duration-300" />
+                  </div>
+                  <span className="text-xs font-bold tracking-widest text-[#2a628f] uppercase">Visión</span>
+                </div>
+                <p className="text-[#13293d] text-base leading-relaxed font-medium">
+                  Revolucionar la educación jurídica en Guatemala, creando la comunidad digital de aprendizaje legal más grande e innovadora de la región.
+                </p>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
