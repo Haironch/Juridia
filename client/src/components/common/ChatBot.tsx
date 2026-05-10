@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, Bot, User } from "lucide-react";
+import { MessageCircle, X, Bot, User, RotateCcw } from "lucide-react";
 
 interface Mensaje {
   id: number;
@@ -7,122 +7,228 @@ interface Mensaje {
   texto: string;
 }
 
-const BASE = [
-  {
-    keywords: ["hola", "buenas", "buenos", "saludos", "hey"],
-    respuesta:
-      "¡Hola! Soy el asistente legal de Derecho GT. Puedo ayudarte con dudas sobre temas jurídicos, exámenes, tesis y más. ¿En qué te puedo orientar?",
-  },
-  {
-    keywords: ["administrativo", "derecho administrativo"],
-    respuesta:
-      "El **Derecho Administrativo** es la rama del derecho público que regula la organización, funcionamiento y actividades del Estado y sus relaciones con los ciudadanos. En Guatemala se rige principalmente por la Ley del Organismo Ejecutivo y la Constitución Política.",
-  },
-  {
-    keywords: ["penal", "derecho penal", "código penal"],
-    respuesta:
-      "El **Derecho Penal** guatemalteco regula los delitos y las penas. Su base es el Decreto 17-73 (Código Penal). Estudia la acción, tipicidad, antijuridicidad y culpabilidad como elementos del delito.",
-  },
-  {
-    keywords: ["civil", "derecho civil", "código civil"],
-    respuesta:
-      "El **Derecho Civil** regula las relaciones entre personas: contratos, familia, sucesiones y bienes. En Guatemala se rige por el Decreto-Ley 106 (Código Civil). Es la base del ordenamiento jurídico privado.",
-  },
-  {
-    keywords: ["laboral", "trabajo", "derecho laboral", "código de trabajo"],
-    respuesta:
-      "El **Derecho Laboral** regula las relaciones entre trabajadores y empleadores. En Guatemala lo rige el Código de Trabajo (Decreto 1441). Sus principios son tutelares e irrenunciables para proteger al trabajador.",
-  },
-  {
-    keywords: ["constitucional", "constitución", "carta magna"],
-    respuesta:
-      "El **Derecho Constitucional** estudia la Constitución Política de Guatemala de 1985. Es la norma suprema del ordenamiento jurídico y consagra los derechos fundamentales, la organización del Estado y las garantías constitucionales.",
-  },
-  {
-    keywords: ["mercantil", "comercial", "comercio", "derecho mercantil"],
-    respuesta:
-      "El **Derecho Mercantil** regula las actividades comerciales y empresariales. En Guatemala lo rige el Código de Comercio (Decreto 2-70). Incluye sociedades mercantiles, títulos de crédito y contratos comerciales.",
-  },
-  {
-    keywords: ["demanda", "denuncia", "diferencia demanda denuncia"],
-    respuesta:
-      "**Diferencia entre demanda y denuncia:**\n• **Demanda:** acto procesal civil mediante el cual una persona (demandante) inicia un juicio contra otra (demandado) para exigir un derecho.\n• **Denuncia:** comunicación ante el Ministerio Público o la PNC sobre la comisión de un delito. No inicia directamente un juicio.",
-  },
-  {
-    keywords: ["jurisprudencia", "qué es jurisprudencia"],
-    respuesta:
-      "La **jurisprudencia** es el conjunto de sentencias y resoluciones reiteradas emitidas por los tribunales, especialmente la Corte Suprema de Justicia y la Corte de Constitucionalidad. En Guatemala constituye fuente del derecho y sirve como guía interpretativa.",
-  },
-  {
-    keywords: ["amparo", "recurso de amparo", "acción de amparo"],
-    respuesta:
-      "El **amparo** es una garantía constitucional que protege a las personas contra actos arbitrarios del Estado que violen sus derechos fundamentales. Lo regula la Ley de Amparo, Exhibición Personal y de Constitucionalidad (Decreto 1-86).",
-  },
-  {
-    keywords: ["habeas corpus", "exhibición personal"],
-    respuesta:
-      "El **habeas corpus** (o exhibición personal en Guatemala) protege la libertad física de las personas. Se interpone cuando alguien es detenido ilegalmente o se encuentra en paradero desconocido. Lo conoce la Corte Suprema de Justicia.",
-  },
-  {
-    keywords: ["contrato", "qué es un contrato", "elementos del contrato"],
-    respuesta:
-      "Un **contrato** es un acuerdo de voluntades entre dos o más personas que crea derechos y obligaciones. Sus elementos esenciales son: consentimiento, objeto lícito y causa lícita. En Guatemala se regula en el Código Civil a partir del artículo 1517.",
-  },
-  {
-    keywords: ["prescripción", "qué es prescripción"],
-    respuesta:
-      "La **prescripción** es la extinción de un derecho o acción legal por el transcurso del tiempo sin ejercerlo. Puede ser adquisitiva (se adquiere un derecho) o extintiva (se pierde la acción para reclamarlo). Los plazos varían según el tipo de acción.",
-  },
-  {
-    keywords: ["nulidad", "nulidad absoluta", "nulidad relativa"],
-    respuesta:
-      "La **nulidad** es la invalidez de un acto jurídico por violar normas de orden público:\n• **Absoluta:** no puede sanearse, cualquiera puede alegarla (ej. objeto ilícito).\n• **Relativa:** puede convalidarse y solo la alega el perjudicado (ej. vicios del consentimiento).",
-  },
-  {
-    keywords: ["apelación", "recurso de apelación", "apelar"],
-    respuesta:
-      "La **apelación** es un recurso procesal mediante el cual una de las partes solicita a un tribunal superior que revise y modifique una resolución del tribunal inferior que le perjudica. Es el recurso ordinario más utilizado en el proceso guatemalteco.",
-  },
-  {
-    keywords: ["tesis", "cómo hacer tesis", "cómo iniciar tesis", "trabajo de graduación"],
-    respuesta:
-      "Para iniciar tu tesis de derecho en Guatemala:\n1. Elige un tema de investigación jurídica relevante\n2. Formula el problema de investigación y tus objetivos\n3. Presenta el protocolo a tu asesor o unidad de tesis\n4. Desarrolla el marco teórico con fuentes doctrinales y legales\n5. Aplica metodología jurídica (dogmática, comparada, empírica)\n6. Redacta conclusiones y recomendaciones\n\nConsulta siempre el reglamento de tu facultad.",
-  },
-  {
-    keywords: ["examen privado", "examen general", "prueba privada", "temas examen"],
-    respuesta:
-      "Los temas más frecuentes en el **examen privado de Derecho** en Guatemala incluyen:\n• Derecho Constitucional y garantías\n• Derecho Penal: teoría del delito y tipos penales\n• Derecho Civil: contratos, familia y sucesiones\n• Derecho Procesal Civil y Penal\n• Derecho Administrativo y Municipal\n• Derecho Laboral y Seguridad Social\n• Derecho Mercantil\n\nRevisa el reglamento específico de tu universidad.",
-  },
-  {
-    keywords: ["proceso penal", "etapas proceso penal", "procedimiento penal"],
-    respuesta:
-      "El **proceso penal guatemalteco** tiene estas etapas:\n1. **Preparatoria:** investigación del MP y la PNC\n2. **Intermedia:** el juez decide si hay mérito para juicio\n3. **Debate (juicio oral):** se presentan pruebas ante el tribunal\n4. **Impugnaciones:** recursos de apelación o casación\n\nSe rige por el Código Procesal Penal (Decreto 51-92).",
-  },
-  {
-    keywords: ["gracias", "muchas gracias", "thank you", "perfecto", "excelente"],
-    respuesta:
-      "¡Con gusto! Recuerda que puedes explorar más contenido en los cursos y usar el ConstituQuiz para practicar. Cualquier otra duda, aquí estoy. ¡Éxito en tus estudios!",
-  },
-];
+interface Opcion {
+  texto: string;
+  siguiente: string;
+}
 
-const FALLBACK =
-  "No encontré una respuesta específica para esa consulta. Te recomiendo revisar los cursos disponibles en la plataforma o consultar con un profesional del derecho para orientación más detallada. ¿Puedo ayudarte con algo más?";
+interface Nodo {
+  id: string;
+  mensaje: string;
+  opciones?: Opcion[];
+}
 
-const BIENVENIDA: Mensaje = {
-  id: 0,
-  tipo: "bot",
-  texto: "¡Hola! Soy el asistente legal de Derecho GT. Puedo responder dudas sobre temas jurídicos guatemaltecos, exámenes, tesis y más. ¿En qué te ayudo?",
+// ─────────────────────────────────────────────────────────────────────────────
+// ÁRBOL DE CONVERSACIÓN
+// Nodos sin `opciones` son hojas → el bot muestra MSG_FIN y aparece "Reiniciar"
+// ─────────────────────────────────────────────────────────────────────────────
+const ARBOL: Record<string, Nodo> = {
+
+  // ── INICIO ────────────────────────────────────────────────────────────────
+  inicio: {
+    id: "inicio",
+    mensaje: "¡Hola! Soy el asistente de Juridia. Selecciona el tema sobre el que necesitas orientación:",
+    opciones: [
+      { texto: "📚 Ramas del Derecho",          siguiente: "menu_ramas" },
+      { texto: "🎓 Exámenes y Carrera",          siguiente: "menu_examenes" },
+      { texto: "⚖️ Garantías Constitucionales",  siguiente: "menu_garantias" },
+      { texto: "🔍 Proceso Penal",               siguiente: "menu_proceso_penal" },
+      { texto: "📝 Contratos y Obligaciones",    siguiente: "menu_contratos" },
+    ],
+  },
+
+  // ── RAMAS DEL DERECHO ─────────────────────────────────────────────────────
+  menu_ramas: {
+    id: "menu_ramas",
+    mensaje: "¿Sobre qué rama del Derecho deseas información?",
+    opciones: [
+      { texto: "Derecho Constitucional", siguiente: "info_constitucional" },
+      { texto: "Derecho Penal",           siguiente: "info_penal" },
+      { texto: "Derecho Civil",           siguiente: "info_civil" },
+      { texto: "Derecho Laboral",         siguiente: "menu_laboral" },
+      { texto: "Derecho Mercantil",       siguiente: "info_mercantil" },
+      { texto: "Derecho Administrativo",  siguiente: "info_administrativo" },
+    ],
+  },
+  info_constitucional: {
+    id: "info_constitucional",
+    mensaje: "El **Derecho Constitucional** estudia la Constitución Política de Guatemala de 1985, norma suprema del ordenamiento jurídico.\n\nConsagra los derechos fundamentales (vida, libertad, igualdad), la organización del Estado en tres organismos (Ejecutivo, Legislativo y Judicial) y garantías como el amparo y el habeas corpus.",
+  },
+  info_penal: {
+    id: "info_penal",
+    mensaje: "El **Derecho Penal** guatemalteco regula los delitos y las penas. Su base es el Código Penal (Decreto 17-73).\n\nLos elementos del delito son tipicidad, antijuridicidad, culpabilidad y punibilidad. La pena varía según la gravedad del ilícito: de días-multa hasta reclusión mayor.",
+  },
+  info_civil: {
+    id: "info_civil",
+    mensaje: "El **Derecho Civil** regula las relaciones entre personas: contratos, familia, sucesiones y bienes. En Guatemala lo rige el Código Civil (Decreto-Ley 106).\n\nSus ramas son: derecho de personas, familia, bienes, obligaciones y sucesiones. Es la base del ordenamiento jurídico privado.",
+  },
+  menu_laboral: {
+    id: "menu_laboral",
+    mensaje: "El **Derecho Laboral** (Código de Trabajo, Decreto 1441) regula la relación entre trabajadores y patronos. ¿Qué aspecto te interesa conocer?",
+    opciones: [
+      { texto: "Jornadas de trabajo",      siguiente: "laboral_jornada" },
+      { texto: "Aguinaldo y Bono 14",      siguiente: "laboral_prestaciones" },
+      { texto: "Despido injustificado",    siguiente: "laboral_despido" },
+      { texto: "Salario mínimo",           siguiente: "laboral_salario" },
+    ],
+  },
+  laboral_jornada: {
+    id: "laboral_jornada",
+    mensaje: "**Jornadas de trabajo en Guatemala** (Art. 116 Código de Trabajo):\n\n• **Diurna:** 8 horas/día · 44 horas/semana\n• **Nocturna:** 6 horas/día · 36 horas/semana\n• **Mixta:** 7 horas/día · 42 horas/semana\n\nEl trabajo que exceda estos límites es **tiempo extraordinario** y debe pagarse con un 50% adicional sobre el salario ordinario.",
+  },
+  laboral_prestaciones: {
+    id: "laboral_prestaciones",
+    mensaje: "**Aguinaldo** (Decreto 76-78):\nEquivale a un salario mensual. Se paga 50 % en la primera quincena de diciembre y 50 % en enero.\n\n**Bono 14** (Decreto 42-92):\nEquivale también a un salario mensual. Se paga íntegramente antes del 15 de julio.\n\nAmbas prestaciones son proporcionales al tiempo trabajado si no se ha cumplido el año completo.",
+  },
+  laboral_despido: {
+    id: "laboral_despido",
+    mensaje: "El **despido injustificado** obliga al patrono a pagar (Art. 82 Código de Trabajo):\n\n• **Indemnización:** 1 mes de salario por cada año trabajado\n• **Vacaciones** proporcionales no gozadas\n• **Aguinaldo** proporcional\n• **Bono 14** proporcional\n\nEl trabajador tiene **30 días** para reclamar ante los Tribunales de Trabajo.",
+  },
+  laboral_salario: {
+    id: "laboral_salario",
+    mensaje: "El **salario mínimo** en Guatemala lo fija el **Organismo Ejecutivo** mediante Acuerdo Gubernativo, a propuesta de la Comisión Nacional del Salario (Art. 113 Código de Trabajo).\n\nSe actualiza anualmente (vigencia desde el 1 de enero) y existen tarifas diferenciadas para actividades agrícolas, no agrícolas y exportación/maquila.",
+  },
+  info_mercantil: {
+    id: "info_mercantil",
+    mensaje: "El **Derecho Mercantil** regula las actividades comerciales (Código de Comercio, Decreto 2-70).\n\nReconoce 5 tipos de sociedades: colectiva, en comandita simple, de responsabilidad limitada, anónima (S.A.) y en comandita por acciones. También regula títulos de crédito: cheque, letra de cambio y pagaré.",
+  },
+  info_administrativo: {
+    id: "info_administrativo",
+    mensaje: "El **Derecho Administrativo** regula la organización y actuación del Estado frente a los ciudadanos.\n\nFuentes principales: Constitución, Ley del Organismo Ejecutivo y Ley de lo Contencioso Administrativo. Los recursos frente a actos administrativos son la revocatoria, la reposición y el contencioso-administrativo.",
+  },
+
+  // ── EXÁMENES Y CARRERA ────────────────────────────────────────────────────
+  menu_examenes: {
+    id: "menu_examenes",
+    mensaje: "¿Qué información necesitas sobre tu carrera?",
+    opciones: [
+      { texto: "Temas del examen privado",      siguiente: "examenes_temas" },
+      { texto: "Cómo iniciar mi tesis",          siguiente: "examenes_tesis" },
+      { texto: "Recomendaciones de estudio",     siguiente: "examenes_recomendaciones" },
+      { texto: "Fuentes del Derecho",            siguiente: "examenes_fuentes" },
+    ],
+  },
+  examenes_temas: {
+    id: "examenes_temas",
+    mensaje: "**Temas frecuentes en el examen privado de Derecho en Guatemala:**\n\n• Derecho Constitucional y garantías\n• Derecho Penal: teoría del delito y tipos penales\n• Derecho Civil: contratos, familia y sucesiones\n• Derecho Procesal Civil y Penal\n• Derecho Administrativo y Municipal\n• Derecho Laboral y Seguridad Social\n• Derecho Mercantil\n• Derecho Internacional Público\n\nRevisa el reglamento de tu facultad, los temas pueden variar.",
+  },
+  examenes_tesis: {
+    id: "examenes_tesis",
+    mensaje: "**Pasos para iniciar tu tesis de Derecho en Guatemala:**\n\n1. Elige un tema de investigación jurídica viable y relevante\n2. Formula el problema, objetivos e hipótesis\n3. Presenta el protocolo ante tu asesor o unidad de tesis\n4. Desarrolla el marco teórico con doctrina, ley y jurisprudencia\n5. Aplica metodología jurídica (dogmática, comparada, empírica)\n6. Redacta conclusiones y recomendaciones\n7. Somételo a revisión antes del examen\n\nConsulta siempre el reglamento de graduación de tu facultad.",
+  },
+  examenes_recomendaciones: {
+    id: "examenes_recomendaciones",
+    mensaje: "**Recomendaciones para estudiar Derecho guatemalteco:**\n\n• Estudia las leyes directamente, no solo resúmenes\n• Relaciona cada norma con la Constitución como norma suprema\n• Practica con jurisprudencia de la CC y la CSJ\n• Usa el ConstituQuiz de Juridia para reforzar conceptos\n• Forma grupos de estudio y simula exámenes orales\n• Revisa los cursos disponibles en la plataforma para cada materia",
+  },
+  examenes_fuentes: {
+    id: "examenes_fuentes",
+    mensaje: "**Fuentes del Derecho guatemalteco** (Art. 2 Ley del Organismo Judicial):\n\n• **Constitución:** norma suprema, prima sobre cualquier otra\n• **Leyes y disposiciones gubernativas:** decretos, reglamentos\n• **Tratados internacionales:** equiparados a leyes ordinarias (salvo DDHH)\n• **Costumbre:** válida solo si la ley la reconoce\n• **Doctrina:** opinión de juristas, fuente auxiliar de interpretación\n• **Jurisprudencia:** sentencias reiteradas de la CC y CSJ",
+  },
+
+  // ── GARANTÍAS CONSTITUCIONALES ────────────────────────────────────────────
+  menu_garantias: {
+    id: "menu_garantias",
+    mensaje: "Las garantías constitucionales protegen tus derechos fundamentales. ¿Cuál deseas conocer?",
+    opciones: [
+      { texto: "El amparo",              siguiente: "garantias_amparo" },
+      { texto: "El habeas corpus",        siguiente: "garantias_habeas" },
+      { texto: "La nulidad de actos",     siguiente: "garantias_nulidad" },
+      { texto: "La prescripción",         siguiente: "garantias_prescripcion" },
+      { texto: "La inconstitucionalidad", siguiente: "garantias_inconstitucionalidad" },
+    ],
+  },
+  garantias_amparo: {
+    id: "garantias_amparo",
+    mensaje: "El **amparo** protege a las personas contra actos arbitrarios del Estado o particulares que violen derechos fundamentales (Decreto 1-86).\n\n• Se interpone ante cualquier tribunal con jurisdicción en el lugar\n• La CC conoce en apelación los de mayor trascendencia\n• **Suspende provisionalmente** el acto reclamado mientras se resuelve\n• No tiene costo y puede presentarlo cualquier persona afectada",
+  },
+  garantias_habeas: {
+    id: "garantias_habeas",
+    mensaje: "El **habeas corpus** (exhibición personal) protege la libertad física.\n\n**Procede cuando:**\n• Una persona es detenida ilegalmente o sin orden judicial\n• La detención supera el plazo legal (6 horas para investigar)\n• El detenido se encuentra en paradero desconocido\n\nLo conoce la **Corte Suprema de Justicia**. Es gratuito, urgente y el juez debe resolver en **24 horas**.",
+  },
+  garantias_nulidad: {
+    id: "garantias_nulidad",
+    mensaje: "La **nulidad** es la invalidez de un acto jurídico:\n\n• **Absoluta:** viola el orden público. No puede sanearse; cualquier persona puede alegarla en cualquier tiempo (ej. objeto ilícito, incapacidad absoluta).\n\n• **Relativa:** puede convalidarse. Solo la alega el perjudicado y tiene plazo para reclamarla (ej. vicios del consentimiento, incapacidad relativa).\n\nRegulada a partir del Art. 1301 del Código Civil.",
+  },
+  garantias_prescripcion: {
+    id: "garantias_prescripcion",
+    mensaje: "La **prescripción** extingue derechos por el paso del tiempo:\n\n• **Adquisitiva (usucapión):** se adquiere la propiedad de un bien por posesión prolongada, pacífica y de buena fe.\n\n• **Extintiva:** se pierde la acción legal para reclamar un derecho por no ejercerla en el plazo fijado por ley.\n\nLos plazos varían: 2, 5, 10 o hasta 20 años según el tipo de acción en el Código Civil.",
+  },
+  garantias_inconstitucionalidad: {
+    id: "garantias_inconstitucionalidad",
+    mensaje: "La **inconstitucionalidad** es el mecanismo para expulsar del ordenamiento jurídico normas que contraríen la Constitución.\n\n• **General:** cualquier persona con auxilio de abogado la plantea ante la CC. Si se declara, la norma queda sin vigencia.\n\n• **En caso concreto:** se plantea en un proceso judicial en curso. Solo inaplica la norma para ese caso específico.\n\nLa conoce la **Corte de Constitucionalidad (CC)**.",
+  },
+
+  // ── PROCESO PENAL ─────────────────────────────────────────────────────────
+  menu_proceso_penal: {
+    id: "menu_proceso_penal",
+    mensaje: "El proceso penal se rige por el Código Procesal Penal (Decreto 51-92). ¿Qué aspecto deseas conocer?",
+    opciones: [
+      { texto: "Etapas del proceso penal",   siguiente: "penal_etapas" },
+      { texto: "Criterio de oportunidad",    siguiente: "penal_criterio" },
+      { texto: "Demanda vs. denuncia",        siguiente: "penal_diferencia" },
+      { texto: "Prisión preventiva",          siguiente: "penal_prision" },
+      { texto: "Medidas desjudicializadoras", siguiente: "penal_desjudicializadoras" },
+    ],
+  },
+  penal_etapas: {
+    id: "penal_etapas",
+    mensaje: "**Etapas del proceso penal guatemalteco** (CPP, Decreto 51-92):\n\n1. **Preparatoria:** Investigación del MP con control del juez contralor\n2. **Intermedia:** El juez decide si hay mérito para llevar el caso a juicio o dicta sobreseimiento\n3. **Debate oral y público:** El Tribunal de Sentencia escucha pruebas y dicta sentencia\n4. **Impugnaciones:** Apelación especial, casación o revisión ante tribunales superiores",
+  },
+  penal_criterio: {
+    id: "penal_criterio",
+    mensaje: "El **criterio de oportunidad** (Art. 25 CPP) permite al MP, con autorización judicial, no ejercitar la acción penal en delitos de menor impacto social.\n\n**Requisitos:**\n• El delito no debe tener pena mínima mayor de 5 años\n• El sindicado debe reparar el daño a la víctima\n• No aplica en delitos contra el Estado o corrupción\n\nSi el sindicado incumple lo pactado, se reactiva la persecución penal.",
+  },
+  penal_diferencia: {
+    id: "penal_diferencia",
+    mensaje: "**Demanda vs. Denuncia:**\n\n**Demanda** (materia civil/laboral):\n• Acto procesal que inicia un juicio entre partes\n• Exige un derecho subjetivo (pago, divorcio, indemnización)\n• Se tramita ante juez civil, familiar o laboral\n\n**Denuncia** (materia penal):\n• Comunicación al MP o PNC sobre un delito\n• No inicia directamente el juicio; el MP investiga\n• Puede presentarla cualquier persona",
+  },
+  penal_prision: {
+    id: "penal_prision",
+    mensaje: "La **prisión preventiva** es una medida cautelar, no una pena.\n\n**Plazos máximos (Art. 268 CPP):**\n• Máximo **1 año** de duración\n• Con prórroga justificada: hasta **2 años** en casos complejos\n• Vencido el plazo sin sentencia: el juez debe otorgar medidas sustitutivas\n\n**Medidas sustitutivas:** arresto domiciliario, caución económica, prohibición de salir del país o presentación periódica ante el juzgado.",
+  },
+  penal_desjudicializadoras: {
+    id: "penal_desjudicializadoras",
+    mensaje: "Las **medidas desjudicializadoras** evitan llegar al juicio oral (Arts. 25-27 CPP):\n\n• **Criterio de oportunidad:** el MP no ejerce la acción si el sindicado repara el daño\n• **Suspensión condicional:** el proceso se suspende hasta 5 años si el imputado cumple condiciones; al cumplirlas se dicta sobreseimiento\n• **Mediación:** las partes llegan a un acuerdo con la ayuda de un facilitador\n• **Conversión:** la acción pública se convierte en privada en ciertos delitos",
+  },
+
+  // ── CONTRATOS Y OBLIGACIONES ──────────────────────────────────────────────
+  menu_contratos: {
+    id: "menu_contratos",
+    mensaje: "El Código Civil (Decreto-Ley 106) regula contratos y obligaciones. ¿Qué deseas saber?",
+    opciones: [
+      { texto: "¿Qué es un contrato?",        siguiente: "civil_contrato" },
+      { texto: "Vicios del consentimiento",   siguiente: "civil_vicios" },
+      { texto: "El recurso de apelación",     siguiente: "civil_apelacion" },
+      { texto: "La jurisprudencia",           siguiente: "civil_jurisprudencia" },
+      { texto: "Tipos de contratos",          siguiente: "civil_tipos" },
+    ],
+  },
+  civil_contrato: {
+    id: "civil_contrato",
+    mensaje: "Un **contrato** es el acuerdo de voluntades entre dos o más personas que crea, modifica o extingue derechos y obligaciones (Art. 1517 Código Civil).\n\n**Elementos esenciales:**\n• **Consentimiento:** voluntad libre y consciente de las partes\n• **Objeto lícito:** la prestación debe ser posible y legal\n• **Causa lícita:** la motivación no debe contravenir la ley\n• **Capacidad:** las partes deben ser mayores de edad y no declaradas incapaces",
+  },
+  civil_vicios: {
+    id: "civil_vicios",
+    mensaje: "Los **vicios del consentimiento** afectan la validez del contrato y pueden provocar nulidad relativa:\n\n• **Error:** falsa representación de la realidad que llevó a contratar\n• **Dolo:** maniobras engañosas deliberadas para obtener el consentimiento\n• **Intimidación:** amenaza grave e injusta que priva de libertad al contratante\n\nQuien los sufre puede pedir la anulación del contrato ante juez civil.",
+  },
+  civil_apelacion: {
+    id: "civil_apelacion",
+    mensaje: "La **apelación** es el recurso ordinario más utilizado en Guatemala.\n\n• Procede contra sentencias definitivas de primera instancia y autos que pongan fin al proceso\n• Debe interponerse dentro de **3 días** (civil) o **3 días** (penal) de notificada la resolución\n• Las **Salas de Apelaciones** revisan la legalidad y el fondo del asunto\n• No se admiten pruebas nuevas salvo excepciones expresas de la ley",
+  },
+  civil_jurisprudencia: {
+    id: "civil_jurisprudencia",
+    mensaje: "La **jurisprudencia** es el conjunto de sentencias reiteradas de tribunales superiores que sirven como fuente de interpretación.\n\n**En Guatemala:**\n• La **Corte de Constitucionalidad (CC)** emite jurisprudencia constitucional vinculante para todos los tribunales\n• La **Corte Suprema de Justicia (CSJ)** fija doctrina legal en casación\n• Se consulta en el portal oficial del Organismo Judicial: organismoJudicial.gob.gt",
+  },
+  civil_tipos: {
+    id: "civil_tipos",
+    mensaje: "**Tipos de contratos más importantes en Guatemala:**\n\n• **Compraventa:** transfiere la propiedad de un bien a cambio de precio\n• **Arrendamiento:** cesión del uso de un bien por tiempo y precio determinado\n• **Mandato:** encargo de representación o gestión de negocios\n• **Préstamo (mutuo):** entrega de dinero u otras cosas fungibles con obligación de restituir\n• **Donación:** transmisión gratuita de bienes\n• **Sociedad civil:** dos o más personas aportan para repartir ganancias",
+  },
 };
 
-function buscarRespuesta(input: string): string {
-  const texto = input.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
-  for (const item of BASE) {
-    if (item.keywords.some((kw) => texto.includes(kw.normalize("NFD").replace(/[̀-ͯ]/g, "")))) {
-      return item.respuesta;
-    }
-  }
-  return FALLBACK;
-}
+const MSG_FIN =
+  "Si tienes alguna otra duda o necesitas apoyo adicional, puedes escribirnos y con gusto te ayudaremos. 😊";
+
+// ─────────────────────────────────────────────────────────────────────────────
 
 function BotTexto({ texto }: { texto: string }) {
   const partes = texto.split(/\*\*(.*?)\*\*/g);
@@ -137,63 +243,80 @@ function BotTexto({ texto }: { texto: string }) {
 
 export default function ChatBot() {
   const [abierto, setAbierto] = useState(false);
-  const [mensajes, setMensajes] = useState<Mensaje[]>([BIENVENIDA]);
-  const [input, setInput] = useState("");
+  const [mensajes, setMensajes] = useState<Mensaje[]>([]);
+  const [nodoActual, setNodoActual] = useState("inicio");
   const [escribiendo, setEscribiendo] = useState(false);
+  const [finalizado, setFinalizado] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  let nextId = useRef(1);
+  const nextId = useRef(1);
+
+  useEffect(() => {
+    const nodo = ARBOL["inicio"];
+    setMensajes([{ id: nextId.current++, tipo: "bot", texto: nodo.mensaje }]);
+  }, []);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [mensajes, escribiendo]);
 
-  useEffect(() => {
-    if (abierto) setTimeout(() => inputRef.current?.focus(), 300);
-  }, [abierto]);
+  const seleccionarOpcion = (opcion: Opcion) => {
+    if (escribiendo) return;
 
-  const enviar = () => {
-    const texto = input.trim();
-    if (!texto) return;
-
-    const msgUsuario: Mensaje = { id: nextId.current++, tipo: "usuario", texto };
+    const msgUsuario: Mensaje = {
+      id: nextId.current++,
+      tipo: "usuario",
+      texto: opcion.texto,
+    };
     setMensajes((prev) => [...prev, msgUsuario]);
-    setInput("");
     setEscribiendo(true);
 
     setTimeout(() => {
-      const respuesta = buscarRespuesta(texto);
+      const siguienteNodo = ARBOL[opcion.siguiente];
       setMensajes((prev) => [
         ...prev,
-        { id: nextId.current++, tipo: "bot", texto: respuesta },
+        { id: nextId.current++, tipo: "bot", texto: siguienteNodo.mensaje },
       ]);
+      setNodoActual(opcion.siguiente);
       setEscribiendo(false);
+
+      if (!siguienteNodo.opciones) {
+        setTimeout(() => {
+          setMensajes((prev) => [
+            ...prev,
+            { id: nextId.current++, tipo: "bot", texto: MSG_FIN },
+          ]);
+          setFinalizado(true);
+        }, 500);
+      }
     }, 700);
   };
 
-  const handleKey = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      enviar();
-    }
+  const reiniciar = () => {
+    nextId.current = 1;
+    setNodoActual("inicio");
+    setFinalizado(false);
+    setEscribiendo(false);
+    const nodo = ARBOL["inicio"];
+    setMensajes([{ id: nextId.current++, tipo: "bot", texto: nodo.mensaje }]);
   };
 
-  const sugerencias = [
-    "¿Qué es el amparo?",
-    "¿Qué es jurisprudencia?",
-    "Diferencia demanda y denuncia",
-    "Temas para examen privado",
-  ];
+  const nodo = ARBOL[nodoActual];
+  const opcionesActuales = !finalizado && !escribiendo ? (nodo?.opciones ?? []) : [];
 
   return (
     <>
-      {/* Chat window */}
+      {/* ── Chat window ─────────────────────────────────────────────────── */}
       <div
         className={`fixed bottom-24 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 transition-all duration-300 origin-bottom-right ${
-          abierto ? "scale-100 opacity-100 pointer-events-auto" : "scale-90 opacity-0 pointer-events-none"
+          abierto
+            ? "scale-100 opacity-100 pointer-events-auto"
+            : "scale-90 opacity-0 pointer-events-none"
         }`}
       >
-        <div className="bg-white rounded-2xl shadow-2xl border border-[#9ac1e2] flex flex-col overflow-hidden" style={{ maxHeight: "75vh" }}>
+        <div
+          className="bg-white rounded-2xl shadow-2xl border border-[#9ac1e2] flex flex-col overflow-hidden"
+          style={{ maxHeight: "80vh" }}
+        >
           {/* Header */}
           <div className="bg-gradient-to-r from-[#2a628f] to-[#18435a] px-4 py-3 flex items-center justify-between flex-shrink-0">
             <div className="flex items-center gap-2.5">
@@ -221,24 +344,28 @@ export default function ChatBot() {
             {mensajes.map((msg) => (
               <div
                 key={msg.id}
-                className={`flex items-end gap-2 ${msg.tipo === "usuario" ? "flex-row-reverse" : "flex-row"}`}
+                className={`flex items-end gap-2 ${
+                  msg.tipo === "usuario" ? "flex-row-reverse" : "flex-row"
+                }`}
               >
-                {/* Avatar */}
-                <div className={`w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center ${
-                  msg.tipo === "bot" ? "bg-[#2a628f]" : "bg-[#13293d]"
-                }`}>
-                  {msg.tipo === "bot"
-                    ? <Bot className="h-3.5 w-3.5 text-white" />
-                    : <User className="h-3.5 w-3.5 text-white" />
-                  }
+                <div
+                  className={`w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center ${
+                    msg.tipo === "bot" ? "bg-[#2a628f]" : "bg-[#13293d]"
+                  }`}
+                >
+                  {msg.tipo === "bot" ? (
+                    <Bot className="h-3.5 w-3.5 text-white" />
+                  ) : (
+                    <User className="h-3.5 w-3.5 text-white" />
+                  )}
                 </div>
-
-                {/* Bubble */}
-                <div className={`max-w-[80%] px-3.5 py-2.5 rounded-2xl ${
-                  msg.tipo === "bot"
-                    ? "bg-white border border-[#d8e9f5] text-[#13293d] rounded-bl-sm"
-                    : "bg-[#2a628f] text-white rounded-br-sm"
-                }`}>
+                <div
+                  className={`max-w-[82%] px-3.5 py-2.5 rounded-2xl ${
+                    msg.tipo === "bot"
+                      ? "bg-white border border-[#d8e9f5] text-[#13293d] rounded-bl-sm"
+                      : "bg-[#2a628f] text-white rounded-br-sm"
+                  }`}
+                >
                   <BotTexto texto={msg.texto} />
                 </div>
               </div>
@@ -264,55 +391,44 @@ export default function ChatBot() {
               </div>
             )}
 
-            {/* Sugerencias — solo al inicio */}
-            {mensajes.length === 1 && !escribiendo && (
-              <div className="pt-1">
-                <p className="text-xs text-[#9ac1e2] mb-2 px-1">Preguntas frecuentes:</p>
-                <div className="flex flex-wrap gap-2">
-                  {sugerencias.map((s) => (
-                    <button
-                      key={s}
-                      onClick={() => { setInput(s); setTimeout(enviar, 50); }}
-                      className="text-xs bg-white border border-[#9ac1e2] text-[#2a628f] px-3 py-1.5 rounded-full hover:bg-[#d8e9f5] transition-colors"
-                    >
-                      {s}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
             <div ref={bottomRef} />
           </div>
 
-          {/* Input */}
-          <div className="p-3 border-t border-[#d8e9f5] bg-white flex-shrink-0">
-            <div className="flex items-center gap-2">
-              <input
-                ref={inputRef}
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={handleKey}
-                placeholder="Escribe tu consulta..."
-                className="flex-1 px-3.5 py-2.5 text-sm rounded-xl border border-[#9ac1e2] focus:outline-none focus:ring-2 focus:ring-[#2a628f]/30 focus:border-[#2a628f] bg-[#f8fbfe] text-[#13293d] placeholder-[#9ac1e2]"
-              />
-              <button
-                onClick={enviar}
-                disabled={!input.trim() || escribiendo}
-                className="w-10 h-10 rounded-xl bg-[#2a628f] text-white flex items-center justify-center hover:bg-[#18435a] disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex-shrink-0"
-              >
-                <Send className="h-4 w-4" />
-              </button>
-            </div>
-            <p className="text-center text-xs text-[#9ac1e2] mt-2">
+          {/* Options panel */}
+          <div className="border-t border-[#d8e9f5] bg-white flex-shrink-0">
+            {finalizado ? (
+              <div className="p-3">
+                <button
+                  onClick={reiniciar}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#2a628f] text-white text-sm font-medium hover:bg-[#18435a] transition-colors"
+                >
+                  <RotateCcw className="h-4 w-4" />
+                  Volver al inicio
+                </button>
+              </div>
+            ) : opcionesActuales.length > 0 ? (
+              <div className="p-3 flex flex-col gap-2 max-h-52 overflow-y-auto">
+                {opcionesActuales.map((op) => (
+                  <button
+                    key={op.texto}
+                    onClick={() => seleccionarOpcion(op)}
+                    disabled={escribiendo}
+                    className="w-full text-left px-4 py-2.5 rounded-xl border border-[#9ac1e2] text-[#2a628f] text-sm font-medium hover:bg-[#d8e9f5] hover:border-[#2a628f] transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    {op.texto}
+                  </button>
+                ))}
+              </div>
+            ) : null}
+
+            <p className="text-center text-xs text-[#9ac1e2] pb-3 px-3">
               Asistente informativo · No reemplaza asesoría legal
             </p>
           </div>
         </div>
       </div>
 
-      {/* FAB button */}
+      {/* ── FAB button ──────────────────────────────────────────────────── */}
       <button
         onClick={() => setAbierto(!abierto)}
         className={`fixed bottom-6 right-4 sm:right-6 z-50 w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 ${
@@ -327,8 +443,6 @@ export default function ChatBot() {
         ) : (
           <MessageCircle className="h-6 w-6 text-white" />
         )}
-
-        {/* Ping animado para llamar atención */}
         {!abierto && (
           <span className="absolute top-0 right-0 w-3 h-3 bg-emerald-400 rounded-full border-2 border-white" />
         )}
