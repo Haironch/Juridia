@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Scale,
@@ -14,9 +14,43 @@ import {
 } from "lucide-react";
 import { useAuthStore } from "../../store/authStore";
 
+const HINT_KEY = "navMenuHintSeen";
+
 export default function Navbar() {
   const { isAuthenticated, user, logout } = useAuthStore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Attention dot: visible until user taps the button
+  const [showDot, setShowDot] = useState(false);
+  // Nudge animation: fires once after a short delay
+  const [nudgeActive, setNudgeActive] = useState(false);
+
+  useEffect(() => {
+    // Only on mobile viewports and only once per session
+    if (window.innerWidth >= 768) return;
+    if (sessionStorage.getItem(HINT_KEY)) return;
+
+    // Show dot immediately
+    setShowDot(true);
+
+    // Fire the nudge animation after 2 s — user has had time to orient
+    const nudgeTimer = setTimeout(() => {
+      setNudgeActive(true);
+      // Remove class after animation finishes so it can't re-trigger
+      setTimeout(() => setNudgeActive(false), 750);
+    }, 2000);
+
+    return () => clearTimeout(nudgeTimer);
+  }, []);
+
+  const handleMobileMenuToggle = () => {
+    setMobileMenuOpen((prev) => !prev);
+    // Dismiss hint permanently on first interaction
+    if (showDot) {
+      setShowDot(false);
+      sessionStorage.setItem(HINT_KEY, "true");
+    }
+  };
 
   return (
     <nav className="bg-[#89c2d9] border-b border-[#67a2d3]">
@@ -113,13 +147,22 @@ export default function Navbar() {
           {/* Mobile menu button */}
           <div className="flex items-center md:hidden">
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-[#16324f] hover:text-[#13293d] hover:bg-[#67a2d3] transition-colors"
+              onClick={handleMobileMenuToggle}
+              className={`relative inline-flex items-center justify-center p-2 rounded-md text-[#16324f] hover:text-[#13293d] hover:bg-[#67a2d3] transition-colors ${nudgeActive ? "animate-nav-nudge" : ""}`}
+              aria-label="Abrir menú de navegación"
             >
               {mobileMenuOpen ? (
                 <X className="h-6 w-6" />
               ) : (
                 <Menu className="h-6 w-6" />
+              )}
+
+              {/* Attention dot — shown once per session until first tap */}
+              {showDot && !mobileMenuOpen && (
+                <span className="absolute top-1 right-1 flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2a628f] opacity-60" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#18435a]" />
+                </span>
               )}
             </button>
           </div>
