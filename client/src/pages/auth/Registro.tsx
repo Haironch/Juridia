@@ -14,8 +14,7 @@ export default function Registro() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí irá la lógica de registro
-    console.log('Registro:', formData);
+    // Aquí irá la lógica de registro (Google OAuth)
   };
 
   return (

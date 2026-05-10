@@ -1,10 +1,18 @@
 import { Router, Request, Response } from "express";
+import { z } from "zod";
 import { db } from "../config/database";
 
 const router = Router();
+const isProd = process.env.NODE_ENV === "production";
+
+const safeError = (err: unknown) =>
+  isProd ? "Error interno del servidor" : (err as Error).message;
+
+// Valida que :id sea un UUID v4 — rechaza inyecciones y valores malformados
+const idSchema = z.string().uuid({ message: "ID de curso inválido" });
 
 // GET /api/cursos — lista todos los publicados
-router.get("/", async (req: Request, res: Response) => {
+router.get("/", async (_req: Request, res: Response) => {
   try {
     const result = await db.execute(`
       SELECT
@@ -21,16 +29,23 @@ router.get("/", async (req: Request, res: Response) => {
     `);
 
     res.json({ ok: true, data: result.rows });
-  } catch (error: any) {
-    res.status(500).json({ ok: false, error: error.message });
+  } catch (err) {
+    console.error("[GET /cursos]", err);
+    res.status(500).json({ ok: false, error: safeError(err) });
   }
 });
 
 // GET /api/cursos/:id — detalle con módulos
 router.get("/:id", async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
+  const parsed = idSchema.safeParse(req.params.id);
+  if (!parsed.success) {
+    res.status(400).json({ ok: false, error: parsed.error.issues[0].message });
+    return;
+  }
 
+  const id = parsed.data;
+
+  try {
     const cursoResult = await db.execute({
       sql: `
         SELECT
@@ -62,13 +77,11 @@ router.get("/:id", async (req: Request, res: Response) => {
 
     res.json({
       ok: true,
-      data: {
-        ...cursoResult.rows[0],
-        modulos: modulosResult.rows,
-      },
+      data: { ...cursoResult.rows[0], modulos: modulosResult.rows },
     });
-  } catch (error: any) {
-    res.status(500).json({ ok: false, error: error.message });
+  } catch (err) {
+    console.error("[GET /cursos/:id]", err);
+    res.status(500).json({ ok: false, error: safeError(err) });
   }
 });
 
