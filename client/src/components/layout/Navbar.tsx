@@ -4,7 +4,6 @@ import {
   Scale,
   BookOpen,
   LogIn,
-  UserPlus,
   Menu,
   X,
   MessageSquare,
@@ -109,13 +108,6 @@ export default function Navbar() {
             {!isAuthenticated ? (
               <>
                 <Link
-                  to="/registro"
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-[#2a628f] hover:bg-[#18435a] transition-colors"
-                >
-                  <UserPlus className="h-4 w-4 mr-1" />
-                  Registrarse
-                </Link>
-                <Link
                   to="/login"
                   className="inline-flex items-center px-4 py-2 text-sm font-medium text-[#16324f] hover:text-[#13293d] transition-colors"
                 >
@@ -219,14 +211,6 @@ export default function Navbar() {
           <div className="pt-4 pb-3 border-t border-[#67a2d3]">
             {!isAuthenticated ? (
               <div className="px-2 space-y-2">
-                <Link
-                  to="/registro"
-                  className="flex items-center px-3 py-2 rounded-md text-base font-medium text-white bg-[#2a628f] hover:bg-[#18435a] transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <UserPlus className="h-5 w-5 mr-2" />
-                  Registrarse
-                </Link>
                 <Link
                   to="/login"
                   className="flex items-center px-3 py-2 rounded-md text-base font-medium text-[#16324f] hover:text-[#13293d] hover:bg-[#67a2d3] transition-colors"
