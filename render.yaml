@@ -6,13 +6,5 @@ services:
     buildCommand: npm install && npm run build
     startCommand: npm start
     autoDeploy: true
-
-    envVars:
-      - key: NODE_ENV
-        value: production
-
-      # ── Estas las configuras manualmente en el dashboard de Render ──────────
-      # JWT_SECRET          → genera uno con: node -e "require('crypto').randomBytes(64).toString('hex')"
-      # TURSO_DATABASE_URL  → libsql://juridia-db-haironch.aws-us-east-1.turso.io
-      # TURSO_AUTH_TOKEN    → token de Turso
-      # ALLOWED_ORIGINS     → https://juridia-eta.vercel.app
+    # Las variables de entorno se gestionan manualmente en el dashboard de Render
+    # para evitar exponer secretos en el repositorio.
