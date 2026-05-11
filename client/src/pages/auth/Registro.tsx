@@ -1,21 +1,54 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { UserPlus, Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserPlus, Mail, Lock, User, Eye, EyeOff, AlertCircle } from 'lucide-react';
+import { useAuthStore } from '../../store/authStore';
 
 export default function Registro() {
+  const navigate = useNavigate();
+  const { registrar, isLoading, error, clearError } = useAuthStore();
   const [showPassword, setShowPassword] = useState(false);
+  const [localError, setLocalError] = useState('');
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Aquí irá la lógica de registro (Google OAuth)
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+    if (localError) setLocalError('');
+    if (error) clearError();
   };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLocalError('');
+
+    if (formData.password !== formData.confirmPassword) {
+      setLocalError('Las contraseñas no coinciden.');
+      return;
+    }
+    if (formData.password.length < 8) {
+      setLocalError('La contraseña debe tener al menos 8 caracteres.');
+      return;
+    }
+
+    try {
+      await registrar({
+        nombre: formData.nombre,
+        apellido: formData.apellido,
+        email: formData.email,
+        password: formData.password,
+      });
+      navigate('/inicio');
+    } catch {
+      // El error ya queda en el store, no hace falta hacer nada más
+    }
+  };
+
+  const displayError = localError || error;
 
   return (
     <div className="min-h-screen bg-[#d8e9f5] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -36,6 +69,14 @@ export default function Registro() {
             </p>
           </div>
 
+          {/* Error global */}
+          {displayError && (
+            <div className="mb-4 flex items-start gap-2 bg-red-50 border border-red-200 text-red-700 rounded-md px-4 py-3 text-sm">
+              <AlertCircle className="h-5 w-5 flex-shrink-0 mt-0.5" />
+              <span>{displayError}</span>
+            </div>
+          )}
+
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
@@ -50,7 +91,7 @@ export default function Registro() {
                     type="text"
                     required
                     value={formData.nombre}
-                    onChange={(e) => setFormData({...formData, nombre: e.target.value})}
+                    onChange={handleChange}
                     className="pl-10 w-full px-4 py-2 border border-[#9ac1e2] rounded-md focus:outline-none focus:ring-2 focus:ring-[#2a628f] text-[#13293d]"
                     placeholder="Juan"
                   />
@@ -68,7 +109,7 @@ export default function Registro() {
                     type="text"
                     required
                     value={formData.apellido}
-                    onChange={(e) => setFormData({...formData, apellido: e.target.value})}
+                    onChange={handleChange}
                     className="pl-10 w-full px-4 py-2 border border-[#9ac1e2] rounded-md focus:outline-none focus:ring-2 focus:ring-[#2a628f] text-[#13293d]"
                     placeholder="Pérez"
                   />
@@ -87,7 +128,7 @@ export default function Registro() {
                   type="email"
                   required
                   value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  onChange={handleChange}
                   className="pl-10 w-full px-4 py-2 border border-[#9ac1e2] rounded-md focus:outline-none focus:ring-2 focus:ring-[#2a628f] text-[#13293d]"
                   placeholder="correo@ejemplo.com"
                 />
@@ -102,12 +143,12 @@ export default function Registro() {
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#16324f]" />
                 <input
                   id="password"
-                  type={showPassword ? "text" : "password"}
+                  type={showPassword ? 'text' : 'password'}
                   required
                   value={formData.password}
-                  onChange={(e) => setFormData({...formData, password: e.target.value})}
+                  onChange={handleChange}
                   className="pl-10 pr-10 w-full px-4 py-2 border border-[#9ac1e2] rounded-md focus:outline-none focus:ring-2 focus:ring-[#2a628f] text-[#13293d]"
-                  placeholder="••••••••"
+                  placeholder="Mínimo 8 caracteres"
                 />
                 <button
                   type="button"
@@ -127,10 +168,10 @@ export default function Registro() {
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#16324f]" />
                 <input
                   id="confirmPassword"
-                  type={showPassword ? "text" : "password"}
+                  type={showPassword ? 'text' : 'password'}
                   required
                   value={formData.confirmPassword}
-                  onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
+                  onChange={handleChange}
                   className="pl-10 w-full px-4 py-2 border border-[#9ac1e2] rounded-md focus:outline-none focus:ring-2 focus:ring-[#2a628f] text-[#13293d]"
                   placeholder="••••••••"
                 />
@@ -139,9 +180,10 @@ export default function Registro() {
 
             <button
               type="submit"
-              className="w-full py-3 bg-[#2a628f] text-white rounded-md hover:bg-[#18435a] transition-colors font-medium text-lg"
+              disabled={isLoading}
+              className="w-full py-3 bg-[#2a628f] text-white rounded-md hover:bg-[#18435a] transition-colors font-medium text-lg disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              Crear cuenta gratuita
+              {isLoading ? 'Creando cuenta…' : 'Crear cuenta gratuita'}
             </button>
           </form>
 

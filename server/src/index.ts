@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import cursosRoutes from './routes/cursos.routes';
+import authRoutes from './routes/auth.routes';
 
 dotenv.config();
 
@@ -88,6 +89,7 @@ app.get('/health', (_req: Request, res: Response) => {
   res.json({ status: 'ok', message: 'Juridia API is running', timestamp: new Date().toISOString() });
 });
 
+app.use('/api/auth', authRoutes);
 app.use('/api/cursos', cursosRoutes);
 
 // ── 404 ───────────────────────────────────────────────────────────────────────

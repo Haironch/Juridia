@@ -11,6 +11,7 @@ import MaterialEstudio from "./pages/public/MaterialEstudio";
 import Premium from "./pages/public/Premium";
 import Progreso from "./pages/public/Progreso";
 import Registro from "./pages/auth/Registro";
+import Login from "./pages/auth/Login";
 import ConstituQuizHome from "./pages/quiz/ConstituQuizHome";
 import QuizStudyMode from "./pages/quiz/QuizStudyMode";
 import QuizPracticeMode from "./pages/quiz/QuizPracticeMode";
@@ -43,6 +44,7 @@ function App() {
               <Route path="/material" element={<MaterialEstudio />} />
               <Route path="/premium" element={<Premium />} />
               <Route path="/registro" element={<Registro />} />
+              <Route path="/login" element={<Login />} />
               <Route path="/progreso" element={<Progreso />} />
               <Route path="/constituquiz" element={<ConstituQuizHome />} />
               <Route path="/constituquiz/estudio/:temaId" element={<QuizStudyMode />} />

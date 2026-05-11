@@ -19,7 +19,7 @@ export default function Home() {
             </p>
             <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
               <Link
-                to="/constituquiz"
+                to="/registro"
                 className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-[#13293d] bg-white hover:bg-[#d8e9f5] transition-colors md:py-4 md:text-lg md:px-10"
               >
                 Comenzar Gratis

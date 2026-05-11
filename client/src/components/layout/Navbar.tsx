@@ -4,12 +4,15 @@ import {
   Scale,
   BookOpen,
   LogIn,
+  UserPlus,
+  LogOut,
   Menu,
   X,
   MessageSquare,
   FileText,
   Brain,
   BarChart2,
+  UserCircle,
 } from "lucide-react";
 import { useAuthStore } from "../../store/authStore";
 
@@ -104,9 +107,16 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-3">
             {!isAuthenticated ? (
               <>
+                <Link
+                  to="/registro"
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-[#2a628f] hover:bg-[#18435a] transition-colors"
+                >
+                  <UserPlus className="h-4 w-4 mr-1" />
+                  Registrarse
+                </Link>
                 <Link
                   to="/login"
                   className="inline-flex items-center px-4 py-2 text-sm font-medium text-[#16324f] hover:text-[#13293d] transition-colors"
@@ -117,20 +127,18 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <span className="text-sm text-[#16324f]">
-                  {user?.nombre || user?.email}
-                </span>
-                <Link
-                  to="/dashboard"
-                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-[#16324f] hover:text-[#13293d] transition-colors"
-                >
-                  Mi Panel
-                </Link>
+                <div className="flex items-center gap-2 text-sm text-[#16324f]">
+                  <UserCircle className="h-5 w-5 text-[#2a628f]" />
+                  <span className="font-medium text-[#13293d]">
+                    {user?.nombre ? `${user.nombre} ${user.apellido ?? ''}`.trim() : user?.email}
+                  </span>
+                </div>
                 <button
                   onClick={logout}
                   className="inline-flex items-center px-4 py-2 text-sm font-medium text-[#16324f] hover:text-red-600 transition-colors"
                 >
-                  Salir
+                  <LogOut className="h-4 w-4 mr-1" />
+                  Cerrar Sesión
                 </button>
               </>
             )}
@@ -212,6 +220,14 @@ export default function Navbar() {
             {!isAuthenticated ? (
               <div className="px-2 space-y-2">
                 <Link
+                  to="/registro"
+                  className="flex items-center px-3 py-2 rounded-md text-base font-medium text-white bg-[#2a628f] hover:bg-[#18435a] transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <UserPlus className="h-5 w-5 mr-2" />
+                  Registrarse
+                </Link>
+                <Link
                   to="/login"
                   className="flex items-center px-3 py-2 rounded-md text-base font-medium text-[#16324f] hover:text-[#13293d] hover:bg-[#67a2d3] transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
@@ -222,24 +238,16 @@ export default function Navbar() {
               </div>
             ) : (
               <div className="px-2 space-y-2">
-                <div className="px-3 py-2 text-base font-medium text-[#13293d]">
-                  {user?.nombre || user?.email}
+                <div className="flex items-center gap-2 px-3 py-2 text-base font-medium text-[#13293d]">
+                  <UserCircle className="h-5 w-5 text-[#2a628f]" />
+                  {user?.nombre ? `${user.nombre} ${user.apellido ?? ''}`.trim() : user?.email}
                 </div>
-                <Link
-                  to="/dashboard"
-                  className="flex items-center px-3 py-2 rounded-md text-base font-medium text-[#16324f] hover:text-[#13293d] hover:bg-[#67a2d3] transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Mi Panel
-                </Link>
                 <button
-                  onClick={() => {
-                    logout();
-                    setMobileMenuOpen(false);
-                  }}
+                  onClick={() => { logout(); setMobileMenuOpen(false); }}
                   className="w-full flex items-center px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-[#67a2d3] transition-colors"
                 >
-                  Salir
+                  <LogOut className="h-5 w-5 mr-2" />
+                  Cerrar Sesión
                 </button>
               </div>
             )}
