@@ -52,6 +52,7 @@ export interface QuizTema {
   icono: string;
   totalPreguntas: number;
   preguntas: QuizPregunta[];
+  categoria?: string;
 }
 
 export interface QuizAttempt {

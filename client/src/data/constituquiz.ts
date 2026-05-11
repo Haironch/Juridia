@@ -6,6 +6,7 @@ export const quizTemas: QuizTema[] = [
     tema: "Derecho Constitucional",
     descripcion: "Preguntas sobre la Constitucion Politica de Guatemala, sus principios y garantias fundamentales.",
     icono: "Scale",
+    categoria: "Constitucional",
     totalPreguntas: 5,
     preguntas: [
       {
@@ -70,6 +71,7 @@ export const quizTemas: QuizTema[] = [
     tema: "Derecho Penal Guatemalteco",
     descripcion: "Conceptos clave del Código Penal (Decreto 17-73): principios, delitos, sanciones y participación criminal.",
     icono: "Shield",
+    categoria: "Penal",
     totalPreguntas: 5,
     preguntas: [
       {
@@ -134,6 +136,7 @@ export const quizTemas: QuizTema[] = [
     tema: "Derecho Civil — Obligaciones y Contratos",
     descripcion: "Fundamentos del Código Civil guatemalteco: obligaciones, contratos, vicios del consentimiento y prescripción.",
     icono: "FileSignature",
+    categoria: "Civil",
     totalPreguntas: 5,
     preguntas: [
       {

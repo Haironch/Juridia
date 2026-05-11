@@ -1,11 +1,18 @@
-import { Brain, TrendingUp, Target, Award } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Brain, TrendingUp, Target, Award, Search, X } from 'lucide-react';
 import { quizTemas } from '../../data/constituquiz';
 import { useQuizStore } from '../../store/quizStore';
 import TopicCard from '../../components/quiz/TopicCard';
 
+// Build the unique category list from data (+ "Todos")
+const CATEGORIAS = ["Todos", ...Array.from(new Set(quizTemas.map(t => t.categoria ?? "General")))];
+
 export default function ConstituQuizHome() {
   const { getProgressByTema, getAllProgress } = useQuizStore();
   const allProgress = getAllProgress();
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategoria, setSelectedCategoria] = useState("Todos");
 
   const totalIntentos = allProgress.reduce((sum, p) => sum + p.intentos, 0);
   const promedioGeneral = allProgress.length > 0
@@ -14,6 +21,32 @@ export default function ConstituQuizHome() {
   const mejorPuntajeGeneral = allProgress.length > 0
     ? Math.max(...allProgress.map(p => p.mejorPuntaje))
     : 0;
+
+  const temasFiltrados = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    return quizTemas.filter(tema => {
+      // Category filter
+      const matchCategoria =
+        selectedCategoria === "Todos" ||
+        (tema.categoria ?? "General") === selectedCategoria;
+
+      // Search: match tema name, descripcion, or any question text
+      const matchSearch =
+        q === "" ||
+        tema.tema.toLowerCase().includes(q) ||
+        tema.descripcion.toLowerCase().includes(q) ||
+        tema.preguntas.some(p => p.pregunta.toLowerCase().includes(q));
+
+      return matchCategoria && matchSearch;
+    });
+  }, [searchQuery, selectedCategoria]);
+
+  const clearFilters = () => {
+    setSearchQuery("");
+    setSelectedCategoria("Todos");
+  };
+
+  const filtersActive = searchQuery.trim() !== "" || selectedCategoria !== "Todos";
 
   return (
     <div className="min-h-screen bg-[#d8e9f5]">
@@ -27,7 +60,7 @@ export default function ConstituQuizHome() {
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">ConstituQuiz</h1>
           <p className="text-lg text-[#b2d3ea] max-w-2xl mx-auto">
-            Pon a prueba tus conocimientos sobre la Constitucion Politica de Guatemala.
+            Pon a prueba tus conocimientos sobre el Derecho guatemalteco.
             Estudia con tarjetas y practica con quizzes interactivos.
           </p>
         </div>
@@ -67,28 +100,98 @@ export default function ConstituQuizHome() {
           </div>
         )}
 
-        {/* Topics Section */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-[#13293d] mb-2">Temas disponibles</h2>
-          <p className="text-[#16324f]">Selecciona un tema para estudiar o practicar</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {quizTemas.map((tema) => (
-            <TopicCard
-              key={tema.id}
-              tema={tema}
-              progress={getProgressByTema(tema.id)}
+        {/* Search + Filter Bar */}
+        <div className="mb-8 space-y-4">
+          {/* Search input */}
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#67a2d3] pointer-events-none" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              placeholder="Buscar quiz por nombre, descripción o pregunta…"
+              className="w-full pl-12 pr-10 py-3 rounded-xl border border-[#9ac1e2] bg-white text-[#13293d] placeholder-[#9ac1e2] focus:outline-none focus:ring-2 focus:ring-[#2a628f] focus:border-transparent shadow-sm text-sm"
             />
-          ))}
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#9ac1e2] hover:text-[#2a628f] transition-colors"
+                aria-label="Limpiar búsqueda"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            )}
+          </div>
+
+          {/* Category filter chips */}
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-sm font-medium text-[#16324f] mr-1">Filtrar por:</span>
+            {CATEGORIAS.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategoria(cat)}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${
+                  selectedCategoria === cat
+                    ? "bg-[#2a628f] text-white border-[#2a628f] shadow-sm"
+                    : "bg-white text-[#2a628f] border-[#9ac1e2] hover:border-[#2a628f] hover:bg-[#eaf4fb]"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+
+            {filtersActive && (
+              <button
+                onClick={clearFilters}
+                className="ml-auto flex items-center gap-1 text-sm text-[#2a628f] hover:text-[#13293d] font-medium transition-colors"
+              >
+                <X className="h-3.5 w-3.5" />
+                Limpiar filtros
+              </button>
+            )}
+          </div>
         </div>
 
-        {/* Empty state if no topics */}
-        {quizTemas.length === 0 && (
-          <div className="text-center py-16">
-            <Brain className="h-16 w-16 text-[#9ac1e2] mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-[#13293d] mb-2">Proximamente</h3>
-            <p className="text-[#67a2d3]">Estamos preparando nuevos quizzes para ti.</p>
+        {/* Topics heading with count */}
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-[#13293d] mb-1">Temas disponibles</h2>
+          <p className="text-[#16324f] text-sm">
+            {temasFiltrados.length === quizTemas.length
+              ? `${quizTemas.length} temas — selecciona uno para estudiar o practicar`
+              : `${temasFiltrados.length} de ${quizTemas.length} temas encontrados`}
+          </p>
+        </div>
+
+        {/* Topics grid */}
+        {temasFiltrados.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {temasFiltrados.map((tema) => (
+              <TopicCard
+                key={tema.id}
+                tema={tema}
+                progress={getProgressByTema(tema.id)}
+              />
+            ))}
+          </div>
+        ) : (
+          /* Empty state when search/filter yields no results */
+          <div className="text-center py-16 bg-white rounded-2xl border border-[#9ac1e2] shadow-sm">
+            <Search className="h-14 w-14 text-[#9ac1e2] mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-[#13293d] mb-2">
+              No encontramos quizzes
+            </h3>
+            <p className="text-[#67a2d3] mb-6 max-w-sm mx-auto">
+              Ningún quiz coincide con{" "}
+              {searchQuery ? `"${searchQuery}"` : "los filtros seleccionados"}.
+              Intenta con otro término o categoría.
+            </p>
+            <button
+              onClick={clearFilters}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#2a628f] text-white rounded-lg text-sm font-medium hover:bg-[#18435a] transition-colors"
+            >
+              <X className="h-4 w-4" />
+              Limpiar filtros
+            </button>
           </div>
         )}
       </div>
