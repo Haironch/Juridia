@@ -29,11 +29,16 @@ const ARBOL: Record<string, Nodo> = {
     id: "inicio",
     mensaje: "¡Hola! Soy el asistente de Juridia. Selecciona el tema sobre el que necesitas orientación:",
     opciones: [
-      { texto: "📚 Ramas del Derecho",          siguiente: "menu_ramas" },
-      { texto: "🎓 Exámenes y Carrera",          siguiente: "menu_examenes" },
-      { texto: "⚖️ Garantías Constitucionales",  siguiente: "menu_garantias" },
-      { texto: "🔍 Proceso Penal",               siguiente: "menu_proceso_penal" },
-      { texto: "📝 Contratos y Obligaciones",    siguiente: "menu_contratos" },
+      { texto: "📚 Ramas del Derecho",            siguiente: "menu_ramas" },
+      { texto: "🎓 Exámenes y Carrera",            siguiente: "menu_examenes" },
+      { texto: "⚖️ Garantías Constitucionales",    siguiente: "menu_garantias" },
+      { texto: "🔍 Proceso Penal",                 siguiente: "menu_proceso_penal" },
+      { texto: "📝 Contratos y Obligaciones",      siguiente: "menu_contratos" },
+      { texto: "🏛️ Derecho Notarial",             siguiente: "menu_notarial" },
+      { texto: "👪 Derecho de Familia",            siguiente: "menu_familia" },
+      { texto: "💰 Derecho Tributario",            siguiente: "menu_tributario" },
+      { texto: "🌍 Derechos Humanos",              siguiente: "menu_ddhh" },
+      { texto: "🏢 Organismos del Estado",         siguiente: "menu_organismos" },
     ],
   },
 
@@ -42,12 +47,16 @@ const ARBOL: Record<string, Nodo> = {
     id: "menu_ramas",
     mensaje: "¿Sobre qué rama del Derecho deseas información?",
     opciones: [
-      { texto: "Derecho Constitucional", siguiente: "info_constitucional" },
+      { texto: "Derecho Constitucional",  siguiente: "info_constitucional" },
       { texto: "Derecho Penal",           siguiente: "info_penal" },
       { texto: "Derecho Civil",           siguiente: "info_civil" },
       { texto: "Derecho Laboral",         siguiente: "menu_laboral" },
       { texto: "Derecho Mercantil",       siguiente: "info_mercantil" },
       { texto: "Derecho Administrativo",  siguiente: "info_administrativo" },
+      { texto: "Derecho Notarial",        siguiente: "menu_notarial" },
+      { texto: "Derecho de Familia",      siguiente: "menu_familia" },
+      { texto: "Derecho Tributario",      siguiente: "menu_tributario" },
+      { texto: "Derecho Procesal Civil",  siguiente: "menu_procesal_civil" },
     ],
   },
   info_constitucional: {
@@ -66,10 +75,12 @@ const ARBOL: Record<string, Nodo> = {
     id: "menu_laboral",
     mensaje: "El **Derecho Laboral** (Código de Trabajo, Decreto 1441) regula la relación entre trabajadores y patronos. ¿Qué aspecto te interesa conocer?",
     opciones: [
-      { texto: "Jornadas de trabajo",      siguiente: "laboral_jornada" },
-      { texto: "Aguinaldo y Bono 14",      siguiente: "laboral_prestaciones" },
-      { texto: "Despido injustificado",    siguiente: "laboral_despido" },
-      { texto: "Salario mínimo",           siguiente: "laboral_salario" },
+      { texto: "Jornadas de trabajo",        siguiente: "laboral_jornada" },
+      { texto: "Aguinaldo y Bono 14",        siguiente: "laboral_prestaciones" },
+      { texto: "Despido injustificado",      siguiente: "laboral_despido" },
+      { texto: "Salario mínimo",             siguiente: "laboral_salario" },
+      { texto: "IGSS y seguridad social",    siguiente: "laboral_igss" },
+      { texto: "Sindicatos y huelga",        siguiente: "laboral_sindicatos" },
     ],
   },
   laboral_jornada: {
@@ -163,11 +174,13 @@ const ARBOL: Record<string, Nodo> = {
     id: "menu_proceso_penal",
     mensaje: "El proceso penal se rige por el Código Procesal Penal (Decreto 51-92). ¿Qué aspecto deseas conocer?",
     opciones: [
-      { texto: "Etapas del proceso penal",   siguiente: "penal_etapas" },
-      { texto: "Criterio de oportunidad",    siguiente: "penal_criterio" },
-      { texto: "Demanda vs. denuncia",        siguiente: "penal_diferencia" },
-      { texto: "Prisión preventiva",          siguiente: "penal_prision" },
-      { texto: "Medidas desjudicializadoras", siguiente: "penal_desjudicializadoras" },
+      { texto: "Etapas del proceso penal",     siguiente: "penal_etapas" },
+      { texto: "Criterio de oportunidad",      siguiente: "penal_criterio" },
+      { texto: "Demanda vs. denuncia",          siguiente: "penal_diferencia" },
+      { texto: "Prisión preventiva",            siguiente: "penal_prision" },
+      { texto: "Medidas desjudicializadoras",   siguiente: "penal_desjudicializadoras" },
+      { texto: "Flagrancia",                    siguiente: "penal_flagrancia" },
+      { texto: "Suspensión condicional",        siguiente: "penal_suspension" },
     ],
   },
   penal_etapas: {
@@ -201,6 +214,8 @@ const ARBOL: Record<string, Nodo> = {
       { texto: "El recurso de apelación",     siguiente: "civil_apelacion" },
       { texto: "La jurisprudencia",           siguiente: "civil_jurisprudencia" },
       { texto: "Tipos de contratos",          siguiente: "civil_tipos" },
+      { texto: "El mandato",                  siguiente: "civil_mandato" },
+      { texto: "El arrendamiento",            siguiente: "civil_arrendamiento" },
     ],
   },
   civil_contrato: {
@@ -222,6 +237,264 @@ const ARBOL: Record<string, Nodo> = {
   civil_tipos: {
     id: "civil_tipos",
     mensaje: "**Tipos de contratos más importantes en Guatemala:**\n\n• **Compraventa:** transfiere la propiedad de un bien a cambio de precio\n• **Arrendamiento:** cesión del uso de un bien por tiempo y precio determinado\n• **Mandato:** encargo de representación o gestión de negocios\n• **Préstamo (mutuo):** entrega de dinero u otras cosas fungibles con obligación de restituir\n• **Donación:** transmisión gratuita de bienes\n• **Sociedad civil:** dos o más personas aportan para repartir ganancias",
+  },
+
+  // ── EXPANSIÓN: CONTRATOS ──────────────────────────────────────────────────
+  civil_mandato: {
+    id: "civil_mandato",
+    mensaje: "**El mandato** (Art. 1686 y ss. Código Civil):\n\nContrato por el que una persona (mandante) encarga a otra (mandatario) la realización de uno o más actos jurídicos en su nombre.\n\n**Tipos:**\n• **General:** para todos los negocios del mandante\n• **Especial:** para un negocio determinado (ej. vender un inmueble)\n• **Judicial:** para representar en juicio; requiere escritura pública\n\n**Se extingue por:** revocación, renuncia, muerte o incapacidad de cualquiera de las partes.",
+  },
+  civil_arrendamiento: {
+    id: "civil_arrendamiento",
+    mensaje: "**El arrendamiento** (Art. 1880 y ss. Código Civil):\n\nContrato por el que el arrendante cede el uso de un bien al arrendatario por tiempo determinado y a cambio de una renta.\n\n**Obligaciones del arrendante:**\n• Entregar el bien en buen estado\n• Garantizar el uso pacífico durante el contrato\n\n**Obligaciones del arrendatario:**\n• Pagar la renta pactada puntualmente\n• Conservar el bien sin deteriorarlo\n• Restituirlo al vencimiento\n\nEl incumplimiento del arrendatario habilita el **desahucio** judicial.",
+  },
+
+  // ── EXPANSIÓN: PROCESO PENAL ──────────────────────────────────────────────
+  penal_flagrancia: {
+    id: "penal_flagrancia",
+    mensaje: "**Flagrancia** (Art. 257 CPP):\n\nSe considera en flagrancia quien es sorprendido en el momento mismo de cometer el delito o inmediatamente después mientras es perseguido.\n\n**En flagrancia:**\n• Cualquier persona puede detener al sindicado y entregarlo a la PNC\n• La PNC puede aprehenderlo sin orden judicial\n• Debe presentarse ante juez en máximo **6 horas**\n• Los Juzgados de Turno tramitan el **proceso de flagrancia**, que puede resolverse en una sola audiencia con el proceso abreviado.",
+  },
+  penal_suspension: {
+    id: "penal_suspension",
+    mensaje: "**Suspensión condicional de la persecución penal** (Art. 27 CPP):\n\nEl proceso se suspende hasta **5 años** si el imputado:\n• No tiene antecedentes penales\n• Admite los hechos\n• Repara el daño a la víctima\n• Cumple las condiciones del juez (trabajo comunitario, presentaciones periódicas, etc.)\n\n**Si cumple:** el juez decreta **sobreseimiento** y el proceso se archiva definitivamente.\n**Si incumple:** se reactiva la persecución penal desde el punto en que fue suspendida.",
+  },
+
+  // ── EXPANSIÓN: DERECHO LABORAL ────────────────────────────────────────────
+  laboral_igss: {
+    id: "laboral_igss",
+    mensaje: "**IGSS — Instituto Guatemalteco de Seguridad Social** (Art. 100 CPRG):\n\nInstitución autónoma que cubre a los trabajadores del sector formal.\n\n**Programas principales:**\n• **IVS:** pensiones por vejez (65 años), invalidez o sobrevivencia\n• **Accidentes:** cobertura de accidentes laborales y en el trayecto\n• **Enfermedad y Maternidad:** atención médica y hospitalaria\n\n**Cuotas mensuales:**\n• Patrono: **12.67%** del salario\n• Trabajador: **4.83%** del salario",
+  },
+  laboral_sindicatos: {
+    id: "laboral_sindicatos",
+    mensaje: "**Sindicatos y huelga** (Arts. 211-241 Código de Trabajo):\n\n**Sindicato:** asociación permanente de trabajadores para defender sus intereses. Se necesitan al menos **20 trabajadores** para formarlo.\n\n**Huelga legal**, para ser válida debe:\n• Ser aprobada por más del **50%** de los trabajadores\n• Agotar el procedimiento de conciliación ante Tribunales de Trabajo\n• No afectar servicios esenciales (agua, hospitales, energía eléctrica)\n\nEl **paro patronal** es el equivalente del lado del empleador.",
+  },
+
+  // ── DERECHO NOTARIAL ──────────────────────────────────────────────────────
+  menu_notarial: {
+    id: "menu_notarial",
+    mensaje: "El Derecho Notarial regula la función del notario como fedatario público en Guatemala (Código de Notariado, Decreto 314). ¿Qué aspecto deseas conocer?",
+    opciones: [
+      { texto: "¿Qué es el protocolo notarial?",      siguiente: "notarial_protocolo" },
+      { texto: "Escritura pública vs. acta notarial",  siguiente: "notarial_instrumentos" },
+      { texto: "El testamento notarial",               siguiente: "notarial_testamento" },
+      { texto: "Fe pública y principios notariales",   siguiente: "notarial_principios" },
+      { texto: "Prohibiciones del notario",            siguiente: "notarial_prohibiciones" },
+      { texto: "Archivo General de Protocolos",        siguiente: "notarial_archivo" },
+    ],
+  },
+  notarial_protocolo: {
+    id: "notarial_protocolo",
+    mensaje: "**El protocolo notarial** (Art. 8, Código de Notariado, Decreto 314):\n\nColección ordenada de los instrumentos públicos que el notario autoriza durante el año.\n\n• Incluye escrituras matrices, actas de protocolación y razones de legalización de firmas\n• Los folios deben estar numerados en orden cronológico\n• Queda bajo custodia y responsabilidad del notario\n• Al cierre del año, se remite un testimonio especial al Archivo General de Protocolos en los primeros **25 días de enero**",
+  },
+  notarial_instrumentos: {
+    id: "notarial_instrumentos",
+    mensaje: "**Escritura pública:**\nInstrumenta negocios jurídicos (contratos, testamentos, constitución de sociedades). Exige declaración de voluntad y disposición de derechos. Las partes deben firmar.\n\n**Acta notarial:**\nHace constar hechos, situaciones o circunstancias que el notario percibe directamente (actas de notoriedad, de presencia, de protesto). No es indispensable la disposición de derechos ni la participación de otras partes.\n\nAmbas tienen plena fe pública.",
+  },
+  notarial_testamento: {
+    id: "notarial_testamento",
+    mensaje: "**El testamento notarial** (Art. 954 Código Civil):\n\nEs el más utilizado en Guatemala; se otorga en escritura pública.\n\n**Formalidades:**\n• Presencia del testador, el notario y **dos testigos hábiles**\n• El notario lee el instrumento en voz alta\n• El testador ratifica que refleja su voluntad\n• Todos firman en el mismo acto\n\n**Prohibición:** los herederos o legatarios instituidos en ese mismo testamento, así como sus cónyuges, **no pueden ser testigos**.",
+  },
+  notarial_principios: {
+    id: "notarial_principios",
+    mensaje: "**Principios fundamentales del Derecho Notarial guatemalteco:**\n\n• **Fe pública notarial:** los actos autorizados por el notario se presumen auténticos y verídicos hasta prueba en contrario\n• **Consentimiento libre:** el notario debe cerciorarse de que las partes actúan sin coacción, dolo ni error antes de autorizar el instrumento\n• **Sistema notarial latino:** el notario es un jurista que asesora, redacta y da forma jurídica preventiva (no un simple autenticador de firmas)\n• **Función preventiva:** su objetivo es evitar litigios futuros",
+  },
+  notarial_prohibiciones: {
+    id: "notarial_prohibiciones",
+    mensaje: "**Prohibiciones del notario guatemalteco** (Art. 18, Código de Notariado):\n\nEl notario NO puede autorizar actos en que tengan interés directo:\n• Él mismo\n• Su cónyuge\n• Sus parientes dentro de los grados señalados por la ley\n\nAutorizar un instrumento en esas condiciones puede generar la **nulidad** del acto y responsabilidad disciplinaria o penal para el notario. Es una garantía de imparcialidad del fedatario público.",
+  },
+  notarial_archivo: {
+    id: "notarial_archivo",
+    mensaje: "**Archivo General de Protocolos:**\n\n• Dependencia del Organismo Judicial\n• Recibe los testimonios especiales de todos los instrumentos del año\n• El notario debe remitirlos en los primeros **25 días de enero**\n• El protocolo original permanece bajo custodia del notario\n• Si el notario fallece o queda inhabilitado, el protocolo pasa al Archivo para su custodia definitiva\n• Cualquier persona puede solicitar copia de instrumentos registrados, previo pago de aranceles",
+  },
+
+  // ── DERECHO DE FAMILIA ────────────────────────────────────────────────────
+  menu_familia: {
+    id: "menu_familia",
+    mensaje: "El Derecho de Familia regula matrimonio, unión de hecho, filiación, alimentos y adopción (Código Civil, Decreto-Ley 106). ¿Qué tema deseas consultar?",
+    opciones: [
+      { texto: "El matrimonio",               siguiente: "familia_matrimonio" },
+      { texto: "Regímenes económicos",        siguiente: "familia_regimenes" },
+      { texto: "La unión de hecho",           siguiente: "familia_union" },
+      { texto: "Patria potestad y tutela",    siguiente: "familia_patria" },
+      { texto: "El divorcio",                 siguiente: "familia_divorcio" },
+      { texto: "Adopción y filiación",        siguiente: "familia_adopcion" },
+      { texto: "Obligación de alimentos",     siguiente: "familia_alimentos" },
+    ],
+  },
+  familia_matrimonio: {
+    id: "familia_matrimonio",
+    mensaje: "**El matrimonio en Guatemala** (Art. 78 y ss. Código Civil):\n\n• Institución social y legal de vida en común entre dos personas\n• Edad mínima sin autorización: **18 años**\n• Con autorización de padres o tutor: desde los **16 años**\n• Puede celebrarse ante **alcalde municipal o notario**\n• Produce plena igualdad de derechos y obligaciones entre los cónyuges\n• Se disuelve únicamente por muerte o divorcio declarado legalmente",
+  },
+  familia_regimenes: {
+    id: "familia_regimenes",
+    mensaje: "**Regímenes económicos del matrimonio** (Art. 122 Código Civil):\n\n• **Comunidad absoluta:** todos los bienes son comunes, sin importar quién los adquirió\n• **Separación absoluta:** cada cónyuge administra su patrimonio con total independencia\n• **Comunidad de gananciales:** los bienes adquiridos *durante* el matrimonio se dividen por igual; los anteriores permanecen propios\n\nA falta de capitulaciones matrimoniales se aplica la **comunidad de gananciales** por defecto.",
+  },
+  familia_union: {
+    id: "familia_union",
+    mensaje: "**Unión de hecho** (Art. 173 Código Civil):\n\nUnión estable y singular entre hombre y mujer con vida en común por más de **3 años**.\n\n**Para producir efectos jurídicos debe declararse:**\n• Ante **notario** (si ambos lo solicitan voluntariamente)\n• Ante **juez de familia** (si hay controversia)\n\n**Efectos:** régimen económico sobre bienes adquiridos, derecho de alimentos y derechos sucesorios equivalentes al matrimonio. La declaración es retroactiva al inicio de la convivencia.",
+  },
+  familia_patria: {
+    id: "familia_patria",
+    mensaje: "**Patria potestad** (Art. 252 y ss. Código Civil):\n\nConjunto de derechos y obligaciones de ambos padres sobre sus hijos menores no emancipados.\n\n**Comprende:**\n• Representación legal del menor\n• Administración de sus bienes\n• Crianza, educación y corrección\n\n**La tutela** reemplaza a la patria potestad cuando el menor carece de padres; el tutor es designado por testamento, juez o la familia.\n\nAmbas son irrenunciables e intransmisibles.",
+  },
+  familia_divorcio: {
+    id: "familia_divorcio",
+    mensaje: "**El divorcio en Guatemala** (Art. 154 y ss. Código Civil):\n\n**Por mutuo consentimiento:**\n• Ante **notario**: si no hay hijos menores ni bienes que liquidar\n• Ante **juez de familia**: si hay hijos menores o bienes comunes\n\n**Contencioso (causas legales):**\n• Adulterio, maltrato físico o psicológico, abandono injustificado, separación de hecho por más de un año, entre otras (Art. 155 CC)\n\nEl divorcio disuelve el vínculo y permite volver a contraer nupcias.",
+  },
+  familia_adopcion: {
+    id: "familia_adopcion",
+    mensaje: "**La adopción en Guatemala** (Ley de Adopciones, Decreto 77-2007):\n\nSe reconoce la **adopción plena**, que:\n• Equipara al adoptado con un hijo biológico\n• Le otorga los apellidos del adoptante\n• Le concede iguales derechos hereditarios\n• Extingue los vínculos jurídicos con la familia de origen\n• Es **irrevocable**\n\nEl **Consejo Nacional de Adopciones (CNA)** supervisa el proceso. La adopción internacional está sujeta al Convenio de La Haya.",
+  },
+  familia_alimentos: {
+    id: "familia_alimentos",
+    mensaje: "**Obligación de alimentos** (Art. 278 y ss. Código Civil):\n\nComprende: manutención, habitación, vestuario, asistencia médica y educación.\n\n**Obligados (en orden de prelación):**\n1. Cónyuge\n2. Padres\n3. Abuelos\n4. Hermanos\n\n**Características:**\n• Irrenunciables e incompensables\n• Se fijan según necesidades del alimentado y posibilidades del obligado\n• El incumplimiento puede derivar en proceso penal por **negación de asistencia económica**",
+  },
+
+  // ── DERECHO TRIBUTARIO ────────────────────────────────────────────────────
+  menu_tributario: {
+    id: "menu_tributario",
+    mensaje: "El sistema tributario guatemalteco está regulado por el Código Tributario (Decreto 6-91). ¿Qué tema deseas consultar?",
+    opciones: [
+      { texto: "¿Qué es un tributo?",                    siguiente: "tributario_concepto" },
+      { texto: "El IVA en Guatemala",                    siguiente: "tributario_iva" },
+      { texto: "El ISR (Impuesto sobre la Renta)",       siguiente: "tributario_isr" },
+      { texto: "La SAT y sus funciones",                 siguiente: "tributario_sat" },
+      { texto: "Evasión y defraudación tributaria",      siguiente: "tributario_evasion" },
+      { texto: "Principios constitucionales tributarios",siguiente: "tributario_principios" },
+    ],
+  },
+  tributario_concepto: {
+    id: "tributario_concepto",
+    mensaje: "**¿Qué es un tributo?** (Código Tributario, Decreto 6-91):\n\nPrestación pecuniaria que el Estado exige a los contribuyentes para financiar el gasto público.\n\n**Tipos:**\n• **Impuestos:** sin contraprestación directa (IVA, ISR, IUSI)\n• **Tasas:** el Estado presta un servicio específico al contribuyente (tasa de migración, tasa de registro)\n• **Contribuciones especiales:** financian obras que benefician a un sector determinado\n\nSolo el **Congreso** puede crear tributos (principio de legalidad tributaria, Art. 239 CPRG).",
+  },
+  tributario_iva: {
+    id: "tributario_iva",
+    mensaje: "**IVA en Guatemala** (Ley del IVA, Decreto 27-92):\n\n• **Tasa:** 12% sobre el precio de venta de bienes y servicios\n• **Destino:** 10.5% al Estado y 1.5% a los municipios (IVA-PAZ)\n• Impuesto **indirecto:** recae económicamente en el consumidor final\n• El vendedor declara y paga ante la SAT mensualmente\n\n**Exentos de IVA:** exportaciones, algunos servicios médicos, educación pública, entre otros.\n\nCada compra genera una **factura** que es el comprobante del IVA pagado.",
+  },
+  tributario_isr: {
+    id: "tributario_isr",
+    mensaje: "**ISR — Impuesto Sobre la Renta** (Decreto 10-2012):\n\n**Trabajo asalariado:**\n• 5% sobre rentas hasta Q30,000 anuales\n• 7% sobre el excedente\n\n**Actividades lucrativas (empresas):**\n• **Régimen sobre utilidades:** 25% sobre la renta neta\n• **Régimen simplificado opcional:** 5% o 7% según ingresos brutos mensuales\n\nEl régimen más conveniente depende del nivel de costos y deducciones de cada empresa o persona individual.",
+  },
+  tributario_sat: {
+    id: "tributario_sat",
+    mensaje: "**SAT — Superintendencia de Administración Tributaria** (Decreto 1-98):\n\nEntidad estatal descentralizada con autonomía funcional y presupuestaria.\n\n**Funciones:**\n• Recaudar impuestos internos (ISR, IVA, IUSI, etc.)\n• Fiscalizar y auditar a los contribuyentes\n• Controlar el comercio exterior (aduanas)\n• Cobrar la deuda tributaria (proceso económico-coactivo)\n• Aplicar sanciones por incumplimiento\n\nEl **Ministerio de Finanzas Públicas** dirige la política fiscal; la SAT la ejecuta.",
+  },
+  tributario_evasion: {
+    id: "tributario_evasion",
+    mensaje: "**Evasión vs. elusión tributaria:**\n\n**Evasión (ilegal):**\nOmisión dolosa del pago de tributos.\n• Multas de hasta el 100% del impuesto omitido\n• Recargos del 12% anual\n• Responsabilidad penal (Art. 358 C Código Penal): prisión de 1 a 6 años cuando el monto supera **Q100,000**\n\n**Elusión (legal):**\nPlanificación fiscal que aprovecha exenciones y deducciones que la propia ley permite. No es ilegal.",
+  },
+  tributario_principios: {
+    id: "tributario_principios",
+    mensaje: "**Principios constitucionales tributarios** (Arts. 239 y 243 CPRG):\n\n• **Legalidad:** solo el Congreso puede crear, modificar o suprimir impuestos mediante decreto\n• **Capacidad de pago:** quien más tiene, más tributa; el sistema debe ser justo y equitativo\n• **Prohibición de doble tributación:** no puede cobrarse dos veces el mismo impuesto sobre el mismo hecho generador al mismo contribuyente en el mismo período\n• **No confiscatoriedad:** los tributos no pueden ser tan elevados que equivalgan a confiscar el patrimonio del contribuyente",
+  },
+
+  // ── DERECHOS HUMANOS ──────────────────────────────────────────────────────
+  menu_ddhh: {
+    id: "menu_ddhh",
+    mensaje: "Los derechos humanos en Guatemala están protegidos por la Constitución y tratados internacionales. ¿Qué deseas saber?",
+    opciones: [
+      { texto: "Garantías constitucionales (resumen)",  siguiente: "ddhh_garantias" },
+      { texto: "Sistema Interamericano de DDHH",         siguiente: "ddhh_interamericano" },
+      { texto: "El Procurador de DDHH (PDH)",            siguiente: "ddhh_pdh" },
+      { texto: "Derechos del detenido",                  siguiente: "ddhh_detenido" },
+      { texto: "Tratados de DDHH y su rango legal",      siguiente: "ddhh_tratados" },
+      { texto: "Derechos de los pueblos indígenas",      siguiente: "ddhh_indigenas" },
+    ],
+  },
+  ddhh_garantias: {
+    id: "ddhh_garantias",
+    mensaje: "**Garantías constitucionales en Guatemala** (Decreto 1-86):\n\n• **Amparo:** protege contra actos arbitrarios de autoridad que violen derechos fundamentales. Lo conoce cualquier tribunal con jurisdicción en el lugar del acto.\n\n• **Exhibición personal (hábeas corpus):** tutela la libertad física frente a detenciones ilegales. El juez resuelve en **24 horas**.\n\n• **Inconstitucionalidad:** expulsa normas contrarias a la Constitución. La conoce la **Corte de Constitucionalidad (CC)**.",
+  },
+  ddhh_interamericano: {
+    id: "ddhh_interamericano",
+    mensaje: "**Sistema Interamericano de DDHH:**\n\nGuatemala es parte de la **Convención Americana sobre Derechos Humanos** (Pacto de San José).\n\n**Órganos:**\n• **CIDH:** recibe peticiones individuales cuando se agotan los recursos internos; investiga y puede someter casos a la Corte\n• **Corte IDH:** tribunal internacional cuyas sentencias son **vinculantes** para Guatemala; puede ordenar reparaciones, indemnizaciones y reformas legislativas\n\nPrimero debe agotarse la vía interna en Guatemala antes de acudir al sistema interamericano.",
+  },
+  ddhh_pdh: {
+    id: "ddhh_pdh",
+    mensaje: "**Procurador de los Derechos Humanos — PDH** (Art. 273 CPRG):\n\n• Comisionado del **Congreso de la República**\n• Período: **5 años**\n• Defiende los derechos constitucionales frente a abusos de la administración pública\n\n**Funciones:**\n• Investigar denuncias ciudadanas\n• Supervisar a la administración pública\n• Emitir censuras públicas a funcionarios\n• Proponer medidas legislativas\n\n⚠️ No tiene facultades jurisdiccionales: no puede dictar sentencias ni multas.",
+  },
+  ddhh_detenido: {
+    id: "ddhh_detenido",
+    mensaje: "**Derechos del detenido en Guatemala** (Arts. 6-11 CPRG):\n\n• Ser informado inmediatamente de la causa de su detención\n• No ser sometido a torturas ni tratos degradantes\n• Ser presentado ante juez en máximo **6 horas**\n• Guardar silencio (no declarar contra sí mismo)\n• Contar con defensor de su elección o de oficio\n• **Presunción de inocencia** hasta sentencia condenatoria firme\n• No ser juzgado dos veces por el mismo delito (**non bis in idem**)",
+  },
+  ddhh_tratados: {
+    id: "ddhh_tratados",
+    mensaje: "**Tratados de DDHH y su rango** (Art. 46 CPRG):\n\n'Los tratados y convenciones en materia de derechos humanos ratificados por Guatemala tienen **preeminencia** sobre el derecho interno.'\n\n**Principales tratados ratificados:**\n• Convención Americana sobre DDHH (Pacto de San José)\n• Pacto Internacional de Derechos Civiles y Políticos\n• Convención sobre los Derechos del Niño\n• CEDAW (derechos de la mujer)\n\nPrevalecen sobre las leyes ordinarias, pero **no** sobre la Constitución misma.",
+  },
+  ddhh_indigenas: {
+    id: "ddhh_indigenas",
+    mensaje: "**Derechos de los pueblos indígenas en Guatemala:**\n\n**Constitución** (Arts. 66-70 CPRG):\n• Reconoce el derecho a mantener identidad cultural, idioma, trajes y costumbres\n• El Estado puede reconocer las normas consuetudinarias de las comunidades\n\n**Convenio 169 de la OIT** (ratificado):\n• Derecho a **consulta previa** ante proyectos que afecten sus territorios\n• Derecho a sus propias instituciones sociales, económicas y culturales\n\n**COCODES y COMUDES:** formas de participación comunitaria reconocidas por ley en Guatemala.",
+  },
+
+  // ── ORGANISMOS DEL ESTADO ─────────────────────────────────────────────────
+  menu_organismos: {
+    id: "menu_organismos",
+    mensaje: "Guatemala es una República democrática con separación de poderes (Art. 141 CPRG). ¿Qué organismo deseas conocer?",
+    opciones: [
+      { texto: "Organismo Legislativo (Congreso)",    siguiente: "organismos_legislativo" },
+      { texto: "Organismo Ejecutivo (Presidencia)",   siguiente: "organismos_ejecutivo" },
+      { texto: "Organismo Judicial (Tribunales)",     siguiente: "organismos_judicial" },
+      { texto: "Corte de Constitucionalidad (CC)",    siguiente: "organismos_cc" },
+      { texto: "Ministerio Público (MP)",             siguiente: "organismos_mp" },
+      { texto: "Contraloría y otros entes",           siguiente: "organismos_otros" },
+    ],
+  },
+  organismos_legislativo: {
+    id: "organismos_legislativo",
+    mensaje: "**Organismo Legislativo — Congreso de la República** (Arts. 157-181 CPRG):\n\n• **160 diputados:** 128 distritales + 32 lista nacional\n• Período: **4 años**, con posibilidad de reelección\n\n**Funciones principales:**\n• Decretar, reformar y derogar leyes\n• Aprobar el Presupuesto General de Ingresos y Egresos del Estado\n• Ratificar tratados internacionales\n• Interpelar ministros de Estado\n• Elegir magistrados de la CC, CSJ y PDH",
+  },
+  organismos_ejecutivo: {
+    id: "organismos_ejecutivo",
+    mensaje: "**Organismo Ejecutivo** (Arts. 182-202 CPRG):\n\n• Ejercido por el **Presidente y Vicepresidente de la República**\n• Período: **4 años**, sin reelección posible\n• Elección directa; si ningún candidato supera el 50% hay segunda vuelta\n\n**Funciones:**\n• Dirigir la política general del Estado\n• Ejecutar el presupuesto nacional\n• Comandar el Ejército\n• Dictar acuerdos y reglamentos gubernativos\n\nLos **Ministerios de Estado** son sus dependencias para cada sector.",
+  },
+  organismos_judicial: {
+    id: "organismos_judicial",
+    mensaje: "**Organismo Judicial** (Arts. 203-222 CPRG):\n\nEjerce la potestad de juzgar y ejecutar lo juzgado en forma exclusiva.\n\n**Estructura (de mayor a menor):**\n1. **Corte Suprema de Justicia (CSJ):** 13 magistrados, 5 años; máxima instancia civil, penal, laboral\n2. **Salas de Apelaciones:** segunda instancia por ramo\n3. **Juzgados de Primera Instancia:** juicio de fondo\n4. **Juzgados de Paz:** menor cuantía y faltas\n\nEl **Presidente del OJ** es elegido entre los magistrados de la CSJ.",
+  },
+  organismos_cc: {
+    id: "organismos_cc",
+    mensaje: "**Corte de Constitucionalidad — CC** (Arts. 268-272 CPRG):\n\nTribunal permanente de jurisdicción privativa para defender el orden constitucional.\n\n• **5 magistrados titulares + 5 suplentes**, período de 5 años\n• Designados por: CSJ, Congreso, Ejecutivo, USAC y Colegio de Abogados\n\n**Funciones:**\n• Conocer la inconstitucionalidad general de leyes\n• Resolver amparos en apelación\n• Emitir opinión en reformas constitucionales\n\nSus fallos son **vinculantes** para todos los poderes del Estado.",
+  },
+  organismos_mp: {
+    id: "organismos_mp",
+    mensaje: "**Ministerio Público — MP** (Art. 251 CPRG):\n\nInstitución auxiliar de la justicia con **autonomía funcional**. No depende del Ejecutivo.\n\n**Función principal:** ejercer la persecución penal pública; dirigir la investigación criminal con la PNC.\n\n**Estructura:**\n• **Fiscal General:** máxima autoridad, elegida por la CSJ; período 4 años\n• **Fiscalías especializadas:** FECI (anticorrupción), Fiscalía de la Mujer, de Menores, de DDHH, etc.\n\nEl MP actúa en nombre del Estado, pero con plena independencia política.",
+  },
+  organismos_otros: {
+    id: "organismos_otros",
+    mensaje: "**Otros entes constitucionales de Guatemala:**\n\n• **Contraloría General de Cuentas** (Art. 232): fiscaliza fondos y bienes del Estado; su titular es elegido por el Congreso\n\n• **Procuraduría General de la Nación** (Art. 252): asesora y representa legalmente al Estado en juicio\n\n• **Tribunal Supremo Electoral — TSE** (Art. 175): organiza y califica los procesos electorales; máxima autoridad electoral\n\n• **Banco de Guatemala — BANGUAT** (Art. 132): banco central; emite la moneda y regula el sistema financiero nacional",
+  },
+
+  // ── DERECHO PROCESAL CIVIL ────────────────────────────────────────────────
+  menu_procesal_civil: {
+    id: "menu_procesal_civil",
+    mensaje: "El Código Procesal Civil y Mercantil (Decreto Ley 107) regula los procesos civiles en Guatemala. ¿Qué aspecto te interesa?",
+    opciones: [
+      { texto: "Tipos de juicios civiles",   siguiente: "procesal_tipos" },
+      { texto: "Medidas cautelares",         siguiente: "procesal_cautelares" },
+      { texto: "El recurso de apelación",    siguiente: "procesal_apelacion" },
+      { texto: "La cosa juzgada",            siguiente: "procesal_cosajuzgada" },
+      { texto: "Ejecución de sentencias",    siguiente: "procesal_ejecucion" },
+    ],
+  },
+  procesal_tipos: {
+    id: "procesal_tipos",
+    mensaje: "**Tipos de juicios en el CPCYM:**\n\n• **Ordinario:** asuntos de mayor complejidad; plazos amplios y doble instancia\n• **Oral:** alimentos, asuntos de familia de menor cuantía, rendición de cuentas; ágil con audiencias\n• **Sumario:** arrendamientos, deuda líquida y exigible, responsabilidad civil\n• **Arbitral:** las partes someten el conflicto a árbitros privados\n\nElegir el tipo incorrecto puede derivar en excepciones procesales del demandado y retraso del juicio.",
+  },
+  procesal_cautelares: {
+    id: "procesal_cautelares",
+    mensaje: "**Medidas cautelares** (Art. 516 y ss. CPCYM):\n\nProvindencias que aseguran el resultado del proceso antes de que haya sentencia:\n\n• **Arraigo:** impide al demandado salir del país\n• **Embargo:** afecta bienes del deudor para garantizar el pago\n• **Secuestro:** desapoderamiento de bienes específicos\n• **Anotación de demanda:** publicidad registral del litigio\n• **Intervención judicial:** el juzgado administra una empresa o negocio\n\nRequieren acreditar **verosimilitud del derecho** y **peligro en la demora**.",
+  },
+  procesal_apelacion: {
+    id: "procesal_apelacion",
+    mensaje: "**Recurso de apelación civil** (Art. 602 CPCYM):\n\n• Recurso ordinario contra resoluciones de primera instancia\n• Plazo: **3 días** para autos; **5 días** para sentencias definitivas\n• Se interpone ante el mismo juez que dictó la resolución\n• Lo resuelve la **Sala de la Corte de Apelaciones** del ramo civil\n• No se admiten pruebas nuevas salvo excepciones legales\n• Contra segunda instancia procede, en casos muy específicos, el **recurso de casación** ante la CSJ",
+  },
+  procesal_cosajuzgada: {
+    id: "procesal_cosajuzgada",
+    mensaje: "**La cosa juzgada:**\n\nCalidad de la sentencia firme que la hace inmutable e irrecurrible.\n\n**Dos efectos:**\n• **Negativo (non bis in idem):** no puede iniciarse un nuevo proceso sobre el mismo objeto, entre las mismas partes y con la misma causa\n• **Positivo:** lo resuelto debe ser acatado en procesos posteriores relacionados\n\nGarantía fundamental de **seguridad jurídica**: da certeza de que el conflicto quedó definitivamente resuelto y el fallo es obligatorio.",
+  },
+  procesal_ejecucion: {
+    id: "procesal_ejecucion",
+    mensaje: "**Ejecución de sentencias:**\n\nCuando el condenado no cumple voluntariamente, el acreedor pide al juez que la ejecute coactivamente.\n\n**Modalidades:**\n• **Vía de apremio:** para títulos ejecutivos (cheque, letra, pagaré, sentencia firme); embargo y remate son inmediatos\n• **Ejecución colectiva (quiebra):** cuando el deudor es insolvente con múltiples acreedores\n• En obligaciones de hacer o no hacer, el juez puede aplicar **multas o arresto hasta 5 días** para forzar el cumplimiento",
   },
 };
 
