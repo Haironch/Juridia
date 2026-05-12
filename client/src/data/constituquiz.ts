@@ -387,5 +387,147 @@ export const quizTemas: QuizTema[] = [
         explicacion: "El artículo 268 del CPP establece que la prisión preventiva no puede exceder de un año. Con resolución motivada, el tribunal puede prorrogarla hasta dos años en casos de especial complejidad. Vencido ese plazo sin sentencia, el imputado debe ser puesto en libertad, siendo sustituida por medidas sustitutivas."
       }
     ]
+  },
+  {
+    id: "derecho-notarial",
+    tema: "Derecho Notarial Guatemalteco",
+    descripcion: "Historia, protocolos, instrumentos públicos, actas notariales, formalidades del testamento y principios del notariado guatemalteco (Decreto 314).",
+    icono: "BookMarked",
+    categoria: "Notarial",
+    totalPreguntas: 12,
+    preguntas: [
+      {
+        id: 1,
+        pregunta: "¿Cuál es la ley que regula actualmente el ejercicio del notariado en Guatemala?",
+        opciones: {
+          A: "El Código de Notariado, contenido en el Decreto 314 del Congreso de la República.",
+          B: "El Decreto Ley 106, Código Civil de Guatemala.",
+          C: "La Ley Reguladora del Ejercicio Notarial, Decreto 28-2010."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El Código de Notariado (Decreto 314) es la norma principal que regula el ejercicio notarial en Guatemala desde 1946. Define al notario, el protocolo, las escrituras públicas, las actas notariales y las obligaciones del fedatario público. Guatemala pertenece al sistema notarial latino de tradición romano-germánica."
+      },
+      {
+        id: 2,
+        pregunta: "¿A qué sistema notarial pertenece el notariado guatemalteco según su tradición jurídica?",
+        opciones: {
+          A: "Al sistema anglosajón (common law), donde el notario es un simple autenticador de firmas.",
+          B: "Al sistema notarial latino, donde el notario es un profesional del derecho con fe pública delegada por el Estado, que asesora a las partes y da forma a los actos jurídicos.",
+          C: "Al sistema mixto germano-anglosajón, adoptado tras la independencia de 1821."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "Guatemala pertenece al sistema notarial latino, de origen romano-germánico. A diferencia del notario anglosajón (mero certificador de firmas), el notario latino redacta, asesora y da forma jurídica a los actos, con función preventiva: evitar litigios futuros. La tradición notarial guatemalteca proviene del Derecho español colonial y se consolidó con el Decreto 314."
+      },
+      {
+        id: 3,
+        pregunta: "Según el Código de Notariado guatemalteco, ¿qué es el protocolo notarial?",
+        opciones: {
+          A: "El conjunto de normas y principios que rigen la función notarial.",
+          B: "La colección ordenada de los instrumentos públicos que el notario autoriza durante el año, encuadernados y foliados.",
+          C: "El registro público donde se inscriben todas las escrituras del país."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El artículo 8 del Código de Notariado define el protocolo como la colección ordenada de los instrumentos públicos que el notario autoriza durante el año. Incluye escrituras matrices, actas de protocolación y razones de legalización de firmas. El protocolo queda bajo custodia del notario y, al cierre de cada año, debe remitirse un testimonio especial al Archivo General de Protocolos."
+      },
+      {
+        id: 4,
+        pregunta: "¿Cuáles son los instrumentos públicos notariales reconocidos en el Código de Notariado de Guatemala?",
+        opciones: {
+          A: "Únicamente las escrituras públicas y los testimonios.",
+          B: "Las escrituras matrices, las actas notariales y las razones de legalización de firmas.",
+          C: "Solo los contratos firmados ante el Registro General de la Propiedad."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El Código de Notariado reconoce como instrumentos públicos notariales: las escrituras matrices (escrituras públicas), las actas notariales y las razones de legalización de firmas. Cada uno tiene fuerza probatoria plena respecto a los hechos que el notario declara haber visto, oído o realizado en su presencia."
+      },
+      {
+        id: 5,
+        pregunta: "¿En qué se diferencia un acta notarial de una escritura pública en el Derecho Notarial guatemalteco?",
+        opciones: {
+          A: "No existe diferencia legal entre ambas; son sinónimos dentro del Código de Notariado.",
+          B: "El acta notarial hace constar hechos que el notario percibe directamente, sin necesidad de disposición de derechos; la escritura instrumenta negocios jurídicos entre partes.",
+          C: "El acta notarial solo puede otorgarse ante juez, mientras que la escritura se otorga ante notario."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "La escritura pública instrumenta negocios jurídicos (contratos, testamentos, constitución de sociedad) donde hay declaración de voluntad. El acta notarial, en cambio, hace constar hechos, situaciones o circunstancias percibidos por el notario (actas de notoriedad, de protesto, de presencia), sin que sea indispensable la disposición de derechos entre partes."
+      },
+      {
+        id: 6,
+        pregunta: "¿Cuál es el principio fundamental que da validez a los instrumentos autorizados por el notario guatemalteco?",
+        opciones: {
+          A: "El principio de fe pública notarial: los hechos consignados en el instrumento se presumen verídicos y auténticos hasta prueba en contrario.",
+          B: "El principio de libre competencia, que permite a cualquier persona autorizar documentos privados.",
+          C: "El principio de publicidad registral, que exige inscribir todos los documentos en el Registro General de la Propiedad."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La fe pública notarial es el principio esencial del Derecho Notarial. El notario, como funcionario investido por el Estado, da certeza jurídica a los actos que autoriza: su contenido se presume auténtico y veraz hasta prueba en contrario. Este principio distingue al instrumento público del documento privado, que no goza de esa presunción de autenticidad."
+      },
+      {
+        id: 7,
+        pregunta: "En el Derecho Notarial guatemalteco, ¿qué implica el principio del consentimiento libre en la autorización de escrituras públicas?",
+        opciones: {
+          A: "Que el notario puede suplir la voluntad de una de las partes si considera que el negocio es beneficioso para ella.",
+          B: "Que el notario debe cerciorarse de que las partes otorgan el acto libremente, sin coacción, dolo ni error, y que conocen el contenido y efectos del instrumento.",
+          C: "Que basta con la firma de una de las partes para que la escritura quede perfeccionada."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El principio del consentimiento libre es una garantía del sistema notarial latino. El notario tiene el deber de asesorar a las partes, leer el instrumento en voz alta, asegurarse de que comprenden su contenido y que actúan voluntariamente. Si detecta vicios del consentimiento (dolo, error, violencia o intimidación), debe negarse a autorizar el acto."
+      },
+      {
+        id: 8,
+        pregunta: "¿Cuál es el tipo de testamento más común en Guatemala, que se incorpora al protocolo notarial?",
+        opciones: {
+          A: "El testamento ológrafo o hológrafo, escrito íntegramente de puño y letra del testador.",
+          B: "El testamento notarial en escritura pública, otorgado ante notario e incorporado al protocolo.",
+          C: "El testamento militar, reservado a miembros del Ejército de Guatemala."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El Código Civil guatemalteco reconoce el testamento notarial (en escritura pública) como la forma ordinaria más utilizada: el testador expresa su voluntad ante notario, quien la instrumenta en el protocolo con todas las formalidades de ley. Existen testamentos especiales (cerrado, ológrafo, en el extranjero), pero el notarial es el de mayor uso y seguridad jurídica."
+      },
+      {
+        id: 9,
+        pregunta: "Según el Código Civil guatemalteco, ¿qué formalidades especiales debe cumplir el testamento otorgado ante notario?",
+        opciones: {
+          A: "Basta con que el testador firme ante dos testigos mayores de edad, sin necesidad de notario.",
+          B: "Debe otorgarse en escritura pública, con presencia del testador, el notario y dos testigos hábiles; el notario debe leerlo en voz alta en el mismo acto y firmarlo todos al pie.",
+          C: "Requiere aprobación del Ministerio de Relaciones Exteriores cuando el testamento incluye bienes inmuebles."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El artículo 954 del Código Civil establece que el testamento notarial se otorga en escritura pública ante notario y dos testigos hábiles. El notario debe leer el instrumento en voz alta para que el testador ratifique que refleja su voluntad, y todos firman en el mismo acto. Los testigos deben ser idóneos: no pueden ser herederos, legatarios ni parientes del testador o del notario en los grados prohibidos."
+      },
+      {
+        id: 10,
+        pregunta: "¿Cuál de las siguientes personas está PROHIBIDA de ser testigo en un testamento notarial guatemalteco?",
+        opciones: {
+          A: "Un ciudadano guatemalteco mayor de edad con plena capacidad civil.",
+          B: "Un médico ajeno al acto que solo conoce al testador.",
+          C: "Los herederos o legatarios instituidos en el mismo testamento y sus cónyuges."
+        },
+        respuestaCorrecta: "C",
+        explicacion: "El Código Civil guatemalteco prohíbe ser testigos en un testamento a quienes tengan interés directo en él: los herederos, legatarios y sus cónyuges. Esta prohibición garantiza la imparcialidad y protege la libre voluntad del testador. También están prohibidos los menores de edad, los incapaces civilmente y quienes no comprendan el idioma en que se extiende el testamento."
+      },
+      {
+        id: 11,
+        pregunta: "¿En qué situación le está PROHIBIDO al notario guatemalteco autorizar una escritura pública, según el Código de Notariado?",
+        opciones: {
+          A: "Cuando el negocio jurídico involucra bienes de valor superior a Q100,000.",
+          B: "Cuando el notario, su cónyuge o sus parientes dentro de los grados de ley tengan interés directo en el acto o contrato.",
+          C: "Cuando la escritura se otorga fuera del municipio donde el notario tiene registrada su oficina."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El artículo 18 del Código de Notariado establece que el notario no puede autorizar actos en que él mismo, su cónyuge o sus parientes dentro de los grados señalados por la ley tengan interés directo. Esta inhabilidad protege la imparcialidad del notario como fedatario público. Si el notario lo autoriza en esas condiciones, el instrumento puede ser declarado nulo."
+      },
+      {
+        id: 12,
+        pregunta: "¿Qué obligación tiene el notario guatemalteco al finalizar cada año con respecto a su protocolo?",
+        opciones: {
+          A: "Destruir los documentos del protocolo para proteger la privacidad de los clientes.",
+          B: "Entregar el protocolo original al Registro General de la Propiedad para su custodia definitiva.",
+          C: "Remitir un testimonio especial de todos los instrumentos del año al Archivo General de Protocolos, dentro de los primeros 25 días de enero."
+        },
+        respuestaCorrecta: "C",
+        explicacion: "El artículo 23 del Código de Notariado obliga al notario a remitir, dentro de los primeros 25 días de enero, un testimonio especial de cada instrumento autorizado durante el año anterior al Archivo General de Protocolos, dependencia del Organismo Judicial. El protocolo original permanece bajo custodia y responsabilidad del notario autorizante."
+      }
+    ]
   }
 ];
