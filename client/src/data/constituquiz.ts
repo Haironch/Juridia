@@ -201,6 +201,7 @@ export const quizTemas: QuizTema[] = [
     tema: "Derecho Laboral Guatemalteco",
     descripcion: "Prestaciones, jornadas, salario mínimo y despido según el Código de Trabajo (Decreto 1441) de Guatemala.",
     icono: "Briefcase",
+    categoria: "Laboral",
     totalPreguntas: 5,
     preguntas: [
       {
@@ -265,6 +266,7 @@ export const quizTemas: QuizTema[] = [
     tema: "Derecho Mercantil Guatemalteco",
     descripcion: "Sociedades mercantiles, títulos de crédito y registro según el Código de Comercio (Decreto 2-70) de Guatemala.",
     icono: "Building2",
+    categoria: "Mercantil",
     totalPreguntas: 5,
     preguntas: [
       {
@@ -329,6 +331,7 @@ export const quizTemas: QuizTema[] = [
     tema: "Derecho Procesal Penal",
     descripcion: "Etapas del proceso, medidas desjudicializadoras y garantías procesales del CPP guatemalteco (Decreto 51-92).",
     icono: "Gavel",
+    categoria: "Procesal",
     totalPreguntas: 5,
     preguntas: [
       {
@@ -527,6 +530,352 @@ export const quizTemas: QuizTema[] = [
         },
         respuestaCorrecta: "C",
         explicacion: "El artículo 23 del Código de Notariado obliga al notario a remitir, dentro de los primeros 25 días de enero, un testimonio especial de cada instrumento autorizado durante el año anterior al Archivo General de Protocolos, dependencia del Organismo Judicial. El protocolo original permanece bajo custodia y responsabilidad del notario autorizante."
+      }
+    ]
+  },
+
+  // ─── DERECHO DE FAMILIA ───────────────────────────────────────────────────
+  {
+    id: "derecho-familia",
+    tema: "Derecho de Familia Guatemalteco",
+    descripcion: "Matrimonio, regímenes económicos, unión de hecho, patria potestad, divorcio y adopción según el Código Civil guatemalteco.",
+    icono: "Heart",
+    categoria: "Civil",
+    totalPreguntas: 6,
+    preguntas: [
+      {
+        id: 1,
+        pregunta: "Según el Código Civil de Guatemala (Decreto Ley 106), ¿a partir de qué edad pueden contraer matrimonio sin autorización especial?",
+        opciones: {
+          A: "A los 16 años para hombres y 14 para mujeres, con autorización de los padres.",
+          B: "A los 18 años cumplidos, hombres y mujeres por igual.",
+          C: "A los 21 años, considerada la mayoría de edad plena para actos civiles."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El artículo 81 del Código Civil establece la edad mínima de 18 años para contraer matrimonio sin autorización. Los menores de 18 pero mayores de 16 años pueden casarse con autorización de quienes ejerzan la patria potestad o tutela; el juez puede suplir esa autorización cuando exista causa justificada. Reformas recientes han reforzado la protección frente al matrimonio infantil."
+      },
+      {
+        id: 2,
+        pregunta: "¿Cuáles son los regímenes económicos del matrimonio reconocidos en el Código Civil de Guatemala?",
+        opciones: {
+          A: "Solo el régimen de comunidad absoluta de bienes, aplicable a todos los matrimonios.",
+          B: "Comunidad absoluta de bienes, separación absoluta de bienes y comunidad de gananciales.",
+          C: "Régimen dotal y régimen de participación en los gananciales, según el tipo de contrato."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El artículo 122 del Código Civil reconoce tres regímenes económicos matrimoniales: (1) comunidad absoluta, donde todo pertenece a ambos cónyuges; (2) separación absoluta, donde cada cónyuge administra su propio patrimonio; y (3) comunidad de gananciales, donde los bienes adquiridos durante el matrimonio se dividen por igual. A falta de capitulaciones matrimoniales, se aplica por defecto la comunidad de gananciales."
+      },
+      {
+        id: 3,
+        pregunta: "¿Qué es la unión de hecho y qué efectos jurídicos produce en Guatemala?",
+        opciones: {
+          A: "Una situación sin efectos jurídicos; Guatemala no reconoce las uniones no matrimoniales.",
+          B: "La unión estable y singular entre hombre y mujer que, declarada ante notario o juez, produce efectos patrimoniales y sucesorios similares al matrimonio.",
+          C: "Un contrato privado que solo genera obligaciones alimentarias entre los convivientes."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El artículo 173 del Código Civil reconoce la unión de hecho con vida en común, estable y singular por más de tres años. Puede declararse ante notario o juez de familia. Una vez declarada, genera régimen económico sobre bienes adquiridos durante la unión y derechos sucesorios equiparables al matrimonio. La declaración es retroactiva a la fecha de inicio de la convivencia."
+      },
+      {
+        id: 4,
+        pregunta: "¿En qué consiste la patria potestad según el Código Civil guatemalteco?",
+        opciones: {
+          A: "El derecho exclusivo del padre de administrar los bienes del hijo hasta su mayoría de edad.",
+          B: "El conjunto de derechos y obligaciones de ambos padres sobre la persona y bienes de sus hijos menores no emancipados.",
+          C: "La facultad de los abuelos de representar legalmente a los menores cuando los padres están ausentes."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "Los artículos 252 y siguientes del Código Civil definen la patria potestad como el conjunto de derechos y deberes de ambos padres respecto a la persona y bienes de sus hijos menores no emancipados. Incluye representación legal, administración de bienes, crianza y educación. La patria potestad es irrenunciable, intransmisible y puede suspenderse o extinguirse por causas graves establecidas en la ley."
+      },
+      {
+        id: 5,
+        pregunta: "¿Cuáles son las formas de divorcio contempladas en el Código Civil guatemalteco?",
+        opciones: {
+          A: "Solo el divorcio contencioso por causas específicas como el adulterio.",
+          B: "El divorcio por mutuo acuerdo (voluntario) y el divorcio contencioso por causas establecidas en la ley.",
+          C: "Únicamente el divorcio judicial ante juez de primera instancia, sin excepción."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El Código Civil (artículos 154-163) reconoce el divorcio voluntario por mutuo consentimiento —tramitable ante notario si no hay hijos menores ni bienes que liquidar, o ante juez de familia en caso contrario— y el divorcio contencioso por causas específicas (adulterio, maltrato, abandono, separación de hecho por más de un año, entre otras). Ambas formas disuelven el vínculo matrimonial."
+      },
+      {
+        id: 6,
+        pregunta: "¿Qué tipo de adopción reconoce actualmente Guatemala y qué efectos produce sobre el adoptado?",
+        opciones: {
+          A: "Solo la adopción simple, que crea un vínculo temporal sin extinguir los lazos con la familia de origen.",
+          B: "La adopción plena, que equipara al adoptado con un hijo biológico y extingue los vínculos jurídicos con la familia de origen.",
+          C: "Solo la adopción internacional, regulada exclusivamente por el Convenio de La Haya sin ley nacional."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "La Ley de Adopciones (Decreto 77-2007) establece en Guatemala la adopción plena, que crea entre adoptante y adoptado los mismos derechos y obligaciones que la filiación biológica. El adoptado adquiere los apellidos del adoptante, hereda en igualdad de condiciones que los hijos biológicos y se extinguen legalmente sus vínculos con la familia de origen. La adopción es irrevocable."
+      }
+    ]
+  },
+
+  // ─── DERECHO ADMINISTRATIVO ──────────────────────────────────────────────
+  {
+    id: "derecho-administrativo",
+    tema: "Derecho Administrativo Guatemalteco",
+    descripcion: "Principio de legalidad, actos administrativos, recursos, proceso contencioso-administrativo y organismos de control del Estado guatemalteco.",
+    icono: "Landmark",
+    categoria: "Administrativo",
+    totalPreguntas: 5,
+    preguntas: [
+      {
+        id: 1,
+        pregunta: "¿Cuál es el principio que rige la actividad de la administración pública en Guatemala respecto a sus actuaciones?",
+        opciones: {
+          A: "Principio de discrecionalidad absoluta: la administración puede actuar sin base legal expresa si considera que es conveniente.",
+          B: "Principio de legalidad: los funcionarios públicos solo pueden hacer lo que la ley expresamente les autoriza.",
+          C: "Principio de oportunidad: la administración actúa según el criterio del funcionario en turno."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El artículo 154 de la Constitución Política de Guatemala consagra el principio de legalidad: los funcionarios públicos actúan dentro de las facultades que la ley les confiere. A diferencia de los particulares (que pueden hacer todo lo no prohibido), los funcionarios necesitan habilitación legal expresa. Toda actuación sin respaldo normativo es nula de pleno derecho y genera responsabilidad personal del funcionario."
+      },
+      {
+        id: 2,
+        pregunta: "¿Cuál es la diferencia entre actos administrativos reglados y discrecionales en el Derecho guatemalteco?",
+        opciones: {
+          A: "No existe diferencia; todos los actos de la administración son igualmente discrecionales.",
+          B: "Los actos reglados están completamente determinados por la ley; los discrecionales permiten elegir entre opciones igualmente válidas dentro de los límites legales.",
+          C: "Los actos discrecionales son siempre ilegales y pueden anularse en vía contenciosa."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "Los actos reglados son aquellos en que la ley predetermina exactamente la conducta administrativa (ej.: otorgar una licencia cuando se cumplen todos los requisitos legales). Los actos discrecionales otorgan a la administración un margen de apreciación para elegir entre opciones válidas (ej.: asignar contratos bajo ciertos criterios). Ambos deben respetar el principio de legalidad y los derechos de los administrados."
+      },
+      {
+        id: 3,
+        pregunta: "¿Cuál es el recurso administrativo ordinario que procede contra resoluciones de la administración pública guatemalteca?",
+        opciones: {
+          A: "El recurso de amparo, que se interpone directamente ante la Corte de Constitucionalidad.",
+          B: "El recurso de revocatoria ante el mismo órgano que resolvió y, en segunda instancia, el recurso jerárquico ante el superior.",
+          C: "El recurso de casación ante la Corte Suprema de Justicia, sin pasar por instancias administrativas."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "La Ley de lo Contencioso Administrativo (Decreto 119-96) establece dos recursos ordinarios en sede administrativa: el recurso de revocatoria (ante el mismo órgano que emitió la resolución) y el recurso jerárquico (ante el superior jerárquico del órgano). Es obligatorio agotar la vía administrativa antes de acudir al proceso contencioso-administrativo ante el Organismo Judicial."
+      },
+      {
+        id: 4,
+        pregunta: "¿Qué es el proceso contencioso-administrativo en Guatemala y ante qué tribunal se tramita?",
+        opciones: {
+          A: "Un proceso penal especial para juzgar funcionarios públicos acusados de corrupción.",
+          B: "El proceso judicial que permite impugnar resoluciones de la administración pública ante las Salas de lo Contencioso Administrativo, una vez agotada la vía administrativa.",
+          C: "Un procedimiento interno de la administración para resolver conflictos entre dependencias del Estado."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El proceso contencioso-administrativo, regulado por el Decreto 119-96, es el mecanismo de control judicial de los actos de la administración pública. Procede cuando el particular ha agotado los recursos administrativos y la resolución final vulnera sus derechos. Se tramita ante las Salas de lo Contencioso Administrativo y tiene como fin revisar la legalidad de los actos impugnados, pudiendo anularlos o modificarlos."
+      },
+      {
+        id: 5,
+        pregunta: "¿Qué institución guatemalteca tiene a su cargo la fiscalización de los fondos y bienes del Estado?",
+        opciones: {
+          A: "La Procuraduría General de la Nación, que asesora jurídicamente al Estado.",
+          B: "La Contraloría General de Cuentas, ente fiscalizador de los recursos del Estado con independencia funcional.",
+          C: "El Ministerio de Finanzas Públicas, que administra directamente todos los fondos estatales."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El artículo 232 de la CPRG crea la Contraloría General de Cuentas como institución técnica descentralizada con independencia funcional, encargada de fiscalizar la correcta inversión de los fondos públicos. Su titular es electo por el Congreso. La Procuraduría General de la Nación (artículo 252 CPRG) cumple una función distinta: asesoría jurídica y representación del Estado en juicio."
+      }
+    ]
+  },
+
+  // ─── DERECHO TRIBUTARIO ──────────────────────────────────────────────────
+  {
+    id: "derecho-tributario",
+    tema: "Derecho Tributario Guatemalteco",
+    descripcion: "Código Tributario (Decreto 6-91), ISR, IVA, SAT y principios de la obligación tributaria en Guatemala.",
+    icono: "Receipt",
+    categoria: "Tributario",
+    totalPreguntas: 5,
+    preguntas: [
+      {
+        id: 1,
+        pregunta: "¿Cuál es el código que establece los principios y disposiciones generales de la tributación en Guatemala?",
+        opciones: {
+          A: "El Código de Comercio, Decreto 2-70.",
+          B: "El Código Tributario, Decreto 6-91 y sus reformas.",
+          C: "La Ley del Impuesto al Valor Agregado (IVA), Decreto 27-92."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El Código Tributario (Decreto 6-91) es la norma matriz que define los principios, conceptos y disposiciones generales de todos los tributos en Guatemala. Establece conceptos como tributo, contribuyente, hecho generador, base imponible y obligación tributaria. Las leyes específicas (ISR, IVA, IUSI, etc.) se aplican en complemento al Código Tributario y no pueden contradecirlo."
+      },
+      {
+        id: 2,
+        pregunta: "¿Cuál es la tasa general del Impuesto al Valor Agregado (IVA) en Guatemala y a qué se aplica?",
+        opciones: {
+          A: "10% exclusivamente sobre productos de importación.",
+          B: "12% sobre el precio de venta de bienes muebles y la prestación de servicios en territorio guatemalteco.",
+          C: "15% para bienes de lujo y 5% para productos de la canasta básica alimentaria."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "La Ley del IVA (Decreto 27-92) fija una tasa del 12% aplicable al precio de venta de bienes muebles, prestación de servicios e importaciones en Guatemala. De ese 12%, el 1.5% se destina a los municipios (IVA-PAZ) y el resto al Estado. El IVA es un impuesto indirecto al consumo: recae económicamente en el consumidor final, aunque el obligado a declararlo ante la SAT es el vendedor o prestador del servicio."
+      },
+      {
+        id: 3,
+        pregunta: "¿Cuál es el ente encargado de administrar y recaudar los tributos en Guatemala?",
+        opciones: {
+          A: "El Banco de Guatemala (BANGUAT), que centraliza todos los ingresos fiscales.",
+          B: "La Superintendencia de Administración Tributaria (SAT), entidad estatal descentralizada creada por el Decreto 1-98.",
+          C: "El Ministerio de Finanzas Públicas, que recauda directamente mediante ventanillas en todo el país."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "La SAT, creada por el Decreto 1-98, es la entidad descentralizada responsable de administrar, recaudar, fiscalizar y controlar los tributos internos y los que gravan el comercio exterior. El Ministerio de Finanzas Públicas es el ente rector de la política fiscal del Estado, pero la operación de recaudación, auditoría y cobro coactivo es función exclusiva de la SAT."
+      },
+      {
+        id: 4,
+        pregunta: "¿Qué grava el Impuesto Sobre la Renta (ISR) en Guatemala y cuál es su ley reguladora vigente?",
+        opciones: {
+          A: "Grava la propiedad de bienes inmuebles; está regulado por la Ley del IUSI, Decreto 15-98.",
+          B: "Grava las rentas de actividades lucrativas, del trabajo y del capital, regulado por la Ley de Actualización Tributaria, Decreto 10-2012.",
+          C: "Grava únicamente las importaciones de bienes suntuarios; lo administra la SAT en aduanas."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El ISR (Decreto 10-2012, Libro I) es un impuesto directo sobre las rentas obtenidas en Guatemala. Las personas en relación de dependencia tributan bajo el régimen de retención en la fuente. Las empresas pueden optar entre el régimen sobre utilidades (25% sobre la renta neta) o el régimen simplificado opcional (5% sobre ingresos de Q0 a Q30,000 mensuales y 7% sobre el excedente)."
+      },
+      {
+        id: 5,
+        pregunta: "¿Cuándo se configura la evasión tributaria y cuáles son sus consecuencias en Guatemala?",
+        opciones: {
+          A: "Solo cuando el contribuyente presenta su declaración con retraso; la sanción es una multa fija de Q500.",
+          B: "Cuando el contribuyente, mediante actos u omisiones dolosas, deja de pagar total o parcialmente un tributo; conlleva multas, recargos, intereses y puede generar responsabilidad penal.",
+          C: "Cuando el contribuyente utiliza las deducciones legales para reducir su base imponible; la ley lo prohíbe expresamente."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "La evasión tributaria implica el incumplimiento doloso de la obligación de pagar tributos. El Código Tributario y el Código Penal guatemalteco tipifican la defraudación tributaria como delito cuando el monto defraudado supera Q100,000 en un período. Las consecuencias incluyen multas de hasta el 100% del impuesto omitido, recargos del 12% anual, intereses resarcitorios y prisión de 1 a 6 años. Distinto a la elusión: planificación fiscal legal que aprovecha los beneficios que la propia ley otorga."
+      }
+    ]
+  },
+
+  // ─── DERECHO PROCESAL CIVIL ──────────────────────────────────────────────
+  {
+    id: "derecho-procesal-civil",
+    tema: "Derecho Procesal Civil y Mercantil",
+    descripcion: "Tipos de juicios, medidas cautelares, recursos y cosa juzgada según el CPCYM (Decreto Ley 107) de Guatemala.",
+    icono: "ClipboardList",
+    categoria: "Procesal",
+    totalPreguntas: 5,
+    preguntas: [
+      {
+        id: 1,
+        pregunta: "¿Cuál es el código que regula los procesos judiciales en materia civil en Guatemala?",
+        opciones: {
+          A: "El Código Civil, Decreto Ley 106, que unifica el derecho sustantivo y procesal.",
+          B: "El Código Procesal Civil y Mercantil (CPCYM), Decreto Ley 107.",
+          C: "La Ley del Organismo Judicial, Decreto 2-89, aplicable a todos los procesos."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El Código Procesal Civil y Mercantil (CPCYM), Decreto Ley 107, regula los procesos judiciales civiles y mercantiles en Guatemala. Establece los tipos de juicios, las normas probatorias, los recursos procesales, las medidas cautelares y la ejecución de sentencias. Se complementa con la Ley del Organismo Judicial (Decreto 2-89), que regula la organización de los tribunales."
+      },
+      {
+        id: 2,
+        pregunta: "¿Cuáles son los principales tipos de procesos civiles que establece el CPCYM guatemalteco?",
+        opciones: {
+          A: "Solo el juicio ordinario para todos los asuntos civiles, sin distinción de materia o cuantía.",
+          B: "Juicio ordinario, juicio oral, juicio sumario y procesos de ejecución, según la naturaleza del asunto.",
+          C: "Solo procesos de menor y mayor cuantía, determinados exclusivamente por el valor económico del litigio."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El CPCYM establece distintos tipos de procesos: el juicio ordinario (asuntos de mayor complejidad), el juicio oral (alimentos, asuntos de menor cuantía, rendición de cuentas), el juicio sumario (arrendamientos, deuda líquida y exigible) y los procesos de ejecución (en la vía de apremio, ejecutiva o de conocimiento). La elección del proceso correcto determina las formas, plazos y garantías aplicables."
+      },
+      {
+        id: 3,
+        pregunta: "¿Qué son las medidas cautelares en el proceso civil guatemalteco y cuáles son las principales?",
+        opciones: {
+          A: "Sanciones que el juez impone al demandado al inicio del proceso, sin necesidad de probar el derecho.",
+          B: "Providencias preventivas que aseguran la eficacia de la futura sentencia: arraigo, embargo, secuestro e intervención judicial.",
+          C: "Acuerdos entre las partes para suspender temporalmente el proceso civil."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "Las medidas cautelares (artículos 516 y siguientes del CPCYM) son providencias provisionales para asegurar el resultado del proceso. Las principales son: arraigo (impide al demandado salir del país), embargo (afecta bienes del deudor), secuestro (desapoderamiento de bienes específicos), anotación de demanda (publicidad registral) e intervención judicial (administración de empresa por el juzgado). Para decretarlas se requiere acreditar verosimilitud del derecho y peligro en la demora."
+      },
+      {
+        id: 4,
+        pregunta: "¿Cuál es el recurso ordinario que procede contra sentencias de primera instancia en el proceso civil guatemalteco?",
+        opciones: {
+          A: "El recurso de casación ante la Corte Suprema de Justicia, interpuesto dentro de 15 días.",
+          B: "El recurso de apelación ante la Sala de la Corte de Apelaciones, dentro de 3 días para autos y 5 días para sentencias.",
+          C: "El recurso de nulidad, que anula automáticamente toda sentencia que contenga un defecto formal."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El recurso de apelación (artículo 602 del CPCYM) es el medio de impugnación ordinario de las resoluciones de primera instancia. Se interpone ante el juez que dictó la resolución dentro de 3 días para autos y 5 días para sentencias definitivas. El tribunal de alzada es la Sala de la Corte de Apelaciones del ramo civil. Contra lo resuelto en segunda instancia procede, en casos tasados, el recurso extraordinario de casación."
+      },
+      {
+        id: 5,
+        pregunta: "¿Qué es la cosa juzgada en el Derecho Procesal Civil guatemalteco?",
+        opciones: {
+          A: "La facultad del juez de revisar y modificar su propia sentencia dentro de los 30 días siguientes a su dictado.",
+          B: "La calidad que adquiere una sentencia firme que la hace inmutable e irrecurrible, impidiendo un nuevo proceso sobre el mismo objeto entre las mismas partes.",
+          C: "El principio que obliga a los jueces a fallar de la misma forma en casos similares anteriores."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "La cosa juzgada es el efecto de la sentencia firme que la hace irrecurrible e inmutable. Tiene dos efectos: negativo (non bis in idem: no puede iniciarse un nuevo proceso sobre el mismo asunto entre las mismas partes con la misma causa) y positivo (lo resuelto debe ser acatado en procesos posteriores relacionados). Es una garantía fundamental de seguridad jurídica consagrada en la Ley del Organismo Judicial."
+      }
+    ]
+  },
+
+  // ─── DERECHOS HUMANOS ────────────────────────────────────────────────────
+  {
+    id: "derechos-humanos",
+    tema: "Derechos Humanos en Guatemala",
+    descripcion: "Garantías constitucionales, sistema interamericano, PDH y preeminencia de tratados internacionales en el ordenamiento guatemalteco.",
+    icono: "ShieldCheck",
+    categoria: "Constitucional",
+    totalPreguntas: 5,
+    preguntas: [
+      {
+        id: 1,
+        pregunta: "¿Cuáles son las garantías constitucionales para la protección de derechos fundamentales en Guatemala?",
+        opciones: {
+          A: "Solo el recurso de amparo, aplicable a toda vulneración de derechos.",
+          B: "El amparo, la exhibición personal (hábeas corpus) y la inconstitucionalidad de leyes, regulados por la Ley Decreto 1-86.",
+          C: "Únicamente el hábeas corpus para casos de detención ilegal."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "La Constitución (artículos 265-276) y la Ley de Amparo, Exhibición Personal e Inconstitucionalidad (Decreto 1-86) establecen tres garantías: el amparo (protege derechos frente a actos arbitrarios de autoridad), la exhibición personal o hábeas corpus (tutela la libertad individual frente a detenciones ilegales o arbitrarias) y la inconstitucionalidad (impugna normas contrarias a la Constitución, en forma general ante la CC o como excepción en casos concretos)."
+      },
+      {
+        id: 2,
+        pregunta: "¿Qué rango tienen los tratados internacionales de derechos humanos ratificados por Guatemala según el artículo 46 de la Constitución?",
+        opciones: {
+          A: "Rango infralegal: están por debajo de las leyes ordinarias del Congreso.",
+          B: "Preeminencia sobre el derecho interno en materia de derechos humanos; prevalecen sobre las leyes ordinarias.",
+          C: "El mismo rango que un acuerdo gubernativo emitido por el Organismo Ejecutivo."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El artículo 46 de la CPRG establece: 'en materia de derechos humanos, los tratados y convenciones aceptados y ratificados por Guatemala tienen preeminencia sobre el derecho interno.' Esto significa que la Convención Americana sobre Derechos Humanos, el Pacto Internacional de Derechos Civiles y Políticos y otros tratados ratificados prevalecen sobre las leyes ordinarias. La Corte de Constitucionalidad ha interpretado que no prevalecen sobre la Constitución misma."
+      },
+      {
+        id: 3,
+        pregunta: "¿Ante qué organismo internacional pueden acudir los guatemaltecos cuando el Estado viola sus derechos y han agotado los recursos internos?",
+        opciones: {
+          A: "Ante la Corte Internacional de Justicia con sede en La Haya, Países Bajos.",
+          B: "Ante la Comisión Interamericana de Derechos Humanos (CIDH) y, eventualmente, ante la Corte Interamericana de Derechos Humanos.",
+          C: "Ante el Tribunal Europeo de Derechos Humanos, al ser Guatemala signataria del Convenio Europeo."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "Guatemala es Estado parte de la Convención Americana sobre Derechos Humanos (Pacto de San José) y reconoce la competencia contenciosa de la Corte IDH. Cuando una persona agota los recursos internos sin obtener justicia, puede presentar una petición ante la CIDH. Si la Comisión admite el caso y no hay solución amistosa, puede someter el asunto a la Corte IDH, cuyas sentencias son vinculantes para el Estado guatemalteco."
+      },
+      {
+        id: 4,
+        pregunta: "¿Qué institución guatemalteca tiene el mandato constitucional de defender los derechos humanos de los habitantes frente a abusos del Estado?",
+        opciones: {
+          A: "La Procuraduría General de la Nación, que representa al Estado en juicio.",
+          B: "El Procurador de los Derechos Humanos (PDH), comisionado del Congreso elegido para un período de 5 años.",
+          C: "La Fiscalía de Derechos Humanos del Ministerio Público, que persigue penalmente a los infractores."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El Procurador de los Derechos Humanos (artículo 273 CPRG) es un comisionado del Congreso de la República que defiende los derechos constitucionales frente a abusos de la administración pública. No tiene facultades jurisdiccionales, pero puede investigar, supervisar a la administración, emitir censuras públicas, recomendar medidas legislativas y promover acciones legales. Es elegido por el Congreso para un período de 5 años."
+      },
+      {
+        id: 5,
+        pregunta: "¿Qué establece el artículo 4 de la Constitución Política de Guatemala respecto a la igualdad?",
+        opciones: {
+          A: "Que solo los ciudadanos guatemaltecos por nacimiento gozan de plena igualdad ante la ley.",
+          B: "Que en Guatemala todos los seres humanos son libres e iguales en dignidad y derechos, sin discriminación por raza, color, sexo, religión, nacimiento u otra razón.",
+          C: "Que la igualdad legal aplica exclusivamente en materia laboral y educativa, no en otros ámbitos."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El artículo 4 de la CPRG consagra el principio de igualdad: 'En Guatemala todos los seres humanos son libres e iguales en dignidad y derechos. El hombre y la mujer, cualquiera que sea su estado civil, tienen iguales oportunidades y responsabilidades.' Este artículo es fundamento del derecho antidiscriminatorio guatemalteco y base para la protección de comunidades indígenas, mujeres y grupos históricamente marginados."
       }
     ]
   }
