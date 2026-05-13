@@ -16,6 +16,7 @@ import ConstituQuizHome from "./pages/quiz/ConstituQuizHome";
 import QuizStudyMode from "./pages/quiz/QuizStudyMode";
 import QuizPracticeMode from "./pages/quiz/QuizPracticeMode";
 import QuizResults from "./pages/quiz/QuizResults";
+import Glosario from "./pages/public/Glosario";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -46,6 +47,7 @@ function App() {
               <Route path="/registro" element={<Registro />} />
               <Route path="/login" element={<Login />} />
               <Route path="/progreso" element={<Progreso />} />
+              <Route path="/glosario" element={<Glosario />} />
               <Route path="/constituquiz" element={<ConstituQuizHome />} />
               <Route path="/constituquiz/estudio/:temaId" element={<QuizStudyMode />} />
               <Route path="/constituquiz/practica/:temaId" element={<QuizPracticeMode />} />

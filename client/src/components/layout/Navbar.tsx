@@ -13,6 +13,7 @@ import {
   Brain,
   BarChart2,
   UserCircle,
+  BookText,
 } from "lucide-react";
 import { useAuthStore } from "../../store/authStore";
 
@@ -102,6 +103,13 @@ export default function Navbar() {
               >
                 <BarChart2 className="h-4 w-4 mr-1" />
                 Mi Progreso
+              </Link>
+              <Link
+                to="/glosario"
+                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-[#16324f] hover:text-[#13293d] transition-colors"
+              >
+                <BookText className="h-4 w-4 mr-1" />
+                Glosario
               </Link>
             </div>
           </div>
@@ -212,6 +220,14 @@ export default function Navbar() {
             >
               <BarChart2 className="h-5 w-5 mr-2" />
               Mi Progreso
+            </Link>
+            <Link
+              to="/glosario"
+              className="flex items-center px-3 py-2 rounded-md text-base font-medium text-[#16324f] hover:text-[#13293d] hover:bg-[#67a2d3] transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <BookText className="h-5 w-5 mr-2" />
+              Glosario
             </Link>
           </div>
 
