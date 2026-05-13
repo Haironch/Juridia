@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Scale, BookOpen, Play, Trophy, Shield, FileSignature, Gavel, BookMarked, Briefcase, Building2, Heart, Landmark, Receipt, ClipboardList, ShieldCheck } from 'lucide-react';
+import { Scale, BookOpen, Play, Trophy, Shield, FileSignature, Gavel, BookMarked, Briefcase, Building2, Heart, Landmark, Receipt, ClipboardList, ShieldCheck, FileText } from 'lucide-react';
 import type { QuizTema, QuizUserProgress } from '../../types/index';
 
 interface TopicCardProps {
@@ -20,6 +20,7 @@ const iconMap: Record<string, React.ReactNode> = {
   Receipt: <Receipt className="h-8 w-8 text-[#2a628f]" />,
   ClipboardList: <ClipboardList className="h-8 w-8 text-[#2a628f]" />,
   ShieldCheck: <ShieldCheck className="h-8 w-8 text-[#2a628f]" />,
+  FileText: <FileText className="h-8 w-8 text-[#2a628f]" />,
 };
 
 export default function TopicCard({ tema, progress }: TopicCardProps) {

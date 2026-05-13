@@ -878,5 +878,978 @@ export const quizTemas: QuizTema[] = [
         explicacion: "El artículo 4 de la CPRG consagra el principio de igualdad: 'En Guatemala todos los seres humanos son libres e iguales en dignidad y derechos. El hombre y la mujer, cualquiera que sea su estado civil, tienen iguales oportunidades y responsabilidades.' Este artículo es fundamento del derecho antidiscriminatorio guatemalteco y base para la protección de comunidades indígenas, mujeres y grupos históricamente marginados."
       }
     ]
+  },
+
+  // ── SESIÓN 1: INTRODUCCIÓN AL DERECHO LABORAL ────────────────────────────
+  {
+    id: "sesion-uno-derecho-laboral",
+    tema: "Introducción al Derecho Laboral",
+    descripcion: "Quiz sobre fundamentos del Código de Trabajo y Derecho Laboral en Guatemala.",
+    icono: "Scale",
+    categoria: "Laboral",
+    totalPreguntas: 22,
+    preguntas: [
+      {
+        id: 1,
+        pregunta: "¿Qué decreto corresponde al Código de Trabajo de Guatemala?",
+        opciones: { A: "Decreto 1441", B: "Decreto 330", C: "Decreto 101" },
+        respuestaCorrecta: "A",
+        explicacion: "El Código de Trabajo vigente corresponde al Decreto 1441 del Congreso de la República."
+      },
+      {
+        id: 2,
+        pregunta: "¿Por qué se dice que el Código de Trabajo es el Decreto 330?",
+        opciones: {
+          A: "Porque fue creado por la Constitución",
+          B: "Porque originalmente fue el Decreto 330 y luego reformado por el 1441",
+          C: "Porque reemplazó totalmente el Decreto 1441"
+        },
+        respuestaCorrecta: "B",
+        explicacion: "Inicialmente el Código de Trabajo fue el Decreto 330, posteriormente reformado íntegramente por el Decreto 1441."
+      },
+      {
+        id: 3,
+        pregunta: "¿Cuándo entró en vigencia el Código de Trabajo?",
+        opciones: { A: "16 de agosto de 1961", B: "15 de septiembre de 1944", C: "1 de enero de 1970" },
+        respuestaCorrecta: "A",
+        explicacion: "El Código de Trabajo entró en vigencia el 16 de agosto de 1961."
+      },
+      {
+        id: 4,
+        pregunta: "¿Cuántos títulos tiene el Código de Trabajo?",
+        opciones: { A: "12 títulos", B: "18 títulos", C: "25 títulos" },
+        respuestaCorrecta: "B",
+        explicacion: "El Código de Trabajo está compuesto por 18 títulos."
+      },
+      {
+        id: 5,
+        pregunta: "¿Cuántos artículos tiene el Código de Trabajo?",
+        opciones: { A: "350 artículos", B: "431 artículos", C: "500 artículos" },
+        respuestaCorrecta: "B",
+        explicacion: "El Código de Trabajo contiene 431 artículos."
+      },
+      {
+        id: 6,
+        pregunta: "¿Qué temas contiene el Código de Trabajo?",
+        opciones: {
+          A: "Solo derecho individual del trabajo",
+          B: "Derecho individual, colectivo y normas administrativas",
+          C: "Únicamente normas procesales"
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El Código regula derecho individual, colectivo y normas administrativas laborales."
+      },
+      {
+        id: 7,
+        pregunta: "¿Qué es el trabajo?",
+        opciones: {
+          A: "Una obligación exclusiva del Estado",
+          B: "Una actividad humana destinada a satisfacer necesidades",
+          C: "Una actividad únicamente física"
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El trabajo es la actividad humana intelectual o material destinada a producir elementos para satisfacer necesidades."
+      },
+      {
+        id: 8,
+        pregunta: "¿Cuál de las siguientes es una clase de trabajo?",
+        opciones: { A: "Trabajo autónomo", B: "Trabajo penal", C: "Trabajo judicial" },
+        respuestaCorrecta: "A",
+        explicacion: "Entre las clases de trabajo se encuentra el trabajo autónomo o por cuenta propia."
+      },
+      {
+        id: 9,
+        pregunta: "¿Qué es el Derecho Laboral?",
+        opciones: {
+          A: "La rama que regula únicamente sindicatos",
+          B: "La rama del derecho público que regula relaciones entre patrono y trabajador",
+          C: "La rama encargada exclusivamente del comercio"
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El Derecho Laboral regula las relaciones entre patrono y trabajador, así como sus derechos y obligaciones."
+      },
+      {
+        id: 10,
+        pregunta: "¿Cuántas teorías existen sobre la naturaleza jurídica del Derecho de Trabajo?",
+        opciones: { A: "Dos", B: "Tres", C: "Cuatro" },
+        respuestaCorrecta: "C",
+        explicacion: "Existen cuatro teorías: privatista, publicista, dualista y social."
+      },
+      {
+        id: 11,
+        pregunta: "¿Cuáles son las etapas históricas del Derecho de Trabajo?",
+        opciones: {
+          A: "Industrialización y globalización",
+          B: "Esclavitud, feudalismo, edad media y edad moderna",
+          C: "Edad antigua y contemporánea únicamente"
+        },
+        respuestaCorrecta: "B",
+        explicacion: "La historia del Derecho de Trabajo se divide en esclavitud, feudalismo, edad media y edad moderna."
+      },
+      {
+        id: 12,
+        pregunta: "¿Cuál fue una etapa importante en la historia del Derecho Laboral en Guatemala?",
+        opciones: { A: "La revolución de 1944", B: "La independencia de México", C: "La guerra fría" },
+        respuestaCorrecta: "A",
+        explicacion: "La revolución de 1944 marcó importantes avances laborales y sociales en Guatemala."
+      },
+      {
+        id: 13,
+        pregunta: "¿Qué son los principios laborales?",
+        opciones: {
+          A: "Normas penales",
+          B: "Bases para crear, interpretar y aplicar normas laborales",
+          C: "Sanciones administrativas"
+        },
+        respuestaCorrecta: "B",
+        explicacion: "Los principios laborales sirven de base para interpretar y aplicar el Derecho Laboral."
+      },
+      {
+        id: 14,
+        pregunta: "¿Cómo se clasifican los principios laborales?",
+        opciones: {
+          A: "Ideológicos, justicia social y doctrinarios",
+          B: "Civiles y penales",
+          C: "Internos y externos"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Los principios laborales se clasifican en ideológicos, de justicia social y doctrinarios o legales."
+      },
+      {
+        id: 15,
+        pregunta: "¿Cuál es uno de los principios ideológicos del Derecho Laboral?",
+        opciones: { A: "Principio conciliatorio", B: "Principio mercantil", C: "Principio registral" },
+        respuestaCorrecta: "A",
+        explicacion: "El principio conciliatorio busca armonizar intereses entre trabajadores y patronos."
+      },
+      {
+        id: 16,
+        pregunta: "¿Cuál es una característica del Derecho Laboral?",
+        opciones: { A: "Imperatividad", B: "Neutralidad absoluta", C: "Formalismo excesivo" },
+        respuestaCorrecta: "A",
+        explicacion: "El Derecho Laboral es imperativo porque sus normas son de cumplimiento obligatorio."
+      },
+      {
+        id: 17,
+        pregunta: "¿Qué establece el principio de estabilidad laboral?",
+        opciones: {
+          A: "Que el trabajador puede ser despedido libremente",
+          B: "Que debe procurarse permanencia y seguridad en el empleo",
+          C: "Que el contrato debe renovarse cada mes"
+        },
+        respuestaCorrecta: "B",
+        explicacion: "La estabilidad laboral busca garantizar permanencia y seguridad al trabajador."
+      },
+      {
+        id: 18,
+        pregunta: "¿Qué buscan los principios de justicia social?",
+        opciones: {
+          A: "Favorecer únicamente a empresas",
+          B: "Proteger a las personas económicamente más débiles",
+          C: "Eliminar contratos laborales"
+        },
+        respuestaCorrecta: "B",
+        explicacion: "Los principios de justicia social buscan proteger y mejorar las condiciones de las personas vulnerables."
+      },
+      {
+        id: 19,
+        pregunta: "¿Cómo se interpreta el Derecho Laboral en Guatemala?",
+        opciones: {
+          A: "Solo mediante interpretación gramatical",
+          B: "Con interpretación clásica y técnico-legal",
+          C: "Únicamente por jurisprudencia"
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El Derecho Laboral se interpreta mediante interpretación clásica y técnico-legal."
+      },
+      {
+        id: 20,
+        pregunta: "¿Qué establece la interpretación clásica del Código de Trabajo?",
+        opciones: {
+          A: "Que debe prevalecer el interés económico empresarial",
+          B: "Que debe tomarse en cuenta el interés de los trabajadores",
+          C: "Que solo importa el texto literal"
+        },
+        respuestaCorrecta: "B",
+        explicacion: "La interpretación clásica prioriza el interés de los trabajadores en armonía con la convivencia social."
+      },
+      {
+        id: 21,
+        pregunta: "¿Qué principio se aplica en caso de duda en interpretación laboral?",
+        opciones: { A: "In dubio pro operario", B: "Cosa juzgada", C: "Legalidad penal" },
+        respuestaCorrecta: "A",
+        explicacion: "En caso de duda debe aplicarse la interpretación más favorable al trabajador."
+      },
+      {
+        id: 22,
+        pregunta: "¿Cuáles son las fuentes del Derecho de Trabajo?",
+        opciones: {
+          A: "Fuentes tradicionales y específicas",
+          B: "Únicamente jurisprudencia",
+          C: "Solo reglamentos administrativos"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Las fuentes del Derecho de Trabajo se dividen en tradicionales y específicas."
+      }
+    ]
+  },
+
+  // ── SESIÓN 2: DERECHO INDIVIDUAL DE TRABAJO ──────────────────────────────
+  {
+    id: "sesion-dos-derecho-individual",
+    tema: "Derecho Individual de Trabajo",
+    descripcion: "Quiz sobre sujetos, principios y disposiciones generales del Derecho Individual de Trabajo.",
+    icono: "Briefcase",
+    categoria: "Laboral",
+    totalPreguntas: 27,
+    preguntas: [
+      {
+        id: 23,
+        pregunta: "¿Qué es el Derecho Individual de Trabajo?",
+        opciones: {
+          A: "La rama que regula únicamente sindicatos",
+          B: "La parte del Derecho Laboral que regula la relación entre patrono y trabajador",
+          C: "La rama encargada del derecho mercantil"
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El Derecho Individual de Trabajo estudia las normas que regulan la relación entre patrono y trabajador derivada de un contrato de trabajo."
+      },
+      {
+        id: 24,
+        pregunta: "¿Quiénes son los sujetos del Derecho Individual de Trabajo?",
+        opciones: {
+          A: "Patrono y trabajador, además de representantes e intermediarios",
+          B: "Solo el trabajador",
+          C: "Únicamente el Estado"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Los sujetos principales son patrono y trabajador; también existen sujetos secundarios como representantes e intermediarios."
+      },
+      {
+        id: 25,
+        pregunta: "¿Quién es el patrono o empleador?",
+        opciones: {
+          A: "Toda persona que presta servicios",
+          B: "La persona individual o jurídica que utiliza servicios de trabajadores",
+          C: "Únicamente una entidad pública"
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El patrono es quien utiliza los servicios de uno o más trabajadores mediante contrato o relación laboral."
+      },
+      {
+        id: 26,
+        pregunta: "¿Quién es el trabajador o empleado?",
+        opciones: {
+          A: "Toda persona individual que presta servicios a un patrono",
+          B: "Solo quien trabaja para el Estado",
+          C: "Toda empresa registrada"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El trabajador es la persona individual que presta servicios materiales o intelectuales a un patrono."
+      },
+      {
+        id: 27,
+        pregunta: "¿Quiénes son representantes del patrono?",
+        opciones: {
+          A: "Los sindicatos",
+          B: "Gerentes, directores y administradores",
+          C: "Únicamente los abogados"
+        },
+        respuestaCorrecta: "B",
+        explicacion: "Los representantes del patrono son quienes ejercen funciones de dirección o administración."
+      },
+      {
+        id: 28,
+        pregunta: "¿Los representantes del patrono deben ser trabajadores del patrono?",
+        opciones: { A: "Sí, excepto los mandatarios", B: "Nunca", C: "Solo en empresas privadas" },
+        respuestaCorrecta: "A",
+        explicacion: "Los representantes normalmente están ligados mediante relación laboral, salvo los mandatarios."
+      },
+      {
+        id: 29,
+        pregunta: "¿Puede el representante del patrono ser testigo en juicio laboral?",
+        opciones: {
+          A: "Sí, libremente",
+          B: "No, porque está sujeto a tacha",
+          C: "Solo si el trabajador lo autoriza"
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El representante del patrono no puede ser testigo por ejercer representación patronal."
+      },
+      {
+        id: 30,
+        pregunta: "¿Puede el representante del patrono afiliarse a un sindicato de trabajadores?",
+        opciones: { A: "Sí", B: "No", C: "Solo temporalmente" },
+        respuestaCorrecta: "B",
+        explicacion: "La ley prohíbe que representantes patronales se afilien a sindicatos de trabajadores."
+      },
+      {
+        id: 31,
+        pregunta: "¿Está sujeto a límites de jornada un representante del patrono?",
+        opciones: { A: "Sí", B: "No", C: "Solo en jornada nocturna" },
+        respuestaCorrecta: "B",
+        explicacion: "Los representantes patronales no están sujetos a límites de jornada."
+      },
+      {
+        id: 32,
+        pregunta: "¿Quién es el intermediario?",
+        opciones: {
+          A: "Quien contrata trabajadores en beneficio de un patrono",
+          B: "El inspector de trabajo",
+          C: "El sindicato"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El intermediario contrata trabajadores en nombre propio para beneficiar a un patrono."
+      },
+      {
+        id: 33,
+        pregunta: "¿Es responsable el patrono por el actuar del intermediario?",
+        opciones: { A: "Sí, solidariamente", B: "Nunca", C: "Solo en casos penales" },
+        respuestaCorrecta: "A",
+        explicacion: "El patrono responde solidariamente frente a trabajadores por actos del intermediario."
+      },
+      {
+        id: 34,
+        pregunta: "¿Cuándo puede limitarse el derecho de trabajo?",
+        opciones: {
+          A: "Por decisión del patrono",
+          B: "Mediante resolución de autoridad competente basada en ley",
+          C: "Por decisión sindical"
+        },
+        respuestaCorrecta: "B",
+        explicacion: "Solo puede limitarse mediante resolución legal por orden público o interés nacional."
+      },
+      {
+        id: 35,
+        pregunta: "¿Cuál es una excepción a los límites al trabajo?",
+        opciones: { A: "Servicio militar obligatorio", B: "Vacaciones anuales", C: "Licencia sindical" },
+        respuestaCorrecta: "A",
+        explicacion: "El servicio militar constituye una excepción permitida por la ley."
+      },
+      {
+        id: 36,
+        pregunta: "¿Se pueden ceder contratos individuales de trabajo sin consentimiento?",
+        opciones: { A: "Sí", B: "No", C: "Solo verbalmente" },
+        respuestaCorrecta: "B",
+        explicacion: "No pueden cederse contratos sin consentimiento claro y expreso del trabajador."
+      },
+      {
+        id: 37,
+        pregunta: "¿Cuál es la excepción a la prohibición de ceder contratos?",
+        opciones: { A: "La venta de herramientas", B: "La enajenación de la empresa", C: "La suspensión laboral" },
+        respuestaCorrecta: "B",
+        explicacion: "La enajenación de la empresa constituye excepción legal."
+      },
+      {
+        id: 38,
+        pregunta: "¿Qué actividades están prohibidas en zonas de trabajo?",
+        opciones: {
+          A: "Venta de bebidas embriagantes y juegos de azar",
+          B: "Capacitaciones laborales",
+          C: "Reuniones sindicales"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La ley prohíbe bebidas embriagantes, juegos de azar y prostitución cerca de centros de trabajo."
+      },
+      {
+        id: 39,
+        pregunta: "¿A qué distancia aplican dichas prohibiciones?",
+        opciones: { A: "1 km", B: "3 km", C: "10 km" },
+        respuestaCorrecta: "B",
+        explicacion: "Las prohibiciones aplican en un radio de 3 km alrededor del centro de trabajo."
+      },
+      {
+        id: 40,
+        pregunta: "¿Puede un patrono dar instrucciones en idioma extranjero?",
+        opciones: { A: "Sí, libremente", B: "No", C: "Solo en inglés" },
+        respuestaCorrecta: "B",
+        explicacion: "La ley prohíbe instrucciones laborales en idiomas extranjeros."
+      },
+      {
+        id: 41,
+        pregunta: "¿Se deben adherir timbres forenses en escritos laborales?",
+        opciones: { A: "Sí", B: "No", C: "Solo en apelaciones" },
+        respuestaCorrecta: "B",
+        explicacion: "Los escritos laborales están exentos de timbres forenses."
+      },
+      {
+        id: 42,
+        pregunta: "¿Qué significa la irrenunciabilidad de derechos?",
+        opciones: {
+          A: "Que el trabajador puede vender sus derechos",
+          B: "Que son nulos los actos que disminuyan derechos laborales",
+          C: "Que los contratos no pueden modificarse"
+        },
+        respuestaCorrecta: "B",
+        explicacion: "Los derechos laborales son irrenunciables y no pueden disminuirse legalmente."
+      },
+      {
+        id: 43,
+        pregunta: "¿Es válido pactar trabajar sin aguinaldo?",
+        opciones: { A: "Sí", B: "No", C: "Solo temporalmente" },
+        respuestaCorrecta: "B",
+        explicacion: "El aguinaldo es un derecho irrenunciable del trabajador."
+      },
+      {
+        id: 44,
+        pregunta: "¿Qué porcentaje máximo de trabajadores extranjeros puede contratar un patrono?",
+        opciones: { A: "10%", B: "25%", C: "50%" },
+        respuestaCorrecta: "A",
+        explicacion: "La ley permite un máximo del 10% de trabajadores extranjeros."
+      },
+      {
+        id: 45,
+        pregunta: "¿Pueden modificarse los porcentajes de contratación de extranjeros?",
+        opciones: {
+          A: "No",
+          B: "Sí, por razones de protección económica nacional",
+          C: "Solo por decisión empresarial"
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El Ejecutivo puede modificar porcentajes por razones económicas nacionales."
+      },
+      {
+        id: 46,
+        pregunta: "¿Cuál es el ámbito de aplicación del Código de Trabajo?",
+        opciones: {
+          A: "Solo empresas privadas",
+          B: "Todas las empresas y trabajadores en Guatemala",
+          C: "Únicamente instituciones estatales"
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El Código aplica a todas las empresas y trabajadores dentro del territorio nacional."
+      },
+      {
+        id: 47,
+        pregunta: "¿Cómo se resuelven los casos no previstos por el Código de Trabajo?",
+        opciones: {
+          A: "Aplicando principios del Derecho de Trabajo y derecho común",
+          B: "Únicamente jurisprudencia",
+          C: "Solo por reglamentos"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Los vacíos legales se resuelven con principios laborales, equidad y derecho común."
+      },
+      {
+        id: 48,
+        pregunta: "¿Qué leyes predominan en caso de conflicto normativo?",
+        opciones: { A: "Las civiles", B: "Las mercantiles", C: "Las laborales y de previsión social" },
+        respuestaCorrecta: "C",
+        explicacion: "Las leyes laborales predominan frente a otras normas en caso de conflicto."
+      },
+      {
+        id: 49,
+        pregunta: "¿Cómo deben interpretarse las leyes laborales?",
+        opciones: {
+          A: "En favor de los trabajadores y convivencia social",
+          B: "Solo de forma literal",
+          C: "A favor del patrono"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La interpretación laboral debe favorecer al trabajador en armonía con la convivencia social."
+      }
+    ]
+  },
+
+  // ── SESIÓN 3-4: CONTRATO INDIVIDUAL Y OBLIGACIONES LABORALES ─────────────
+  {
+    id: "sesion-tres-cuatro-contrato-obligaciones",
+    tema: "Contrato Individual de Trabajo y Obligaciones Laborales",
+    descripcion: "Quiz sobre contratos de trabajo, relación laboral, modalidades y obligaciones de patronos y trabajadores.",
+    icono: "FileText",
+    categoria: "Laboral",
+    totalPreguntas: 50,
+    preguntas: [
+      {
+        id: 50,
+        pregunta: "¿Qué es doctrinariamente el contrato individual de trabajo?",
+        opciones: {
+          A: "Un acuerdo entre trabajador y patrono con prestación de servicios y remuneración",
+          B: "Una resolución judicial",
+          C: "Un contrato mercantil obligatorio"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Doctrinariamente es un acuerdo de voluntades entre trabajador y patrono."
+      },
+      {
+        id: 51,
+        pregunta: "¿Qué establece la definición legal del contrato individual de trabajo?",
+        opciones: {
+          A: "Un vínculo económico-jurídico con prestación personal y remuneración",
+          B: "Una obligación exclusivamente civil",
+          C: "Una asociación comercial"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 18 CT regula el vínculo económico-jurídico entre trabajador y patrono."
+      },
+      {
+        id: 52,
+        pregunta: "¿Cuál es una característica del contrato individual de trabajo?",
+        opciones: { A: "Consensual", B: "Gratuito", C: "Unilateral" },
+        respuestaCorrecta: "A",
+        explicacion: "El contrato laboral es consensual, bilateral, oneroso y de tracto sucesivo."
+      },
+      {
+        id: 53,
+        pregunta: "¿Cuáles son los elementos del contrato de trabajo?",
+        opciones: {
+          A: "Personales, reales y formales",
+          B: "Civiles y penales",
+          C: "Administrativos únicamente"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Los elementos son subjetivos, materiales y formales."
+      },
+      {
+        id: 54,
+        pregunta: "¿Cuál es un principio del contrato individual de trabajo?",
+        opciones: { A: "Razonabilidad", B: "Legalidad penal", C: "Retroactividad" },
+        respuestaCorrecta: "A",
+        explicacion: "Entre los principios destacan razonabilidad, exclusividad y ausencia de riesgo."
+      },
+      {
+        id: 55,
+        pregunta: "¿Cuál es un elemento especial del contrato de trabajo?",
+        opciones: { A: "Subordinación", B: "Herencia", C: "Copropiedad" },
+        respuestaCorrecta: "A",
+        explicacion: "La subordinación implica obediencia a instrucciones del patrono."
+      },
+      {
+        id: 56,
+        pregunta: "¿Cómo pueden clasificarse los contratos de trabajo según su duración?",
+        opciones: {
+          A: "Indefinidos, a plazo fijo y por obra determinada",
+          B: "Mercantiles y civiles",
+          C: "Nacionales e internacionales"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Las modalidades por duración son indefinido, plazo fijo y obra determinada."
+      },
+      {
+        id: 57,
+        pregunta: "¿Cuál es la naturaleza jurídica del contrato individual de trabajo?",
+        opciones: {
+          A: "Contrato autónomo",
+          B: "Contrato penal",
+          C: "Contrato societario obligatorio"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El contrato laboral tiene naturaleza autónoma con características propias."
+      },
+      {
+        id: 58,
+        pregunta: "¿Qué es la relación laboral?",
+        opciones: {
+          A: "El vínculo surgido desde que inicia la prestación del servicio",
+          B: "Una simple promesa verbal",
+          C: "Un trámite administrativo"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La relación laboral nace cuando el trabajador inicia servicios."
+      },
+      {
+        id: 59,
+        pregunta: "¿Cuál es una característica de la relación laboral?",
+        opciones: { A: "Dependencia continuada", B: "Independencia total", C: "Ausencia de pago" },
+        respuestaCorrecta: "A",
+        explicacion: "La dependencia continuada es esencial en la relación laboral."
+      },
+      {
+        id: 60,
+        pregunta: "¿Qué significa vínculo económico-jurídico?",
+        opciones: {
+          A: "Que existen beneficios económicos y obligaciones legales",
+          B: "Que solo existe relación económica",
+          C: "Que no hay obligaciones"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Existe beneficio económico y derechos y obligaciones legales."
+      },
+      {
+        id: 61,
+        pregunta: "¿Qué implica la prestación personal del servicio?",
+        opciones: {
+          A: "Que el trabajador debe prestar personalmente el servicio",
+          B: "Que cualquier persona puede sustituirlo",
+          C: "Que solo aplica a empresas"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El servicio debe ejecutarse personalmente por el trabajador."
+      },
+      {
+        id: 62,
+        pregunta: "¿Qué implica la dependencia continuada?",
+        opciones: {
+          A: "Que el patrono debe proporcionar medios necesarios para trabajar",
+          B: "Que el trabajador es independiente",
+          C: "Que no existe subordinación"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La dependencia supone apoyo y recursos proporcionados por el patrono."
+      },
+      {
+        id: 63,
+        pregunta: "¿Qué implica la dirección en la relación laboral?",
+        opciones: {
+          A: "Obedecer órdenes del patrono o representantes",
+          B: "Independencia absoluta",
+          C: "Control judicial"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La dirección implica acatar instrucciones patronales."
+      },
+      {
+        id: 64,
+        pregunta: "¿Cómo puede ser la dirección?",
+        opciones: { A: "Inmediata o delegada", B: "Pública o privada", C: "Civil o penal" },
+        respuestaCorrecta: "A",
+        explicacion: "La dirección puede ejercerse directamente o mediante representantes."
+      },
+      {
+        id: 65,
+        pregunta: "¿Qué significa retribución de cualquier clase o forma?",
+        opciones: {
+          A: "Pago de salario por servicios prestados",
+          B: "Trabajo gratuito",
+          C: "Pago únicamente en especie"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El trabajador debe recibir remuneración por su trabajo."
+      },
+      {
+        id: 66,
+        pregunta: "¿La exclusividad es esencial en todo contrato laboral?",
+        opciones: {
+          A: "No, salvo pacto expreso o incompatibilidad",
+          B: "Sí, siempre",
+          C: "Solo en el sector público"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La exclusividad solo aplica cuando exista pacto expreso."
+      },
+      {
+        id: 67,
+        pregunta: "¿Cuál es la diferencia entre contrato y relación laboral?",
+        opciones: {
+          A: "El contrato es acuerdo y la relación es la ejecución del trabajo",
+          B: "Son exactamente lo mismo",
+          C: "La relación laboral solo existe por escrito"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El contrato regula condiciones y la relación es la prestación efectiva."
+      },
+      {
+        id: 68,
+        pregunta: "¿Cuándo se perfecciona el contrato individual de trabajo?",
+        opciones: {
+          A: "Cuando inicia la relación laboral",
+          B: "Cuando se firma únicamente",
+          C: "Cuando lo aprueba un juez"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El contrato se perfecciona al iniciar la prestación de servicios."
+      },
+      {
+        id: 69,
+        pregunta: "¿Qué es simulación del contrato de trabajo?",
+        opciones: {
+          A: "Ocultar una verdadera relación laboral bajo otro contrato",
+          B: "Modificar salarios",
+          C: "Firmar contratos colectivos"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La simulación busca evitar obligaciones laborales."
+      },
+      {
+        id: 70,
+        pregunta: "¿Cómo se identifica una simulación laboral?",
+        opciones: {
+          A: "Cuando existen elementos propios de relación laboral",
+          B: "Cuando hay vacaciones",
+          C: "Cuando existe sindicato"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La simulación se detecta verificando subordinación y remuneración."
+      },
+      {
+        id: 71,
+        pregunta: "¿Qué prestación puede reclamarse en caso de simulación?",
+        opciones: {
+          A: "Indemnización y prestaciones laborales",
+          B: "Solo vacaciones",
+          C: "Únicamente salario"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Pueden reclamarse todas las prestaciones omitidas."
+      },
+      {
+        id: 72,
+        pregunta: "¿A qué obliga el contrato de trabajo?",
+        opciones: {
+          A: "Al cumplimiento de obligaciones legales y contractuales",
+          B: "Solo al pago salarial",
+          C: "Únicamente a obedecer órdenes"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El contrato obliga conforme a ley, buena fe y costumbre."
+      },
+      {
+        id: 73,
+        pregunta: "¿Pueden alterarse permanentemente las condiciones laborales?",
+        opciones: {
+          A: "Solo por acuerdo expreso o autorización legal",
+          B: "Sí, unilateralmente",
+          C: "Nunca"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Las condiciones solo pueden modificarse conforme a ley."
+      },
+      {
+        id: 74,
+        pregunta: "¿Cuál es un elemento de la prestación del servicio?",
+        opciones: { A: "Tiempo de realización", B: "Nacionalidad", C: "Religión" },
+        respuestaCorrecta: "A",
+        explicacion: "El tiempo y lugar son elementos esenciales del servicio."
+      },
+      {
+        id: 75,
+        pregunta: "¿Qué trabajo debe realizarse si no se especifica en el contrato?",
+        opciones: {
+          A: "El compatible con capacidades del trabajador",
+          B: "Cualquier trabajo",
+          C: "Solo trabajo físico"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Debe ser compatible con aptitudes y condición física."
+      },
+      {
+        id: 76,
+        pregunta: "¿Qué es sustitución patronal?",
+        opciones: {
+          A: "Cambio de patrono sin afectar derechos laborales",
+          B: "Despido colectivo",
+          C: "Cambio de trabajador"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La sustitución patronal mantiene intactos los derechos laborales."
+      },
+      {
+        id: 77,
+        pregunta: "¿Cuáles son las modalidades del contrato laboral?",
+        opciones: {
+          A: "Indefinido, plazo fijo y obra determinada",
+          B: "Mercantil y civil",
+          C: "Público y privado"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 25 CT regula las modalidades laborales."
+      },
+      {
+        id: 78,
+        pregunta: "¿Cuál es la modalidad general del contrato laboral?",
+        opciones: { A: "Tiempo indefinido", B: "Plazo fijo", C: "Obra determinada" },
+        respuestaCorrecta: "A",
+        explicacion: "La regla general es el contrato por tiempo indefinido."
+      },
+      {
+        id: 79,
+        pregunta: "¿Cuándo puede celebrarse un contrato a plazo fijo?",
+        opciones: {
+          A: "Cuando existe fecha determinada de finalización",
+          B: "Siempre",
+          C: "Solo verbalmente"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El plazo fijo requiere fecha o circunstancia determinada."
+      },
+      {
+        id: 80,
+        pregunta: "¿Por qué son excepcionales los contratos a plazo fijo?",
+        opciones: {
+          A: "Porque solo aplican a trabajos temporales o accidentales",
+          B: "Porque son ilegales",
+          C: "Porque no requieren salario"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Son excepcionales debido a la naturaleza temporal del trabajo."
+      },
+      {
+        id: 81,
+        pregunta: "¿Cómo pueden celebrarse los contratos individuales de trabajo?",
+        opciones: { A: "Verbales o escritos", B: "Solo escritos", C: "Únicamente electrónicos" },
+        respuestaCorrecta: "A",
+        explicacion: "La ley permite contratos verbales y escritos."
+      },
+      {
+        id: 82,
+        pregunta: "¿Cómo pueden clasificarse según cantidad de relaciones?",
+        opciones: {
+          A: "Individual y colectivo",
+          B: "Temporal y permanente",
+          C: "Mercantil y laboral"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Existen contratos individuales y colectivos."
+      },
+      {
+        id: 83,
+        pregunta: "¿Cuándo puede ser verbal un contrato laboral?",
+        opciones: {
+          A: "En labores agrícolas, domésticas o temporales",
+          B: "Siempre",
+          C: "Nunca"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La ley permite verbalidad en ciertos trabajos específicos."
+      },
+      {
+        id: 84,
+        pregunta: "¿Qué obligación tiene el patrono en contratos verbales?",
+        opciones: {
+          A: "Entregar constancia laboral",
+          B: "Registrar ante juez",
+          C: "Pagar doble salario"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Debe proporcionar constancia con datos esenciales."
+      },
+      {
+        id: 85,
+        pregunta: "¿Cómo debe extenderse el contrato escrito?",
+        opciones: { A: "En tres ejemplares", B: "En un ejemplar", C: "Solo digital" },
+        respuestaCorrecta: "A",
+        explicacion: "Debe realizarse en tres ejemplares."
+      },
+      {
+        id: 86,
+        pregunta: "¿Cómo se presentan actualmente los contratos laborales?",
+        opciones: { A: "Electrónicamente", B: "Solo físicamente", C: "Verbalmente" },
+        respuestaCorrecta: "A",
+        explicacion: "Actualmente se presentan mediante plataforma electrónica."
+      },
+      {
+        id: 87,
+        pregunta: "¿Qué requisito debe contener el contrato escrito?",
+        opciones: { A: "Salario y jornada", B: "Partido político", C: "Religión" },
+        respuestaCorrecta: "A",
+        explicacion: "El contrato debe indicar salario, jornada y demás condiciones."
+      },
+      {
+        id: 88,
+        pregunta: "¿Cómo se prueba el contrato laboral?",
+        opciones: {
+          A: "Con documento escrito o medios generales de prueba",
+          B: "Solo con testigos",
+          C: "Solo con peritaje"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Los contratos escritos se prueban documentalmente y los verbales por medios generales."
+      },
+      {
+        id: 89,
+        pregunta: "¿Quiénes tienen capacidad para celebrar contratos de trabajo?",
+        opciones: {
+          A: "Mayores de edad y menores autorizados",
+          B: "Solo empresarios",
+          C: "Únicamente mayores de 21 años"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La ley regula capacidad laboral para mayores y ciertos menores."
+      },
+      {
+        id: 90,
+        pregunta: "¿Puede trabajar legalmente un menor de 14 años?",
+        opciones: { A: "No", B: "Sí, libremente", C: "Solo en vacaciones" },
+        respuestaCorrecta: "A",
+        explicacion: "La edad mínima laboral actualmente es 15 años."
+      },
+      {
+        id: 91,
+        pregunta: "¿Existen excepciones para trabajo de menores de 14 años?",
+        opciones: { A: "No", B: "Sí, sin restricciones", C: "Solo nocturno" },
+        respuestaCorrecta: "A",
+        explicacion: "No puede permitirse trabajo a menores de 15 años."
+      },
+      {
+        id: 92,
+        pregunta: "¿La interdicción del patrono invalida contratos vigentes?",
+        opciones: { A: "No", B: "Sí", C: "Solo parcialmente" },
+        respuestaCorrecta: "A",
+        explicacion: "La interdicción no invalida contratos celebrados previamente."
+      },
+      {
+        id: 93,
+        pregunta: "¿Qué requisito debe cumplir un reclutador para trabajo en extranjero?",
+        opciones: {
+          A: "Garantizar repatriación de trabajadores",
+          B: "Tener oficina internacional",
+          C: "Pagar impuestos especiales"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Debe garantizar gastos y protección de trabajadores."
+      },
+      {
+        id: 94,
+        pregunta: "¿Cuándo no puede autorizarse trabajo en extranjero?",
+        opciones: {
+          A: "Si son menores de edad",
+          B: "Si son profesionales",
+          C: "Si tienen contrato escrito"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "No puede autorizarse trabajo de menores en el extranjero."
+      },
+      {
+        id: 95,
+        pregunta: "¿Los profesionales necesitan autorización para trabajar en el extranjero?",
+        opciones: { A: "No", B: "Sí", C: "Solo parcialmente" },
+        respuestaCorrecta: "A",
+        explicacion: "Profesionales titulados están exceptuados."
+      },
+      {
+        id: 96,
+        pregunta: "¿Qué ocurre con cláusulas que reduzcan derechos laborales?",
+        opciones: {
+          A: "Son nulas ipso jure",
+          B: "Son válidas",
+          C: "Dependen del patrono"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Las cláusulas que reduzcan derechos son nulas."
+      },
+      {
+        id: 97,
+        pregunta: "¿Cuál es una obligación del patrono?",
+        opciones: {
+          A: "Proporcionar herramientas necesarias",
+          B: "Retener salarios",
+          C: "Negar inspecciones"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El patrono debe brindar herramientas y condiciones necesarias."
+      },
+      {
+        id: 98,
+        pregunta: "¿Qué puede solicitarse si un trabajador no desocupa vivienda laboral?",
+        opciones: {
+          A: "Lanzamiento judicial",
+          B: "Embargo automático",
+          C: "Despido inmediato"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Procede el lanzamiento mediante incidente laboral."
+      },
+      {
+        id: 99,
+        pregunta: "¿Cuál es una prohibición de los trabajadores?",
+        opciones: {
+          A: "Trabajar en estado de embriaguez",
+          B: "Solicitar vacaciones",
+          C: "Afiliarse a sindicato"
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Está prohibido trabajar bajo efectos de alcohol o drogas."
+      }
+    ]
   }
 ];
