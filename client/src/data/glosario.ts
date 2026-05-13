@@ -208,6 +208,208 @@ export const terminosJuridicos: TerminoJuridico[] = [
     ejemplo:
       "Una persona que ha poseído un terreno abandonado de forma pública y pacífica durante más de 20 años puede iniciar un proceso judicial para que se le declare propietario por usucapión.",
   },
+
+  // ── Batch 2 ───────────────────────────────────────────────────────────────
+  {
+    id: "acta-notarial",
+    termino: "Acta notarial",
+    definicion:
+      "Instrumento público en que el notario hace constar hechos, situaciones o circunstancias que percibe directamente, sin que sea indispensable la disposición de derechos ni la comparecencia de otras partes. A diferencia de la escritura pública, no instrumenta negocios jurídicos sino que da fe de realidades.",
+    fuente: "Art. 60 Código de Notariado, Decreto 314",
+    categoria: "Notarial",
+    ejemplo:
+      "El notario que presencia la entrega de un bien levanta un acta notarial de entrega, dejando constancia fehaciente del hecho sin necesidad de que las partes dispongan de derechos.",
+  },
+  {
+    id: "antijuridicidad",
+    termino: "Antijuridicidad",
+    definicion:
+      "Elemento del delito que consiste en la contradicción entre la conducta típica del agente y el ordenamiento jurídico en su conjunto. Una conducta típica no es antijurídica si existe una causa de justificación, como la legítima defensa, el estado de necesidad o el cumplimiento de un deber legal.",
+    fuente: "Art. 24 bis Código Penal, Decreto 17-73",
+    categoria: "Penal",
+    ejemplo:
+      "Quien mata en legítima defensa realiza una conducta típica (homicidio), pero no antijurídica, porque la ley justifica el uso de la fuerza necesaria para repeler una agresión ilegítima.",
+  },
+  {
+    id: "capacidad-juridica",
+    termino: "Capacidad jurídica",
+    definicion:
+      "Aptitud reconocida por la ley para ser titular de derechos y obligaciones. Se distingue la capacidad de goce —inherente a todo ser humano desde el nacimiento— y la capacidad de ejercicio —para actuar por sí mismo—, que se adquiere a los 18 años.",
+    fuente: "Art. 1 y 8 Código Civil, Decreto Ley 106",
+    categoria: "Civil",
+    ejemplo:
+      "Un niño de 10 años tiene capacidad de goce (puede heredar) pero no de ejercicio (no puede firmar contratos por sí solo; necesita que su representante legal lo haga en su nombre).",
+  },
+  {
+    id: "culpabilidad",
+    termino: "Culpabilidad",
+    definicion:
+      "Elemento del delito que permite atribuirle el hecho típico y antijurídico a su autor como obra suya. Exige que el sujeto haya actuado con dolo (intención) o culpa (imprudencia) y que fuera imputable al momento del hecho. Sin culpabilidad no puede imponerse pena.",
+    fuente: "Art. 11 y 23 Código Penal, Decreto 17-73",
+    categoria: "Penal",
+    ejemplo:
+      "Una persona con trastorno mental severo que cause un daño actúa sin culpabilidad por inimputabilidad; el juez podrá aplicarle una medida de seguridad, pero no una pena de prisión.",
+  },
+  {
+    id: "demanda",
+    termino: "Demanda",
+    definicion:
+      "Acto procesal escrito por el que el actor ejercita una pretensión ante el órgano jurisdiccional, poniendo formalmente en marcha el proceso civil. Debe contener la identificación de las partes, los hechos, el derecho aplicable y la petición concreta al juez.",
+    fuente: "Art. 61 CPCYM, Decreto Ley 107",
+    categoria: "Procesal",
+    ejemplo:
+      "Al presentar la demanda de cobro de Q50,000 ante el Juzgado de Primera Instancia Civil, el acreedor da inicio al juicio ordinario y el juez emplaza al demandado para que conteste.",
+  },
+  {
+    id: "denuncia",
+    termino: "Denuncia",
+    definicion:
+      "Comunicación que cualquier persona hace al Ministerio Público o a la Policía Nacional Civil sobre la comisión de un delito de acción pública. A diferencia de la querella, el denunciante no asume un rol procesal activo; solo informa del hecho para que el MP investigue.",
+    fuente: "Art. 297 CPP, Decreto 51-92",
+    categoria: "Penal",
+    ejemplo:
+      "Un vecino que presencia un robo puede denunciarlo ante el MP o la PNC; el Ministerio Público queda obligado a investigar aunque la víctima directa no haya actuado.",
+  },
+  {
+    id: "excepcion",
+    termino: "Excepción procesal",
+    definicion:
+      "Medio de defensa que opone el demandado para atacar la forma del proceso (excepciones dilatorias, como la incompetencia) o el fondo de la pretensión (excepciones perentorias, como la prescripción o el pago). Las dilatorias suspenden el proceso; las perentorias lo extinguen.",
+    fuente: "Art. 116 y 120 CPCYM, Decreto Ley 107",
+    categoria: "Procesal",
+    ejemplo:
+      "Si el actor presenta una demanda ante un juez que no es competente, el demandado puede oponer la excepción dilatoria de incompetencia para que el caso se traslade al tribunal correcto.",
+  },
+  {
+    id: "filiacion",
+    termino: "Filiación",
+    definicion:
+      "Vínculo jurídico que une a padres e hijos, determinando derechos y obligaciones recíprocos. Puede ser por consanguinidad (biológica) o por adopción (legal). La filiación matrimonial se presume cuando el hijo nace dentro del matrimonio; la extramatrimonial se establece por reconocimiento voluntario o declaración judicial.",
+    fuente: "Art. 199 y ss. Código Civil, Decreto Ley 106",
+    categoria: "Civil",
+    ejemplo:
+      "El hijo nacido durante el matrimonio se presume hijo del marido (filiación matrimonial). Si el padre biológico es otro, la parte interesada debe impugnar esa presunción ante un juez de familia.",
+  },
+  {
+    id: "hecho-generador",
+    termino: "Hecho generador",
+    definicion:
+      "Presupuesto de hecho establecido en la ley tributaria cuya realización origina el nacimiento de la obligación tributaria. Es el elemento que vincula al contribuyente con el Estado, haciendo exigible el pago del tributo.",
+    fuente: "Art. 31 Código Tributario, Decreto 6-91",
+    categoria: "Tributario",
+    ejemplo:
+      "En el IVA, el hecho generador es la venta de un bien o la prestación de un servicio; en el instante en que se realiza esa operación nace la obligación de pagar el 12% al Estado.",
+  },
+  {
+    id: "imputado",
+    termino: "Imputado",
+    definicion:
+      "Persona a quien se le atribuye formalmente la comisión de un delito durante el proceso penal, antes de que exista una sentencia condenatoria firme. Goza de la presunción de inocencia y tiene derecho a defensa desde el primer acto del procedimiento.",
+    fuente: "Art. 71 CPP, Decreto 51-92",
+    categoria: "Penal",
+    ejemplo:
+      "Desde que el MP formaliza cargos en la primera declaración, la persona pasa a ser imputada. Solo deja de serlo cuando se dicta sentencia absolutoria firme o se sobresee el caso.",
+  },
+  {
+    id: "legado",
+    termino: "Legado",
+    definicion:
+      "Disposición testamentaria a título particular por la que el testador transmite a una persona determinada (legatario) bienes o derechos concretos de su herencia, sin constituirla heredera universal. El legatario solo responde por las deudas del causante hasta el valor de lo recibido.",
+    fuente: "Art. 1004 Código Civil, Decreto Ley 106",
+    categoria: "Civil",
+    ejemplo:
+      "Si el testador dice 'dejo mi vehículo a mi sobrino Juan', está constituyendo un legado específico; Juan recibirá únicamente el carro, no una parte proporcional de toda la herencia.",
+  },
+  {
+    id: "medida-de-seguridad",
+    termino: "Medida de seguridad",
+    definicion:
+      "Consecuencia jurídica del delito distinta de la pena, aplicable a quienes resultan penalmente inimputables (personas con trastorno mental o menores de edad). Su finalidad es la rehabilitación, custodia o tratamiento, no el castigo. Se impone por tiempo indeterminado hasta que cese la peligrosidad.",
+    fuente: "Art. 88 Código Penal, Decreto 17-73",
+    categoria: "Penal",
+    ejemplo:
+      "Una persona con esquizofrenia que comete un delito grave puede ser declarada inimputable por el juez y sometida a internamiento en un establecimiento psiquiátrico como medida de seguridad.",
+  },
+  {
+    id: "notificacion",
+    termino: "Notificación",
+    definicion:
+      "Acto procesal por el que se pone formalmente en conocimiento de las partes o terceros una resolución judicial o administrativa. Es indispensable para que las resoluciones produzcan efectos legales y para que comiencen a correr los plazos para interponer recursos.",
+    fuente: "Art. 66 CPCYM, Decreto Ley 107",
+    categoria: "Procesal",
+    ejemplo:
+      "El plazo de 5 días para apelar una sentencia civil empieza a contar desde el día siguiente a la notificación, no desde la fecha en que el juez la dictó.",
+  },
+  {
+    id: "patria-potestad",
+    termino: "Patria potestad",
+    definicion:
+      "Conjunto de derechos y obligaciones que la ley reconoce a los padres sobre la persona y bienes de sus hijos menores no emancipados. Comprende la representación legal, la administración del patrimonio del hijo y su crianza y educación. Es irrenunciable, intransmisible y puede suspenderse o extinguirse por causas graves.",
+    fuente: "Art. 252 Código Civil, Decreto Ley 106",
+    categoria: "Civil",
+    ejemplo:
+      "Los padres ejercen la patria potestad de manera conjunta. Si uno de ellos maltrata al hijo, el juez de familia puede suspenderle la patria potestad y atribuírsela exclusivamente al otro progenitor.",
+  },
+  {
+    id: "recurso-revocatoria",
+    termino: "Recurso de revocatoria",
+    definicion:
+      "Medio de impugnación ordinario que se interpone ante el mismo órgano que dictó la resolución impugnada, solicitando que la modifique o deje sin efecto. En sede administrativa es el primer recurso que debe agotarse antes de acceder a la vía contencioso-administrativa.",
+    fuente: "Art. 7 Ley de lo Contencioso Administrativo, Decreto 119-96",
+    categoria: "Procesal",
+    ejemplo:
+      "Si la SAT emite una resolución sancionando a un contribuyente, este debe interponer el recurso de revocatoria ante la propia SAT dentro del plazo legal antes de poder acudir a los tribunales.",
+  },
+  {
+    id: "sentencia",
+    termino: "Sentencia",
+    definicion:
+      "Resolución definitiva del juez o tribunal que pone fin al proceso, declarando el derecho de las partes sobre el fondo del asunto. Cuando queda firme produce cosa juzgada. Puede ser condenatoria, absolutoria o declarativa según su contenido.",
+    fuente: "Art. 141 LOJ, Decreto 2-89",
+    categoria: "Procesal",
+    ejemplo:
+      "En un juicio ordinario de cobro de dinero, la sentencia condena al demandado a pagar la suma adeudada más intereses y costas; una vez notificada y vencidos los plazos de recurso, adquiere firmeza.",
+  },
+  {
+    id: "sucesion",
+    termino: "Sucesión",
+    definicion:
+      "Transmisión del patrimonio —bienes, derechos y obligaciones— de una persona fallecida (causante) a sus sucesores. Puede ser testada, cuando existe testamento válido, o intestada, cuando no hay testamento y la ley determina quiénes heredan y en qué proporción.",
+    fuente: "Art. 917 Código Civil, Decreto Ley 106",
+    categoria: "Civil",
+    ejemplo:
+      "Cuando una persona muere sin testamento, sus bienes se distribuyen entre herederos legales según el orden que fija el Código Civil: primero los hijos, luego los padres, después los hermanos, y así sucesivamente.",
+  },
+  {
+    id: "testamento",
+    termino: "Testamento",
+    definicion:
+      "Acto personalísimo, unilateral y esencialmente revocable por el que una persona capaz dispone de sus bienes y declara su voluntad para que surta efecto después de su muerte. El más usado en Guatemala es el testamento notarial, otorgado en escritura pública ante notario y dos testigos.",
+    fuente: "Art. 935 Código Civil, Decreto Ley 106",
+    categoria: "Civil",
+    ejemplo:
+      "Una persona puede cambiar su testamento cuantas veces quiera mientras viva; el que prevalece es siempre el último otorgado, ya que cada nuevo testamento revoca automáticamente los anteriores.",
+  },
+  {
+    id: "tributo",
+    termino: "Tributo",
+    definicion:
+      "Prestación pecuniaria que el Estado exige coactivamente a los contribuyentes en virtud de su poder tributario, para financiar el gasto público. Solo puede crearse por ley. Se clasifica en impuestos, tasas y contribuciones especiales según exista o no contraprestación directa del Estado.",
+    fuente: "Art. 9 Código Tributario, Decreto 6-91 · Art. 239 CPRG",
+    categoria: "Tributario",
+    ejemplo:
+      "El IVA es un tributo tipo impuesto (sin contraprestación directa); la tasa de migración es un tributo tipo tasa, porque el Estado presta un servicio específico a quien la paga.",
+  },
+  {
+    id: "tutela",
+    termino: "Tutela",
+    definicion:
+      "Institución que reemplaza a la patria potestad cuando el menor carece de padres que la ejerzan, o cuando un mayor de edad es declarado incapaz. El tutor representa legalmente al pupilo, administra sus bienes y cuida de su persona. Es designado por testamento, por el juez o por la familia.",
+    fuente: "Art. 293 Código Civil, Decreto Ley 106",
+    categoria: "Civil",
+    ejemplo:
+      "Al quedar huérfano un niño sin abuelos ni parientes cercanos, el juez de familia nombra un tutor dativo —generalmente una persona de confianza— para que lo represente legalmente hasta que cumpla 18 años.",
+  },
 ];
 
 export const CATEGORIAS_GLOSARIO = [
