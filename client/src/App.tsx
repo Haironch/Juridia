@@ -23,6 +23,8 @@ import AdminLayout from "./pages/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminUsuarios from "./pages/admin/AdminUsuarios";
 import AdminCursos from "./pages/admin/AdminCursos";
+import CasosHome from "./pages/casos/CasosHome";
+import CasoDetalle from "./pages/casos/CasoDetalle";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -69,6 +71,8 @@ function App() {
               <Route path="/constituquiz/estudio/:temaId" element={<QuizStudyMode />} />
               <Route path="/constituquiz/practica/:temaId" element={<QuizPracticeMode />} />
               <Route path="/constituquiz/resultados/:temaId" element={<QuizResults />} />
+              <Route path="/casos" element={<CasosHome />} />
+              <Route path="/casos/:id" element={<CasoDetalle />} />
             </Route>
           </Route>
         </Routes>

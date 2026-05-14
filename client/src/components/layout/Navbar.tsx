@@ -17,6 +17,7 @@ import {
   ChevronDown,
   GraduationCap,
   Wrench,
+  Gavel,
 } from "lucide-react";
 import { useAuthStore } from "../../store/authStore";
 
@@ -145,6 +146,12 @@ export default function Navbar() {
       label: "ConstituQuiz",
       icon: <Brain className="h-4 w-4" />,
       description: "Practica con preguntas y quizzes",
+    },
+    {
+      to: "/casos",
+      label: "Casos Prácticos",
+      icon: <Gavel className="h-4 w-4" />,
+      description: "Lee el caso y responde preguntas",
     },
   ];
 
