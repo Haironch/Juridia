@@ -1,7 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from "./components/layout/MainLayout";
 import SessionGuard from "./components/common/SessionGuard";
+import AdminGuard from "./components/admin/AdminGuard";
 import BetaLanding from "./pages/public/BetaLanding";
 import Home from "./pages/public/Home";
 import Cursos from "./pages/public/Cursos";
@@ -17,6 +18,11 @@ import QuizStudyMode from "./pages/quiz/QuizStudyMode";
 import QuizPracticeMode from "./pages/quiz/QuizPracticeMode";
 import QuizResults from "./pages/quiz/QuizResults";
 import Glosario from "./pages/public/Glosario";
+import AdminLogin from "./pages/admin/AdminLogin";
+import AdminLayout from "./pages/admin/AdminLayout";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminUsuarios from "./pages/admin/AdminUsuarios";
+import AdminCursos from "./pages/admin/AdminCursos";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -34,6 +40,17 @@ function App() {
         <Routes>
           {/* ── Pantalla de entrada (Beta Landing) ── */}
           <Route path="/" element={<BetaLanding />} />
+
+          {/* ── Admin — login público, panel protegido por AdminGuard ── */}
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+          <Route element={<AdminGuard />}>
+            <Route element={<AdminLayout />}>
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
+              <Route path="/admin/usuarios" element={<AdminUsuarios />} />
+              <Route path="/admin/cursos" element={<AdminCursos />} />
+            </Route>
+          </Route>
 
           {/* ── Rutas principales — requieren haber pasado por BetaLanding ── */}
           <Route element={<SessionGuard />}>
