@@ -158,7 +158,6 @@ export default function CasoDetalle() {
   // ── Render: preguntas ───────────────────────────────────────────────────────
   if (fase === 'preguntas') {
     const esCorrecta = confirmada && seleccionada === pregunta.correcta;
-    const esIncorrecta = confirmada && seleccionada !== pregunta.correcta;
 
     return (
       <div className="min-h-screen bg-[#f0f7ff]">
