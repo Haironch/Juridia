@@ -18,6 +18,7 @@ import {
   GraduationCap,
   Wrench,
   Gavel,
+  ClipboardList,
 } from "lucide-react";
 import { useAuthStore } from "../../store/authStore";
 
@@ -152,6 +153,12 @@ export default function Navbar() {
       label: "Casos Prácticos",
       icon: <Gavel className="h-4 w-4" />,
       description: "Lee el caso y responde preguntas",
+    },
+    {
+      to: "/examen",
+      label: "Examen Simulado",
+      icon: <ClipboardList className="h-4 w-4" />,
+      description: "Simulacro con tiempo límite",
     },
   ];
 

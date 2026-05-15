@@ -25,6 +25,7 @@ import AdminUsuarios from "./pages/admin/AdminUsuarios";
 import AdminCursos from "./pages/admin/AdminCursos";
 import CasosHome from "./pages/casos/CasosHome";
 import CasoDetalle from "./pages/casos/CasoDetalle";
+import ExamenSimulado from "./pages/examen/ExamenSimulado";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -73,6 +74,7 @@ function App() {
               <Route path="/constituquiz/resultados/:temaId" element={<QuizResults />} />
               <Route path="/casos" element={<CasosHome />} />
               <Route path="/casos/:id" element={<CasoDetalle />} />
+              <Route path="/examen" element={<ExamenSimulado />} />
             </Route>
           </Route>
         </Routes>
