@@ -26,6 +26,7 @@ import AdminCursos from "./pages/admin/AdminCursos";
 import CasosHome from "./pages/casos/CasosHome";
 import CasoDetalle from "./pages/casos/CasoDetalle";
 import ExamenSimulado from "./pages/examen/ExamenSimulado";
+import Timeline from "./pages/public/Timeline";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -75,6 +76,7 @@ function App() {
               <Route path="/casos" element={<CasosHome />} />
               <Route path="/casos/:id" element={<CasoDetalle />} />
               <Route path="/examen" element={<ExamenSimulado />} />
+              <Route path="/historia" element={<Timeline />} />
             </Route>
           </Route>
         </Routes>

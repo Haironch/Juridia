@@ -19,6 +19,7 @@ import {
   Wrench,
   Gavel,
   ClipboardList,
+  Clock,
 } from "lucide-react";
 import { useAuthStore } from "../../store/authStore";
 
@@ -159,6 +160,12 @@ export default function Navbar() {
       label: "Examen Simulado",
       icon: <ClipboardList className="h-4 w-4" />,
       description: "Simulacro con tiempo límite",
+    },
+    {
+      to: "/historia",
+      label: "Historia del Derecho",
+      icon: <Clock className="h-4 w-4" />,
+      description: "Línea de tiempo visual",
     },
   ];
 
