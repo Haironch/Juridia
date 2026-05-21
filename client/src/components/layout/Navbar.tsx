@@ -245,6 +245,11 @@ export default function Navbar() {
                   <span className="font-medium text-[#13293d]">
                     {user?.nombre ? `${user.nombre} ${user.apellido ?? ""}`.trim() : user?.email}
                   </span>
+                  {user?.rachaActual && user.rachaActual > 0 && (
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 text-xs font-bold border border-orange-200">
+                      🔥 {user.rachaActual}
+                    </span>
+                  )}
                 </div>
                 <button
                   onClick={logout}
@@ -381,7 +386,12 @@ export default function Navbar() {
               <div className="px-2 space-y-2">
                 <div className="flex items-center gap-2 px-3 py-2 text-base font-medium text-[#13293d]">
                   <UserCircle className="h-5 w-5 text-[#2a628f]" />
-                  {user?.nombre ? `${user.nombre} ${user.apellido ?? ""}`.trim() : user?.email}
+                  <span>{user?.nombre ? `${user.nombre} ${user.apellido ?? ""}`.trim() : user?.email}</span>
+                  {user?.rachaActual && user.rachaActual > 0 && (
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 text-xs font-bold border border-orange-200">
+                      🔥 {user.rachaActual}
+                    </span>
+                  )}
                 </div>
                 <button
                   onClick={() => { logout(); setMobileMenuOpen(false); }}

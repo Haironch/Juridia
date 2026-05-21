@@ -9,6 +9,8 @@ interface Usuario {
   nombre?: string;
   apellido?: string;
   rol: string;
+  rachaActual?: number;
+  rachaMaxima?: number;
 }
 
 interface AuthState {

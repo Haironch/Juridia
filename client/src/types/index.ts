@@ -12,6 +12,8 @@ export interface Usuario {
   apellido?: string;
   rol: RolUsuario;
   fechaRegistro: string;
+  rachaActual?: number;
+  rachaMaxima?: number;
 }
 
 export interface AuthResponse {

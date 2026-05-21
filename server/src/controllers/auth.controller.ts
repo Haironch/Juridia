@@ -106,7 +106,8 @@ export const login = async (req: Request, res: Response) => {
 
   try {
     const result = await db.execute({
-      sql: `SELECT id, email, password_hash, nombre, apellido, rol, estado
+      sql: `SELECT id, email, password_hash, nombre, apellido, rol, estado,
+                   racha_actual, racha_maxima, ultimo_dia_actividad
             FROM usuarios WHERE email = ? LIMIT 1`,
       args: [email],
     });
@@ -132,11 +133,28 @@ export const login = async (req: Request, res: Response) => {
       return;
     }
 
-    // Actualizar último acceso
+    // Calcular racha de días consecutivos
+    const hoy = new Date().toISOString().split('T')[0];
+    const ayer = new Date(Date.now() - 86_400_000).toISOString().split('T')[0];
+    const ultimoDia = user.ultimo_dia_actividad as string | null;
+
+    let nuevaRacha: number;
+    if (ultimoDia === hoy) {
+      nuevaRacha = (user.racha_actual as number) || 1;
+    } else if (ultimoDia === ayer) {
+      nuevaRacha = ((user.racha_actual as number) || 0) + 1;
+    } else {
+      nuevaRacha = 1;
+    }
+    const nuevaRachaMaxima = Math.max((user.racha_maxima as number) || 0, nuevaRacha);
+
     const now = new Date().toISOString();
     await db.execute({
-      sql: 'UPDATE usuarios SET ultimo_acceso = ?, updatedAt = ? WHERE id = ?',
-      args: [now, now, user.id],
+      sql: `UPDATE usuarios
+            SET ultimo_acceso = ?, updatedAt = ?,
+                racha_actual = ?, racha_maxima = ?, ultimo_dia_actividad = ?
+            WHERE id = ?`,
+      args: [now, now, nuevaRacha, nuevaRachaMaxima, hoy, user.id],
     });
 
     const token = jwt.sign(
@@ -155,6 +173,8 @@ export const login = async (req: Request, res: Response) => {
           nombre: user.nombre,
           apellido: user.apellido,
           rol: user.rol,
+          rachaActual: nuevaRacha,
+          rachaMaxima: nuevaRachaMaxima,
         },
       },
     });

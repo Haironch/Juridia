@@ -10,8 +10,10 @@ import {
   XCircle,
   ArrowRight,
   BookOpen,
+  Flame,
 } from "lucide-react";
 import { useQuizStore } from "../../store/quizStore";
+import { useAuthStore } from "../../store/authStore";
 import { quizTemas } from "../../data/constituquiz";
 
 function formatDate(isoString: string) {
@@ -41,7 +43,10 @@ function ScoreBar({ value }: { value: number }) {
 
 export default function Progreso() {
   const { getAllProgress, attempts } = useQuizStore();
+  const { user } = useAuthStore();
   const allProgress = getAllProgress();
+  const rachaActual = user?.rachaActual ?? 0;
+  const rachaMaxima = user?.rachaMaxima ?? 0;
 
   const totalIntentos = allProgress.reduce((sum, p) => sum + p.intentos, 0);
   const promedioGeneral =
@@ -106,8 +111,31 @@ export default function Progreso() {
           </div>
         ) : (
           <>
+            {/* ── Racha banner ── */}
+            {rachaActual > 0 && (
+              <div className="mb-8 bg-gradient-to-r from-orange-400 to-amber-400 rounded-2xl p-5 flex items-center gap-5 shadow-sm">
+                <div className="text-5xl leading-none">🔥</div>
+                <div className="flex-1">
+                  <p className="text-white font-bold text-xl">
+                    {rachaActual === 1 ? '¡Bienvenido de nuevo!' : `¡${rachaActual} días seguidos!`}
+                  </p>
+                  <p className="text-orange-100 text-sm mt-0.5">
+                    {rachaActual === 1
+                      ? 'Entra mañana para comenzar tu racha.'
+                      : 'Sigue así, la constancia es clave para dominar el derecho.'}
+                  </p>
+                </div>
+                {rachaMaxima > 1 && (
+                  <div className="text-center flex-shrink-0 bg-white/20 rounded-xl px-4 py-2">
+                    <p className="text-white font-black text-2xl">{rachaMaxima}</p>
+                    <p className="text-orange-100 text-xs">récord</p>
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* ── Summary Cards ── */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-12">
               <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#9ac1e2]">
                 <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center mb-3">
                   <Target className="h-5 w-5 text-[#2a628f]" />
@@ -150,6 +178,22 @@ export default function Progreso() {
                 <p className="text-sm text-[#67a2d3] mt-1">
                   Temas dominados
                 </p>
+              </div>
+
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-orange-200">
+                <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center mb-3">
+                  <Flame className="h-5 w-5 text-orange-500" />
+                </div>
+                <p className="text-3xl font-bold text-[#13293d]">{rachaActual}</p>
+                <p className="text-sm text-[#67a2d3] mt-1">Racha actual 🔥</p>
+              </div>
+
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-amber-200">
+                <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center mb-3">
+                  <Trophy className="h-5 w-5 text-amber-500" />
+                </div>
+                <p className="text-3xl font-bold text-[#13293d]">{rachaMaxima}</p>
+                <p className="text-sm text-[#67a2d3] mt-1">Mejor racha</p>
               </div>
             </div>
 
