@@ -88,10 +88,11 @@ export default function QuizPracticeMode() {
 
         {/* Options */}
         <div className="space-y-4 mb-8">
-          {shuffledOptions.map(({ key, text }) => (
+          {shuffledOptions.map(({ key, label, text }) => (
             <QuizOptionButton
               key={key}
               optionKey={key}
+              displayLabel={label}
               text={text}
               isSelected={selectedAnswer === key}
               isRevealed={isAnswerRevealed}

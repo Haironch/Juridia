@@ -1,7 +1,8 @@
 import { Check, X } from 'lucide-react';
 
 interface QuizOptionButtonProps {
-  optionKey: string;
+  optionKey: string;    // clave original para validación
+  displayLabel: string; // letra visible según posición del shuffle
   text: string;
   isSelected: boolean;
   isRevealed: boolean;
@@ -12,6 +13,7 @@ interface QuizOptionButtonProps {
 
 export default function QuizOptionButton({
   optionKey,
+  displayLabel,
   text,
   isSelected,
   isRevealed,
@@ -59,7 +61,7 @@ export default function QuizOptionButton({
         isSelected ? 'bg-[#2a628f] text-white' :
         'bg-[#d8e9f5] text-[#2a628f]'
       }`}>
-        {optionKey}
+        {displayLabel}
       </span>
       <span className="flex-1 text-base leading-relaxed pt-0.5">{text}</span>
       {getIcon()}

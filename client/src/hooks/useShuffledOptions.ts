@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
 
 export interface ShuffledOption {
-  key: string;
+  key: string;   // clave original — solo para validación interna
+  label: string; // letra mostrada al usuario (A/B/C según posición del shuffle)
   text: string;
 }
 
@@ -15,13 +16,18 @@ function fisherYates<T>(arr: T[]): T[] {
 }
 
 // Shuffles opciones once per question (re-shuffles when questionId changes).
-// Each option retains its original key so answer validation is unaffected.
+// `key` is the original key for answer validation; `label` is the display letter
+// based on shuffled position so the visible letter doesn't reveal the correct key.
 export function useShuffledOptions(
   opciones: Record<string, string>,
   questionId: number
 ): ShuffledOption[] {
   return useMemo(() => {
     const entries = Object.entries(opciones).map(([key, text]) => ({ key, text }));
-    return fisherYates(entries);
+    const shuffled = fisherYates(entries);
+    return shuffled.map((opt, i) => ({
+      ...opt,
+      label: String.fromCharCode(65 + i), // A, B, C… según posición
+    }));
   }, [questionId]); // eslint-disable-line react-hooks/exhaustive-deps
 }
