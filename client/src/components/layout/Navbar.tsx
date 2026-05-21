@@ -20,6 +20,7 @@ import {
   Gavel,
   ClipboardList,
   Clock,
+  Calculator,
 } from "lucide-react";
 import { useAuthStore } from "../../store/authStore";
 
@@ -175,6 +176,12 @@ export default function Navbar() {
       label: "Glosario Jurídico",
       icon: <BookText className="h-4 w-4" />,
       description: "Términos y definiciones legales",
+    },
+    {
+      to: "/liquidacion",
+      label: "Calcula tu Liquidación",
+      icon: <Calculator className="h-4 w-4" />,
+      description: "Estima tu liquidación laboral",
     },
     {
       to: "/progreso",
