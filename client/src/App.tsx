@@ -28,6 +28,7 @@ import CasoDetalle from "./pages/casos/CasoDetalle";
 import ExamenSimulado from "./pages/examen/ExamenSimulado";
 import Timeline from "./pages/public/Timeline";
 import CalculadoraLiquidacion from "./pages/herramientas/CalculadoraLiquidacion";
+import GeneradorDocumentos from "./pages/herramientas/GeneradorDocumentos";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -79,6 +80,7 @@ function App() {
               <Route path="/examen" element={<ExamenSimulado />} />
               <Route path="/historia" element={<Timeline />} />
               <Route path="/liquidacion" element={<CalculadoraLiquidacion />} />
+              <Route path="/documentos" element={<GeneradorDocumentos />} />
             </Route>
           </Route>
         </Routes>

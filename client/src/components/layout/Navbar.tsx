@@ -184,6 +184,12 @@ export default function Navbar() {
       description: "Estima tu liquidación laboral",
     },
     {
+      to: "/documentos",
+      label: "Generador de Documentos",
+      icon: <FileText className="h-4 w-4" />,
+      description: "Crea documentos legales básicos",
+    },
+    {
       to: "/progreso",
       label: "Mi Progreso",
       icon: <BarChart2 className="h-4 w-4" />,
