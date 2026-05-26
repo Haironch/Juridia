@@ -8,6 +8,7 @@ import Home from "./pages/public/Home";
 import Cursos from "./pages/public/Cursos";
 import CursoDetalle from "./pages/public/CursoDetalle";
 import Foros from "./pages/public/Foros";
+import ForoDetalle from "./pages/public/ForoDetalle";
 import MaterialEstudio from "./pages/public/MaterialEstudio";
 import Premium from "./pages/public/Premium";
 import Progreso from "./pages/public/Progreso";
@@ -65,6 +66,7 @@ function App() {
               <Route path="/cursos" element={<Cursos />} />
               <Route path="/cursos/:id" element={<CursoDetalle />} />
               <Route path="/foros" element={<Foros />} />
+              <Route path="/foros/:id" element={<ForoDetalle />} />
               <Route path="/material" element={<MaterialEstudio />} />
               <Route path="/premium" element={<Premium />} />
               <Route path="/registro" element={<Registro />} />

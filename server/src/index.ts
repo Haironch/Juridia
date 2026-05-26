@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import cursosRoutes from './routes/cursos.routes';
 import authRoutes from './routes/auth.routes';
 import adminRoutes from './routes/admin.routes';
+import forosRoutes from './routes/foros.routes';
 
 dotenv.config();
 
@@ -93,6 +94,7 @@ app.get('/health', (_req: Request, res: Response) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/cursos', cursosRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/foros', forosRoutes);
 
 // ── 404 ───────────────────────────────────────────────────────────────────────
 app.use((_req: Request, res: Response) => {
