@@ -29,6 +29,7 @@ const ARBOL: Record<string, Nodo> = {
     id: "inicio",
     mensaje: "¡Hola! Soy el asistente de Juridia. Selecciona el tema sobre el que necesitas orientación:",
     opciones: [
+      { texto: "🆘 Asistencia Ciudadana",          siguiente: "menu_asistencia" },
       { texto: "📚 Ramas del Derecho",            siguiente: "menu_ramas" },
       { texto: "🎓 Exámenes y Carrera",            siguiente: "menu_examenes" },
       { texto: "⚖️ Garantías Constitucionales",    siguiente: "menu_garantias" },
@@ -40,6 +41,76 @@ const ARBOL: Record<string, Nodo> = {
       { texto: "🌍 Derechos Humanos",              siguiente: "menu_ddhh" },
       { texto: "🏢 Organismos del Estado",         siguiente: "menu_organismos" },
     ],
+  },
+
+  // ── ASISTENCIA CIUDADANA ──────────────────────────────────────────────────
+  menu_asistencia: {
+    id: "menu_asistencia",
+    mensaje: "🆘 **Asistencia Ciudadana**\n\nEsta sección te orienta sobre tus derechos frente a las autoridades. ¿Qué situación estás enfrentando?",
+    opciones: [
+      { texto: "🚨 Me están deteniendo ahora",          siguiente: "detencion_ahora" },
+      { texto: "🪪 ¿Cómo debe identificarse la autoridad?", siguiente: "identificacion_autoridad" },
+      { texto: "⚖️ ¿Cuándo es legal una detención?",    siguiente: "detencion_legal" },
+      { texto: "👊 Abuso o violencia de autoridad",      siguiente: "menu_abuso_autoridad" },
+      { texto: "🏠 ¿Pueden entrar a mi casa sin orden?", siguiente: "allanamiento" },
+      { texto: "💸 Me piden dinero para no detenerme",   siguiente: "extorsion_policial" },
+    ],
+  },
+
+  detencion_ahora: {
+    id: "detencion_ahora",
+    mensaje: "🚨 **Si te están deteniendo en este momento, recuerda:**\n\n**1. Mantén la calma y no resistas físicamente.**\nResistir puede derivar en cargos adicionales. Ejerce tus derechos verbalmente.\n\n**2. Exige saber el motivo** (Art. 6 CPRG).\n\"¿Por qué me detienen? ¿Tienen orden judicial?\"\n\n**3. Solicita la identificación del agente.**\nNombre, número de placa o carné. Memoriza o anota el número de la patrulla.\n\n**4. Tienes derecho a comunicarte** con un familiar o abogado (Art. 8 CPRG).\nPuedes decir: \"Solicito comunicarme con mi familia y con un abogado.\"\n\n**5. No declares nada sin abogado presente** (Art. 16 CPRG — derecho a no autoincriminarse).\nPuedes responder únicamente con tu nombre y DPI.\n\n**6. El plazo máximo sin orden judicial es 6 horas** (Art. 7 CPRG).\nPasado ese tiempo deben presentarte ante juez o liberarte.\n\n**7. No firmes ningún documento sin leerlo** y sin la asistencia de un abogado.\n\n📞 **PDH (Procurador de DDHH): 1555** — gratuito, 24 horas.",
+  },
+
+  identificacion_autoridad: {
+    id: "identificacion_autoridad",
+    mensaje: "🪪 **Identificación obligatoria de las autoridades en Guatemala**\n\n**Policía Nacional Civil (PNC):**\n• Debe portar uniforme oficial con nombre visible y número de placa en la solapa.\n• En servicio de civil (investigación): obligado a mostrar su **carné de identificación policial** al ser requerido.\n• Tiene derecho a preguntar: *\"¿Puede mostrarme su carné y número de placa?\"*\n\n**Agentes del MP / Fiscales:**\n• Deben portar carné institucional con foto y cargo.\n• En allanamientos deben mostrar la orden judicial y su credencial.\n\n**Militares (Ejército):**\n• Solo pueden actuar en apoyo a la PNC dentro de lo autorizado por la ley.\n• Deben identificarse con número de unidad y grado.\n\n**¿Qué hacer si no se identifican?**\n• Puede negarse a cooperar y decir: *\"No puedo atender a personas que no se identifiquen correctamente como autoridad.\"*\n• Anota cualquier dato visible: número de patrulla, color de vehículo, hora y lugar.\n• Denuncia ante la **Inspectoría General de la PNC** o el **PDH (Tel. 1555)**.",
+  },
+
+  detencion_legal: {
+    id: "detencion_legal",
+    mensaje: "⚖️ **¿Cuándo es legal que te detengan? (Art. 6 CPRG)**\n\nEn Guatemala **solo hay dos casos** en que una detención es legal:\n\n**1. Orden judicial escrita:**\nEmitida y firmada por un juez competente. La autoridad debe mostrártela antes de proceder.\n\n**2. Flagrancia:**\nSer sorprendido en el momento mismo de cometer un delito, o inmediatamente después en persecución directa.\n\n**Plazos que la ley establece:**\n• Máximo **6 horas** detenido sin ser presentado ante juez (Art. 7 CPRG).\n• En ese plazo el MP debe decidir si imputa o te libera.\n• La detención preventiva (con imputación) tiene otros plazos procesales según el CPP.\n\n**¿Qué NO es legal?**\n• Detenerte por \"sospecha\" sin elementos concretos.\n• Retenerte más de 6 horas sin orden ni presentarte al juez.\n• Detenerte por deudas civiles (no son delito).\n• Detenerte por tu apariencia, raza o zona donde estés.\n\nSi crees que tu detención es ilegal, puedes interponer **Exhibición Personal (Habeas Corpus)** ante cualquier Sala de Apelaciones.",
+  },
+
+  menu_abuso_autoridad: {
+    id: "menu_abuso_autoridad",
+    mensaje: "👊 **Abuso de autoridad — ¿Qué tipo de situación enfrentaste?**",
+    opciones: [
+      { texto: "Violencia física (golpes, maltrato)",    siguiente: "abuso_fisico" },
+      { texto: "Insultos, humillaciones o amenazas",     siguiente: "abuso_verbal" },
+      { texto: "Me retuvieron ilegalmente",              siguiente: "abuso_retencion" },
+      { texto: "¿Dónde y cómo denuncio?",               siguiente: "abuso_denuncia" },
+    ],
+  },
+
+  abuso_fisico: {
+    id: "abuso_fisico",
+    mensaje: "👊 **Violencia física por parte de autoridad**\n\nEs un delito. El Código Penal tipifica:\n• **Abuso de autoridad** (Art. 418 CP): cuando el funcionario actúa fuera de sus atribuciones.\n• **Lesiones** (Arts. 144-148 CP): si causaron daño físico.\n• **Tortura** (Art. 201 Bis CP): en casos graves.\n\n**¿Qué hacer en el momento?**\n• No respondas con violencia — solo empeoraría tu situación legal.\n• Di en voz alta: *\"Esto está siendo presenciado / grabado.\"*\n• Si hay testigos, pídeles su nombre y teléfono.\n\n**Después:**\n• **Fotografía** todas las lesiones lo antes posible.\n• Ve al **hospital o puesto de salud** para que quede registro médico.\n• Ese registro médico es prueba clave para la denuncia.\n• **Denuncia ante el MP** (gratuito): relata todo con fecha, hora, lugar, número de placa del agente.\n• También puedes acudir al **PDH (Tel. 1555)** para asesoría inmediata.",
+  },
+
+  abuso_verbal: {
+    id: "abuso_verbal",
+    mensaje: "🗣️ **Insultos, humillaciones o amenazas por parte de autoridad**\n\nAunque muchas veces se normalizan, los insultos y amenazas por parte de un funcionario público son **abuso de autoridad** (Art. 418 CP) y pueden configurar **coacción** (Art. 214 CP) si van acompañados de amenazas.\n\n**¿Puedo grabar?**\nSí. En Guatemala **grabar en espacios públicos o en interacciones con funcionarios** que ejercen actos de autoridad es legal. La grabación puede ser prueba.\n\n**¿Qué hacer?**\n• Mantén la calma. Responde con calma y firmeza, no con insultos.\n• Si es seguro, activa la grabación del teléfono (audio o video).\n• Anota: hora, lugar, nombre/placa del agente, lo que dijo.\n• Denuncia ante la **Inspectoría General de la PNC** o ante el **MP**.\n• El PDH (Tel. 1555) también puede recibir tu queja y darle seguimiento.",
+  },
+
+  abuso_retencion: {
+    id: "abuso_retencion",
+    mensaje: "🔒 **Retención o detención ilegal**\n\nSi te retuvieron sin causa legal, sin orden judicial y fuera de flagrancia, o te mantuvieron más de 6 horas sin presentarte ante juez:\n\n**Recursos legales disponibles:**\n\n**1. Exhibición Personal (Habeas Corpus)** — Art. 263 CPRG\nSe presenta ante cualquier Sala de Apelaciones del país. Puede presentarla TÚ, un familiar o cualquier persona en tu nombre. El juez debe ordenar tu presentación inmediata. Es GRATUITA y urgente.\n\n**2. Denuncia penal ante el MP**\nPor detención ilegal (Art. 203 CP) y abuso de autoridad (Art. 418 CP).\n\n**3. Queja ante el PDH**\nTel. 1555, gratuito. El PDH puede intervenir y exigir explicaciones a la institución.\n\n**4. Inspectoría General de la PNC**\nPara quejas sobre conducta policial específica.",
+  },
+
+  abuso_denuncia: {
+    id: "abuso_denuncia",
+    mensaje: "📋 **¿Dónde y cómo denunciar el abuso de autoridad?**\n\n**1. Ministerio Público (MP)**\n• Cualquier agencia fiscal del país.\n• Gratuito. Puedes presentarte solo, sin abogado.\n• Presenta tu relato escrito con: fecha, hora, lugar, datos del agente, testigos y cualquier evidencia (fotos, videos, registro médico).\n• El MP tiene obligación legal de recibir tu denuncia.\n\n**2. Procurador de los Derechos Humanos (PDH)**\n• 📞 Tel: **1555** — gratuito, disponible las 24 horas.\n• También en sus oficinas regionales en todo el país.\n• Recibe quejas, investiga y puede emitir resoluciones y censuras públicas.\n\n**3. Inspectoría General de la PNC**\n• Para denuncias específicas contra agentes de la PNC.\n• Ubicada en la Dirección General de la PNC, Ciudad Guatemala.\n\n**4. COPREDEH** (Comisión Presidencial de DDHH)\n• Para violaciones sistemáticas o que involucren varias instituciones.\n\n**Consejo práctico:**\nSiempre guarda copia de tu denuncia con número de expediente. Si el MP se niega a recibirla, el PDH puede intervenir.",
+  },
+
+  allanamiento: {
+    id: "allanamiento",
+    mensaje: "🏠 **¿Pueden entrar a tu casa sin orden judicial?**\n\n**Regla general: NO.** El domicilio es inviolable (Art. 23 CPRG).\n\n**Solo hay dos excepciones legales:**\n\n**1. Orden judicial escrita** firmada por juez competente.\nTienes derecho a VERLA antes de permitir la entrada.\nPuede decir: *\"Muéstrame la orden judicial antes de ingresar.\"*\n\n**2. Flagrancia** o persecución inmediata.\nSi un delincuente entra a tu casa huyendo de la policía, pueden seguirlo.\n\n**¿Qué hacer si intentan entrar sin orden?**\n• Diles calmadamente: *\"No autorizo el ingreso sin orden judicial.\"*\n• Anota el número de placa, patrulla, hora y cuántos agentes son.\n• Si fuerzan la entrada sin orden: **es allanamiento de morada** (Art. 206 CP), delito que cometen ELLOS.\n• Todo lo que encuentren en un allanamiento ilegal puede ser **prueba ilícita** no admisible en tribunal (Art. 183 CPP).\n• Denuncia de inmediato ante el MP y el PDH (Tel. 1555).\n\n⚠️ No uses violencia para impedirlo — ejerce tu derecho verbalmente y documenta todo.",
+  },
+
+  extorsion_policial: {
+    id: "extorsion_policial",
+    mensaje: "💸 **Si te piden dinero para no detenerte o para dejarte ir**\n\nEso es **extorsión** (Art. 261 CP) y **cohecho activo/pasivo** (Arts. 439-442 CP) — delitos graves que comete el funcionario.\n\n**¿Qué hacer en el momento?**\n• **No pagues.** Pagar valida la extorsión y puede hacerte cómplice.\n• Di con calma: *\"No tengo dinero. Si hay causa legal para detenerme, presénteme ante el juez.\"*\n• Si insisten: *\"Voy a reportar este número de placa y este incidente.\"*\n• Memoriza o anota discretamente: número de placa, número de patrulla, apariencia del agente, hora y lugar exacto.\n\n**Después del incidente:**\n• Denuncia en el **MP** (Fiscalía contra la Corrupción).\n• Denuncia al **PDH: Tel. 1555** (gratuito, confidencial).\n• También puedes denunciar en la **Contraloría General de Cuentas** si hay malversación.\n• Si tienes grabación (audio o video), es prueba muy valiosa.\n\n⚠️ Sé que da miedo denunciar, pero estas denuncias son la única forma de combatir la corrupción policial. El PDH puede orientarte sobre cómo hacerlo de forma segura.",
   },
 
   // ── RAMAS DEL DERECHO ─────────────────────────────────────────────────────
