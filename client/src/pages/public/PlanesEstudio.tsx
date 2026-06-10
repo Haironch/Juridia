@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import {
-  Calendar, Plus, Zap, CheckCircle, Clock, BookOpen,
-  AlertCircle, Loader2, ArrowRight,
+  Calendar, Plus, Zap, AlertCircle, Loader2, ArrowRight,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 
