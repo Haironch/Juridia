@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import {
-  ArrowLeft, Calendar, CheckCircle2, Clock, BookOpen,
-  Loader2, AlertCircle, Target, Zap,
+  ArrowLeft, Calendar, CheckCircle2, BookOpen,
+  Loader2, AlertCircle, Zap,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 
@@ -191,7 +191,6 @@ function TarjetaSemana({ semana, onToggle, isToggling }: {
 export default function PlanDetalle() {
   const { id } = useParams<{ id: string }>();
   const { token } = useAuthStore();
-  const navigate = useNavigate();
 
   const { data, isLoading, isError } = useQuery<DetalleResponse>({
     queryKey: ['plan-detalle', id],
