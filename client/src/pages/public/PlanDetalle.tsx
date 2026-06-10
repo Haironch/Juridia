@@ -6,15 +6,17 @@ import {
   Loader2, AlertCircle, Zap, Download, Trash2, ExternalLink,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
+import { generarPlanPDF } from '../../utils/generarPlanPDF';
 
 const API = import.meta.env.VITE_API_URL ?? '';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 interface SemanaRecurso {
-  tipo: 'glosario' | 'quiz' | 'caso' | 'documento' | 'material';
+  tipo: 'glosario' | 'quiz' | 'caso' | 'documento' | 'material' | 'lectura' | 'tip' | 'actividad';
   id: string;
   nombre: string;
   duracion?: string;
+  descripcion?: string;
 }
 
 interface Semana {
@@ -22,7 +24,10 @@ interface Semana {
   numero_semana: number;
   titulo: string;
   descripcion: string;
+  objetivos?: string[];
   recursos: SemanaRecurso[];
+  tips?: string[];
+  lecturaRecomendada?: { titulo: string; articulo: string; tiempo: string };
   fecha_inicio: string;
   fecha_fin: string;
   estado: string;
@@ -296,10 +301,22 @@ export default function PlanDetalle() {
               <div className="flex gap-2">
                 <button
                   onClick={() => {
-                    const elemento = document.documentElement;
-                    const nombrePlan = `Plan_${plan.examen}_${plan.fase}`;
-                    // Usar html2pdf simple o generar PDF desde backend
-                    alert('PDF descargable en desarrollo - próximamente');
+                    if (plan && semanas.length > 0) {
+                      generarPlanPDF({
+                        examen: plan.examen,
+                        fase: plan.fase,
+                        fechaExamen: plan.fecha_examen,
+                        semanas: semanas.map(s => ({
+                          numero_semana: s.numero_semana,
+                          titulo: s.titulo,
+                          descripcion: s.descripcion,
+                          objetivos: s.objetivos,
+                          recursos: s.recursos,
+                          tips: s.tips,
+                          lecturaRecomendada: s.lecturaRecomendada,
+                        })),
+                      });
+                    }
                   }}
                   className="flex items-center gap-1 px-3 py-1.5 bg-white/20 hover:bg-white/30 rounded text-sm transition-colors"
                 >

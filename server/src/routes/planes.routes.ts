@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { randomUUID } from 'crypto';
 import { db } from '../config/database';
 import { authenticate } from '../middlewares/auth.middleware';
-import { generarPlan } from '../utils/planGenerator';
+import { generarPlan } from '../utils/planGeneratorEnriquecido';
 import type { AuthRequest } from '../types';
 
 const router = Router();
