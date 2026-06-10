@@ -206,4 +206,37 @@ router.patch('/semanas/:id', authenticate, async (req: AuthRequest, res: Respons
   }
 });
 
+// ── DELETE /api/planes/:id — eliminar plan ──────────────────────────────────
+router.delete('/:id', authenticate, async (req: AuthRequest, res: Response) => {
+  const { id } = req.params;
+  const usuario = req.user!;
+
+  try {
+    const planRes = await db.execute({
+      sql: 'SELECT usuario_id FROM planes_estudio WHERE id = ?',
+      args: [id],
+    });
+
+    if (planRes.rows.length === 0) {
+      res.status(404).json({ ok: false, error: 'Plan no encontrado' });
+      return;
+    }
+
+    if (planRes.rows[0].usuario_id !== usuario.id) {
+      res.status(403).json({ ok: false, error: 'No tienes permiso para eliminar este plan' });
+      return;
+    }
+
+    await db.execute({
+      sql: 'DELETE FROM planes_estudio WHERE id = ?',
+      args: [id],
+    });
+
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('[DELETE /planes/:id]', err);
+    res.status(500).json({ ok: false, error: 'Error al eliminar plan' });
+  }
+});
+
 export default router;

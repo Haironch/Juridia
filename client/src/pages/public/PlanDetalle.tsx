@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   ArrowLeft, Calendar, CheckCircle2, BookOpen,
-  Loader2, AlertCircle, Zap,
+  Loader2, AlertCircle, Zap, Download, Trash2, ExternalLink,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 
@@ -149,7 +149,7 @@ function TarjetaSemana({ semana, onToggle, isToggling }: {
 
           <div className="space-y-2">
             {semana.recursos.map((recurso, idx) => {
-              const ruta = RECURSO_RUTAS[recurso.id] || '#';
+              const ruta = RECURSO_RUTAS[recurso.id] || null;
               const tipoEmoji: Record<string, string> = {
                 glosario: '📚',
                 quiz: '❓',
@@ -158,26 +158,38 @@ function TarjetaSemana({ semana, onToggle, isToggling }: {
                 material: '📖',
               };
 
+              const Componente = ruta ? Link : 'div';
+              const props = ruta ? { to: ruta } : {};
+
               return (
-                <Link
+                <Componente
                   key={idx}
-                  to={ruta}
-                  className="block p-3 rounded-lg border border-[#d8e9f5] hover:border-[#2a628f] hover:bg-white transition-colors group"
+                  {...props}
+                  className={`block p-3 rounded-lg border transition-colors group ${
+                    ruta
+                      ? 'border-[#d8e9f5] hover:border-[#2a628f] hover:bg-white cursor-pointer'
+                      : 'border-[#d8e9f5] bg-gray-50'
+                  }`}
                 >
                   <div className="flex items-start justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-[#13293d] group-hover:text-[#2a628f] transition-colors">
+                    <div className="flex-1">
+                      <p className={`text-sm font-medium ${ruta ? 'text-[#13293d] group-hover:text-[#2a628f]' : 'text-[#9ac1e2]'} transition-colors`}>
                         {tipoEmoji[recurso.tipo]} {recurso.nombre}
                       </p>
                       <p className="text-xs text-[#9ac1e2]">{recurso.tipo}</p>
                     </div>
-                    {recurso.duracion && (
-                      <span className="text-xs text-[#16324f] font-medium whitespace-nowrap ml-2">
-                        {recurso.duracion}
-                      </span>
-                    )}
+                    <div className="flex items-center gap-2 ml-2">
+                      {recurso.duracion && (
+                        <span className="text-xs text-[#16324f] font-medium whitespace-nowrap">
+                          {recurso.duracion}
+                        </span>
+                      )}
+                      {ruta && (
+                        <ExternalLink className="h-3.5 w-3.5 text-[#9ac1e2] group-hover:text-[#2a628f] transition-colors" />
+                      )}
+                    </div>
                   </div>
-                </Link>
+                </Componente>
               );
             })}
           </div>
@@ -190,7 +202,9 @@ function TarjetaSemana({ semana, onToggle, isToggling }: {
 // ── Main ──────────────────────────────────────────────────────────────────────
 export default function PlanDetalle() {
   const { id } = useParams<{ id: string }>();
-  const { token } = useAuthStore();
+  const { token, user } = useAuthStore();
+  const navigate = useNavigate();
+  const qc = useQueryClient();
 
   const { data, isLoading, isError } = useQuery<DetalleResponse>({
     queryKey: ['plan-detalle', id],
@@ -211,6 +225,18 @@ export default function PlanDetalle() {
       });
       return res.json();
     },
+  });
+
+  // ── Eliminar plan ──
+  const eliminarMutation = useMutation({
+    mutationFn: async () => {
+      const res = await fetch(`${API}/api/planes/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return res.json();
+    },
+    onSuccess: () => navigate('/planes'),
   });
 
   const plan = data?.data.plan;
@@ -254,7 +280,7 @@ export default function PlanDetalle() {
         {/* Header */}
         <div className="bg-gradient-to-r from-[#2a628f] to-[#18435a] rounded-2xl p-6 text-white mb-8">
           <div className="flex items-start justify-between gap-4 mb-4">
-            <div>
+            <div className="flex-1">
               <h1 className="text-3xl font-bold mb-1">
                 Plan de {plan.examen.charAt(0).toUpperCase() + plan.examen.slice(1)}
               </h1>
@@ -262,9 +288,37 @@ export default function PlanDetalle() {
                 Nivel {plan.fase} • {totalSemanas} semanas personalizadas
               </p>
             </div>
-            <div className="text-right">
-              <div className="text-4xl font-bold">{progreso}%</div>
-              <p className="text-sm text-[#b2d3ea]">Completado</p>
+            <div className="text-right flex flex-col items-end gap-3">
+              <div>
+                <div className="text-4xl font-bold">{progreso}%</div>
+                <p className="text-sm text-[#b2d3ea]">Completado</p>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => {
+                    const elemento = document.documentElement;
+                    const nombrePlan = `Plan_${plan.examen}_${plan.fase}`;
+                    // Usar html2pdf simple o generar PDF desde backend
+                    alert('PDF descargable en desarrollo - próximamente');
+                  }}
+                  className="flex items-center gap-1 px-3 py-1.5 bg-white/20 hover:bg-white/30 rounded text-sm transition-colors"
+                >
+                  <Download className="h-4 w-4" />
+                  PDF
+                </button>
+                <button
+                  onClick={() => {
+                    if (confirm('¿Eliminar este plan? Esta acción no se puede deshacer.')) {
+                      eliminarMutation.mutate();
+                    }
+                  }}
+                  disabled={eliminarMutation.isPending}
+                  className="flex items-center gap-1 px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 disabled:opacity-50 rounded text-sm transition-colors"
+                >
+                  <Trash2 className="h-4 w-4" />
+                  Eliminar
+                </button>
+              </div>
             </div>
           </div>
 
