@@ -312,7 +312,7 @@ export const PLAN_RULES: Record<string, Record<string, Record<number, SemanaConf
         titulo: 'Penas y Circunstancias',
         descripcion: 'Aplicación de penas, circunstancias atenuantes y agravantes.',
         recursos: [
-          { tipo: 'case', id: 'caso-defensa', nombre: 'Casos de aplicación de penas', duracion: '1.5 horas' },
+          { tipo: 'caso', id: 'caso-defensa', nombre: 'Casos de aplicación de penas', duracion: '1.5 horas' },
           { tipo: 'quiz', id: 'penal-quiz', nombre: 'Quiz de Penas', duracion: '1 hora' },
         ],
       },

@@ -146,7 +146,7 @@ router.post('/', authenticate, async (req: AuthRequest, res: Response) => {
   const { titulo, contenido, categoria } = parsed.data;
   const usuario = req.user!;
   const id = randomUUID();
-  const nombre = [usuario.nombre, usuario.apellido].filter(Boolean).join(' ') || usuario.email;
+  const nombre = usuario.email;
   const ts = now();
 
   try {
@@ -180,7 +180,7 @@ router.post('/:id/respuestas', authenticate, async (req: AuthRequest, res: Respo
   const { contenido } = parsed.data;
   const usuario = req.user!;
   const respuestaId = randomUUID();
-  const nombre = [usuario.nombre, usuario.apellido].filter(Boolean).join(' ') || usuario.email;
+  const nombre = usuario.email;
   const ts = now();
 
   try {
@@ -310,7 +310,7 @@ router.patch('/respuestas/:id/solucion', authenticate, async (req: AuthRequest, 
     }
 
     const row = respuestaRes.rows[0];
-    const esAdmin = usuario.rol === 'SUPER_ADMIN' || usuario.rol === 'ADMIN';
+    const esAdmin = usuario.rol === 'SUPER_ADMIN';
 
     if (row.post_autor !== usuario.id && !esAdmin) {
       res.status(403).json({ ok: false, error: 'Solo el autor del post puede marcar la solución' });
@@ -365,7 +365,7 @@ router.delete('/:id', authenticate, async (req: AuthRequest, res: Response) => {
       return;
     }
 
-    const esAdmin = usuario.rol === 'SUPER_ADMIN' || usuario.rol === 'ADMIN';
+    const esAdmin = usuario.rol === 'SUPER_ADMIN';
     if (post.rows[0].usuario_id !== usuario.id && !esAdmin) {
       res.status(403).json({ ok: false, error: 'Sin permisos para eliminar este post' });
       return;
