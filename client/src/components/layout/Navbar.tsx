@@ -21,6 +21,7 @@ import {
   ClipboardList,
   Clock,
   Calculator,
+  Calendar,
 } from "lucide-react";
 import { useAuthStore } from "../../store/authStore";
 
@@ -171,6 +172,12 @@ export default function Navbar() {
   ];
 
   const HERRAMIENTAS_ITEMS: DropdownItem[] = [
+    {
+      to: "/planes",
+      label: "Planes de Estudio",
+      icon: <Calendar className="h-4 w-4" />,
+      description: "Calendario personalizado para tu examen",
+    },
     {
       to: "/glosario",
       label: "Glosario Jurídico",

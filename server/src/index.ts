@@ -7,6 +7,7 @@ import cursosRoutes from './routes/cursos.routes';
 import authRoutes from './routes/auth.routes';
 import adminRoutes from './routes/admin.routes';
 import forosRoutes from './routes/foros.routes';
+import planesRoutes from './routes/planes.routes';
 
 dotenv.config();
 
@@ -95,6 +96,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/cursos', cursosRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/foros', forosRoutes);
+app.use('/api/planes', planesRoutes);
 
 // ── 404 ───────────────────────────────────────────────────────────────────────
 app.use((_req: Request, res: Response) => {
