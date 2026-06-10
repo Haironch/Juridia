@@ -20,8 +20,13 @@ export interface PlanParaPDF {
 }
 
 export async function generarPlanPDF(plan: PlanParaPDF) {
-  // Importar html2pdf dinámicamente
-  const html2pdf = (await import('html2pdf.js')).default;
+  // Cargar html2pdf desde CDN
+  const script = document.createElement('script');
+  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+
+  return new Promise((resolve) => {
+    script.onload = () => {
+      const html2pdf = (window as any).html2pdf;
 
   // Crear contenido HTML del plan
   const contenido = `
@@ -159,6 +164,10 @@ export async function generarPlanPDF(plan: PlanParaPDF) {
     pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
   };
 
-  // Generar y descargar PDF
-  html2pdf().set(opt).from(element).save();
+      // Generar y descargar PDF
+      html2pdf().set(opt).from(element).save();
+      resolve(true);
+    };
+    document.head.appendChild(script);
+  });
 }
