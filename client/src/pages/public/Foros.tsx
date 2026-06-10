@@ -94,10 +94,10 @@ function ModalNuevoPost({ onClose, onSuccess }: ModalProps) {
     <div
       ref={backdropRef}
       onClick={(e) => { if (e.target === backdropRef.current) onClose(); }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 px-4 pb-4 sm:pb-0"
     >
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl p-6">
-        <div className="flex items-center justify-between mb-4">
+      <div className="bg-white rounded-t-3xl sm:rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] sm:max-h-none flex flex-col overflow-y-auto sm:overflow-visible p-4 sm:p-6">
+        <div className="flex items-center justify-between mb-4 shrink-0">
           <h2 className="text-xl font-bold text-[#13293d]">Nueva publicación</h2>
           <button onClick={onClose} className="text-[#9ac1e2] hover:text-[#13293d] transition-colors">
             <X className="h-5 w-5" />
@@ -105,13 +105,13 @@ function ModalNuevoPost({ onClose, onSuccess }: ModalProps) {
         </div>
 
         {error && (
-          <div className="mb-4 flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+          <div className="mb-4 flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700 shrink-0">
             <AlertCircle className="h-4 w-4 shrink-0" />
             {error}
           </div>
         )}
 
-        <div className="space-y-4">
+        <div className="space-y-4 flex-1 overflow-y-auto sm:overflow-visible">
           <div>
             <label className="block text-sm font-medium text-[#13293d] mb-1">Categoría *</label>
             <select
@@ -150,17 +150,17 @@ function ModalNuevoPost({ onClose, onSuccess }: ModalProps) {
           </div>
         </div>
 
-        <div className="flex justify-end gap-3 mt-6">
+        <div className="flex flex-col-reverse sm:flex-row justify-end gap-3 mt-6 shrink-0 pt-4 border-t border-[#d8e9f5]">
           <button
             onClick={onClose}
-            className="px-4 py-2 text-sm font-medium text-[#16324f] hover:text-[#13293d] transition-colors"
+            className="w-full sm:w-auto px-4 py-3 sm:py-2 text-sm font-medium text-[#16324f] hover:text-[#13293d] hover:bg-[#f0f7ff] rounded-lg transition-colors"
           >
             Cancelar
           </button>
           <button
             onClick={() => mutation.mutate()}
             disabled={mutation.isPending || !titulo.trim() || !contenido.trim() || !categoria}
-            className="flex items-center gap-2 px-5 py-2 bg-[#2a628f] hover:bg-[#18435a] disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium rounded-lg transition-colors"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-3 sm:py-2 bg-[#2a628f] hover:bg-[#18435a] disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium rounded-lg transition-colors"
           >
             {mutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             Publicar
