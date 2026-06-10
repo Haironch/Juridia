@@ -161,56 +161,43 @@ function TarjetaSemana({ semana, onToggle, isToggling }: {
                 caso: '⚖️',
                 documento: '📄',
                 material: '📖',
+                lectura: '📖',
+                tip: '💡',
+                actividad: '✍️',
               };
+
+              const content = (
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <p className={`text-sm font-medium transition-colors ${
+                      ruta ? 'text-[#13293d] group-hover:text-[#2a628f]' : 'text-[#9ac1e2]'
+                    }`}>
+                      {tipoEmoji[recurso.tipo]} {recurso.nombre}
+                    </p>
+                    <p className="text-xs text-[#9ac1e2]">{recurso.tipo}</p>
+                  </div>
+                  <div className="flex items-center gap-2 ml-2">
+                    {recurso.duracion && (
+                      <span className="text-xs text-[#16324f] font-medium whitespace-nowrap">
+                        {recurso.duracion}
+                      </span>
+                    )}
+                    {ruta && <ExternalLink className="h-3.5 w-3.5 text-[#9ac1e2] group-hover:text-[#2a628f] transition-colors" />}
+                  </div>
+                </div>
+              );
 
               return ruta ? (
                 <Link
                   key={idx}
                   to={ruta}
-                  className={`block p-3 rounded-lg border transition-colors group border-[#d8e9f5] hover:border-[#2a628f] hover:bg-white cursor-pointer`}
+                  className="block p-3 rounded-lg border border-[#d8e9f5] hover:border-[#2a628f] hover:bg-white transition-colors group cursor-pointer"
                 >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-[#13293d] group-hover:text-[#2a628f] transition-colors">
-                        {tipoEmoji[recurso.tipo]} {recurso.nombre}
-                      </p>
-                      <p className="text-xs text-[#9ac1e2]">{recurso.tipo}</p>
-                    </div>
-                    <div className="flex items-center gap-2 ml-2">
-                      {recurso.duracion && (
-                        <span className="text-xs text-[#16324f] font-medium whitespace-nowrap">
-                          {recurso.duracion}
-                        </span>
-                      )}
-                      <ExternalLink className="h-3.5 w-3.5 text-[#9ac1e2] group-hover:text-[#2a628f] transition-colors" />
-                    </div>
-                  </div>
+                  {content}
                 </Link>
               ) : (
-                <div
-                  key={idx}
-                  className={`block p-3 rounded-lg border transition-colors group border-[#d8e9f5] bg-gray-50`}
-                >
-                    ruta
-                      ? 'border-[#d8e9f5] hover:border-[#2a628f] hover:bg-white cursor-pointer'
-                      : 'border-[#d8e9f5] bg-gray-50'
-                  }`}
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-[#9ac1e2]">
-                        {tipoEmoji[recurso.tipo]} {recurso.nombre}
-                      </p>
-                      <p className="text-xs text-[#9ac1e2]">{recurso.tipo}</p>
-                    </div>
-                    <div className="flex items-center gap-2 ml-2">
-                      {recurso.duracion && (
-                        <span className="text-xs text-[#16324f] font-medium whitespace-nowrap">
-                          {recurso.duracion}
-                        </span>
-                      )}
-                    </div>
-                  </div>
+                <div key={idx} className="block p-3 rounded-lg border border-[#d8e9f5] bg-gray-50">
+                  {content}
                 </div>
               );
             })}
