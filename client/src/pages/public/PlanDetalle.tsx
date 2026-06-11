@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   ArrowLeft, Calendar, CheckCircle2, BookOpen,
   Loader2, AlertCircle, Zap, Download, Trash2, ExternalLink,
@@ -213,6 +213,7 @@ export default function PlanDetalle() {
   const { id } = useParams<{ id: string }>();
   const { token } = useAuthStore();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const { data, isLoading, isError } = useQuery<DetalleResponse>({
     queryKey: ['plan-detalle', id],
@@ -246,7 +247,8 @@ export default function PlanDetalle() {
       return res.json();
     },
     onSuccess: () => {
-      setTimeout(() => navigate('/planes'), 500);
+      queryClient.invalidateQueries({ queryKey: ['planes'] });
+      navigate('/planes');
     },
   });
 
