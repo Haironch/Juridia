@@ -1023,7 +1023,206 @@ export const PLAN_RULES: Record<string, Record<string, Record<number, SemanaConf
         },
       },
     },
-    avanzada: {},
+    avanzada: {
+      1: {
+        titulo: 'Jurisprudencia Civil Guatemalteca: Las Sentencias que Debes Dominar',
+        descripcion: 'Las resoluciones civiles más importantes de la CSJ y CC. Imprescindibles para argumentar a nivel avanzado.',
+        objetivos: [
+          'Dominar las sentencias civiles más citadas de la CSJ',
+          'Entender cómo la jurisprudencia interpreta el Código Civil',
+          'Aplicar precedentes en argumentación jurídica',
+        ],
+        recursos: [
+          { tipo: 'lectura', id: 'jurisprudencia-civil-csj', nombre: '📖 12 sentencias civiles clave de la CSJ', duracion: '3 horas', descripcion: 'Contratos, familia, responsabilidad civil: holding y aplicación' },
+          { tipo: 'quiz', id: 'quiz-jurisprudencia-civil', nombre: '❓ Quiz: Jurisprudencia civil avanzada', duracion: '1.5 horas', descripcion: 'Identifica el fallo correcto en casos basados en sentencias reales' },
+          { tipo: 'actividad', id: 'actividad-ficha-jurisprudencia-civil', nombre: '✍️ Actividad: Fichas de 4 sentencias elegidas', duracion: '1 hora', descripcion: 'Hechos, holding, razonamiento y cómo usarla en un caso nuevo' },
+        ],
+        tips: [
+          'Ratio decidendi = la regla que resuelve el caso (lo que vincula)',
+          'Busca sentencias con votos disidentes: revelan puntos controvertidos',
+          'Cita: expediente + año + nombre de la acción (ej: casación civil No. 123-2022)',
+        ],
+        lecturaRecomendada: {
+          titulo: 'Memoria de Labores CSJ + Gaceta de la CC',
+          articulo: 'Sentencias civiles 2020-2024 sobre contratos, familia y responsabilidad',
+          tiempo: '90 min',
+        },
+      },
+      2: {
+        titulo: 'Nulidades, Rescisión y Resolución de Contratos',
+        descripcion: 'Cuándo un contrato no vale nada, cuándo se puede deshacer y cuándo simplemente se resuelve. Distinción crítica en el examen avanzado.',
+        objetivos: [
+          'Distinguir nulidad absoluta, relativa, rescisión y resolución',
+          'Aplicar las causas de nulidad del Código Civil con precisión',
+          'Resolver casos donde coexisten múltiples vicios contractuales',
+        ],
+        recursos: [
+          { tipo: 'material', id: 'nulidades-contratos-avanzado', nombre: 'Nulidades, rescisión y resolución de contratos', duracion: '2.5 horas', descripcion: 'CC Arts. 1301-1318 (nulidad), Arts. 1579-1600 (resolución/rescisión)' },
+          { tipo: 'lectura', id: 'cc-arts-1301-1318', nombre: '📖 CC: Arts. 1301-1318 (Nulidad de contratos)', duracion: '40 min', descripcion: 'Causas, efectos, convalidación y prescripción de la acción' },
+          { tipo: 'caso', id: 'caso-nulidad-contrato-avanzado', nombre: 'Caso: Contrato con objeto ilícito y lesión', duracion: '50 min', descripcion: 'Nulidad absoluta + lesión enorme: ¿qué acción procede?' },
+          { tipo: 'actividad', id: 'actividad-nulidades-cuadro', nombre: '✍️ Actividad: Cuadro comparativo de ineficacias contractuales', duracion: '30 min', descripcion: 'Nulidad absoluta vs relativa vs rescisión vs resolución: efectos y plazos' },
+        ],
+        tips: [
+          'Nulidad absoluta: cualquiera puede pedirla, no prescribe, no se sanea',
+          'Nulidad relativa: solo la parte afectada, prescribe en 2 años (Art. 1312 CC)',
+          'Rescisión: contrato válido pero con lesión económica grave (Art. 1579 CC)',
+        ],
+        lecturaRecomendada: {
+          titulo: 'Código Civil Guatemalteco',
+          articulo: 'Arts. 1301-1318 (Nulidades), Arts. 1579-1600 (Rescisión y resolución)',
+          tiempo: '55 min',
+        },
+      },
+      3: {
+        titulo: 'Sucesiones Complejas: Testamento, Legítima y Conflictos Hereditarios',
+        descripcion: 'Más allá del testamento simple: sustituciones, fideicomisos, colación y las disputas hereditarias que llegan a juicio.',
+        objetivos: [
+          'Dominar las formas especiales de testamento (ológrafo, militar, marítimo)',
+          'Aplicar la colación y computación de la legítima',
+          'Resolver conflictos entre herederos testamentarios e intestados',
+        ],
+        recursos: [
+          { tipo: 'material', id: 'sucesiones-avanzado', nombre: 'Sucesiones complejas: fideicomisos y conflictos', duracion: '2.5 horas', descripcion: 'CC Arts. 940-1077: formas de testar, legítima, colación, preterición' },
+          { tipo: 'lectura', id: 'cc-arts-940-976', nombre: '📖 CC: Arts. 940-976 (Testamentos especiales)', duracion: '45 min', descripcion: 'Ológrafo, cerrado, abierto notarial, militar y en peligro de muerte' },
+          { tipo: 'caso', id: 'caso-herencia-avanzado', nombre: 'Caso: Heredero preterido impugna testamento notarial', duracion: '50 min', descripcion: 'Preterición, reducción de legados y acción de petición de herencia' },
+          { tipo: 'actividad', id: 'actividad-calculo-legitima', nombre: '✍️ Actividad: Calcula la legítima en 3 supuestos', duracion: '35 min', descripcion: 'Con cónyuge, hijos y ascendientes en distintas combinaciones' },
+        ],
+        tips: [
+          'Preterición = omitir a heredero forzoso → anula solo en lo que lo perjudica',
+          'Colación: los bienes donados en vida se cuentan en la herencia (Art. 1071 CC)',
+          'Legítima GT = 50% de la masa hereditaria líquida para herederos forzosos',
+        ],
+        lecturaRecomendada: {
+          titulo: 'Código Civil Guatemalteco',
+          articulo: 'Arts. 1051-1077 (Legítima y colación), Arts. 940-993 (Testamentos)',
+          tiempo: '60 min',
+        },
+      },
+      4: {
+        titulo: 'Derecho Notarial Avanzado: Escrituras, Fe Pública y Nulidades',
+        descripcion: 'El notario como profesional del derecho: su responsabilidad, las escrituras que autoriza y cuándo estas pueden impugnarse.',
+        objetivos: [
+          'Dominar los requisitos formales de la escritura pública guatemalteca',
+          'Entender la responsabilidad civil y penal del notario',
+          'Conocer las causas de nulidad e inexistencia del instrumento público',
+        ],
+        recursos: [
+          { tipo: 'material', id: 'derecho-notarial-avanzado', nombre: 'Derecho Notarial: escrituras y responsabilidad', duracion: '2.5 horas', descripcion: 'Código de Notariado Decreto 314: Arts. 1-90 comentados' },
+          { tipo: 'lectura', id: 'codigo-notariado-arts-1-50', nombre: '📖 Código de Notariado: Arts. 1-50', duracion: '50 min', descripcion: 'Requisitos de escrituras, protocolo, fe pública y registro' },
+          { tipo: 'caso', id: 'caso-nulidad-escritura', nombre: 'Caso: Escritura impugnada por falta de requisito formal', duracion: '40 min', descripcion: 'Nulidad notarial vs subsanación vs inexistencia del instrumento' },
+          { tipo: 'actividad', id: 'actividad-redacta-escritura', nombre: '✍️ Actividad: Identifica errores en escritura defectuosa', duracion: '30 min', descripcion: 'Escritura con 5 errores intencionados: encuéntralos y clasifícalos' },
+        ],
+        tips: [
+          'Escritura pública = instrumento notarial; acta notarial = hace constar hechos',
+          'Las enmiendas y entrerrenglonaduras deben salvarse antes de firmar (Art. 42 CN)',
+          'Nulidad absoluta notarial: el notario no es hábil para el acto',
+        ],
+        lecturaRecomendada: {
+          titulo: 'Código de Notariado (Decreto 314)',
+          articulo: 'Arts. 1-50 (Protocolo y escrituras) + Arts. 62-75 (Nulidades)',
+          tiempo: '60 min',
+        },
+      },
+      5: {
+        titulo: 'Responsabilidad Civil Profesional: Abogados y Notarios',
+        descripcion: 'Cuándo el abogado o notario responde por los daños que causa su mala praxis. Un tema cada vez más relevante en Guatemala.',
+        objetivos: [
+          'Identificar los elementos de la responsabilidad civil del abogado',
+          'Distinguir mala praxis notarial de mala praxis procesal',
+          'Aplicar criterios de daño, causalidad y culpa profesional',
+        ],
+        recursos: [
+          { tipo: 'material', id: 'responsabilidad-profesional-civil', nombre: 'Responsabilidad civil del abogado y notario', duracion: '2 horas', descripcion: 'CC + Ley del Organismo Judicial + Código de Ética Profesional' },
+          { tipo: 'lectura', id: 'loj-responsabilidad-abogado', nombre: '📖 LOJ + CC: Responsabilidad de auxiliares de justicia', duracion: '45 min', descripcion: 'Arts. 188-197 LOJ + CC Arts. 1648-1655 (responsabilidad por servicios)' },
+          { tipo: 'caso', id: 'caso-mala-praxis-notarial', nombre: 'Caso: Notario autoriza escritura con incapaz', duracion: '45 min', descripcion: 'Responsabilidad civil, disciplinaria y penal del notario' },
+          { tipo: 'actividad', id: 'actividad-responsabilidad-profesional', nombre: '✍️ Actividad: Analiza 3 casos de mala praxis jurídica', duracion: '35 min', descripcion: '¿Hay responsabilidad? ¿Civil, disciplinaria o penal?' },
+        ],
+        tips: [
+          'El abogado responde por culpa leve en el ejercicio profesional',
+          'Prescripción de la acción contra el notario: 4 años desde el daño (Art. 1508 CC)',
+          'Responsabilidad disciplinaria ante el Colegio de Abogados es independiente de la civil',
+        ],
+        lecturaRecomendada: {
+          titulo: 'Ley del Organismo Judicial + Código de Ética del Abogado',
+          articulo: 'LOJ Arts. 188-197 + Estatuto del CAG: obligaciones y sanciones',
+          tiempo: '55 min',
+        },
+      },
+      6: {
+        titulo: 'Litigación Civil Estratégica: Cómo Ganar Casos Civiles',
+        descripcion: 'La diferencia entre saber el derecho y saber litigar. Estrategia probatoria, manejo de excepciones y argumentación al juez.',
+        objetivos: [
+          'Diseñar una estrategia de litigación civil completa',
+          'Dominar excepciones previas y perentorias como herramienta defensiva',
+          'Argumentar con jurisprudencia y doctrina frente al juzgador',
+        ],
+        recursos: [
+          { tipo: 'material', id: 'litigacion-civil-estrategia', nombre: 'Estrategia de litigación civil guatemalteca', duracion: '2.5 horas', descripcion: 'CPCG: excepciones, prueba, alegatos y recursos como herramientas estratégicas' },
+          { tipo: 'caso', id: 'caso-litigacion-civil', nombre: 'Caso: Demanda con defensas múltiples', duracion: '1 hora', descripcion: 'Diseña la estrategia de defensa: excepciones, prueba y alegatos' },
+          { tipo: 'actividad', id: 'actividad-alegato-civil', nombre: '✍️ Actividad: Redacta un alegato de bien probado', duracion: '1.5 horas', descripcion: 'Argumentación completa con hechos, derecho y jurisprudencia' },
+          { tipo: 'tip', id: 'tip-litigacion-civil', nombre: '🎯 Los 7 errores más comunes en litigación civil', descripcion: 'Los errores que pierden juicios y cómo evitarlos' },
+        ],
+        tips: [
+          'Las excepciones previas pueden terminar el juicio sin entrar al fondo',
+          'La carga de la prueba recae en quien afirma, no en quien niega (Art. 126 CPCG)',
+          'El alegato de bien probado: hechos → prueba rendida → norma → conclusión',
+        ],
+        lecturaRecomendada: {
+          titulo: 'Código Procesal Civil y Mercantil',
+          articulo: 'Arts. 116-134 (Excepciones), Arts. 139-182 (Prueba)',
+          tiempo: '65 min',
+        },
+      },
+      7: {
+        titulo: 'Simulacro Final Civil Avanzado: 40 Preguntas de Análisis',
+        descripcion: 'El simulacro más exigente del plan civil. Jurisprudencia, nulidades, notarial, litigación. Modo examen real.',
+        objetivos: [
+          'Medir dominio real del nivel avanzado civil',
+          'Identificar los últimos puntos a reforzar',
+          'Consolidar velocidad y precisión en preguntas de análisis',
+        ],
+        recursos: [
+          { tipo: 'quiz', id: 'simulacro-civil-avanzado', nombre: '❓ Simulacro Civil Avanzado (40 preguntas)', duracion: '2.5 horas', descripcion: 'Análisis de casos, jurisprudencia, notarial y litigación' },
+          { tipo: 'actividad', id: 'actividad-post-simulacro-civil', nombre: '✍️ Actividad: Plan de acción post-simulacro', duracion: '30 min', descripcion: 'Lista los 3 temas a reforzar y el artículo exacto de cada error' },
+          { tipo: 'tip', id: 'tip-simulacro-civil-avanzado', nombre: '🎯 Estrategia para preguntas de análisis jurídico', descripcion: 'Cómo leer, descomponer y responder preguntas complejas en tiempo' },
+        ],
+        tips: [
+          'Meta avanzada: 80%+ para considerar el nivel dominado',
+          'Preguntas de jurisprudencia: busca el principio, no el número de artículo',
+          'Anota cada error con su artículo fuente: eso es tu guía de repaso final',
+        ],
+        lecturaRecomendada: {
+          titulo: 'Repaso basado en errores del simulacro',
+          articulo: 'Solo los artículos y sentencias detrás de cada pregunta fallada',
+          tiempo: '90 min',
+        },
+      },
+      8: {
+        titulo: 'Cierre Civil Avanzado: Integración Final y Preparación de Examen',
+        descripcion: 'Conecta todo lo del Código Civil con su aplicación procesal y notarial. El cierre que convierte el conocimiento en rendimiento.',
+        objetivos: [
+          'Integrar Código Civil, CPCG y Código de Notariado en un solo esquema mental',
+          'Dominar los 15 temas civiles más frecuentes en el examen privado',
+          'Entrar al examen con estrategia clara y confianza sólida',
+        ],
+        recursos: [
+          { tipo: 'glosario', id: 'glosario-civil-avanzado', nombre: '📚 Glosario Civil Avanzado: 70 términos', duracion: '1 hora', descripcion: 'Términos de jurisprudencia, notarial y litigación civil' },
+          { tipo: 'actividad', id: 'actividad-mapa-civil-avanzado', nombre: '✍️ Actividad: Mapa integrador CC + CPCG + CN', duracion: '45 min', descripcion: 'Relaciona cada institución civil con su norma y su proceso' },
+          { tipo: 'tip', id: 'tip-15-temas-civiles', nombre: '🎯 Los 15 temas civiles más frecuentes en privados', descripcion: 'Ranking basado en convocatorias 2019-2024' },
+          { tipo: 'tip', id: 'tip-examen-civil-final', nombre: '🧠 Estrategia final para el examen civil', descripcion: 'Protocolo completo: la noche anterior, el día del examen, durante y después' },
+        ],
+        tips: [
+          'No estudies nada nuevo las últimas 12 horas: solo repasa tu mapa integrador',
+          'Familia + contratos + proceso = más del 60% del examen civil',
+          'Si dudas entre dos respuestas: elige la que tenga respaldo en artículo específico',
+        ],
+        lecturaRecomendada: {
+          titulo: 'Tu resumen personal de los 3 niveles del plan civil',
+          articulo: 'Los artículos que aún no dominas al 100% después del simulacro',
+          tiempo: '60 min',
+        },
+      },
+    },
   },
   penal: { basica: {}, intermedia: {}, avanzada: {} },
   laboral: { basica: {}, intermedia: {}, avanzada: {} },
