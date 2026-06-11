@@ -821,7 +821,208 @@ export const PLAN_RULES: Record<string, Record<string, Record<number, SemanaConf
         },
       },
     },
-    intermedia: {},
+    intermedia: {
+      1: {
+        titulo: 'Contratos Complejos: Mandato, Sociedad Civil y Comodato',
+        descripcion: 'Más allá de la compraventa. Los contratos que realmente se usan en el ejercicio profesional y que el examen intermedio sí pregunta.',
+        objetivos: [
+          'Dominar mandato: tipos, representación y extinción',
+          'Entender la sociedad civil vs sociedad mercantil',
+          'Distinguir comodato de mutuo y arrendamiento',
+        ],
+        recursos: [
+          { tipo: 'material', id: 'contratos-complejos-civil', nombre: 'Mandato, sociedad civil y contratos reales', duracion: '2 horas', descripcion: 'CC Arts. 1686-1874: mandato, sociedad, comodato, mutuo, depósito' },
+          { tipo: 'caso', id: 'caso-contrato-sociedad', nombre: 'Caso: Disolución anticipada de sociedad civil', duracion: '40 min', descripcion: 'Causas de disolución y liquidación entre socios' },
+          { tipo: 'lectura', id: 'cc-arts-1686-1743', nombre: '📖 CC: Arts. 1686-1743 (Mandato)', duracion: '40 min', descripcion: 'Mandato general vs especial, con y sin representación' },
+          { tipo: 'actividad', id: 'actividad-cuadro-contratos', nombre: '✍️ Actividad: Cuadro comparativo de contratos reales', duracion: '25 min', descripcion: 'Comodato vs mutuo vs depósito: objeto, obligaciones, extinción' },
+        ],
+        tips: [
+          'Mandato con representación = el mandatario actúa en nombre del mandante',
+          'Comodato = préstamo gratuito de cosa no fungible (la devuelves tal cual)',
+          'Mutuo = préstamo de cosa fungible (devuelves el equivalente)',
+        ],
+        lecturaRecomendada: {
+          titulo: 'Código Civil Guatemalteco',
+          articulo: 'Arts. 1686-1743 (Mandato), Arts. 1757-1810 (Sociedad civil)',
+          tiempo: '50 min',
+        },
+      },
+      2: {
+        titulo: 'Responsabilidad Civil Extracontractual',
+        descripcion: 'Cuando el daño no viene de un contrato sino de un hecho ilícito o cuasicontrato. Responsabilidad directa, indirecta y objetiva.',
+        objetivos: [
+          'Distinguir responsabilidad contractual de extracontractual',
+          'Dominar responsabilidad por hecho propio, ajeno y de cosas',
+          'Aplicar la teoría del daño: material, moral y emergente',
+        ],
+        recursos: [
+          { tipo: 'material', id: 'responsabilidad-civil-extra', nombre: 'Responsabilidad civil extracontractual', duracion: '2 horas', descripcion: 'CC Arts. 1645-1672: hecho ilícito, daños, responsabilidad objetiva' },
+          { tipo: 'caso', id: 'caso-accidente-civil', nombre: 'Caso: Accidente de tránsito con daños a terceros', duracion: '45 min', descripcion: 'Responsabilidad, daño emergente, lucro cesante y daño moral' },
+          { tipo: 'lectura', id: 'cc-arts-1645-1672', nombre: '📖 CC: Arts. 1645-1672 (Hecho ilícito y daños)', duracion: '40 min', descripcion: 'Causas, eximentes, tipos de daño y reparación' },
+          { tipo: 'actividad', id: 'actividad-responsabilidad', nombre: '✍️ Actividad: Identifica el tipo de responsabilidad en 5 casos', duracion: '30 min', descripcion: 'Contractual, extracontractual, directa, indirecta u objetiva' },
+        ],
+        tips: [
+          'Hecho ilícito civil: acción/omisión culposa o dolosa que causa daño (Art. 1645 CC)',
+          'Responsabilidad objetiva: no importa culpa, solo el nexo causal (ej: animales)',
+          'Daño moral: no necesita prueba de monto exacto, el juez lo estima',
+        ],
+        lecturaRecomendada: {
+          titulo: 'Código Civil Guatemalteco',
+          articulo: 'Arts. 1645-1672 (Responsabilidad por hecho ilícito)',
+          tiempo: '45 min',
+        },
+      },
+      3: {
+        titulo: 'Garantías Reales: Hipoteca, Prenda y Fianza',
+        descripcion: 'Las garantías que respaldan las obligaciones. Imprescindibles en la práctica notarial y bancaria guatemalteca.',
+        objetivos: [
+          'Dominar constitución, efectos y ejecución de la hipoteca',
+          'Entender prenda civil vs prenda sin desplazamiento',
+          'Aplicar fianza: subsidiariedad, beneficios de excusión y división',
+        ],
+        recursos: [
+          { tipo: 'material', id: 'garantias-reales-civil', nombre: 'Hipoteca, prenda y fianza: guía completa', duracion: '2.5 horas', descripcion: 'CC Arts. 822-885 (hipoteca), Arts. 886-944 (prenda), Arts. 2100-2146 (fianza)' },
+          { tipo: 'lectura', id: 'cc-arts-822-885', nombre: '📖 CC: Arts. 822-885 (Hipoteca)', duracion: '45 min', descripcion: 'Constitución, clases, efectos y extinción de la hipoteca' },
+          { tipo: 'caso', id: 'caso-ejecucion-hipoteca', nombre: 'Caso: Ejecución hipotecaria por falta de pago', duracion: '40 min', descripcion: 'Proceso de ejecución, subasta y preferencia de créditos' },
+          { tipo: 'actividad', id: 'actividad-garantias-comparativo', nombre: '✍️ Actividad: Compara hipoteca vs prenda vs fianza', duracion: '25 min', descripcion: 'Objeto, forma, efectos, ejecución y extinción de cada una' },
+        ],
+        tips: [
+          'Hipoteca solo sobre inmuebles y se inscribe en el Registro de la Propiedad',
+          'Prenda sobre muebles; sin desplazamiento = el deudor conserva la cosa',
+          'Beneficio de excusión: el fiador puede exigir que primero se ejecute al deudor',
+        ],
+        lecturaRecomendada: {
+          titulo: 'Código Civil Guatemalteco',
+          articulo: 'Arts. 822-885 (Hipoteca), Arts. 2100-2115 (Fianza)',
+          tiempo: '55 min',
+        },
+      },
+      4: {
+        titulo: 'Familia Avanzada: Adopción, Tutela y Patrimonio Familiar',
+        descripcion: 'Los institutos de protección familiar que van más allá del matrimonio. Alta frecuencia en el examen intermedio.',
+        objetivos: [
+          'Conocer el proceso y efectos de la adopción en Guatemala',
+          'Entender la tutela y curatela: quién, cómo y para qué',
+          'Dominar el patrimonio familiar: constitución y límites',
+        ],
+        recursos: [
+          { tipo: 'material', id: 'familia-adopcion-tutela', nombre: 'Adopción, tutela, curatela y patrimonio familiar', duracion: '2 horas', descripcion: 'CC Arts. 228-358: adopción, tutela, patrimonio familiar' },
+          { tipo: 'lectura', id: 'cc-arts-228-270', nombre: '📖 CC: Arts. 228-270 (Adopción)', duracion: '35 min', descripcion: 'Requisitos, efectos, nulidad e irrevocabilidad' },
+          { tipo: 'caso', id: 'caso-tutela', nombre: 'Caso: Nombramiento de tutor para menor huérfano', duracion: '35 min', descripcion: 'Procedimiento, facultades y responsabilidades del tutor' },
+          { tipo: 'actividad', id: 'actividad-adopcion-vs-tutela', nombre: '✍️ Actividad: Diferencia adopción vs tutela vs guarda', duracion: '20 min', descripcion: 'Cuadro comparativo con efectos jurídicos de cada figura' },
+        ],
+        tips: [
+          'La adopción en GT crea un vínculo idéntico al de filiación biológica (Art. 228 CC)',
+          'Tutor ≠ padre adoptivo: la tutela es temporal y no crea filiación',
+          'Patrimonio familiar: los bienes afectos NO pueden ser embargados (Art. 352 CC)',
+        ],
+        lecturaRecomendada: {
+          titulo: 'Código Civil Guatemalteco',
+          articulo: 'Arts. 228-270 (Adopción), Arts. 293-358 (Tutela y patrimonio familiar)',
+          tiempo: '50 min',
+        },
+      },
+      5: {
+        titulo: 'Derecho Registral: Registro de la Propiedad y Registro Civil',
+        descripcion: 'Cómo funcionan los registros en Guatemala. Inscripción, anotación, cancelación y fe pública registral.',
+        objetivos: [
+          'Entender los principios registrales: publicidad, especialidad, tracto sucesivo',
+          'Conocer qué actos son inscribibles en el Registro de la Propiedad',
+          'Dominar la fe pública registral y sus límites',
+        ],
+        recursos: [
+          { tipo: 'material', id: 'derecho-registral', nombre: 'Registro de la Propiedad y Registro Civil', duracion: '2 horas', descripcion: 'CC Arts. 1124-1155 + Ley del Registro Nacional de las Personas' },
+          { tipo: 'lectura', id: 'cc-arts-1124-1155', nombre: '📖 CC: Arts. 1124-1155 (Registro de la Propiedad)', duracion: '40 min', descripcion: 'Inscripción, anotación preventiva, cancelación' },
+          { tipo: 'actividad', id: 'actividad-principios-registrales', nombre: '✍️ Actividad: Explica los 6 principios registrales', duracion: '25 min', descripcion: 'Publicidad, legalidad, especialidad, tracto, rogación, fe pública' },
+          { tipo: 'tip', id: 'tip-registros-gt', nombre: '🎯 Los 5 registros más importantes en Guatemala', descripcion: 'Propiedad, Civil, Mercantil, Tributario y Nacional de las Personas' },
+        ],
+        tips: [
+          'Tracto sucesivo: solo puede inscribirse a favor de quien ya tiene inscrito el derecho anterior',
+          'Anotación preventiva ≠ inscripción definitiva; tiene plazo de caducidad',
+          'Fe pública registral protege al tercero de buena fe que confió en el registro',
+        ],
+        lecturaRecomendada: {
+          titulo: 'Código Civil + Ley del Registro de la Propiedad',
+          articulo: 'CC Arts. 1124-1155 + Decreto 1146 (Ley del Registro de la Propiedad)',
+          tiempo: '50 min',
+        },
+      },
+      6: {
+        titulo: 'Proceso Civil Ordinario: Demanda, Prueba y Sentencia',
+        descripcion: 'Cómo funciona un juicio civil de principio a fin. Las etapas, los escritos y los plazos que debes dominar.',
+        objetivos: [
+          'Conocer las etapas del juicio ordinario civil guatemalteco',
+          'Dominar los medios de prueba y su ofrecimiento',
+          'Entender la sentencia: estructura, efectos y cosa juzgada',
+        ],
+        recursos: [
+          { tipo: 'material', id: 'proceso-civil-ordinario', nombre: 'Juicio ordinario civil: etapas y escritos', duracion: '2.5 horas', descripcion: 'CPCG Arts. 96-209: demanda, contestación, prueba, sentencia' },
+          { tipo: 'lectura', id: 'cpcg-arts-96-140', nombre: '📖 CPCG: Arts. 96-140 (Demanda y contestación)', duracion: '45 min', descripcion: 'Requisitos, efectos de la presentación y rebeldía' },
+          { tipo: 'caso', id: 'caso-juicio-ordinario', nombre: 'Caso: Demanda de cobro por incumplimiento de contrato', duracion: '45 min', descripcion: 'Trámite completo: demanda → prueba → sentencia → recurso' },
+          { tipo: 'actividad', id: 'actividad-diagrama-proceso', nombre: '✍️ Actividad: Diagrama del juicio ordinario civil', duracion: '30 min', descripcion: 'Etapas, plazos, escritos y recursos en cada fase' },
+        ],
+        tips: [
+          'Demanda: 8 requisitos del Art. 106 CPCG (memorízalos)',
+          'Plazo de contestación: 9 días hábiles desde la notificación (Art. 111 CPCG)',
+          'Cosa juzgada: mismo objeto, misma causa, mismas partes (triple identidad)',
+        ],
+        lecturaRecomendada: {
+          titulo: 'Código Procesal Civil y Mercantil',
+          articulo: 'Arts. 96-209 (Juicio ordinario: demanda a sentencia)',
+          tiempo: '60 min',
+        },
+      },
+      7: {
+        titulo: 'Juicios Sumarios, Ejecutivos y Medidas Cautelares',
+        descripcion: 'Procesos más rápidos y las herramientas para asegurar el resultado del juicio. Muy frecuentes en la práctica civil.',
+        objetivos: [
+          'Distinguir juicio ordinario de sumario y ejecutivo',
+          'Dominar el proceso ejecutivo: título, liquidez y exigibilidad',
+          'Conocer medidas cautelares: arraigo, embargo, secuestro e intervención',
+        ],
+        recursos: [
+          { tipo: 'material', id: 'procesos-especiales-civil', nombre: 'Juicios sumarios, ejecutivos y medidas cautelares', duracion: '2 horas', descripcion: 'CPCG Arts. 229-294 (sumario), Arts. 294-334 (ejecutivo)' },
+          { tipo: 'lectura', id: 'cpcg-arts-294-334', nombre: '📖 CPCG: Arts. 294-334 (Juicio ejecutivo)', duracion: '40 min', descripcion: 'Títulos ejecutivos, oposición, remate y liquidación' },
+          { tipo: 'caso', id: 'caso-embargo-preventivo', nombre: 'Caso: Solicitud de embargo preventivo', duracion: '35 min', descripcion: 'Requisitos, caución y responsabilidad por embargo indebido' },
+          { tipo: 'actividad', id: 'actividad-medidas-cautelares', nombre: '✍️ Actividad: ¿Cuál medida cautelar aplica en cada caso?', duracion: '25 min', descripcion: '5 supuestos prácticos: arraigo, embargo, secuestro o intervención' },
+        ],
+        tips: [
+          'Título ejecutivo: debe ser líquido, exigible y constar en documento auténtico',
+          'Arraigo: retiene a la persona; embargo: retiene bienes',
+          'Medidas cautelares pueden pedirse ANTES del juicio (Art. 535 CPCG)',
+        ],
+        lecturaRecomendada: {
+          titulo: 'Código Procesal Civil y Mercantil',
+          articulo: 'Arts. 294-334 (Ejecutivo), Arts. 523-535 (Medidas cautelares)',
+          tiempo: '50 min',
+        },
+      },
+      8: {
+        titulo: 'Simulacro Civil Intermedio y Repaso Integral',
+        descripcion: '35 preguntas de nivel intermedio. Contratos complejos, responsabilidad, proceso civil y registros. Cierre del nivel.',
+        objetivos: [
+          'Evaluar dominio completo del nivel intermedio civil',
+          'Consolidar la conexión entre Código Civil y Procesal Civil',
+          'Identificar brechas finales antes del nivel avanzado',
+        ],
+        recursos: [
+          { tipo: 'quiz', id: 'simulacro-civil-intermedio', nombre: '❓ Simulacro Civil Intermedio (35 preguntas)', duracion: '2 horas', descripcion: 'Contratos complejos, responsabilidad, garantías, proceso civil' },
+          { tipo: 'glosario', id: 'glosario-civil-intermedio', nombre: '📚 Glosario Civil Intermedio: 55 términos', duracion: '45 min', descripcion: 'Términos procesales y de contratos especiales' },
+          { tipo: 'actividad', id: 'actividad-repaso-civil-inter', nombre: '✍️ Actividad: Mapa integrador CC + CPCG', duracion: '35 min', descripcion: 'Relaciona cada institución civil con su proceso correspondiente' },
+          { tipo: 'tip', id: 'tip-civil-intermedio-frecuentes', nombre: '🎯 Los 8 temas más frecuentes nivel intermedio', descripcion: 'Hipoteca, responsabilidad, ejecutivo, medidas cautelares encabezan la lista' },
+        ],
+        tips: [
+          'El ejecutivo y las medidas cautelares son las preguntas procesales más comunes',
+          'Responsabilidad extracontractual + garantías = combo frecuente en el privado',
+          'Revisa siempre: ¿es CC o CPCG? Muchos fallos confunden código sustantivo con procesal',
+        ],
+        lecturaRecomendada: {
+          titulo: 'Repaso: CC Arts. clave + CPCG Arts. clave',
+          articulo: 'Enfócate en los artículos detrás de tus errores del simulacro',
+          tiempo: '60 min',
+        },
+      },
+    },
     avanzada: {},
   },
   penal: { basica: {}, intermedia: {}, avanzada: {} },
