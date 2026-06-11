@@ -619,7 +619,211 @@ export const PLAN_RULES: Record<string, Record<string, Record<number, SemanaConf
       },
     },
   },
-  civil: { basica: {}, intermedia: {}, avanzada: {} },
+  civil: {
+    basica: {
+      1: {
+        titulo: 'Personas y Capacidad Jurídica',
+        descripcion: 'La base de todo el Derecho Civil: quién puede ser sujeto de derechos, qué es capacidad de goce vs ejercicio y cómo se registra el estado civil.',
+        objetivos: [
+          'Distinguir persona individual de persona jurídica',
+          'Entender capacidad de goce vs capacidad de ejercicio',
+          'Conocer el Registro Civil y sus funciones',
+        ],
+        recursos: [
+          { tipo: 'material', id: 'civil-personas', nombre: 'Personas: individual, jurídica y estado civil', duracion: '1.5 horas', descripcion: 'CC Arts. 1-30 comentados con ejemplos' },
+          { tipo: 'glosario', id: 'glosario-civil-basico', nombre: '📚 Glosario Civil Básico (35 términos)', duracion: '45 min', descripcion: 'Términos esenciales del Derecho Civil guatemalteco' },
+          { tipo: 'lectura', id: 'cc-arts-1-30', nombre: '📖 CC: Arts. 1-30 (De las personas)', duracion: '30 min', descripcion: 'Concepto, inicio y fin de la personalidad jurídica' },
+          { tipo: 'actividad', id: 'actividad-personas', nombre: '✍️ Actividad: Clasifica 10 sujetos de derecho', duracion: '20 min', descripcion: 'Individual vs jurídica, capaces vs incapaces' },
+        ],
+        tips: [
+          'Persona individual: todo ser humano desde la concepción (Art. 1 CC)',
+          'Capacidad de goce = tener derechos; de ejercicio = poder ejercerlos',
+          'Incapacidad absoluta: menores de 14 años y declarados en estado de interdicción',
+        ],
+        lecturaRecomendada: {
+          titulo: 'Código Civil Guatemalteco',
+          articulo: 'Arts. 1-8 (Personas individuales), Arts. 15-30 (Personas jurídicas)',
+          tiempo: '30 min',
+        },
+      },
+      2: {
+        titulo: 'Derecho de Familia: Matrimonio y Régimen Patrimonial',
+        descripcion: 'Requisitos, efectos y consecuencias del matrimonio. Los regímenes económicos que rigen los bienes de los cónyuges.',
+        objetivos: [
+          'Dominar requisitos y efectos del matrimonio civil',
+          'Distinguir comunidad absoluta, separación y comunidad de gananciales',
+          'Conocer las causas de nulidad e inexistencia del matrimonio',
+        ],
+        recursos: [
+          { tipo: 'material', id: 'familia-matrimonio', nombre: 'Matrimonio: requisitos, formas y regímenes', duracion: '2 horas', descripcion: 'CC Arts. 78-180: requisitos, efectos, regímenes patrimoniales' },
+          { tipo: 'caso', id: 'caso-nulidad-matrimonio', nombre: 'Caso: Nulidad de matrimonio por impedimento', duracion: '30 min', descripcion: 'Análisis de impedimentos absolutos y relativos' },
+          { tipo: 'lectura', id: 'cc-arts-78-132', nombre: '📖 CC: Arts. 78-132 (Matrimonio y efectos)', duracion: '40 min', descripcion: 'Definición, requisitos, derechos y deberes conyugales' },
+        ],
+        tips: [
+          'Comunidad absoluta = todo es de ambos; Separación = cada quien lo suyo',
+          'Impedimentos absolutos: consanguinidad, matrimonio anterior vigente',
+          'El matrimonio nulo vs matrimonio inexistente: efectos distintos',
+        ],
+        lecturaRecomendada: {
+          titulo: 'Código Civil Guatemalteco',
+          articulo: 'Arts. 78-110 (Matrimonio), Arts. 122-180 (Regímenes económicos)',
+          tiempo: '50 min',
+        },
+      },
+      3: {
+        titulo: 'Familia: Divorcio, Filiación y Alimentos',
+        descripcion: 'Causas de divorcio, filiación (quién es padre/madre legalmente) y la obligación de alimentos. Tres temas de altísima frecuencia en el examen.',
+        objetivos: [
+          'Conocer las 13 causas de divorcio del CC guatemalteco',
+          'Distinguir filiación matrimonial y extramatrimonial',
+          'Calcular y argumentar la obligación alimentaria',
+        ],
+        recursos: [
+          { tipo: 'material', id: 'familia-divorcio-filiacion', nombre: 'Divorcio, filiación y alimentos', duracion: '2 horas', descripcion: 'CC Arts. 155-292: divorcio, patria potestad, alimentos' },
+          { tipo: 'caso', id: 'caso-familia', nombre: 'Caso: Divorcio con menores e impugnación de paternidad', duracion: '45 min', descripcion: 'Guarda, visitas y pensión en un solo caso' },
+          { tipo: 'lectura', id: 'cc-arts-155-292', nombre: '📖 CC: Arts. 155-292 (Divorcio y filiación)', duracion: '45 min', descripcion: 'Causas, efectos, impugnación de paternidad' },
+          { tipo: 'actividad', id: 'actividad-causas-divorcio', nombre: '✍️ Actividad: Lista las 13 causas de divorcio', duracion: '20 min', descripcion: 'Memoriza y clasifica por tipo de causa' },
+        ],
+        tips: [
+          'Las 13 causas de divorcio están en el Art. 155 CC (memorízdelas)',
+          'Alimentos: proporcionales a necesidad del quien pide y posibilidad del que da',
+          'La impugnación de paternidad tiene plazo: 1 año desde que se conoce (Art. 226 CC)',
+        ],
+        lecturaRecomendada: {
+          titulo: 'Código Civil Guatemalteco',
+          articulo: 'Arts. 155-169 (Divorcio), Arts. 199-292 (Filiación y alimentos)',
+          tiempo: '50 min',
+        },
+      },
+      4: {
+        titulo: 'Bienes y Derechos Reales: Propiedad y Posesión',
+        descripcion: 'Clasificación de bienes, el derecho de propiedad y la posesión. Usufructo, servidumbres y limitaciones al dominio.',
+        objetivos: [
+          'Clasificar bienes (muebles/inmuebles, fungibles/no fungibles)',
+          'Distinguir propiedad, posesión y tenencia',
+          'Entender usufructo, uso, habitación y servidumbres',
+        ],
+        recursos: [
+          { tipo: 'material', id: 'bienes-derechos-reales', nombre: 'Bienes, propiedad y derechos reales limitados', duracion: '2 horas', descripcion: 'CC Arts. 442-720: bienes, propiedad, usufructo, servidumbres' },
+          { tipo: 'lectura', id: 'cc-arts-442-490', nombre: '📖 CC: Arts. 442-490 (Bienes y propiedad)', duracion: '40 min', descripcion: 'Clasificación de bienes y derecho de propiedad' },
+          { tipo: 'actividad', id: 'actividad-clasificacion-bienes', nombre: '✍️ Actividad: Clasifica 20 ejemplos de bienes', duracion: '25 min', descripcion: 'Mueble/inmueble, fungible, consumible, registrable' },
+          { tipo: 'caso', id: 'caso-usufructo', nombre: 'Caso: Usufructo sobre bien inmueble familiar', duracion: '35 min', descripcion: 'Derechos y obligaciones del usufructuario vs nudo propietario' },
+        ],
+        tips: [
+          'Propiedad = usar + gozar + disponer (Art. 464 CC)',
+          'Posesión de buena fe + justo título = prescripción adquisitiva en 10 años',
+          'Servidumbre activa: el predio dominante; pasiva: el predio sirviente',
+        ],
+        lecturaRecomendada: {
+          titulo: 'Código Civil Guatemalteco',
+          articulo: 'Arts. 464-476 (Propiedad), Arts. 703-720 (Servidumbres)',
+          tiempo: '45 min',
+        },
+      },
+      5: {
+        titulo: 'Obligaciones Civiles: Fuentes, Cumplimiento y Extinción',
+        descripcion: 'Cómo nacen, cómo se cumplen y cómo se extinguen las obligaciones. El corazón del Derecho Civil patrimonial.',
+        objetivos: [
+          'Identificar las fuentes de las obligaciones (contrato, ley, cuasicontrato, delito)',
+          'Dominar modos de extinción (pago, novación, compensación, prescripción)',
+          'Entender mora, incumplimiento y daños y perjuicios',
+        ],
+        recursos: [
+          { tipo: 'material', id: 'obligaciones-civiles', nombre: 'Obligaciones: nacimiento, efectos y extinción', duracion: '2.5 horas', descripcion: 'CC Arts. 1319-1515: tipos, efectos, extinción' },
+          { tipo: 'lectura', id: 'cc-arts-1319-1410', nombre: '📖 CC: Arts. 1319-1410 (Obligaciones)', duracion: '50 min', descripcion: 'Fuentes, clasificación y efectos de las obligaciones' },
+          { tipo: 'caso', id: 'caso-incumplimiento', nombre: 'Caso: Incumplimiento de obligación con daños', duracion: '35 min', descripcion: 'Mora, daños directos e indirectos, cláusula penal' },
+          { tipo: 'actividad', id: 'actividad-extincion', nombre: '✍️ Actividad: Mapa de modos de extinción', duracion: '30 min', descripcion: 'Diagrama de los 10 modos de extinción con ejemplos' },
+        ],
+        tips: [
+          'Pago = cumplimiento exacto, íntegro y puntual (no solo dinero)',
+          'Mora del deudor: intereses moratorios desde la interpelación',
+          'Prescripción extintiva civil: 10 años regla general (Art. 1508 CC)',
+        ],
+        lecturaRecomendada: {
+          titulo: 'Código Civil Guatemalteco',
+          articulo: 'Arts. 1380-1420 (Extinción), Arts. 1431-1515 (Daños y perjuicios)',
+          tiempo: '55 min',
+        },
+      },
+      6: {
+        titulo: 'Contratos Civiles: Compraventa, Arrendamiento y Donación',
+        descripcion: 'Los tres contratos más frecuentes en la práctica guatemalteca. Elementos, obligaciones de las partes y vicios que los invalidan.',
+        objetivos: [
+          'Dominar elementos esenciales de la compraventa civil',
+          'Conocer derechos y obligaciones en el arrendamiento',
+          'Entender tipos de donación y causas de revocación',
+        ],
+        recursos: [
+          { tipo: 'material', id: 'contratos-nominados-civil', nombre: 'Contratos civiles: compraventa, arrendamiento, donación', duracion: '2 horas', descripcion: 'CC Arts. 1517-1694: los 3 contratos principales' },
+          { tipo: 'caso', id: 'caso-contrato', nombre: 'Caso: Compraventa con vicios ocultos', duracion: '35 min', descripcion: 'Acciones edilicias: redhibitoria y quanti minoris' },
+          { tipo: 'lectura', id: 'cc-arts-1517-1594', nombre: '📖 CC: Arts. 1517-1594 (Compraventa)', duracion: '45 min', descripcion: 'Elementos, precio, entrega, garantías y vicios' },
+          { tipo: 'actividad', id: 'actividad-redacta-contrato', nombre: '✍️ Actividad: Redacta cláusulas de compraventa', duracion: '30 min', descripcion: 'Precio, entrega, garantías, resolución' },
+        ],
+        tips: [
+          'Compraventa civil: vendedor entrega cosa y comprador paga precio cierto en dinero',
+          'Vicios ocultos: el comprador tiene 6 meses para reclamar (Art. 1558 CC)',
+          'Arrendamiento: el arrendatario NO puede subarrendar sin autorización (Art. 1891 CC)',
+        ],
+        lecturaRecomendada: {
+          titulo: 'Código Civil Guatemalteco',
+          articulo: 'Arts. 1517-1558 (Compraventa), Arts. 1880-1940 (Arrendamiento)',
+          tiempo: '55 min',
+        },
+      },
+      7: {
+        titulo: 'Sucesiones y Herencias: Testamentaria e Intestada',
+        descripcion: 'Qué pasa con los bienes cuando alguien muere. Testamento, herederos legales y la porción legítima que nadie puede quitar.',
+        objetivos: [
+          'Distinguir sucesión testamentaria de intestada',
+          'Conocer formas válidas de testamento en Guatemala',
+          'Entender la legítima hereditaria y los herederos forzosos',
+        ],
+        recursos: [
+          { tipo: 'material', id: 'sucesiones-herencias', nombre: 'Sucesiones: testamentaria, intestada y legítima', duracion: '2 horas', descripcion: 'CC Arts. 917-1067: herederos, testamentos, legítima' },
+          { tipo: 'lectura', id: 'cc-arts-917-950', nombre: '📖 CC: Arts. 917-950 (Apertura de la sucesión)', duracion: '40 min', descripcion: 'Capacidad para heredar, aceptación y renuncia' },
+          { tipo: 'caso', id: 'caso-herencia', nombre: 'Caso: Impugnación de testamento por preterición', duracion: '40 min', descripcion: 'Heredero forzoso omitido en testamento' },
+          { tipo: 'actividad', id: 'actividad-orden-sucesion', nombre: '✍️ Actividad: Aplica el orden sucesorio intestado', duracion: '25 min', descripcion: '¿Quién hereda? Resuelve 3 casos de sucesión legal' },
+        ],
+        tips: [
+          'Orden intestado GT: 1° hijos, 2° ascendientes, 3° cónyuge, 4° colaterales (Art. 1078 CC)',
+          'La legítima = 50% de la herencia para herederos forzosos',
+          'Testamento ológrafo: escrito y firmado completamente de puño y letra del testador',
+        ],
+        lecturaRecomendada: {
+          titulo: 'Código Civil Guatemalteco',
+          articulo: 'Arts. 940-976 (Testamentos), Arts. 1078-1095 (Sucesión intestada)',
+          tiempo: '50 min',
+        },
+      },
+      8: {
+        titulo: 'Simulacro Civil Básico y Repaso Final',
+        descripcion: '30 preguntas de todos los temas civiles básicos. Cronometrado. Análisis de errores y cierre del nivel.',
+        objetivos: [
+          'Evaluar dominio completo del Derecho Civil básico',
+          'Identificar los 3 temas más débiles para reforzar',
+          'Cerrar el nivel básico con confianza',
+        ],
+        recursos: [
+          { tipo: 'quiz', id: 'simulacro-civil-basico', nombre: '❓ Simulacro Civil Básico (30 preguntas)', duracion: '1.5 horas', descripcion: 'Personas, familia, bienes, obligaciones, contratos, sucesiones' },
+          { tipo: 'glosario', id: 'glosario-civil-repaso', nombre: '📚 Glosario Civil: 50 términos clave', duracion: '45 min', descripcion: 'Repaso rápido de términos y definiciones civiles' },
+          { tipo: 'actividad', id: 'actividad-mapa-civil', nombre: '✍️ Actividad: Mapa del Derecho Civil guatemalteco', duracion: '30 min', descripcion: 'Conecta todas las áreas del Código Civil en un esquema' },
+          { tipo: 'tip', id: 'tip-civil-frecuentes', nombre: '🎯 Los 10 temas más frecuentes en exámenes civiles', descripcion: 'Basado en convocatorias anteriores del examen privado' },
+        ],
+        tips: [
+          'Familia y contratos son las áreas con más preguntas en el privado civil',
+          'Repasa las causas de nulidad de contratos (Art. 1301 CC)',
+          'Sucesiones: memoriza el orden intestado y la legítima',
+        ],
+        lecturaRecomendada: {
+          titulo: 'Repaso integral del Código Civil guatemalteco',
+          articulo: 'Arts. clave de cada libro según tus errores del simulacro',
+          tiempo: '60 min',
+        },
+      },
+    },
+    intermedia: {},
+    avanzada: {},
+  },
   penal: { basica: {}, intermedia: {}, avanzada: {} },
   laboral: { basica: {}, intermedia: {}, avanzada: {} },
 };
