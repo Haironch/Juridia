@@ -6,7 +6,7 @@ import {
   Loader2, AlertCircle, Zap, Download, Trash2, ExternalLink,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
-import { generarPlanPDF } from '../../utils/generarPlanPDF';
+import { generarPlanPDF } from '../../utils/generarPlanPDFProfesional';
 
 const API = import.meta.env.VITE_API_URL ?? '';
 
@@ -242,9 +242,12 @@ export default function PlanDetalle() {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });
+      if (!res.ok) throw new Error('Error al eliminar');
       return res.json();
     },
-    onSuccess: () => navigate('/planes'),
+    onSuccess: () => {
+      setTimeout(() => navigate('/planes'), 500);
+    },
   });
 
   const plan = data?.data.plan;
