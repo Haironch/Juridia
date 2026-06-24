@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   ArrowLeft, Calendar, CheckCircle2, BookOpen,
-  Loader2, AlertCircle, Zap, Download, Trash2, ExternalLink,
+  Loader2, AlertCircle, Zap, Download, Trash2, ExternalLink, Target, Clock,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { generarPlanPDF } from '../../utils/generarPlanPDFProfesional';
@@ -54,41 +54,106 @@ interface DetalleResponse {
   };
 }
 
-// Mapeo de recursos a rutas
-const RECURSO_RUTAS: Record<string, string> = {
-  'glosario': '/glosario',
+// ── Helpers ───────────────────────────────────────────────────────────────────
+const NOMBRES_EXAMEN: Record<string, string> = {
+  privado: 'Examen Privado',
+  civil: 'Derecho Civil',
+  penal: 'Derecho Penal',
+  laboral: 'Derecho Laboral',
+};
+
+const NOMBRES_FASE: Record<string, string> = {
+  basica: 'Básico',
+  intermedia: 'Intermedio',
+  avanzada: 'Avanzado',
+};
+
+// Rutas por ID específico (overrides)
+const ID_RUTAS: Record<string, string> = {
+  'completo': '/glosario',
+  'glosario-civil-basico': '/glosario',
+  'glosario-civil-intermedio': '/glosario',
+  'glosario-civil-avanzado': '/glosario',
+  'glosario-civil-repaso': '/glosario',
+  'glosario-intermedio': '/glosario',
+  'glosario-avanzado-express': '/glosario',
+  'glosario-repaso': '/glosario',
   'constituquiz-sesion-1': '/constituquiz/estudio/constitucional-1',
-  'constitucional-2': '/constituquiz/estudio/constitucional-2',
+  'constituquiz-intermedio': '/constituquiz/estudio/constitucional-2',
   'civil-quiz': '/constituquiz/estudio/civil-1',
   'laboral-quiz': '/constituquiz/estudio/laboral-1',
   'examen-simulado': '/examen',
   'repaso-simulado': '/examen',
-  'caso-contrato': '/casos',
-  'caso-despido': '/casos',
-  'caso-familia': '/casos',
-  'caso-defensa': '/casos',
-  'caso-procesal': '/casos',
+  'simulacro-civil-basico': '/examen',
+  'simulacro-civil-intermedio': '/examen',
+  'simulacro-civil-avanzado': '/examen',
+  'simulacro-avanzado-final': '/examen',
+  'simulacro-intermedio': '/examen',
+  'mini-quiz-debiles': '/examen',
+  'repaso-mini-quiz': '/examen',
   'liquidacion': '/liquidacion',
-  'documentos': '/documentos',
-  'material': '/material',
-  'procedimiento': '/material',
-  'constitucion-basico': '/material',
 };
 
+function getRecursoRuta(recurso: SemanaRecurso): string | null {
+  if (ID_RUTAS[recurso.id]) return ID_RUTAS[recurso.id];
+  switch (recurso.tipo) {
+    case 'glosario': return '/glosario';
+    case 'caso': return '/casos';
+    case 'material': return '/material';
+    case 'documento': return '/documentos';
+    case 'quiz': return '/examen';
+    default: return null; // tip, actividad, lectura = informativos, sin ruta
+  }
+}
+
+function esSemanasActual(semana: Semana): boolean {
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+  const inicio = new Date(semana.fecha_inicio);
+  const fin = new Date(semana.fecha_fin);
+  return hoy >= inicio && hoy <= fin;
+}
+
+const TIPO_EMOJI: Record<string, string> = {
+  glosario: '📚',
+  quiz: '❓',
+  caso: '⚖️',
+  documento: '📄',
+  material: '📖',
+  lectura: '📖',
+  tip: '💡',
+  actividad: '✍️',
+};
+
+const TIPO_LABEL: Record<string, string> = {
+  glosario: 'Glosario',
+  quiz: 'Quiz',
+  caso: 'Caso práctico',
+  documento: 'Documento',
+  material: 'Material',
+  lectura: 'Lectura',
+  tip: 'Tip',
+  actividad: 'Actividad',
+};
+
+// ── TarjetaSemana ─────────────────────────────────────────────────────────────
 function TarjetaSemana({ semana, onToggle, isToggling }: {
   semana: Semana;
   onToggle: (id: string) => void;
   isToggling: boolean;
 }) {
   const completada = semana.progreso?.completado ?? false;
-  const [expanded, setExpanded] = useState(false);
+  const esActual = esSemanasActual(semana);
+  const [expanded, setExpanded] = useState(esActual);
 
   return (
     <div
       className={`rounded-xl border-2 transition-all ${
         completada
           ? 'border-green-300 bg-green-50'
-          : 'border-[#9ac1e2] bg-white hover:border-[#2a628f]'
+          : esActual
+            ? 'border-[#2a628f] bg-white shadow-md'
+            : 'border-[#9ac1e2] bg-white hover:border-[#2a628f]'
       }`}
     >
       <button
@@ -96,10 +161,15 @@ function TarjetaSemana({ semana, onToggle, isToggling }: {
         className="w-full text-left p-5 flex items-start justify-between"
       >
         <div className="flex-1">
-          <div className="flex items-center gap-3 mb-2">
+          <div className="flex items-center gap-2 flex-wrap mb-2">
             <span className="text-sm font-bold text-[#2a628f] bg-[#d8e9f5] px-3 py-1 rounded-full">
               Semana {semana.numero_semana}
             </span>
+            {esActual && !completada && (
+              <span className="inline-flex items-center gap-1 text-xs font-semibold text-[#2a628f] bg-blue-100 px-2 py-0.5 rounded">
+                <Clock className="h-3 w-3" /> Semana actual
+              </span>
+            )}
             {completada && (
               <span className="inline-flex items-center gap-1 text-xs font-medium text-green-700 bg-green-100 px-2 py-0.5 rounded">
                 <CheckCircle2 className="h-3.5 w-3.5" /> Completada
@@ -139,69 +209,117 @@ function TarjetaSemana({ semana, onToggle, isToggling }: {
             completada
               ? 'bg-green-200 text-green-700 hover:bg-green-300'
               : 'bg-[#d8e9f5] text-[#2a628f] hover:bg-[#9ac1e2]'
-          }`}
+          } disabled:opacity-40 disabled:cursor-not-allowed`}
           title={completada ? 'Marcar como no completada' : 'Marcar como completada'}
         >
-          <CheckCircle2 className={`h-5 w-5 transition-transform ${completada ? '' : 'opacity-50'}`} />
+          {isToggling
+            ? <Loader2 className="h-5 w-5 animate-spin" />
+            : <CheckCircle2 className={`h-5 w-5 ${completada ? '' : 'opacity-50'}`} />
+          }
         </button>
       </button>
 
       {expanded && (
-        <div className="border-t-2 border-inherit px-5 py-4 bg-opacity-50">
-          <h4 className="text-sm font-semibold text-[#13293d] mb-3">
-            Recursos para esta semana:
-          </h4>
+        <div className="border-t-2 border-inherit px-5 py-4 space-y-5">
 
-          <div className="space-y-2">
-            {semana.recursos.map((recurso, idx) => {
-              const ruta = RECURSO_RUTAS[recurso.id] || null;
-              const tipoEmoji: Record<string, string> = {
-                glosario: '📚',
-                quiz: '❓',
-                caso: '⚖️',
-                documento: '📄',
-                material: '📖',
-                lectura: '📖',
-                tip: '💡',
-                actividad: '✍️',
-              };
+          {/* Objetivos */}
+          {semana.objetivos && semana.objetivos.length > 0 && (
+            <div>
+              <h4 className="text-sm font-semibold text-[#13293d] mb-2 flex items-center gap-1.5">
+                <Target className="h-4 w-4 text-[#2a628f]" />
+                Objetivos de la semana
+              </h4>
+              <ul className="space-y-1">
+                {semana.objetivos.map((obj, i) => (
+                  <li key={i} className="text-sm text-[#16324f] flex items-start gap-2">
+                    <span className="mt-1 w-1.5 h-1.5 rounded-full bg-[#2a628f] shrink-0" />
+                    {obj}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
-              const content = (
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <p className={`text-sm font-medium transition-colors ${
-                      ruta ? 'text-[#13293d] group-hover:text-[#2a628f]' : 'text-[#9ac1e2]'
-                    }`}>
-                      {tipoEmoji[recurso.tipo]} {recurso.nombre}
-                    </p>
-                    <p className="text-xs text-[#9ac1e2]">{recurso.tipo}</p>
-                  </div>
-                  <div className="flex items-center gap-2 ml-2">
-                    {recurso.duracion && (
-                      <span className="text-xs text-[#16324f] font-medium whitespace-nowrap">
-                        {recurso.duracion}
-                      </span>
+          {/* Recursos */}
+          <div>
+            <h4 className="text-sm font-semibold text-[#13293d] mb-2">
+              Recursos para esta semana
+            </h4>
+            <div className="space-y-2">
+              {semana.recursos.map((recurso, idx) => {
+                const ruta = getRecursoRuta(recurso);
+                const esInformativo = !ruta;
+
+                const inner = (
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1 min-w-0">
+                      <p className={`text-sm font-medium transition-colors truncate ${
+                        ruta ? 'text-[#13293d] group-hover:text-[#2a628f]' : 'text-[#16324f]'
+                      }`}>
+                        {TIPO_EMOJI[recurso.tipo]} {recurso.nombre}
+                      </p>
+                      <div className="flex items-center gap-2 mt-0.5">
+                        <span className="text-xs text-[#9ac1e2] capitalize">
+                          {TIPO_LABEL[recurso.tipo] ?? recurso.tipo}
+                        </span>
+                        {recurso.duracion && (
+                          <span className="text-xs text-[#16324f] font-medium">
+                            · {recurso.duracion}
+                          </span>
+                        )}
+                        {esInformativo && (
+                          <span className="text-xs text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">
+                            Actividad propia
+                          </span>
+                        )}
+                      </div>
+                      {recurso.descripcion && (
+                        <p className="text-xs text-[#9ac1e2] mt-1 line-clamp-2">{recurso.descripcion}</p>
+                      )}
+                    </div>
+                    {ruta && (
+                      <ExternalLink className="h-3.5 w-3.5 text-[#9ac1e2] group-hover:text-[#2a628f] transition-colors ml-2 shrink-0 mt-1" />
                     )}
-                    {ruta && <ExternalLink className="h-3.5 w-3.5 text-[#9ac1e2] group-hover:text-[#2a628f] transition-colors" />}
                   </div>
-                </div>
-              );
+                );
 
-              return ruta ? (
-                <Link
-                  key={idx}
-                  to={ruta}
-                  className="block p-3 rounded-lg border border-[#d8e9f5] hover:border-[#2a628f] hover:bg-white transition-colors group cursor-pointer"
-                >
-                  {content}
-                </Link>
-              ) : (
-                <div key={idx} className="block p-3 rounded-lg border border-[#d8e9f5] bg-gray-50">
-                  {content}
-                </div>
-              );
-            })}
+                return ruta ? (
+                  <Link
+                    key={idx}
+                    to={ruta}
+                    className="block p-3 rounded-lg border border-[#d8e9f5] hover:border-[#2a628f] hover:bg-blue-50/30 transition-colors group cursor-pointer"
+                  >
+                    {inner}
+                  </Link>
+                ) : (
+                  <div key={idx} className="block p-3 rounded-lg border border-[#d8e9f5] bg-amber-50/40">
+                    {inner}
+                  </div>
+                );
+              })}
+            </div>
           </div>
+
+          {/* Tips */}
+          {semana.tips && semana.tips.length > 0 && (
+            <div className="bg-[#f0f7ff] rounded-lg p-3">
+              <p className="text-xs font-semibold text-[#2a628f] mb-1.5">💡 Tips de estudio</p>
+              <ul className="space-y-1">
+                {semana.tips.map((tip, i) => (
+                  <li key={i} className="text-xs text-[#16324f]">• {tip}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Lectura recomendada */}
+          {semana.lecturaRecomendada && (
+            <div className="border border-[#d8e9f5] rounded-lg p-3">
+              <p className="text-xs font-semibold text-[#13293d] mb-1">📖 Lectura recomendada</p>
+              <p className="text-xs text-[#16324f] font-medium">{semana.lecturaRecomendada.titulo}</p>
+              <p className="text-xs text-[#9ac1e2]">{semana.lecturaRecomendada.articulo} · {semana.lecturaRecomendada.tiempo}</p>
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -214,6 +332,7 @@ export default function PlanDetalle() {
   const { token } = useAuthStore();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const [togglingId, setTogglingId] = useState<string | null>(null);
 
   const { data, isLoading, isError } = useQuery<DetalleResponse>({
     queryKey: ['plan-detalle', id],
@@ -234,9 +353,14 @@ export default function PlanDetalle() {
       });
       return res.json();
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['plan-detalle', id] });
+      queryClient.invalidateQueries({ queryKey: ['planes'] });
+      setTogglingId(null);
+    },
+    onError: () => setTogglingId(null),
   });
 
-  // ── Eliminar plan ──
   const eliminarMutation = useMutation({
     mutationFn: async () => {
       const res = await fetch(`${API}/api/planes/${id}`, {
@@ -258,6 +382,11 @@ export default function PlanDetalle() {
   const semanasCompletas = semanas.filter(s => s.progreso?.completado).length;
   const progreso = totalSemanas > 0 ? Math.round((semanasCompletas / totalSemanas) * 100) : 0;
 
+  const handleToggle = (semanaId: string) => {
+    setTogglingId(semanaId);
+    toggleMutation.mutate(semanaId);
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-[#d8e9f5] flex items-center justify-center">
@@ -278,6 +407,9 @@ export default function PlanDetalle() {
     );
   }
 
+  const nombreExamen = NOMBRES_EXAMEN[plan.examen] ?? plan.examen;
+  const nombreFase = NOMBRES_FASE[plan.fase] ?? plan.fase;
+
   return (
     <div className="min-h-screen bg-[#d8e9f5]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -295,11 +427,16 @@ export default function PlanDetalle() {
           <div className="flex items-start justify-between gap-4 mb-4">
             <div className="flex-1">
               <h1 className="text-3xl font-bold mb-1">
-                Plan de {plan.examen.charAt(0).toUpperCase() + plan.examen.slice(1)}
+                {nombreExamen}
               </h1>
               <p className="text-[#b2d3ea]">
-                Nivel {plan.fase} • {totalSemanas} semanas personalizadas
+                Nivel {nombreFase} · {totalSemanas} semanas personalizadas
               </p>
+              {plan.fecha_examen && (
+                <p className="text-sm text-[#b2d3ea] mt-1">
+                  Examen: {new Date(plan.fecha_examen).toLocaleDateString('es-GT', { day: 'numeric', month: 'long', year: 'numeric' })}
+                </p>
+              )}
             </div>
             <div className="text-right flex flex-col items-end gap-3">
               <div>
@@ -340,7 +477,10 @@ export default function PlanDetalle() {
                   disabled={eliminarMutation.isPending}
                   className="flex items-center gap-1 px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 disabled:opacity-50 rounded text-sm transition-colors"
                 >
-                  <Trash2 className="h-4 w-4" />
+                  {eliminarMutation.isPending
+                    ? <Loader2 className="h-4 w-4 animate-spin" />
+                    : <Trash2 className="h-4 w-4" />
+                  }
                   Eliminar
                 </button>
               </div>
@@ -350,7 +490,7 @@ export default function PlanDetalle() {
           {/* Barra de progreso */}
           <div className="h-3 bg-white/20 rounded-full overflow-hidden">
             <div
-              className="h-full bg-white transition-all"
+              className="h-full bg-white transition-all duration-500"
               style={{ width: `${progreso}%` }}
             />
           </div>
@@ -372,8 +512,8 @@ export default function PlanDetalle() {
               <TarjetaSemana
                 key={semana.id}
                 semana={semana}
-                onToggle={(id) => toggleMutation.mutate(id)}
-                isToggling={toggleMutation.isPending}
+                onToggle={handleToggle}
+                isToggling={togglingId === semana.id}
               />
             ))
           )}
@@ -385,9 +525,9 @@ export default function PlanDetalle() {
             <div className="flex items-start gap-4">
               <Zap className="h-6 w-6 text-orange-500 shrink-0 mt-1" />
               <div className="flex-1">
-                <h3 className="font-bold text-[#13293d] mb-2">Dúdas en el camino?</h3>
+                <h3 className="font-bold text-[#13293d] mb-2">¿Dudas en el camino?</h3>
                 <p className="text-sm text-[#16324f] mb-4">
-                  Comparte tus dúdas en los foros de la comunidad. Otros estudiantes y profesionales te ayudarán.
+                  Comparte tus dudas en los foros de la comunidad. Otros estudiantes y profesionales te ayudarán.
                 </p>
                 <Link
                   to="/foros"

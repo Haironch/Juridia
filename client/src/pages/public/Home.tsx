@@ -1,7 +1,21 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { BookOpen, Users, Award, TrendingUp, Brain, BarChart2, MessageSquare, ArrowRight } from "lucide-react";
+import { useAuthStore } from "../../store/authStore";
+import MascotaLex from "../../components/mascota/MascotaLex";
 
 export default function Home() {
+  const { isAuthenticated, user } = useAuthStore();
+  const [lexVisible, setLexVisible] = useState(true);
+
+  const saludo = isAuthenticated && user?.nombre
+    ? `¡Hola, ${user.nombre}! 👋 Qué bueno verte de nuevo. ¿Listo para seguir estudiando?`
+    : null;
+
+  const presentacion = !isAuthenticated
+    ? 'Hola, mi nombre es Lex y seré tu compañero de estudio en Juridia. Te ayudaré a prepararte para tu examen privado con planes personalizados, recursos y mucho apoyo en el camino. ¡Estoy aquí para que llegues al título!'
+    : null;
+
   return (
     <div className="bg-[#d8e9f5]">
       {/* Hero Section */}
@@ -33,7 +47,40 @@ export default function Home() {
             </div>
           </div>
         </div>
+
       </div>
+
+      {/* Lex — modal de bienvenida */}
+      {lexVisible && (saludo || presentacion) && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            onClick={() => setLexVisible(false)}
+          />
+          <div className="relative z-10 flex flex-col items-center gap-4 bg-white rounded-3xl shadow-2xl px-10 py-8 max-w-sm w-full mx-4">
+            <button
+              onClick={() => setLexVisible(false)}
+              className="absolute top-4 right-4 w-7 h-7 flex items-center justify-center rounded-full bg-[#f1f5f9] hover:bg-[#e2e8f0] text-[#64748b] hover:text-[#0f2942] text-lg font-bold transition-colors"
+              aria-label="Cerrar"
+            >
+              ×
+            </button>
+            <MascotaLex estado="feliz" tamaño="lg" />
+            <div className="text-center">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#2a628f] mb-1">Juridia</p>
+              <p className="text-[#1e293b] text-base leading-relaxed">
+                {saludo ?? presentacion}
+              </p>
+            </div>
+            <button
+              onClick={() => setLexVisible(false)}
+              className="w-full py-2.5 bg-[#2a628f] hover:bg-[#0f2942] text-white text-sm font-semibold rounded-xl transition-colors"
+            >
+              {isAuthenticated ? '¡Vamos a estudiar!' : '¡Encantado de conocerte!'}
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Features Section */}
       <div className="py-16 bg-[#cce0f0]">

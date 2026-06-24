@@ -25,6 +25,28 @@ interface PlanesResponse {
   data: Plan[];
 }
 
+// ── Helpers ───────────────────────────────────────────────────────────────────
+const NOMBRES_EXAMEN: Record<string, string> = {
+  privado: 'Examen Privado',
+  civil: 'Derecho Civil',
+  penal: 'Derecho Penal',
+  laboral: 'Derecho Laboral',
+};
+
+const NOMBRES_FASE: Record<string, string> = {
+  basica: 'Básico',
+  intermedia: 'Intermedio',
+  avanzada: 'Avanzado',
+};
+
+function semanasHastaFecha(fecha: string): number {
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+  const target = new Date(fecha);
+  const diff = Math.ceil((target.getTime() - hoy.getTime()) / (1000 * 60 * 60 * 24 * 7));
+  return Math.max(0, diff);
+}
+
 // ── Modal crear plan ──────────────────────────────────────────────────────────
 interface ModalProps { onClose: () => void; onSuccess: () => void; }
 
@@ -35,6 +57,16 @@ function ModalNuevoPlan({ onClose, onSuccess }: ModalProps) {
   const [semanas, setSemanas] = useState(8);
   const [fechaExamen, setFechaExamen] = useState('');
   const [error, setError] = useState('');
+
+  const semanasDisponiblesReales = fechaExamen ? semanasHastaFecha(fechaExamen) : null;
+
+  // Error bloqueante: la fecha ingresada no cubre las semanas seleccionadas
+  const errorFecha =
+    semanasDisponiblesReales !== null && semanasDisponiblesReales < semanas
+      ? semanasDisponiblesReales === 0
+        ? 'La fecha de examen ya pasó o es esta semana. Elige una fecha futura.'
+        : `Tu examen es en ${semanasDisponiblesReales} semana${semanasDisponiblesReales !== 1 ? 's' : ''}, pero el plan requiere ${semanas}. Reduce las semanas o elige una fecha más lejana.`
+      : null;
 
   const mutation = useMutation({
     mutationFn: async () => {
@@ -55,6 +87,8 @@ function ModalNuevoPlan({ onClose, onSuccess }: ModalProps) {
     onSuccess: () => { onSuccess(); onClose(); },
     onError: (e: Error) => setError(e.message),
   });
+
+  const puedeCrear = !!fechaExamen && !errorFecha && !mutation.isPending;
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 px-4 pb-4 sm:pb-0">
@@ -94,10 +128,32 @@ function ModalNuevoPlan({ onClose, onSuccess }: ModalProps) {
               onChange={(e) => setFase(e.target.value)}
               className="w-full px-3 py-2 border border-[#9ac1e2] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#2a628f]"
             >
-              <option value="basica">Básica (sin conocimientos previos)</option>
-              <option value="intermedia">Intermedia (tengo noción)</option>
-              <option value="avanzada">Avanzada (domino el tema)</option>
+              <option value="basica">Básico (sin conocimientos previos)</option>
+              <option value="intermedia">Intermedio (tengo noción)</option>
+              <option value="avanzada">Avanzado (domino el tema)</option>
             </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-[#13293d] mb-1">
+              Fecha del examen
+            </label>
+            <input
+              type="date"
+              value={fechaExamen}
+              onChange={(e) => setFechaExamen(e.target.value)}
+              className={`w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 ${
+                errorFecha
+                  ? 'border-red-400 focus:ring-red-300'
+                  : 'border-[#9ac1e2] focus:ring-[#2a628f]'
+              }`}
+            />
+            {errorFecha && (
+              <div className="mt-2 p-2.5 bg-red-50 border border-red-200 rounded-lg flex gap-2 text-xs text-red-700">
+                <AlertCircle className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+                {errorFecha}
+              </div>
+            )}
           </div>
 
           <div>
@@ -118,18 +174,7 @@ function ModalNuevoPlan({ onClose, onSuccess }: ModalProps) {
               </span>
             </div>
             <p className="text-xs text-[#9ac1e2] mt-1">Mínimo 4, máximo 16 semanas</p>
-          </div>
 
-          <div>
-            <label className="block text-sm font-medium text-[#13293d] mb-1">
-              Fecha del examen (opcional)
-            </label>
-            <input
-              type="date"
-              value={fechaExamen}
-              onChange={(e) => setFechaExamen(e.target.value)}
-              className="w-full px-3 py-2 border border-[#9ac1e2] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#2a628f]"
-            />
           </div>
         </div>
 
@@ -142,7 +187,7 @@ function ModalNuevoPlan({ onClose, onSuccess }: ModalProps) {
           </button>
           <button
             onClick={() => mutation.mutate()}
-            disabled={mutation.isPending}
+            disabled={!puedeCrear}
             className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-3 sm:py-2 bg-[#2a628f] hover:bg-[#18435a] disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium rounded-lg transition-colors"
           >
             {mutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
@@ -245,6 +290,9 @@ export default function PlanesEstudio() {
                 ? Math.round((plan.semanas_completadas / plan.total_semanas) * 100)
                 : 0;
 
+              const nombreExamen = NOMBRES_EXAMEN[plan.examen] ?? plan.examen;
+              const nombreFase = NOMBRES_FASE[plan.fase] ?? plan.fase;
+
               return (
                 <Link
                   key={plan.id}
@@ -255,10 +303,10 @@ export default function PlanesEstudio() {
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
                         <h3 className="text-lg font-bold text-[#13293d]">
-                          Plan de {plan.examen.charAt(0).toUpperCase() + plan.examen.slice(1)}
+                          {nombreExamen}
                         </h3>
                         <span className="inline-block px-2.5 py-0.5 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
-                          {plan.fase}
+                          {nombreFase}
                         </span>
                       </div>
 
