@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import {
-  Calendar, Plus, Zap, AlertCircle, Loader2, ArrowRight,
+  Calendar, Plus, Zap, AlertCircle, Loader2, ArrowRight, Trash2, Clock,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 
@@ -199,11 +199,30 @@ function ModalNuevoPlan({ onClose, onSuccess }: ModalProps) {
   );
 }
 
+function diasHastaFecha(fecha: string): number {
+  const hoy = new Date(); hoy.setHours(0,0,0,0);
+  return Math.ceil((new Date(fecha).getTime() - hoy.getTime()) / (1000*60*60*24));
+}
+
+function esUrgente(plan: Plan): boolean {
+  if (!plan.fecha_examen) return false;
+  return diasHastaFecha(plan.fecha_examen) <= 14;
+}
+
+function planMasUrgente(planes: Plan[]): string | null {
+  const conFecha = planes.filter(p => p.fecha_examen);
+  if (!conFecha.length) return null;
+  return conFecha.sort((a, b) =>
+    new Date(a.fecha_examen!).getTime() - new Date(b.fecha_examen!).getTime()
+  )[0].id;
+}
+
 // ── Main ──────────────────────────────────────────────────────────────────────
 export default function PlanesEstudio() {
   const { isAuthenticated, token } = useAuthStore();
   const qc = useQueryClient();
   const [showModal, setShowModal] = useState(false);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
   const { data, isLoading } = useQuery<PlanesResponse>({
     queryKey: ['planes'],
@@ -217,7 +236,22 @@ export default function PlanesEstudio() {
     staleTime: 60_000,
   });
 
+  const deleteMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const res = await fetch(`${API}/api/planes/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return res.json();
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['planes'] });
+      setConfirmDeleteId(null);
+    },
+  });
+
   const planes = data?.data ?? [];
+  const idUrgente = planMasUrgente(planes);
 
   if (!isAuthenticated) {
     return (
@@ -248,14 +282,27 @@ export default function PlanesEstudio() {
       </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        {/* Button */}
-        <button
-          onClick={() => setShowModal(true)}
-          className="flex items-center gap-2 px-5 py-2.5 bg-[#2a628f] text-white rounded-lg hover:bg-[#18435a] font-medium transition-colors mb-8"
-        >
-          <Plus className="h-5 w-5" />
-          Crear nuevo plan
-        </button>
+        {/* Header de lista */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-[#64748b]">
+              {planes.length}/2 planes activos
+            </span>
+            {planes.length >= 2 && (
+              <span className="text-xs bg-amber-100 text-amber-700 border border-amber-200 rounded-full px-2.5 py-0.5 font-medium">
+                Límite alcanzado — elimina uno para crear otro
+              </span>
+            )}
+          </div>
+          <button
+            onClick={() => setShowModal(true)}
+            disabled={planes.length >= 2}
+            className="flex items-center gap-2 px-5 py-2.5 bg-[#2a628f] text-white rounded-lg hover:bg-[#18435a] font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            <Plus className="h-5 w-5" />
+            Crear nuevo plan
+          </button>
+        </div>
 
         {/* Content */}
         {isLoading && (
@@ -289,55 +336,111 @@ export default function PlanesEstudio() {
               const progreso = plan.total_semanas > 0
                 ? Math.round((plan.semanas_completadas / plan.total_semanas) * 100)
                 : 0;
-
               const nombreExamen = NOMBRES_EXAMEN[plan.examen] ?? plan.examen;
-              const nombreFase = NOMBRES_FASE[plan.fase] ?? plan.fase;
+              const nombreFase   = NOMBRES_FASE[plan.fase]   ?? plan.fase;
+              const urgente      = esUrgente(plan);
+              const esPrioritario = plan.id === idUrgente;
+              const diasRestantes = plan.fecha_examen ? diasHastaFecha(plan.fecha_examen) : null;
 
               return (
-                <Link
+                <div
                   key={plan.id}
-                  to={`/planes/${plan.id}`}
-                  className="block bg-white rounded-xl border border-[#9ac1e2] hover:border-[#2a628f] hover:shadow-md transition-all p-6"
+                  className={`relative bg-white rounded-xl border-2 transition-all ${
+                    urgente
+                      ? 'border-red-300 shadow-md shadow-red-100'
+                      : esPrioritario
+                      ? 'border-amber-300 shadow-md shadow-amber-50'
+                      : 'border-[#9ac1e2]'
+                  }`}
                 >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <h3 className="text-lg font-bold text-[#13293d]">
-                          {nombreExamen}
-                        </h3>
-                        <span className="inline-block px-2.5 py-0.5 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
-                          {nombreFase}
-                        </span>
-                      </div>
-
-                      <p className="text-sm text-[#16324f] mb-4">
-                        {plan.semanas_disponibles} semanas · {plan.total_semanas} semanas del plan
-                        {plan.fecha_examen && ` · Examen: ${new Date(plan.fecha_examen).toLocaleDateString('es-GT')}`}
-                      </p>
-
-                      {/* Barra de progreso */}
-                      <div className="flex items-center gap-3">
-                        <div className="flex-1 h-2 bg-[#d8e9f5] rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-gradient-to-r from-[#2a628f] to-[#18435a] transition-all"
-                            style={{ width: `${progreso}%` }}
-                          />
-                        </div>
-                        <span className="text-sm font-semibold text-[#2a628f] min-w-[3rem] text-right">
-                          {progreso}%
-                        </span>
-                      </div>
-
-                      <p className="text-xs text-[#9ac1e2] mt-2">
-                        {plan.semanas_completadas} de {plan.total_semanas} semanas completadas
-                      </p>
+                  {/* Badge urgencia */}
+                  {urgente && (
+                    <div className="absolute -top-3 left-4 flex items-center gap-1 bg-red-500 text-white text-xs font-bold px-3 py-0.5 rounded-full">
+                      <Clock className="h-3 w-3" />
+                      ¡Examen en {diasRestantes} días!
                     </div>
+                  )}
+                  {!urgente && esPrioritario && planes.length > 1 && (
+                    <div className="absolute -top-3 left-4 bg-amber-400 text-white text-xs font-bold px-3 py-0.5 rounded-full">
+                      Más próximo
+                    </div>
+                  )}
 
-                    <ArrowRight className="h-5 w-5 text-[#9ac1e2] mt-1" />
+                  <Link to={`/planes/${plan.id}`} className="block p-6">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          <h3 className="text-lg font-bold text-[#13293d]">{nombreExamen}</h3>
+                          <span className="px-2.5 py-0.5 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
+                            {nombreFase}
+                          </span>
+                        </div>
+                        <p className="text-sm text-[#16324f] mb-4">
+                          {plan.semanas_disponibles} semanas · {plan.total_semanas} semanas del plan
+                          {plan.fecha_examen && ` · Examen: ${new Date(plan.fecha_examen).toLocaleDateString('es-GT')}`}
+                        </p>
+                        <div className="flex items-center gap-3">
+                          <div className="flex-1 h-2 bg-[#d8e9f5] rounded-full overflow-hidden">
+                            <div
+                              className={`h-full transition-all ${urgente ? 'bg-gradient-to-r from-red-400 to-red-600' : 'bg-gradient-to-r from-[#2a628f] to-[#18435a]'}`}
+                              style={{ width: `${progreso}%` }}
+                            />
+                          </div>
+                          <span className="text-sm font-semibold text-[#2a628f] min-w-[3rem] text-right">
+                            {progreso}%
+                          </span>
+                        </div>
+                        <p className="text-xs text-[#9ac1e2] mt-2">
+                          {plan.semanas_completadas} de {plan.total_semanas} semanas completadas
+                        </p>
+                      </div>
+                      <ArrowRight className="h-5 w-5 text-[#9ac1e2] mt-1 flex-shrink-0" />
+                    </div>
+                  </Link>
+
+                  {/* Botón eliminar */}
+                  <div className="px-6 pb-4 flex justify-end">
+                    <button
+                      onClick={() => setConfirmDeleteId(plan.id)}
+                      className="flex items-center gap-1.5 text-xs text-red-400 hover:text-red-600 transition-colors"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                      Eliminar plan
+                    </button>
                   </div>
-                </Link>
+                </div>
               );
             })}
+          </div>
+        )}
+
+        {/* Modal confirmar eliminación */}
+        {confirmDeleteId && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center">
+            <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setConfirmDeleteId(null)} />
+            <div className="relative z-10 bg-white rounded-2xl shadow-xl p-7 max-w-sm w-full mx-4 text-center">
+              <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Trash2 className="h-6 w-6 text-red-500" />
+              </div>
+              <h3 className="text-lg font-bold text-[#13293d] mb-2">¿Eliminar este plan?</h3>
+              <p className="text-sm text-[#64748b] mb-6">Esta acción no se puede deshacer. Se eliminarán el plan y todo su progreso.</p>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setConfirmDeleteId(null)}
+                  className="flex-1 py-2.5 rounded-xl border border-[#e2e8f0] text-sm font-medium text-[#64748b] hover:bg-[#f8fafc] transition-colors"
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={() => deleteMutation.mutate(confirmDeleteId)}
+                  disabled={deleteMutation.isPending}
+                  className="flex-1 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-white text-sm font-semibold transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                >
+                  {deleteMutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+                  Sí, eliminar
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>

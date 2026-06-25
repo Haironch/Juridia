@@ -29,6 +29,17 @@ router.post('/', authenticate, async (req: AuthRequest, res: Response) => {
   const usuario = req.user!;
 
   try {
+    // Límite de 2 planes por usuario
+    const countRes = await db.execute({
+      sql: 'SELECT COUNT(*) as total FROM planes_estudio WHERE usuario_id = ?',
+      args: [usuario.id],
+    });
+    const total = Number((countRes.rows[0] as any).total);
+    if (total >= 2) {
+      res.status(400).json({ ok: false, error: 'Solo puedes tener hasta 2 planes activos. Elimina uno antes de crear otro.' });
+      return;
+    }
+
     const planId = randomUUID();
     const ahora = now();
 
