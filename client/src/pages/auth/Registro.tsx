@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { UserPlus, Mail, Lock, User, Eye, EyeOff, AlertCircle } from 'lucide-react';
+import { UserPlus, Mail, Lock, User, Eye, EyeOff, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 
 export default function Registro() {
@@ -8,6 +8,7 @@ export default function Registro() {
   const { registrar, isLoading, error, clearError } = useAuthStore();
   const [showPassword, setShowPassword] = useState(false);
   const [localError, setLocalError] = useState('');
+  const [emailEnviado, setEmailEnviado] = useState(false);
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
@@ -43,8 +44,11 @@ export default function Registro() {
         password: formData.password,
       });
       navigate('/inicio');
-    } catch {
-      // El error ya queda en el store, no hace falta hacer nada más
+    } catch (err: any) {
+      if (err.message === 'VERIFY_EMAIL') {
+        setEmailEnviado(true);
+      }
+      // otros errores ya quedan en el store
     }
   };
 
@@ -69,8 +73,26 @@ export default function Registro() {
             </p>
           </div>
 
+          {/* Email de verificación enviado */}
+          {emailEnviado && (
+            <div className="text-center space-y-4 py-4">
+              <CheckCircle2 className="h-14 w-14 text-green-500 mx-auto" />
+              <p className="text-[#13293d] font-semibold text-lg">¡Cuenta creada!</p>
+              <p className="text-sm text-[#16324f]">
+                Te enviamos un correo a <strong>{formData.email}</strong>.<br />
+                Haz click en el enlace para verificar tu cuenta y luego inicia sesión.
+              </p>
+              <Link
+                to="/login"
+                className="inline-block mt-2 px-6 py-2 bg-[#2a628f] text-white rounded-lg hover:bg-[#18435a] transition-colors text-sm font-medium"
+              >
+                Ir a iniciar sesión
+              </Link>
+            </div>
+          )}
+
           {/* Error global */}
-          {displayError && (
+          {!emailEnviado && displayError && (
             <div className="mb-4 flex items-start gap-2 bg-red-50 border border-red-200 text-red-700 rounded-md px-4 py-3 text-sm">
               <AlertCircle className="h-5 w-5 flex-shrink-0 mt-0.5" />
               <span>{displayError}</span>
@@ -78,7 +100,7 @@ export default function Registro() {
           )}
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-4">
+          {!emailEnviado && <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label htmlFor="nombre" className="block text-sm font-medium text-[#13293d] mb-1">
@@ -185,30 +207,28 @@ export default function Registro() {
             >
               {isLoading ? 'Creando cuenta…' : 'Crear cuenta gratuita'}
             </button>
-          </form>
+          </form>}
 
-          {/* Footer */}
-          <div className="mt-6 text-center">
-            <p className="text-sm text-[#16324f]">
-              ¿Ya tienes cuenta?{' '}
-              <Link to="/login" className="text-[#2a628f] hover:text-[#18435a] font-medium">
-                Iniciar sesión
-              </Link>
-            </p>
-          </div>
-
-          <div className="mt-6 pt-6 border-t border-[#9ac1e2]">
-            <p className="text-xs text-center text-[#16324f]">
-              Al registrarte, aceptas nuestros{' '}
-              <a href="/terminos" className="text-[#2a628f] hover:underline">
-                Términos de Uso
-              </a>{' '}
-              y{' '}
-              <a href="/privacidad" className="text-[#2a628f] hover:underline">
-                Política de Privacidad
-              </a>
-            </p>
-          </div>
+          {!emailEnviado && (
+            <>
+              <div className="mt-6 text-center">
+                <p className="text-sm text-[#16324f]">
+                  ¿Ya tienes cuenta?{' '}
+                  <Link to="/login" className="text-[#2a628f] hover:text-[#18435a] font-medium">
+                    Iniciar sesión
+                  </Link>
+                </p>
+              </div>
+              <div className="mt-6 pt-6 border-t border-[#9ac1e2]">
+                <p className="text-xs text-center text-[#16324f]">
+                  Al registrarte, aceptas nuestros{' '}
+                  <a href="/terminos" className="text-[#2a628f] hover:underline">Términos de Uso</a>{' '}
+                  y{' '}
+                  <a href="/privacidad" className="text-[#2a628f] hover:underline">Política de Privacidad</a>
+                </p>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
