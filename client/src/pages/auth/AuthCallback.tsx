@@ -12,25 +12,25 @@ export default function AuthCallback() {
     if (ran.current) return;
     ran.current = true;
 
-    const handle = async () => {
-      const { data, error } = await supabase.auth.getSession();
-
-      if (error || !data.session) {
-        navigate('/login');
-        return;
+    // onAuthStateChange se dispara DESPUÉS de que Supabase intercambia el código PKCE
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (session) {
+          try {
+            const perfil = await syncPerfil(session.access_token);
+            login(perfil, session.access_token);
+            navigate('/inicio', { replace: true });
+          } catch {
+            navigate('/login', { replace: true });
+          }
+        } else if (event === 'SIGNED_OUT' || event === 'INITIAL_SESSION') {
+          navigate('/login', { replace: true });
+        }
+        subscription.unsubscribe();
       }
+    );
 
-      try {
-        const token = data.session.access_token;
-        const perfil = await syncPerfil(token);
-        login(perfil, token);
-        navigate('/inicio');
-      } catch {
-        navigate('/login');
-      }
-    };
-
-    handle();
+    return () => subscription.unsubscribe();
   }, [navigate, syncPerfil, login]);
 
   return (
