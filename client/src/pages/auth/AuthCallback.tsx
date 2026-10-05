@@ -12,10 +12,11 @@ export default function AuthCallback() {
     if (ran.current) return;
     ran.current = true;
 
-    // onAuthStateChange se dispara DESPUÉS de que Supabase intercambia el código PKCE
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        if (session) {
+        // Si hay sesión (ya sea nueva o existente), sincronizar y entrar
+        if (session && (event === 'SIGNED_IN' || event === 'INITIAL_SESSION' || event === 'TOKEN_REFRESHED')) {
+          subscription.unsubscribe();
           try {
             const perfil = await syncPerfil(session.access_token);
             login(perfil, session.access_token);
@@ -23,14 +24,29 @@ export default function AuthCallback() {
           } catch {
             navigate('/login', { replace: true });
           }
-        } else if (event === 'SIGNED_OUT' || event === 'INITIAL_SESSION') {
+          return;
+        }
+
+        // Solo redirigir a login si explícitamente se cerró sesión
+        if (event === 'SIGNED_OUT') {
+          subscription.unsubscribe();
           navigate('/login', { replace: true });
         }
-        subscription.unsubscribe();
+
+        // INITIAL_SESSION sin sesión: esperar SIGNED_IN (no hacer nada)
       }
     );
 
-    return () => subscription.unsubscribe();
+    // Fallback: si en 10s no llega ningún evento con sesión, ir a login
+    const timeout = setTimeout(() => {
+      subscription.unsubscribe();
+      navigate('/login', { replace: true });
+    }, 10_000);
+
+    return () => {
+      subscription.unsubscribe();
+      clearTimeout(timeout);
+    };
   }, [navigate, syncPerfil, login]);
 
   return (
