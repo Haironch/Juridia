@@ -77,8 +77,10 @@ router.post('/sync', async (req: Request, res: Response) => {
 
     // Primera vez: crear perfil en Turso usando datos de Supabase metadata
     const metadata = supaUser.user_metadata ?? {};
-    const nombre = (metadata.nombre as string) || (metadata.full_name as string) || 'Usuario';
-    const apellido = (metadata.apellido as string) || '';
+    const fullName = ((metadata.full_name as string) || '').trim();
+    const parts = fullName.split(/\s+/);
+    const nombre = (metadata.nombre as string) || parts[0] || 'Usuario';
+    const apellido = (metadata.apellido as string) || parts.slice(1).join(' ') || '';
     const email = supaUser.email ?? '';
 
     await db.execute({
