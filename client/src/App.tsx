@@ -16,6 +16,7 @@ import Premium from "./pages/public/Premium";
 import Progreso from "./pages/public/Progreso";
 import Registro from "./pages/auth/Registro";
 import Login from "./pages/auth/Login";
+import OlvidePassword from "./pages/auth/OlvidePassword";
 import ConstituQuizHome from "./pages/quiz/ConstituQuizHome";
 import QuizStudyMode from "./pages/quiz/QuizStudyMode";
 import QuizPracticeMode from "./pages/quiz/QuizPracticeMode";
@@ -75,6 +76,7 @@ function App() {
               <Route path="/premium" element={<Premium />} />
               <Route path="/registro" element={<Registro />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/olvide-password" element={<OlvidePassword />} />
               <Route path="/progreso" element={<Progreso />} />
               <Route path="/glosario" element={<Glosario />} />
               <Route path="/constituquiz" element={<ConstituQuizHome />} />

@@ -108,6 +108,11 @@ export default function Login() {
           {/* Footer */}
           <div className="mt-6 text-center space-y-2">
             <p className="text-sm text-[#16324f]">
+              <Link to="/olvide-password" className="text-[#2a628f] hover:text-[#18435a] font-medium">
+                ¿Olvidaste tu contraseña?
+              </Link>
+            </p>
+            <p className="text-sm text-[#16324f]">
               ¿No tienes cuenta?{' '}
               <Link to="/registro" className="text-[#2a628f] hover:text-[#18435a] font-medium">
                 Regístrate gratis
