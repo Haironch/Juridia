@@ -17,6 +17,7 @@ import Progreso from "./pages/public/Progreso";
 import Registro from "./pages/auth/Registro";
 import Login from "./pages/auth/Login";
 import OlvidePassword from "./pages/auth/OlvidePassword";
+import AuthCallback from "./pages/auth/AuthCallback";
 import ConstituQuizHome from "./pages/quiz/ConstituQuizHome";
 import QuizStudyMode from "./pages/quiz/QuizStudyMode";
 import QuizPracticeMode from "./pages/quiz/QuizPracticeMode";
@@ -50,6 +51,9 @@ function App() {
         <Routes>
           {/* ── Pantalla de entrada (Beta Landing) ── */}
           <Route path="/" element={<BetaLanding />} />
+
+          {/* ── OAuth callback — fuera de SessionGuard ── */}
+          <Route path="/auth/callback" element={<AuthCallback />} />
 
           {/* ── Admin — login público, panel protegido por AdminGuard ── */}
           <Route path="/admin/login" element={<AdminLogin />} />

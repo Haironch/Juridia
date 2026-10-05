@@ -26,6 +26,7 @@ interface AuthState {
   registrar: (data: { nombre: string; apellido: string; email: string; password: string }) => Promise<void>;
   iniciarSesion: (data: { email: string; password: string }) => Promise<void>;
   recuperarPassword: (email: string) => Promise<void>;
+  loginConGoogle: () => Promise<void>;
   syncPerfil: (token: string) => Promise<Usuario>;
 }
 
@@ -139,5 +140,13 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       set({ isLoading: false, error: err.message });
       throw err;
     }
+  },
+
+  loginConGoogle: async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: `${window.location.origin}/auth/callback` },
+    });
+    if (error) throw new Error(error.message);
   },
 }));
