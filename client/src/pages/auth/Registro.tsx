@@ -5,8 +5,13 @@ import { useAuthStore } from '../../store/authStore';
 
 export default function Registro() {
   const navigate = useNavigate();
-  const { registrar, loginConGoogle, isLoading, error, clearError } = useAuthStore();
+  const { registrar, loginConGoogle, isLoading, isAuthenticated, error, clearError } = useAuthStore();
   const [googleLoading, setGoogleLoading] = useState(false);
+
+  if (isAuthenticated) {
+    navigate('/inicio', { replace: true });
+    return null;
+  }
   const [showPassword, setShowPassword] = useState(false);
   const [localError, setLocalError] = useState('');
   const [emailEnviado, setEmailEnviado] = useState(false);

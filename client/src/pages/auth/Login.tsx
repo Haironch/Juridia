@@ -5,8 +5,13 @@ import { useAuthStore } from '../../store/authStore';
 
 export default function Login() {
   const navigate = useNavigate();
-  const { iniciarSesion, loginConGoogle, isLoading, error, clearError } = useAuthStore();
+  const { iniciarSesion, loginConGoogle, isLoading, isAuthenticated, error, clearError } = useAuthStore();
   const [googleLoading, setGoogleLoading] = useState(false);
+
+  if (isAuthenticated) {
+    navigate('/inicio', { replace: true });
+    return null;
+  }
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ email: '', password: '' });
 
