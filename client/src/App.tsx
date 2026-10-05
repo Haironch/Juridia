@@ -21,6 +21,7 @@ import Registro from "./pages/auth/Registro";
 import Login from "./pages/auth/Login";
 import OlvidePassword from "./pages/auth/OlvidePassword";
 import AuthCallback from "./pages/auth/AuthCallback";
+import NuevaPassword from "./pages/auth/NuevaPassword";
 import ConstituQuizHome from "./pages/quiz/ConstituQuizHome";
 import QuizStudyMode from "./pages/quiz/QuizStudyMode";
 import QuizPracticeMode from "./pages/quiz/QuizPracticeMode";
@@ -70,8 +71,9 @@ function App() {
           {/* ── Pantalla de entrada (Beta Landing) ── */}
           <Route path="/" element={<BetaLanding />} />
 
-          {/* ── OAuth callback — fuera de SessionGuard ── */}
+          {/* ── OAuth callback y recuperación de contraseña — fuera de SessionGuard ── */}
           <Route path="/auth/callback" element={<AuthCallback />} />
+          <Route path="/nueva-password" element={<NuevaPassword />} />
 
           {/* ── Admin — login público, panel protegido por AdminGuard ── */}
           <Route path="/admin/login" element={<AdminLogin />} />
