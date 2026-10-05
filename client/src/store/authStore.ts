@@ -27,6 +27,7 @@ interface AuthState {
   iniciarSesion: (data: { email: string; password: string }) => Promise<void>;
   recuperarPassword: (email: string) => Promise<void>;
   loginConGoogle: () => Promise<void>;
+  updateToken: (token: string) => void;
   syncPerfil: (token: string) => Promise<Usuario>;
 }
 
@@ -140,6 +141,11 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       set({ isLoading: false, error: err.message });
       throw err;
     }
+  },
+
+  updateToken: (token: string) => {
+    localStorage.setItem('token', token);
+    set({ token });
   },
 
   loginConGoogle: async () => {

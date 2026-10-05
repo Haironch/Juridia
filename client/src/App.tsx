@@ -1,5 +1,8 @@
+import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { supabase } from "./lib/supabase";
+import { useAuthStore } from "./store/authStore";
 import MainLayout from "./components/layout/MainLayout";
 import SessionGuard from "./components/common/SessionGuard";
 import AdminGuard from "./components/admin/AdminGuard";
@@ -45,6 +48,21 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+  const updateToken = useAuthStore((s) => s.updateToken);
+  const logout = useAuthStore((s) => s.logout);
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'TOKEN_REFRESHED' && session) {
+        updateToken(session.access_token);
+      }
+      if (event === 'SIGNED_OUT') {
+        logout();
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [updateToken, logout]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
