@@ -204,123 +204,142 @@ export default function CursoDetalle() {
               </div>
             )}
 
-            <h2 className="text-xl font-bold text-[#13293d] mb-5 flex items-center gap-2">
+            <h2 className="text-xl font-bold text-[#13293d] mb-6 flex items-center gap-2">
               <BookOpen className="h-5 w-5 text-[#2a628f]" />
-              Contenido del curso
+              Tu camino de aprendizaje
             </h2>
 
-            <div className="space-y-3">
-              {curso.modulos.map((modulo, i) => {
-                const estado = isAuthenticated ? getModuloEstado(modulo, i) : (i === 0 ? "disponible" : "bloqueado");
-                const puntaje = progresoMap[modulo.id]?.puntaje_quiz;
+            {/* Mapa de niveles */}
+            <div className="relative">
+              {/* Línea vertical conectora */}
+              <div className="absolute left-6 top-6 bottom-6 w-0.5 bg-gradient-to-b from-[#9ac1e2] to-[#d8e9f5]" />
 
-                return (
-                  <div
-                    key={modulo.id}
-                    className={`rounded-xl border overflow-hidden transition-all ${
-                      estado === "bloqueado"
-                        ? "border-[#d8e9f5] opacity-60"
-                        : "border-[#9ac1e2] hover:shadow-md"
-                    }`}
-                  >
-                    <div className="flex items-center gap-4 p-4 bg-white">
-                      {/* Icono estado */}
-                      <div className={`w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm ${
-                        estado === "completado" ? "bg-emerald-100 text-emerald-600"
-                        : estado === "disponible" ? "bg-[#2a628f] text-white"
-                        : "bg-[#d8e9f5] text-[#9ac1e2]"
+              <div className="space-y-4">
+                {curso.modulos.map((modulo, i) => {
+                  const estado = isAuthenticated ? getModuloEstado(modulo, i) : (i === 0 ? "disponible" : "bloqueado");
+                  const puntaje = progresoMap[modulo.id]?.puntaje_quiz;
+
+                  return (
+                    <div key={modulo.id} className="relative flex items-center gap-4">
+                      {/* Nodo */}
+                      <div className={`relative z-10 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 border-2 font-bold text-sm transition-all ${
+                        estado === "completado"
+                          ? "bg-emerald-500 border-emerald-500 text-white shadow-md"
+                          : estado === "disponible"
+                          ? "bg-[#2a628f] border-[#2a628f] text-white shadow-lg ring-4 ring-[#2a628f]/20"
+                          : "bg-white border-[#d8e9f5] text-[#9ac1e2]"
                       }`}>
-                        {estado === "completado" ? <CheckCircle2 className="h-5 w-5" />
-                          : estado === "bloqueado" ? <Lock className="h-4 w-4" />
-                          : modulo.orden}
+                        {estado === "completado"
+                          ? <CheckCircle2 className="h-5 w-5" />
+                          : estado === "bloqueado"
+                          ? <Lock className="h-4 w-4" />
+                          : <span>{modulo.orden}</span>}
                       </div>
 
-                      <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-[#13293d] text-sm leading-snug">{modulo.titulo}</p>
-                        <div className="flex items-center gap-3 mt-0.5">
-                          {modulo.duracion_estimada && (
-                            <span className="text-xs text-[#67a2d3] flex items-center gap-1">
-                              <Clock className="h-3 w-3" />{modulo.duracion_estimada} min
-                            </span>
+                      {/* Tarjeta */}
+                      <div className={`flex-1 bg-white rounded-2xl border p-4 transition-all ${
+                        estado === "bloqueado"
+                          ? "border-[#d8e9f5] opacity-55"
+                          : estado === "completado"
+                          ? "border-emerald-200 hover:shadow-md"
+                          : "border-[#2a628f]/40 hover:shadow-md shadow-sm"
+                      }`}>
+                        <div className="flex items-center justify-between gap-3">
+                          <div className="min-w-0">
+                            <p className={`font-semibold text-sm leading-snug ${estado === "bloqueado" ? "text-[#9ac1e2]" : "text-[#13293d]"}`}>
+                              {modulo.titulo}
+                            </p>
+                            <div className="flex items-center gap-2 mt-1">
+                              {modulo.duracion_estimada > 0 && (
+                                <span className="text-xs text-[#67a2d3] flex items-center gap-1">
+                                  <Clock className="h-3 w-3" />{modulo.duracion_estimada} min
+                                </span>
+                              )}
+                              {puntaje !== null && puntaje !== undefined && (
+                                <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
+                                  puntaje >= 60 ? "bg-emerald-100 text-emerald-700" : "bg-red-100 text-red-700"
+                                }`}>
+                                  {puntaje}%
+                                </span>
+                              )}
+                            </div>
+                          </div>
+
+                          {estado !== "bloqueado" && isAuthenticated && (
+                            <button
+                              onClick={() => navigate(`/cursos/${id}/leccion/${modulo.id}`)}
+                              className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors flex-shrink-0 ${
+                                estado === "completado"
+                                  ? "bg-[#f0f7fc] text-[#2a628f] hover:bg-[#d8e9f5]"
+                                  : "bg-[#2a628f] text-white hover:bg-[#18435a]"
+                              }`}
+                            >
+                              {estado === "completado" ? "Repasar" : "Iniciar"}
+                              <ChevronRight className="h-3.5 w-3.5" />
+                            </button>
                           )}
-                          {puntaje !== null && puntaje !== undefined && (
-                            <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
-                              puntaje >= 60 ? "bg-emerald-100 text-emerald-700" : "bg-red-100 text-red-700"
-                            }`}>
-                              Quiz: {puntaje}%
-                            </span>
+                          {!isAuthenticated && i === 0 && (
+                            <Link
+                              to="/login"
+                              className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-[#2a628f] text-white hover:bg-[#18435a] transition-colors flex-shrink-0"
+                            >
+                              Comenzar <ChevronRight className="h-3.5 w-3.5" />
+                            </Link>
                           )}
                         </div>
                       </div>
+                    </div>
+                  );
+                })}
 
-                      {estado !== "bloqueado" && isAuthenticated && (
-                        <button
-                          onClick={() => navigate(`/cursos/${id}/leccion/${modulo.id}`)}
-                          className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors flex-shrink-0 ${
-                            estado === "completado"
-                              ? "bg-[#f0f7fc] text-[#2a628f] hover:bg-[#d8e9f5]"
-                              : "bg-[#2a628f] text-white hover:bg-[#18435a]"
-                          }`}
-                        >
-                          {estado === "completado" ? "Repasar" : "Iniciar"}
-                          <ChevronRight className="h-3.5 w-3.5" />
-                        </button>
-                      )}
-                      {!isAuthenticated && i === 0 && (
-                        <Link
-                          to="/login"
-                          className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-[#2a628f] text-white hover:bg-[#18435a] transition-colors flex-shrink-0"
-                        >
-                          Comenzar <ChevronRight className="h-3.5 w-3.5" />
-                        </Link>
-                      )}
+                {/* Nodo final: Evaluación */}
+                {isAuthenticated && (
+                  <div className="relative flex items-center gap-4">
+                    <div className={`relative z-10 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 border-2 transition-all ${
+                      tieneCertificado
+                        ? "bg-yellow-400 border-yellow-400 text-white shadow-md"
+                        : todosAprobados
+                        ? "bg-[#2a628f] border-[#2a628f] text-white shadow-lg ring-4 ring-[#2a628f]/20"
+                        : "bg-white border-[#d8e9f5] text-[#9ac1e2]"
+                    }`}>
+                      <Award className="h-5 w-5" />
+                    </div>
+
+                    <div className={`flex-1 bg-white rounded-2xl border p-4 transition-all ${
+                      tieneCertificado
+                        ? "border-yellow-200 hover:shadow-md"
+                        : todosAprobados
+                        ? "border-[#2a628f]/40 hover:shadow-md shadow-sm"
+                        : "border-[#d8e9f5] opacity-55"
+                    }`}>
+                      <div className="flex items-center justify-between gap-3">
+                        <div>
+                          <p className={`font-semibold text-sm ${todosAprobados || tieneCertificado ? "text-[#13293d]" : "text-[#9ac1e2]"}`}>
+                            Evaluación final
+                          </p>
+                          <p className="text-xs text-[#67a2d3] mt-0.5">
+                            {tieneCertificado
+                              ? `Certificado — Puntaje: ${progreso!.certificado!.puntaje_final}%`
+                              : todosAprobados
+                              ? "Necesitas 70% para certificarte"
+                              : `Completa las ${totalModulos} lecciones para desbloquear`}
+                          </p>
+                        </div>
+                        {todosAprobados && (
+                          <button
+                            onClick={() => navigate(`/cursos/${id}/evaluacion`)}
+                            className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-[#2a628f] text-white hover:bg-[#18435a] transition-colors flex-shrink-0"
+                          >
+                            {tieneCertificado ? "Ver" : "Presentar"}
+                            <ChevronRight className="h-3.5 w-3.5" />
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
-                );
-              })}
-            </div>
-
-            {/* Examen final */}
-            {isAuthenticated && (
-              <div className={`mt-6 rounded-2xl border p-5 transition-all ${
-                todosAprobados
-                  ? "border-[#2a628f] bg-gradient-to-br from-[#f0f7fc] to-white"
-                  : "border-[#d8e9f5] bg-white opacity-70"
-              }`}>
-                <div className="flex items-center gap-4">
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-                    tieneCertificado ? "bg-yellow-100"
-                    : todosAprobados ? "bg-[#2a628f]"
-                    : "bg-[#d8e9f5]"
-                  }`}>
-                    <Award className={`h-5 w-5 ${
-                      tieneCertificado ? "text-yellow-600"
-                      : todosAprobados ? "text-white"
-                      : "text-[#9ac1e2]"
-                    }`} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-bold text-[#13293d] text-sm">Evaluación final</p>
-                    <p className="text-xs text-[#67a2d3] mt-0.5">
-                      {tieneCertificado
-                        ? `Certificado obtenido — Puntaje: ${progreso!.certificado!.puntaje_final}%`
-                        : todosAprobados
-                        ? "Listo para presentar. Necesitas 70% para certificarte."
-                        : `Completa las ${totalModulos} lecciones para desbloquear`}
-                    </p>
-                  </div>
-                  {todosAprobados && (
-                    <button
-                      onClick={() => navigate(`/cursos/${id}/evaluacion`)}
-                      className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-[#2a628f] text-white hover:bg-[#18435a] transition-colors flex-shrink-0"
-                    >
-                      {tieneCertificado ? "Ver certificado" : "Presentar"}
-                      <ChevronRight className="h-3.5 w-3.5" />
-                    </button>
-                  )}
-                </div>
+                )}
               </div>
-            )}
+            </div>
           </div>
 
           {/* Sidebar */}
