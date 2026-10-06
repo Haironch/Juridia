@@ -219,11 +219,13 @@ router.post("/:cursoId/modulos/:moduloId/quiz", authenticate, async (req: AuthRe
     let aciertos = 0;
     const total = correctas.rows.length;
     const detalle: Record<string, boolean> = {};
+    const opcionesCorrectas: Record<string, string> = {};
 
     for (const row of correctas.rows as any[]) {
       const esCorrecta = respuestas[row.pregunta_id] === row.opcion_correcta_id;
       if (esCorrecta) aciertos++;
       detalle[row.pregunta_id] = esCorrecta;
+      opcionesCorrectas[row.pregunta_id] = row.opcion_correcta_id;
     }
 
     const puntaje = Math.round((aciertos / total) * 100);
@@ -248,7 +250,7 @@ router.post("/:cursoId/modulos/:moduloId/quiz", authenticate, async (req: AuthRe
       });
     }
 
-    res.json({ ok: true, data: { puntaje, aprobado, aciertos, total, detalle } });
+    res.json({ ok: true, data: { puntaje, aprobado, aciertos, total, detalle, opcionesCorrectas } });
   } catch (err) {
     console.error("[POST /cursos/:id/modulos/:mid/quiz]", err);
     res.status(500).json({ ok: false, error: safeError(err) });
@@ -328,11 +330,13 @@ router.post("/:cursoId/evaluacion", authenticate, async (req: AuthRequest, res: 
     let aciertos = 0;
     const total = correctas.rows.length;
     const detalle: Record<string, boolean> = {};
+    const opcionesCorrectas: Record<string, string> = {};
 
     for (const row of correctas.rows as any[]) {
       const esCorrecta = respuestas[row.pregunta_id] === row.opcion_correcta_id;
       if (esCorrecta) aciertos++;
       detalle[row.pregunta_id] = esCorrecta;
+      opcionesCorrectas[row.pregunta_id] = row.opcion_correcta_id;
     }
 
     const puntaje = Math.round((aciertos / total) * 100);
@@ -352,7 +356,7 @@ router.post("/:cursoId/evaluacion", authenticate, async (req: AuthRequest, res: 
     });
 
     if (!aprobado) {
-      res.json({ ok: true, data: { puntaje, aprobado, aciertos, total, detalle, certificado: null } });
+      res.json({ ok: true, data: { puntaje, aprobado, aciertos, total, detalle, opcionesCorrectas, certificado: null } });
       return;
     }
 
@@ -375,7 +379,7 @@ router.post("/:cursoId/evaluacion", authenticate, async (req: AuthRequest, res: 
       certificado = { codigo_unico: codigo, puntaje_final: puntaje, emitido_en: now };
     }
 
-    res.json({ ok: true, data: { puntaje, aprobado, aciertos, total, detalle, certificado } });
+    res.json({ ok: true, data: { puntaje, aprobado, aciertos, total, detalle, opcionesCorrectas, certificado } });
   } catch (err) {
     console.error("[POST /cursos/:id/evaluacion]", err);
     res.status(500).json({ ok: false, error: safeError(err) });

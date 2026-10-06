@@ -19,6 +19,7 @@ interface ExamenResultado {
   aciertos: number;
   total: number;
   detalle: Record<string, boolean>;
+  opcionesCorrectas: Record<string, string>;
   certificado: { codigo_unico: string; puntaje_final: number; emitido_en: string } | null;
 }
 
@@ -412,17 +413,26 @@ export default function EvaluacionFinal() {
             {preguntas && (
               <div className="bg-white rounded-2xl border border-[#9ac1e2] p-6">
                 <h3 className="font-bold text-[#13293d] mb-4 text-sm">Revisión de respuestas</h3>
-                <div className="space-y-2">
+                <div className="space-y-3">
                   {preguntas.map((p, i) => {
                     const correcto = resultado.detalle[p.id];
+                    const opcionCorrectaId = resultado.opcionesCorrectas[p.id];
+                    const opcionCorrecta = p.opciones.find(o => o.id === opcionCorrectaId);
                     return (
-                      <div key={p.id} className={`flex items-start gap-3 p-3 rounded-xl text-sm ${
-                        correcto ? "bg-emerald-50 text-emerald-800" : "bg-red-50 text-red-800"
+                      <div key={p.id} className={`p-3 rounded-xl text-sm ${
+                        correcto ? "bg-emerald-50 border border-emerald-100" : "bg-red-50 border border-red-100"
                       }`}>
-                        {correcto
-                          ? <CheckCircle2 className="h-4 w-4 flex-shrink-0 mt-0.5" />
-                          : <XCircle className="h-4 w-4 flex-shrink-0 mt-0.5" />}
-                        <span><span className="font-bold">{i + 1}.</span> {p.texto}</span>
+                        <div className={`flex items-start gap-2 ${correcto ? "text-emerald-800" : "text-red-800"}`}>
+                          {correcto
+                            ? <CheckCircle2 className="h-4 w-4 flex-shrink-0 mt-0.5" />
+                            : <XCircle className="h-4 w-4 flex-shrink-0 mt-0.5" />}
+                          <span><span className="font-bold">{i + 1}.</span> {p.texto}</span>
+                        </div>
+                        {!correcto && opcionCorrecta && (
+                          <p className="mt-2 ml-6 text-xs text-emerald-700 font-medium">
+                            Respuesta correcta: {opcionCorrecta.texto}
+                          </p>
+                        )}
                       </div>
                     );
                   })}

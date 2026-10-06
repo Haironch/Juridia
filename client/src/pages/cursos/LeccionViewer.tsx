@@ -35,6 +35,7 @@ interface QuizResultado {
   aciertos: number;
   total: number;
   detalle: Record<string, boolean>;
+  opcionesCorrectas: Record<string, string>;
 }
 
 export default function LeccionViewer() {
@@ -60,6 +61,18 @@ export default function LeccionViewer() {
       return res.data.data;
     },
     enabled: !!cursoId && !!moduloId,
+  });
+
+  // Lista de módulos para saber cuál sigue
+  const { data: cursoData } = useQuery<{ modulos: { id: string; orden: number }[] }>({
+    queryKey: ["curso", cursoId],
+    queryFn: async () => {
+      const res = await api.get<{ ok: boolean; data: { modulos: { id: string; orden: number }[] } }>(
+        `/api/cursos/${cursoId}`
+      );
+      return res.data.data;
+    },
+    enabled: !!cursoId,
   });
 
   const mutation = useMutation({
@@ -103,6 +116,13 @@ export default function LeccionViewer() {
   const totalPreguntas = preguntas.length;
   const respondidas = Object.keys(respuestas).length;
   const todasRespondidas = respondidas === totalPreguntas;
+
+  function getSiguienteModuloId(): string | null {
+    if (!cursoData?.modulos) return null;
+    const ordenados = [...cursoData.modulos].sort((a, b) => a.orden - b.orden);
+    const idx = ordenados.findIndex(m => m.id === moduloId);
+    return idx >= 0 && idx < ordenados.length - 1 ? ordenados[idx + 1].id : null;
+  }
 
   function handleEnviar() {
     mutation.mutate(respuestas);
@@ -212,26 +232,28 @@ export default function LeccionViewer() {
                     <div className="space-y-2">
                       {opcionesOrdenadas.map((opcion) => {
                         const seleccionada = respSeleccionada === opcion.id;
-                        let esCorrecta_opcion = false;
-                        if (mostrarFeedback && resultado) {
-                          // Encontrar si esta opción es la correcta buscando cuál fue marcada como correcta por el servidor
-                          // El servidor devuelve detalle: { preguntaId: true/false } basado en la respuesta del usuario
-                          // Para mostrar cuál era la correcta necesitamos compararla con lo que el usuario eligió
-                        }
+                        const esLaCorrecta = mostrarFeedback && resultado?.opcionesCorrectas[pregunta.id] === opcion.id;
 
                         let claseBase = "w-full text-left px-4 py-3 rounded-xl border text-sm transition-all ";
+                        let claseCirculo = "w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 text-xs font-bold ";
 
                         if (!mostrarFeedback) {
                           claseBase += seleccionada
                             ? "border-[#2a628f] bg-[#f0f7fc] text-[#13293d] font-medium"
                             : "border-[#d8e9f5] bg-[#f8fbfe] text-[#16324f] hover:border-[#9ac1e2] hover:bg-white";
+                          claseCirculo += seleccionada
+                            ? "border-[#2a628f] bg-[#2a628f] text-white"
+                            : "border-[#9ac1e2] text-[#9ac1e2]";
                         } else {
-                          if (seleccionada && esCorrecta) {
+                          if (esLaCorrecta) {
                             claseBase += "border-emerald-400 bg-emerald-50 text-emerald-800 font-medium";
+                            claseCirculo += "border-emerald-500 bg-emerald-500 text-white";
                           } else if (seleccionada && !esCorrecta) {
                             claseBase += "border-red-400 bg-red-50 text-red-800 font-medium";
+                            claseCirculo += "border-red-500 bg-red-500 text-white";
                           } else {
                             claseBase += "border-[#d8e9f5] bg-[#f8fbfe] text-[#9ac1e2]";
+                            claseCirculo += "border-[#d8e9f5] text-[#9ac1e2]";
                           }
                         }
 
@@ -243,14 +265,10 @@ export default function LeccionViewer() {
                             className={claseBase}
                           >
                             <div className="flex items-center gap-3">
-                              <span className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 text-xs font-bold ${
-                                seleccionada
-                                  ? mostrarFeedback
-                                    ? esCorrecta ? "border-emerald-500 bg-emerald-500 text-white" : "border-red-500 bg-red-500 text-white"
-                                    : "border-[#2a628f] bg-[#2a628f] text-white"
-                                  : "border-[#9ac1e2] text-[#9ac1e2]"
-                              }`}>
-                                {["A","B","C","D"][opcion.orden - 1]}
+                              <span className={claseCirculo}>
+                                {mostrarFeedback && esLaCorrecta
+                                  ? <CheckCircle2 className="h-3.5 w-3.5" />
+                                  : ["A","B","C","D"][opcion.orden - 1]}
                               </span>
                               {opcion.texto}
                             </div>
@@ -327,13 +345,28 @@ export default function LeccionViewer() {
                       Intentar de nuevo
                     </button>
                   )}
-                  <Link
-                    to={`/cursos/${cursoId}`}
-                    className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#2a628f] text-white rounded-xl font-semibold text-sm hover:bg-[#18435a] transition-colors"
-                  >
-                    {resultado.aprobado ? "Siguiente lección" : "Volver al curso"}
-                    <ChevronRight className="h-4 w-4" />
-                  </Link>
+                  {resultado.aprobado && getSiguienteModuloId() ? (
+                    <button
+                      onClick={() => navigate(`/cursos/${cursoId}/leccion/${getSiguienteModuloId()}`)}
+                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#2a628f] text-white rounded-xl font-semibold text-sm hover:bg-[#18435a] transition-colors"
+                    >
+                      Siguiente lección <ChevronRight className="h-4 w-4" />
+                    </button>
+                  ) : resultado.aprobado ? (
+                    <button
+                      onClick={() => navigate(`/cursos/${cursoId}/evaluacion`)}
+                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#2a628f] text-white rounded-xl font-semibold text-sm hover:bg-[#18435a] transition-colors"
+                    >
+                      Ir al examen final <ChevronRight className="h-4 w-4" />
+                    </button>
+                  ) : (
+                    <Link
+                      to={`/cursos/${cursoId}`}
+                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#2a628f] text-white rounded-xl font-semibold text-sm hover:bg-[#18435a] transition-colors"
+                    >
+                      Volver al curso <ChevronRight className="h-4 w-4" />
+                    </Link>
+                  )}
                 </div>
               </div>
             )}
