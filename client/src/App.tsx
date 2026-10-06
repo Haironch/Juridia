@@ -38,6 +38,8 @@ import ExamenSimulado from "./pages/examen/ExamenSimulado";
 import Timeline from "./pages/public/Timeline";
 import CalculadoraLiquidacion from "./pages/herramientas/CalculadoraLiquidacion";
 import GeneradorDocumentos from "./pages/herramientas/GeneradorDocumentos";
+import LeccionViewer from "./pages/cursos/LeccionViewer";
+import EvaluacionFinal from "./pages/cursos/EvaluacionFinal";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -92,6 +94,8 @@ function App() {
               <Route path="/inicio" element={<Home />} />
               <Route path="/cursos" element={<Cursos />} />
               <Route path="/cursos/:id" element={<CursoDetalle />} />
+              <Route path="/cursos/:cursoId/leccion/:moduloId" element={<LeccionViewer />} />
+              <Route path="/cursos/:cursoId/evaluacion" element={<EvaluacionFinal />} />
               <Route path="/foros" element={<Foros />} />
               <Route path="/foros/:id" element={<ForoDetalle />} />
               <Route path="/planes" element={<PlanesEstudio />} />

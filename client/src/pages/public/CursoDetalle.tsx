@@ -1,21 +1,21 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import {
   ArrowLeft, Clock, Layers, Lock, BookOpen,
-  CheckCircle, ChevronDown, ChevronUp, PlayCircle,
+  CheckCircle2, PlayCircle, FileText, Award,
+  ChevronRight, AlertCircle,
 } from "lucide-react";
-import { useState } from "react";
 import api from "../../services/api";
+import { useAuthStore } from "../../store/authStore";
 
 interface Modulo {
   id: string;
   orden: number;
   titulo: string;
-  contenido: string;
   duracion_estimada: number;
 }
 
-interface CursoDetalle {
+interface CursoData {
   id: string;
   titulo: string;
   descripcion: string;
@@ -27,61 +27,36 @@ interface CursoDetalle {
   modulos: Modulo[];
 }
 
-function NivelBadge({ nivel }: { nivel: string }) {
-  const color =
-    nivel === "Básico"
-      ? "bg-emerald-100 text-emerald-700"
-      : nivel === "Intermedio"
-      ? "bg-amber-100 text-amber-700"
-      : "bg-rose-100 text-rose-700";
-  return (
-    <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${color}`}>
-      {nivel}
-    </span>
-  );
+interface ProgresoModulo {
+  modulo_id: string;
+  completado: number;
+  quiz_aprobado: number;
+  puntaje_quiz: number | null;
 }
 
-function ModuloItem({ modulo, index }: { modulo: Modulo; index: number }) {
-  const [abierto, setAbierto] = useState(index === 0);
+interface Certificado {
+  codigo_unico: string;
+  puntaje_final: number;
+  emitido_en: string;
+}
 
-  return (
-    <div className="border border-[#9ac1e2] rounded-xl overflow-hidden">
-      <button
-        onClick={() => setAbierto(!abierto)}
-        className="w-full flex items-center gap-4 p-4 bg-white hover:bg-[#f0f7fc] transition-colors text-left"
-      >
-        <div className="w-8 h-8 rounded-full bg-[#2a628f] text-white text-sm font-bold flex items-center justify-center flex-shrink-0">
-          {modulo.orden}
-        </div>
-        <div className="flex-1 min-w-0">
-          <p className="font-semibold text-[#13293d] text-sm">{modulo.titulo}</p>
-          {modulo.duracion_estimada && (
-            <p className="text-xs text-[#67a2d3] flex items-center gap-1 mt-0.5">
-              <Clock className="h-3 w-3" />
-              {modulo.duracion_estimada} min
-            </p>
-          )}
-        </div>
-        {abierto ? (
-          <ChevronUp className="h-4 w-4 text-[#67a2d3] flex-shrink-0" />
-        ) : (
-          <ChevronDown className="h-4 w-4 text-[#67a2d3] flex-shrink-0" />
-        )}
-      </button>
+interface ProgresoData {
+  modulos: ProgresoModulo[];
+  certificado: Certificado | null;
+}
 
-      {abierto && modulo.contenido && (
-        <div className="px-4 pb-4 pt-2 bg-[#f8fbfe] border-t border-[#d8e9f5]">
-          <p className="text-sm text-[#16324f] leading-relaxed">{modulo.contenido}</p>
-        </div>
-      )}
-    </div>
-  );
+function NivelBadge({ nivel }: { nivel: string }) {
+  const color =
+    nivel === "Básico" ? "bg-emerald-100 text-emerald-700"
+    : nivel === "Intermedio" ? "bg-amber-100 text-amber-700"
+    : "bg-rose-100 text-rose-700";
+  return <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${color}`}>{nivel}</span>;
 }
 
 function SkeletonDetalle() {
   return (
     <div className="animate-pulse">
-      <div className="bg-gradient-to-br from-[#2a628f] to-[#13293d] py-14">
+      <div className="bg-gradient-to-br from-[#2a628f] to-[#13293d] py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <div className="h-4 bg-white/20 rounded w-24 mb-6" />
           <div className="h-8 bg-white/20 rounded w-2/3 mb-4" />
@@ -89,40 +64,81 @@ function SkeletonDetalle() {
           <div className="h-4 bg-white/20 rounded w-3/4" />
         </div>
       </div>
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 space-y-3">
+        {[1,2,3,4,5].map(i => <div key={i} className="h-16 bg-white rounded-xl border border-[#d8e9f5]" />)}
+      </div>
     </div>
   );
 }
 
 export default function CursoDetalle() {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const { token, isAuthenticated } = useAuthStore();
 
-  const { data, isLoading, isError } = useQuery({
+  const { data: curso, isLoading, isError } = useQuery({
     queryKey: ["curso", id],
     queryFn: async () => {
-      const res = await api.get<{ ok: boolean; data: CursoDetalle }>(`/api/cursos/${id}`);
+      const res = await api.get<{ ok: boolean; data: CursoData }>(`/api/cursos/${id}`);
       return res.data.data;
     },
     enabled: !!id,
   });
 
+  const { data: progreso } = useQuery<ProgresoData>({
+    queryKey: ["curso-progreso", id],
+    queryFn: async () => {
+      const res = await api.get<{ ok: boolean; data: ProgresoData }>(
+        `/api/cursos/${id}/progreso`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      return res.data.data;
+    },
+    enabled: !!id && isAuthenticated,
+  });
+
   if (isLoading) return <SkeletonDetalle />;
 
-  if (isError || !data) {
+  if (isError || !curso) {
     return (
       <div className="min-h-screen bg-[#d8e9f5] flex items-center justify-center">
         <div className="text-center">
+          <AlertCircle className="h-10 w-10 text-[#9ac1e2] mx-auto mb-3" />
           <p className="text-[#13293d] font-semibold mb-2">Curso no encontrado</p>
-          <Link to="/cursos" className="text-[#2a628f] text-sm hover:underline">
-            ← Volver a cursos
-          </Link>
+          <Link to="/cursos" className="text-[#2a628f] text-sm hover:underline">← Volver a cursos</Link>
         </div>
       </div>
     );
   }
 
-  const duracionTotal = data.modulos.reduce(
-    (sum, m) => sum + (m.duracion_estimada ?? 0), 0
-  );
+  const progresoMap: Record<string, ProgresoModulo> = {};
+  progreso?.modulos.forEach(p => { progresoMap[p.modulo_id] = p; });
+
+  const aprobados = Object.values(progresoMap).filter(p => p.quiz_aprobado === 1).length;
+  const totalModulos = curso.modulos.length;
+  const porcentaje = totalModulos > 0 ? Math.round((aprobados / totalModulos) * 100) : 0;
+  const todosAprobados = aprobados === totalModulos && totalModulos > 0;
+  const tieneCertificado = !!progreso?.certificado;
+
+  function getModuloEstado(modulo: Modulo, index: number) {
+    const p = progresoMap[modulo.id];
+    if (p?.quiz_aprobado === 1) return "completado";
+    if (index === 0) return "disponible";
+    const anterior = curso.modulos[index - 1];
+    const pAnterior = progresoMap[anterior.id];
+    if (pAnterior?.quiz_aprobado === 1) return "disponible";
+    return "bloqueado";
+  }
+
+  function getPrimerModuloDisponible() {
+    for (let i = 0; i < curso.modulos.length; i++) {
+      const estado = getModuloEstado(curso.modulos[i], i);
+      if (estado === "disponible") return curso.modulos[i].id;
+    }
+    return null;
+  }
+
+  const primerDisponible = getPrimerModuloDisponible();
 
   return (
     <div className="min-h-screen bg-[#d8e9f5]">
@@ -139,41 +155,27 @@ export default function CursoDetalle() {
 
           <div className="flex flex-wrap items-center gap-2 mb-4">
             <span className="text-sm text-[#b2d3ea] bg-white/10 px-3 py-1 rounded-full">
-              {data.categoriaIcono} {data.categoria}
+              {curso.categoriaIcono} {curso.categoria}
             </span>
-            <NivelBadge nivel={data.nivel} />
-            {data.es_premium === 1 && (
+            <NivelBadge nivel={curso.nivel} />
+            {curso.es_premium === 1 && (
               <span className="flex items-center gap-1 text-xs font-semibold text-white bg-white/20 px-2.5 py-1 rounded-full">
-                <Lock className="h-3 w-3" />
-                Premium
+                <Lock className="h-3 w-3" /> Premium
               </span>
             )}
           </div>
 
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
-            {data.titulo}
+            {curso.titulo}
           </h1>
-
           <p className="text-[#b2d3ea] text-base leading-relaxed max-w-2xl mb-8">
-            {data.descripcion}
+            {curso.descripcion}
           </p>
 
-          {/* Stats row */}
           <div className="flex flex-wrap gap-6 text-sm text-[#89c2d9]">
-            <div className="flex items-center gap-2">
-              <Layers className="h-4 w-4" />
-              <span>{data.modulos.length} módulos</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Clock className="h-4 w-4" />
-              <span>{data.duracion}</span>
-            </div>
-            {duracionTotal > 0 && (
-              <div className="flex items-center gap-2">
-                <PlayCircle className="h-4 w-4" />
-                <span>{duracionTotal} min de contenido</span>
-              </div>
-            )}
+            <div className="flex items-center gap-2"><Layers className="h-4 w-4" /><span>{totalModulos} lecciones</span></div>
+            <div className="flex items-center gap-2"><Clock className="h-4 w-4" /><span>{curso.duracion}</span></div>
+            <div className="flex items-center gap-2"><FileText className="h-4 w-4" /><span>Evaluación final + certificado</span></div>
           </div>
         </div>
       </div>
@@ -182,73 +184,207 @@ export default function CursoDetalle() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-          {/* Módulos */}
+          {/* Lecciones */}
           <div className="lg:col-span-2">
+
+            {/* Progreso si está autenticado */}
+            {isAuthenticated && totalModulos > 0 && (
+              <div className="bg-white rounded-2xl border border-[#9ac1e2] p-5 mb-6">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-semibold text-[#13293d]">Tu progreso</span>
+                  <span className="text-sm font-bold text-[#2a628f]">{aprobados}/{totalModulos} lecciones</span>
+                </div>
+                <div className="h-2.5 bg-[#d8e9f5] rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-[#2a628f] to-[#18435a] rounded-full transition-all duration-500"
+                    style={{ width: `${porcentaje}%` }}
+                  />
+                </div>
+                <p className="text-xs text-[#67a2d3] mt-2">{porcentaje}% completado</p>
+              </div>
+            )}
+
             <h2 className="text-xl font-bold text-[#13293d] mb-5 flex items-center gap-2">
               <BookOpen className="h-5 w-5 text-[#2a628f]" />
               Contenido del curso
             </h2>
 
             <div className="space-y-3">
-              {data.modulos.map((modulo, i) => (
-                <ModuloItem key={modulo.id} modulo={modulo} index={i} />
-              ))}
+              {curso.modulos.map((modulo, i) => {
+                const estado = isAuthenticated ? getModuloEstado(modulo, i) : (i === 0 ? "disponible" : "bloqueado");
+                const puntaje = progresoMap[modulo.id]?.puntaje_quiz;
+
+                return (
+                  <div
+                    key={modulo.id}
+                    className={`rounded-xl border overflow-hidden transition-all ${
+                      estado === "bloqueado"
+                        ? "border-[#d8e9f5] opacity-60"
+                        : "border-[#9ac1e2] hover:shadow-md"
+                    }`}
+                  >
+                    <div className="flex items-center gap-4 p-4 bg-white">
+                      {/* Icono estado */}
+                      <div className={`w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm ${
+                        estado === "completado" ? "bg-emerald-100 text-emerald-600"
+                        : estado === "disponible" ? "bg-[#2a628f] text-white"
+                        : "bg-[#d8e9f5] text-[#9ac1e2]"
+                      }`}>
+                        {estado === "completado" ? <CheckCircle2 className="h-5 w-5" />
+                          : estado === "bloqueado" ? <Lock className="h-4 w-4" />
+                          : modulo.orden}
+                      </div>
+
+                      <div className="flex-1 min-w-0">
+                        <p className="font-semibold text-[#13293d] text-sm leading-snug">{modulo.titulo}</p>
+                        <div className="flex items-center gap-3 mt-0.5">
+                          {modulo.duracion_estimada && (
+                            <span className="text-xs text-[#67a2d3] flex items-center gap-1">
+                              <Clock className="h-3 w-3" />{modulo.duracion_estimada} min
+                            </span>
+                          )}
+                          {puntaje !== null && puntaje !== undefined && (
+                            <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
+                              puntaje >= 60 ? "bg-emerald-100 text-emerald-700" : "bg-red-100 text-red-700"
+                            }`}>
+                              Quiz: {puntaje}%
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {estado !== "bloqueado" && isAuthenticated && (
+                        <button
+                          onClick={() => navigate(`/cursos/${id}/leccion/${modulo.id}`)}
+                          className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors flex-shrink-0 ${
+                            estado === "completado"
+                              ? "bg-[#f0f7fc] text-[#2a628f] hover:bg-[#d8e9f5]"
+                              : "bg-[#2a628f] text-white hover:bg-[#18435a]"
+                          }`}
+                        >
+                          {estado === "completado" ? "Repasar" : "Iniciar"}
+                          <ChevronRight className="h-3.5 w-3.5" />
+                        </button>
+                      )}
+                      {!isAuthenticated && i === 0 && (
+                        <Link
+                          to="/login"
+                          className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-[#2a628f] text-white hover:bg-[#18435a] transition-colors flex-shrink-0"
+                        >
+                          Comenzar <ChevronRight className="h-3.5 w-3.5" />
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
+
+            {/* Examen final */}
+            {isAuthenticated && (
+              <div className={`mt-6 rounded-2xl border p-5 transition-all ${
+                todosAprobados
+                  ? "border-[#2a628f] bg-gradient-to-br from-[#f0f7fc] to-white"
+                  : "border-[#d8e9f5] bg-white opacity-70"
+              }`}>
+                <div className="flex items-center gap-4">
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
+                    tieneCertificado ? "bg-yellow-100"
+                    : todosAprobados ? "bg-[#2a628f]"
+                    : "bg-[#d8e9f5]"
+                  }`}>
+                    <Award className={`h-5 w-5 ${
+                      tieneCertificado ? "text-yellow-600"
+                      : todosAprobados ? "text-white"
+                      : "text-[#9ac1e2]"
+                    }`} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-bold text-[#13293d] text-sm">Evaluación final</p>
+                    <p className="text-xs text-[#67a2d3] mt-0.5">
+                      {tieneCertificado
+                        ? `Certificado obtenido — Puntaje: ${progreso!.certificado!.puntaje_final}%`
+                        : todosAprobados
+                        ? "Listo para presentar. Necesitas 70% para certificarte."
+                        : `Completa las ${totalModulos} lecciones para desbloquear`}
+                    </p>
+                  </div>
+                  {todosAprobados && (
+                    <button
+                      onClick={() => navigate(`/cursos/${id}/evaluacion`)}
+                      className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-[#2a628f] text-white hover:bg-[#18435a] transition-colors flex-shrink-0"
+                    >
+                      {tieneCertificado ? "Ver certificado" : "Presentar"}
+                      <ChevronRight className="h-3.5 w-3.5" />
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Sidebar */}
-          <div className="lg:col-span-1">
-            {/* Cómo completar */}
-            <div className="bg-white rounded-2xl border border-[#9ac1e2] p-6 mb-6">
-              <h3 className="font-bold text-[#13293d] mb-4">¿Cómo completar este curso?</h3>
-              <ul className="space-y-3">
+          <div className="lg:col-span-1 space-y-5">
+
+            {/* CTA principal */}
+            {isAuthenticated ? (
+              <button
+                onClick={() => {
+                  if (tieneCertificado) navigate(`/cursos/${id}/evaluacion`);
+                  else if (todosAprobados) navigate(`/cursos/${id}/evaluacion`);
+                  else if (primerDisponible) navigate(`/cursos/${id}/leccion/${primerDisponible}`);
+                }}
+                className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-sm bg-[#2a628f] text-white hover:bg-[#18435a] transition-colors shadow-lg"
+              >
+                <PlayCircle className="h-5 w-5" />
+                {tieneCertificado ? "Ver certificado" : todosAprobados ? "Presentar examen final" : aprobados > 0 ? "Continuar curso" : "Comenzar curso"}
+              </button>
+            ) : (
+              <Link
+                to="/login"
+                className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-sm bg-[#2a628f] text-white hover:bg-[#18435a] transition-colors shadow-lg"
+              >
+                <PlayCircle className="h-5 w-5" />
+                Inicia sesión para comenzar
+              </Link>
+            )}
+
+            {/* Resumen del curso */}
+            <div className="bg-[#13293d] rounded-2xl p-5 text-white">
+              <h3 className="font-bold mb-4 text-xs uppercase tracking-wider text-[#89c2d9]">Resumen</h3>
+              <div className="space-y-3 text-sm">
                 {[
-                  "Estudia cada módulo en orden",
-                  "Lee el contenido con calma",
-                  "Toma notas de los puntos clave",
-                  "Practica con el ConstituQuiz",
-                  "Repasa los módulos difíciles",
+                  { label: "Nivel", value: curso.nivel },
+                  { label: "Duración", value: curso.duracion },
+                  { label: "Lecciones", value: String(totalModulos) },
+                  { label: "Evaluación", value: "Sí, con certificado" },
+                  { label: "Acceso", value: curso.es_premium === 1 ? "Premium" : "Gratuito" },
+                ].map(({ label, value }) => (
+                  <div key={label} className="flex justify-between">
+                    <span className="text-[#89c2d9]">{label}</span>
+                    <span className="font-medium text-right">{value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Instrucciones */}
+            <div className="bg-white rounded-2xl border border-[#9ac1e2] p-5">
+              <h3 className="font-bold text-[#13293d] mb-3 text-sm">¿Cómo funciona?</h3>
+              <ol className="space-y-2.5">
+                {[
+                  "Lee cada lección con calma",
+                  "Responde el quiz al final (60% para avanzar)",
+                  "Desbloquea la siguiente lección",
+                  "Con todos los módulos listos, presenta el examen final (70% para certificarte)",
+                  "Descarga tu certificado",
                 ].map((paso, i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-sm text-[#16324f]">
-                    <CheckCircle className="h-4 w-4 text-[#2a628f] flex-shrink-0 mt-0.5" />
+                  <li key={i} className="flex items-start gap-2 text-xs text-[#16324f]">
+                    <span className="w-5 h-5 rounded-full bg-[#d8e9f5] text-[#2a628f] font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">{i + 1}</span>
                     {paso}
                   </li>
                 ))}
-              </ul>
-            </div>
-
-            {/* Resumen */}
-            <div className="bg-[#13293d] rounded-2xl p-6 text-white">
-              <h3 className="font-bold mb-4 text-sm uppercase tracking-wide text-[#89c2d9]">
-                Resumen
-              </h3>
-              <div className="space-y-3 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-[#89c2d9]">Nivel</span>
-                  <span className="font-medium">{data.nivel}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[#89c2d9]">Duración</span>
-                  <span className="font-medium">{data.duracion}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[#89c2d9]">Módulos</span>
-                  <span className="font-medium">{data.modulos.length}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[#89c2d9]">Acceso</span>
-                  <span className="font-medium">
-                    {data.es_premium === 1 ? "Premium" : "Gratuito"}
-                  </span>
-                </div>
-              </div>
-
-              <Link
-                to="/constituquiz"
-                className="mt-6 w-full inline-flex items-center justify-center gap-2 py-2.5 bg-[#2a628f] hover:bg-[#18435a] rounded-xl text-sm font-semibold transition-colors"
-              >
-                Practicar con ConstituQuiz
-              </Link>
+              </ol>
             </div>
           </div>
         </div>
