@@ -58,6 +58,11 @@ export default function LeccionViewer() {
     enabled: !!cursoId && !!moduloId,
   });
 
+  const secciones = useMemo(
+    () => parseSecciones(data?.modulo?.contenido ?? ""),
+    [data?.modulo?.contenido]
+  );
+
   const { data: cursoData } = useQuery<{ modulos: { id: string; orden: number }[] }>({
     queryKey: ["curso", cursoId],
     queryFn: async () => {
@@ -110,7 +115,6 @@ export default function LeccionViewer() {
 
   const { modulo, preguntas } = data;
 
-  const secciones = useMemo(() => parseSecciones(modulo.contenido), [modulo.contenido]);
   const totalSecciones = secciones.length;
   const enUltimaSeccion = seccionIdx === totalSecciones - 1;
 
