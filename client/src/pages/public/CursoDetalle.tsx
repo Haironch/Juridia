@@ -181,7 +181,7 @@ export default function CursoDetalle() {
       </div>
 
       {/* Body */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-28 lg:pb-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
           {/* Lecciones */}
@@ -408,6 +408,22 @@ export default function CursoDetalle() {
           </div>
         </div>
       </div>
+
+      {/* Sticky bottom CTA — solo móvil */}
+      {isAuthenticated && (
+        <div className="fixed bottom-0 inset-x-0 z-30 lg:hidden bg-white/95 backdrop-blur border-t border-[#d8e9f5] px-4 py-3 shadow-lg">
+          <button
+            onClick={() => {
+              if (tieneCertificado || todosAprobados) navigate(`/cursos/${id}/evaluacion`);
+              else if (primerDisponible) navigate(`/cursos/${id}/leccion/${primerDisponible}`);
+            }}
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl font-bold text-sm bg-[#2a628f] text-white active:bg-[#18435a] transition-colors"
+          >
+            <PlayCircle className="h-5 w-5" />
+            {tieneCertificado ? "Ver certificado" : todosAprobados ? "Presentar examen final" : aprobados > 0 ? "Continuar" : "Comenzar curso"}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

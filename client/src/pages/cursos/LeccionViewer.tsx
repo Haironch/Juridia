@@ -357,14 +357,14 @@ export default function LeccionViewer() {
             100% { transform: scale(1); opacity: 1; }
           }
         `}</style>
-        <div className="max-w-lg mx-auto px-4 sm:px-6 py-16 flex flex-col items-center text-center">
+        <div className="max-w-lg mx-auto px-4 sm:px-6 py-10 sm:py-16 flex flex-col items-center text-center">
           {/* Icono animado */}
-          <div className="relative mb-8">
+          <div className="relative mb-6 sm:mb-8">
             <div
-              className="w-28 h-28 rounded-full bg-gradient-to-br from-[#2a628f] to-[#13293d] flex items-center justify-center shadow-2xl"
+              className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-gradient-to-br from-[#2a628f] to-[#13293d] flex items-center justify-center shadow-2xl"
               style={{ animation: "celebPop 0.55s cubic-bezier(0.175,0.885,0.32,1.275) forwards" }}
             >
-              <Trophy className="h-14 w-14 text-yellow-300" />
+              <Trophy className="h-12 w-12 sm:h-14 sm:w-14 text-yellow-300" />
             </div>
             <div
               className="absolute -top-1 -right-1 w-9 h-9 bg-yellow-400 rounded-full flex items-center justify-center shadow-md"
@@ -379,7 +379,7 @@ export default function LeccionViewer() {
           </span>
           <h2 className="text-3xl font-bold text-[#13293d] mb-1">¡Nivel superado!</h2>
           <p className="text-[#67a2d3] text-sm mb-3">Puntaje obtenido</p>
-          <p className="text-6xl font-bold text-[#2a628f] mb-6">{resultado.puntaje}%</p>
+          <p className="text-5xl sm:text-6xl font-bold text-[#2a628f] mb-6">{resultado.puntaje}%</p>
 
           {/* Barras de aciertos */}
           <div className="flex items-center gap-1.5 mb-10">
