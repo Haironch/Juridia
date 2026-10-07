@@ -143,8 +143,12 @@ export default function CursoDetalle() {
   return (
     <div className="min-h-screen bg-[#d8e9f5]">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-[#2a628f] to-[#13293d]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      <div className="bg-gradient-to-br from-[#2a628f] via-[#18435a] to-[#13293d] relative overflow-hidden">
+        {/* Decorative circles */}
+        <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-white/5 translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+        <div className="absolute bottom-0 left-1/3 w-64 h-64 rounded-full bg-white/[0.03] translate-y-1/2 pointer-events-none" />
+
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative">
           <Link
             to="/cursos"
             className="inline-flex items-center gap-1.5 text-[#89c2d9] hover:text-white text-sm mb-6 transition-colors"
@@ -153,29 +157,57 @@ export default function CursoDetalle() {
             Todos los cursos
           </Link>
 
-          <div className="flex flex-wrap items-center gap-2 mb-4">
-            <span className="text-sm text-[#b2d3ea] bg-white/10 px-3 py-1 rounded-full">
-              {curso.categoriaIcono} {curso.categoria}
-            </span>
-            <NivelBadge nivel={curso.nivel} />
-            {curso.es_premium === 1 && (
-              <span className="flex items-center gap-1 text-xs font-semibold text-white bg-white/20 px-2.5 py-1 rounded-full">
-                <Lock className="h-3 w-3" /> Premium
-              </span>
-            )}
-          </div>
+          <div className="flex flex-col lg:flex-row lg:items-start lg:gap-10">
+            {/* Left: texto */}
+            <div className="flex-1">
+              <div className="flex flex-wrap items-center gap-2 mb-4">
+                <span className="text-sm text-[#b2d3ea] bg-white/10 px-3 py-1 rounded-full">
+                  {curso.categoriaIcono} {curso.categoria}
+                </span>
+                <NivelBadge nivel={curso.nivel} />
+                {curso.es_premium === 0 && (
+                  <span className="flex items-center gap-1 text-xs font-bold text-emerald-300 bg-emerald-500/20 border border-emerald-400/30 px-2.5 py-1 rounded-full">
+                    ✓ Gratuito
+                  </span>
+                )}
+                {curso.es_premium === 1 && (
+                  <span className="flex items-center gap-1 text-xs font-semibold text-white bg-white/20 px-2.5 py-1 rounded-full">
+                    <Lock className="h-3 w-3" /> Premium
+                  </span>
+                )}
+              </div>
 
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
-            {curso.titulo}
-          </h1>
-          <p className="text-[#b2d3ea] text-base leading-relaxed max-w-2xl mb-8">
-            {curso.descripcion}
-          </p>
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
+                {curso.titulo}
+              </h1>
+              <p className="text-[#b2d3ea] text-base leading-relaxed mb-8">
+                {curso.descripcion}
+              </p>
 
-          <div className="flex flex-wrap gap-6 text-sm text-[#89c2d9]">
-            <div className="flex items-center gap-2"><Layers className="h-4 w-4" /><span>{totalModulos} lecciones</span></div>
-            <div className="flex items-center gap-2"><Clock className="h-4 w-4" /><span>{curso.duracion}</span></div>
-            <div className="flex items-center gap-2"><FileText className="h-4 w-4" /><span>Evaluación final + certificado</span></div>
+              <div className="flex flex-wrap gap-5 text-sm text-[#89c2d9]">
+                <div className="flex items-center gap-2"><Layers className="h-4 w-4" /><span>{totalModulos} lecciones</span></div>
+                <div className="flex items-center gap-2"><Clock className="h-4 w-4" /><span>{curso.duracion}</span></div>
+                <div className="flex items-center gap-2"><FileText className="h-4 w-4" /><span>Certificado incluido</span></div>
+              </div>
+            </div>
+
+            {/* Right: stats card (solo desktop) */}
+            <div className="hidden lg:flex flex-col gap-3 bg-white/10 backdrop-blur rounded-2xl border border-white/20 p-5 min-w-[180px]">
+              {[
+                { icon: "🗳️", label: "Temática", value: "Voto y Constitución" },
+                { icon: "📚", label: "Lecciones", value: `${totalModulos} módulos` },
+                { icon: "⏱️", label: "Duración", value: curso.duracion },
+                { icon: "🏅", label: "Certificado", value: "Al finalizar" },
+              ].map(({ icon, label, value }) => (
+                <div key={label} className="flex items-center gap-3">
+                  <span className="text-xl">{icon}</span>
+                  <div>
+                    <p className="text-[10px] text-[#89c2d9] uppercase tracking-wider">{label}</p>
+                    <p className="text-sm font-semibold text-white leading-tight">{value}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -204,10 +236,13 @@ export default function CursoDetalle() {
               </div>
             )}
 
-            <h2 className="text-xl font-bold text-[#13293d] mb-6 flex items-center gap-2">
+            <h2 className="text-xl font-bold text-[#13293d] mb-2 flex items-center gap-2">
               <BookOpen className="h-5 w-5 text-[#2a628f]" />
               Tu camino de aprendizaje
             </h2>
+            <p className="text-sm text-[#67a2d3] mb-6">
+              Completa cada lección y su quiz para desbloquear la siguiente
+            </p>
 
             {/* Mapa de niveles */}
             <div className="relative">
@@ -218,45 +253,63 @@ export default function CursoDetalle() {
                 {curso.modulos.map((modulo, i) => {
                   const estado = isAuthenticated ? getModuloEstado(modulo, i) : (i === 0 ? "disponible" : "bloqueado");
                   const puntaje = progresoMap[modulo.id]?.puntaje_quiz;
+                  const iconos = ["🗳️", "⚖️", "🛡️", "📢", "🏛️"];
+                  const icono = iconos[i] ?? "📚";
 
                   return (
-                    <div key={modulo.id} className="relative flex items-center gap-4">
+                    <div key={modulo.id} className="relative flex items-start gap-4">
                       {/* Nodo */}
-                      <div className={`relative z-10 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 border-2 font-bold text-sm transition-all ${
-                        estado === "completado"
-                          ? "bg-emerald-500 border-emerald-500 text-white shadow-md"
-                          : estado === "disponible"
-                          ? "bg-[#2a628f] border-[#2a628f] text-white shadow-lg ring-4 ring-[#2a628f]/20"
-                          : "bg-white border-[#d8e9f5] text-[#9ac1e2]"
-                      }`}>
-                        {estado === "completado"
-                          ? <CheckCircle2 className="h-5 w-5" />
-                          : estado === "bloqueado"
-                          ? <Lock className="h-4 w-4" />
-                          : <span>{modulo.orden}</span>}
+                      <div className="relative z-10 flex-shrink-0">
+                        <div className={`w-12 h-12 rounded-full flex items-center justify-center border-2 font-bold text-sm transition-all ${
+                          estado === "completado"
+                            ? "bg-emerald-500 border-emerald-500 text-white shadow-md"
+                            : estado === "disponible"
+                            ? "bg-[#2a628f] border-[#2a628f] text-white shadow-lg"
+                            : "bg-white border-[#d8e9f5] text-[#b2cfe8]"
+                        }`}>
+                          {estado === "completado"
+                            ? <CheckCircle2 className="h-5 w-5" />
+                            : estado === "bloqueado"
+                            ? <Lock className="h-4 w-4" />
+                            : <span className="text-base">{icono}</span>}
+                        </div>
+                        {/* Pulso en disponible */}
+                        {estado === "disponible" && (
+                          <span className="absolute inset-0 rounded-full bg-[#2a628f]/30 animate-ping" />
+                        )}
                       </div>
 
                       {/* Tarjeta */}
-                      <div className={`flex-1 bg-white rounded-2xl border p-4 transition-all ${
+                      <div className={`flex-1 rounded-2xl border p-4 transition-all mb-0 ${
                         estado === "bloqueado"
-                          ? "border-[#d8e9f5] opacity-55"
+                          ? "bg-white/60 border-[#e8f2f9]"
                           : estado === "completado"
-                          ? "border-emerald-200 hover:shadow-md"
-                          : "border-[#2a628f]/40 hover:shadow-md shadow-sm"
+                          ? "bg-white border-emerald-200 hover:shadow-md"
+                          : "bg-white border-[#2a628f]/40 shadow-md hover:shadow-lg"
                       }`}>
                         <div className="flex items-center justify-between gap-3">
                           <div className="min-w-0">
-                            <p className={`font-semibold text-sm leading-snug ${estado === "bloqueado" ? "text-[#9ac1e2]" : "text-[#13293d]"}`}>
+                            <div className="flex items-center gap-2 mb-0.5">
+                              <span className="text-[10px] font-bold text-[#9ac1e2] uppercase tracking-wider">
+                                Lección {modulo.orden}
+                              </span>
+                              {estado === "completado" && (
+                                <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-full">
+                                  Completada
+                                </span>
+                              )}
+                            </div>
+                            <p className={`font-bold text-sm leading-snug ${estado === "bloqueado" ? "text-[#a8c5de]" : "text-[#13293d]"}`}>
                               {modulo.titulo}
                             </p>
-                            <div className="flex items-center gap-2 mt-1">
+                            <div className="flex items-center gap-2 mt-1.5">
                               {modulo.duracion_estimada > 0 && (
-                                <span className="text-xs text-[#67a2d3] flex items-center gap-1">
+                                <span className={`text-xs flex items-center gap-1 ${estado === "bloqueado" ? "text-[#b8d5e8]" : "text-[#67a2d3]"}`}>
                                   <Clock className="h-3 w-3" />{modulo.duracion_estimada} min
                                 </span>
                               )}
                               {puntaje !== null && puntaje !== undefined && (
-                                <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
+                                <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${
                                   puntaje >= 60 ? "bg-emerald-100 text-emerald-700" : "bg-red-100 text-red-700"
                                 }`}>
                                   {puntaje}%
@@ -268,10 +321,10 @@ export default function CursoDetalle() {
                           {estado !== "bloqueado" && isAuthenticated && (
                             <button
                               onClick={() => navigate(`/cursos/${id}/leccion/${modulo.id}`)}
-                              className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors flex-shrink-0 ${
+                              className={`flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-xl transition-all flex-shrink-0 ${
                                 estado === "completado"
                                   ? "bg-[#f0f7fc] text-[#2a628f] hover:bg-[#d8e9f5]"
-                                  : "bg-[#2a628f] text-white hover:bg-[#18435a]"
+                                  : "bg-[#2a628f] text-white hover:bg-[#18435a] shadow-sm"
                               }`}
                             >
                               {estado === "completado" ? "Repasar" : "Iniciar"}
@@ -281,10 +334,15 @@ export default function CursoDetalle() {
                           {!isAuthenticated && i === 0 && (
                             <Link
                               to="/login"
-                              className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-[#2a628f] text-white hover:bg-[#18435a] transition-colors flex-shrink-0"
+                              className="flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-xl bg-[#2a628f] text-white hover:bg-[#18435a] transition-all shadow-sm flex-shrink-0"
                             >
                               Comenzar <ChevronRight className="h-3.5 w-3.5" />
                             </Link>
+                          )}
+                          {estado === "bloqueado" && (
+                            <div className="flex-shrink-0 text-[#c8dff0]">
+                              <Lock className="h-4 w-4" />
+                            </div>
                           )}
                         </div>
                       </div>
@@ -368,39 +426,41 @@ export default function CursoDetalle() {
               </Link>
             )}
 
-            {/* Resumen del curso */}
+            {/* Lo que aprenderás */}
             <div className="bg-[#13293d] rounded-2xl p-5 text-white">
-              <h3 className="font-bold mb-4 text-xs uppercase tracking-wider text-[#89c2d9]">Resumen</h3>
-              <div className="space-y-3 text-sm">
+              <h3 className="font-bold mb-4 text-xs uppercase tracking-wider text-[#89c2d9]">Lo que aprenderás</h3>
+              <ul className="space-y-2.5">
                 {[
-                  { label: "Nivel", value: curso.nivel },
-                  { label: "Duración", value: curso.duracion },
-                  { label: "Lecciones", value: String(totalModulos) },
-                  { label: "Evaluación", value: "Sí, con certificado" },
-                  { label: "Acceso", value: curso.es_premium === 1 ? "Premium" : "Gratuito" },
-                ].map(({ label, value }) => (
-                  <div key={label} className="flex justify-between">
-                    <span className="text-[#89c2d9]">{label}</span>
-                    <span className="font-medium text-right">{value}</span>
-                  </div>
+                  "Cómo funciona la Constitución de Guatemala",
+                  "Tus derechos como ciudadano",
+                  "El proceso electoral y tu voto",
+                  "Cómo identificar propaganda electoral",
+                  "Qué elegimos realmente en cada elección",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm">
+                    <span className="text-emerald-400 mt-0.5 flex-shrink-0">✓</span>
+                    <span className="text-[#b2d3ea]">{item}</span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
 
-            {/* Instrucciones */}
+            {/* Cómo funciona */}
             <div className="bg-white rounded-2xl border border-[#9ac1e2] p-5">
-              <h3 className="font-bold text-[#13293d] mb-3 text-sm">¿Cómo funciona?</h3>
-              <ol className="space-y-2.5">
+              <h3 className="font-bold text-[#13293d] mb-4 text-sm flex items-center gap-2">
+                <span className="text-base">🗺️</span> ¿Cómo funciona?
+              </h3>
+              <ol className="space-y-3">
                 {[
-                  "Lee cada lección con calma",
-                  "Responde el quiz al final (60% para avanzar)",
-                  "Desbloquea la siguiente lección",
-                  "Con todos los módulos listos, presenta el examen final (70% para certificarte)",
-                  "Descarga tu certificado",
-                ].map((paso, i) => (
-                  <li key={i} className="flex items-start gap-2 text-xs text-[#16324f]">
-                    <span className="w-5 h-5 rounded-full bg-[#d8e9f5] text-[#2a628f] font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">{i + 1}</span>
-                    {paso}
+                  { emoji: "📖", texto: "Lee cada lección por secciones" },
+                  { emoji: "✏️", texto: "Responde el quiz (mínimo 60%)" },
+                  { emoji: "🔓", texto: "Desbloquea la siguiente lección" },
+                  { emoji: "🏆", texto: "Aprueba el examen final (70%)" },
+                  { emoji: "🎓", texto: "Descarga tu certificado" },
+                ].map(({ emoji, texto }, i) => (
+                  <li key={i} className="flex items-center gap-3 text-xs text-[#16324f]">
+                    <span className="w-7 h-7 rounded-full bg-[#d8e9f5] flex items-center justify-center flex-shrink-0 text-sm">{emoji}</span>
+                    {texto}
                   </li>
                 ))}
               </ol>

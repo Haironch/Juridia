@@ -201,36 +201,50 @@ export default function LeccionViewer() {
       <div className="min-h-screen bg-[#d8e9f5]">
         {topbar}
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
-          {/* Indicador de secciones */}
-          <div className="flex items-center justify-center gap-2 mb-8">
-            {secciones.map((_, i) => (
-              <div
-                key={i}
-                className={`rounded-full transition-all duration-300 ${
-                  i === seccionIdx
-                    ? "w-6 h-2 bg-[#2a628f]"
-                    : i < seccionIdx
-                    ? "w-2 h-2 bg-[#9ac1e2]"
-                    : "w-2 h-2 bg-[#c8dff0]"
-                }`}
-              />
-            ))}
+          {/* Indicador de secciones + contador */}
+          <div className="flex flex-col items-center gap-3 mb-8">
+            <div className="flex items-center gap-1.5">
+              {secciones.map((_, i) => (
+                <div
+                  key={i}
+                  className={`rounded-full transition-all duration-300 ${
+                    i === seccionIdx
+                      ? "w-7 h-2.5 bg-[#2a628f]"
+                      : i < seccionIdx
+                      ? "w-2.5 h-2.5 bg-[#9ac1e2]"
+                      : "w-2.5 h-2.5 bg-[#c8dff0]"
+                  }`}
+                />
+              ))}
+            </div>
+            <span className="text-xs font-semibold text-[#67a2d3] bg-white px-3 py-1 rounded-full border border-[#d8e9f5]">
+              Sección {seccionIdx + 1} de {totalSecciones}
+            </span>
           </div>
 
           {/* Contenido de la sección */}
-          <article className="bg-white rounded-2xl border border-[#9ac1e2] p-6 sm:p-10 mb-6 min-h-64">
-            <div className="prose prose-slate max-w-none
-              prose-headings:text-[#13293d] prose-headings:font-bold
-              prose-h2:text-lg prose-h2:mt-0 prose-h2:mb-4
-              prose-h3:text-base prose-h3:mt-6 prose-h3:mb-2
-              prose-p:text-[#16324f] prose-p:leading-relaxed prose-p:text-base
-              prose-strong:text-[#13293d] prose-strong:font-semibold
-              prose-ul:text-[#16324f] prose-li:my-1
-              prose-hr:border-[#d8e9f5]
-            ">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                {secciones[seccionIdx]}
-              </ReactMarkdown>
+          <article className="bg-white rounded-2xl border border-[#d8e9f5] shadow-sm overflow-hidden mb-6 min-h-64">
+            {/* Header de la card */}
+            <div className="bg-gradient-to-r from-[#2a628f] to-[#18435a] px-6 py-3 flex items-center gap-2">
+              <span className="text-white/60 text-xs font-semibold uppercase tracking-wider">Lectura</span>
+              <span className="text-white/30">·</span>
+              <span className="text-white text-xs font-bold">{modulo.titulo}</span>
+            </div>
+            <div className="p-6 sm:p-8">
+              <div className="prose prose-slate max-w-none
+                prose-headings:text-[#13293d] prose-headings:font-bold
+                prose-h2:text-xl prose-h2:mt-0 prose-h2:mb-4 prose-h2:border-b prose-h2:border-[#d8e9f5] prose-h2:pb-2
+                prose-h3:text-base prose-h3:mt-6 prose-h3:mb-2 prose-h3:text-[#2a628f]
+                prose-p:text-[#16324f] prose-p:leading-relaxed prose-p:text-base
+                prose-strong:text-[#13293d] prose-strong:font-semibold
+                prose-ul:text-[#16324f] prose-li:my-1.5
+                prose-hr:border-[#d8e9f5]
+                prose-blockquote:border-[#2a628f] prose-blockquote:bg-[#f0f7fc] prose-blockquote:rounded-r-lg prose-blockquote:py-1
+              ">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {secciones[seccionIdx]}
+                </ReactMarkdown>
+              </div>
             </div>
           </article>
 
