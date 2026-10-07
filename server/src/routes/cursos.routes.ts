@@ -70,7 +70,7 @@ router.get("/:id", async (req: Request, res: Response) => {
 
     const modulosResult = await db.execute({
       sql: `
-        SELECT id, orden, titulo, contenido, duracion_estimada
+        SELECT id, orden, titulo, duracion_estimada
         FROM modulos_curso
         WHERE curso_id = ?
         ORDER BY orden
