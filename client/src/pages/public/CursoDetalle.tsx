@@ -124,16 +124,16 @@ export default function CursoDetalle() {
     const p = progresoMap[modulo.id];
     if (p?.quiz_aprobado === 1) return "completado";
     if (index === 0) return "disponible";
-    const anterior = curso.modulos[index - 1];
+    const anterior = curso!.modulos[index - 1];
     const pAnterior = progresoMap[anterior.id];
     if (pAnterior?.quiz_aprobado === 1) return "disponible";
     return "bloqueado";
   }
 
   function getPrimerModuloDisponible() {
-    for (let i = 0; i < curso.modulos.length; i++) {
-      const estado = getModuloEstado(curso.modulos[i], i);
-      if (estado === "disponible") return curso.modulos[i].id;
+    for (let i = 0; i < curso!.modulos.length; i++) {
+      const estado = getModuloEstado(curso!.modulos[i], i);
+      if (estado === "disponible") return curso!.modulos[i].id;
     }
     return null;
   }

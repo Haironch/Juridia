@@ -1,4 +1,4 @@
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState, useRef } from "react";
 import {
@@ -11,7 +11,6 @@ import { useAuthStore } from "../../store/authStore";
 interface Opcion { id: string; texto: string; orden: number; }
 interface Pregunta { id: string; texto: string; opciones: Opcion[]; }
 
-interface ExamenData { ok: boolean; data: Pregunta[]; }
 
 interface ExamenResultado {
   puntaje: number;
@@ -138,7 +137,6 @@ function CertificadoCard({ nombre, apellido, titulo, codigo, puntaje, fecha }: {
 
 export default function EvaluacionFinal() {
   const { cursoId } = useParams<{ cursoId: string }>();
-  const navigate = useNavigate();
   const qc = useQueryClient();
   const { token, user: perfil } = useAuthStore();
 
