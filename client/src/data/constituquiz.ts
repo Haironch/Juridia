@@ -1289,6 +1289,360 @@ export const quizTemas: QuizTema[] = [
     ]
   },
 
+  // ── FASE 3: Derecho Constitucional ampliado ──────────────────────────────────
+  {
+    id: "derecho-constitucional-estado",
+    tema: "Derecho Constitucional — Organización del Estado y Derechos",
+    descripcion: "Organismos del Estado, Corte de Constitucionalidad, derechos individuales y sociales, reformas constitucionales y supremacía constitucional (CPRG 1985).",
+    icono: "Scale",
+    categoria: "Constitucional",
+    totalPreguntas: 15,
+    preguntas: [
+      {
+        id: 1,
+        pregunta: "¿Cuáles son los tres organismos del Estado guatemalteco y en qué artículo de la CPRG se establecen?",
+        opciones: {
+          A: "Ejecutivo, Legislativo y Judicial; artículo 141 de la CPRG.",
+          B: "Presidente, Congreso y Corte Suprema; artículo 100 de la CPRG.",
+          C: "Central, Departamental y Municipal; artículo 200 de la CPRG."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 141 de la CPRG establece: 'La soberanía radica en el pueblo quien la delega, para su ejercicio, en los Organismos Legislativo, Ejecutivo y Judicial.' Cada organismo tiene funciones separadas y ninguno puede subordinar a otro; la independencia entre poderes es un pilar del Estado de Derecho guatemalteco. Se complementan con entidades autónomas como la CC, el TSE y el MP."
+      },
+      {
+        id: 2,
+        pregunta: "¿Cuál es la composición de la Corte de Constitucionalidad (CC) de Guatemala?",
+        opciones: {
+          A: "Cinco magistrados titulares y cinco suplentes, elegidos por cinco años, postulados por el Congreso, el Ejecutivo, la CSJ, el CANG y la USAC.",
+          B: "Siete magistrados nombrados vitaliciamente por el Presidente de la República.",
+          C: "Nueve magistrados titulares elegidos por el Congreso de la República para un período de cuatro años."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 269 de la CPRG establece que la CC se integra por cinco magistrados titulares con sus suplentes, cada uno designado por un sector diferente: el Congreso de la República, el Ejecutivo en Consejo de Ministros, la Corte Suprema de Justicia, el Colegio de Abogados (CANG) y la Universidad de San Carlos de Guatemala. Duran en funciones cinco años y no pueden ser reelectos de inmediato."
+      },
+      {
+        id: 3,
+        pregunta: "¿Cuál es la función principal de la Corte de Constitucionalidad de Guatemala?",
+        opciones: {
+          A: "Defender el orden constitucional, conocer los recursos de inconstitucionalidad y emitir opiniones sobre tratados internacionales.",
+          B: "Juzgar en única instancia a los funcionarios del más alto rango por delitos cometidos en el ejercicio del cargo.",
+          C: "Administrar el presupuesto del Organismo Judicial y nombrar a los jueces de primera instancia."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La CC (artículo 268 CPRG) es un tribunal permanente de jurisdicción privativa, cuya función esencial es la defensa del orden constitucional. Conoce: inconstitucionalidades generales (que derogan normas), amparos en única instancia contra ciertos órganos supremos, exhibición personal, y emite opiniones consultivas sobre tratados y leyes. Sus sentencias son vinculantes para el Estado y tienen carácter erga omnes cuando declaran inconstitucionalidad."
+      },
+      {
+        id: 4,
+        pregunta: "¿Cuáles son los requisitos constitucionales para ser Presidente de Guatemala?",
+        opciones: {
+          A: "Guatemalteco de origen, ciudadano en ejercicio, mayor de 40 años y ser del estado seglar.",
+          B: "Guatemalteco por naturalización, mayor de 35 años y con título universitario.",
+          C: "Solo ser ciudadano guatemalteco mayor de 18 años inscrito en el padrón electoral."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 185 de la CPRG exige para ser Presidente: ser guatemalteco de origen (no naturalizado), ciudadano en ejercicio, mayor de cuarenta años de edad y ser del estado seglar (no ministro de ningún culto religioso). Adicionalmente, no puede haber sido condenado por delito alguno y no puede ser pariente del Presidente o Vicepresidente en ejercicio hasta en cuarto grado de consanguinidad."
+      },
+      {
+        id: 5,
+        pregunta: "¿Cuántos diputados integran el Congreso de la República de Guatemala y cómo son elegidos?",
+        opciones: {
+          A: "El número varía según la población; hay diputados distritales (uno por cada 80,000 habitantes) y una lista nacional de 32 diputados, elegidos por voto directo.",
+          B: "128 diputados fijos, elegidos exclusivamente por representación proporcional a nivel nacional.",
+          C: "22 diputados, uno por cada departamento, más 10 designados por el Presidente de la República."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 157 de la CPRG establece que el Congreso se integra por diputados electos directamente por el pueblo. Hay dos categorías: diputados de lista nacional (32 en total) y diputados distritales (uno por cada 80,000 habitantes o fracción superior a 40,000 en cada distrito). El número de diputados distritales se actualiza con cada censo. El TSE determina la distribución de curules por partido mediante el sistema de representación proporcional."
+      },
+      {
+        id: 6,
+        pregunta: "¿Qué establece el artículo 12 de la CPRG sobre el derecho de defensa?",
+        opciones: {
+          A: "La defensa de la persona y sus derechos es inviolable; nadie puede ser condenado sin ser citado, oído y vencido en proceso legal ante juez competente.",
+          B: "Solo los abogados colegiados activos pueden ejercer la defensa técnica en procesos penales.",
+          C: "El Estado provee defensa pública gratuita únicamente en casos de pena de muerte."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 12 de la CPRG consagra el debido proceso: 'La defensa de la persona y sus derechos es inviolable. Nadie podrá ser condenado, ni privado de sus derechos, sin haber sido citado, oído y vencido en proceso legal ante juez o tribunal competente y preestablecido.' Este principio es el fundamento de toda la justicia procesal guatemalteca e impide la condena en ausencia sin las garantías correspondientes."
+      },
+      {
+        id: 7,
+        pregunta: "¿Qué son los derechos sociales reconocidos en la CPRG y en qué título se encuentran?",
+        opciones: {
+          A: "Derechos individuales como la vida y la libertad, regulados en el Título I de la CPRG.",
+          B: "Los derechos relativos a la familia, cultura, comunidades indígenas, educación, salud y trabajo, regulados en el Título II, Capítulo II.",
+          C: "Derechos exclusivos de los funcionarios públicos en el ejercicio de sus cargos."
+        },
+        respuestaCorrecta: "B",
+        explicacion: "El Título II, Capítulo II de la CPRG regula los derechos sociales, que son garantías de carácter prestacional que el Estado debe satisfacer activamente. Incluyen: derechos de la familia (matrimonio, maternidad, adopción), cultura, comunidades indígenas, educación (gratuita y obligatoria), salud, seguridad social, asistencia social y trabajo. Se diferencian de los derechos individuales porque exigen acción positiva del Estado."
+      },
+      {
+        id: 8,
+        pregunta: "¿Qué dice el artículo 44 de la CPRG sobre los derechos inherentes a la persona?",
+        opciones: {
+          A: "Los derechos y garantías que otorga la Constitución no excluyen otros que, aunque no figuren expresamente, son inherentes a la persona humana.",
+          B: "Solo tienen derechos constitucionales los ciudadanos guatemaltecos inscritos en el padrón electoral.",
+          C: "Los derechos constitucionales pueden suspenderse por el Ejecutivo en estados de excepción sin límite temporal."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 44 de la CPRG establece la cláusula de apertura constitucional: los derechos enumerados en la Constitución no son los únicos; existen derechos inherentes al ser humano que la Constitución reconoce aunque no los mencione expresamente. También dispone que serán nulas las leyes que disminuyan, restrinjan o tergiversen los derechos que la Constitución garantiza. Esta norma se complementa con el artículo 46 sobre tratados de DDHH."
+      },
+      {
+        id: 9,
+        pregunta: "¿Cómo se reforma la Constitución Política de Guatemala?",
+        opciones: {
+          A: "Las reformas las puede decretar el Congreso con el voto de dos terceras partes, pero deben ratificarse mediante consulta popular (referéndum).",
+          B: "Solo el Presidente de la República puede proponer reformas constitucionales al Congreso.",
+          C: "Requiere la convocatoria obligatoria a una Asamblea Nacional Constituyente para cualquier reforma."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 280 de la CPRG establece el procedimiento de reforma: el Congreso puede reformar los artículos no pétreos con el voto afirmativo de dos terceras partes del total de diputados, debiendo ratificarse la reforma mediante consulta popular. Los artículos pétreos (artículos 140, 141, 165 inciso g, 186 y 187) no pueden reformarse por ningún procedimiento. La Asamblea Nacional Constituyente es otra vía posible para reformas totales."
+      },
+      {
+        id: 10,
+        pregunta: "¿Qué protege el artículo 6 de la CPRG respecto a la detención legal?",
+        opciones: {
+          A: "Ninguna persona puede ser detenida o presa, sino por causa de delito o falta, en virtud de orden librada por juez competente.",
+          B: "Todo ciudadano puede ser detenido hasta por 72 horas sin necesidad de orden judicial.",
+          C: "Solo la Policía Nacional Civil puede ejecutar detenciones; el Ejército no tiene esa facultad."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 6 de la CPRG regula la detención legal: requiere orden de juez competente, salvo flagrancia. Toda persona detenida debe ser notificada inmediatamente de la causa de su detención, tiene derecho a comunicarse con su abogado y familiares, y debe ser puesta a disposición del tribunal dentro de las seis horas siguientes. La detención arbitraria o incomunicación ilegal da lugar a exhibición personal (hábeas corpus)."
+      },
+      {
+        id: 11,
+        pregunta: "¿Cuál es la función del Tribunal Supremo Electoral (TSE) en el sistema constitucional guatemalteco?",
+        opciones: {
+          A: "Es el máximo organismo en materia electoral; es independiente y de ninguna manera responde a los organismos del Estado.",
+          B: "Es un órgano del Congreso encargado de organizar únicamente las elecciones generales cada cuatro años.",
+          C: "Depende del Organismo Ejecutivo y coordina el financiamiento de los partidos políticos."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 121 de la Ley Electoral y de Partidos Políticos (LEPP) y el artículo 223 de la CPRG establecen al TSE como organismo autónomo, de plena jurisdicción en materia electoral. Sus funciones incluyen: organizar y dirigir las elecciones, fiscalizar a los partidos políticos, conocer y resolver los recursos en materia electoral, y declarar los resultados oficiales. Sus resoluciones en materia electoral son inapelables."
+      },
+      {
+        id: 12,
+        pregunta: "¿Qué reconocen los artículos 66 al 70 de la CPRG respecto a las comunidades indígenas?",
+        opciones: {
+          A: "El Estado reconoce y protege las formas de vida, costumbres, tradiciones, organización social, idiomas y dialectos de los grupos indígenas guatemaltecos.",
+          B: "Se establece que los idiomas indígenas son idiomas oficiales junto con el español en los departamentos con mayoría indígena.",
+          C: "Se crea un régimen autónomo especial de gobierno para los territorios con población mayoritariamente indígena."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Los artículos 66-70 de la CPRG forman el capítulo sobre comunidades indígenas. El Estado reconoce y protege: sus formas de vida, costumbres, tradiciones, organización social, uso del traje indígena, idiomas y dialectos. Garantiza además sus tierras y cooperativas agrícolas. Estos artículos son base del pluralismo jurídico guatemalteco y han sido desarrollados por el Convenio 169 de la OIT, ratificado por Guatemala."
+      },
+      {
+        id: 13,
+        pregunta: "¿Qué establece el artículo 175 de la CPRG sobre la jerarquía normativa?",
+        opciones: {
+          A: "Ninguna ley puede contrariar las disposiciones de la Constitución; las leyes que violen o tergiversen los mandatos constitucionales son nulas ipso jure.",
+          B: "Las leyes ordinarias tienen el mismo rango que la Constitución si son aprobadas por mayoría calificada.",
+          C: "Los tratados internacionales tienen rango superior a la Constitución en todas las materias."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 175 de la CPRG consagra el principio de supremacía constitucional: la Constitución es la norma de normas y ninguna ley puede contradecirla. Las normas que la contraríen son nulas de pleno derecho (ipso jure), sin necesidad de declaración expresa. Este principio se garantiza mediante el control de constitucionalidad a cargo de la CC y, en cada caso concreto, de cualquier tribunal del país."
+      },
+      {
+        id: 14,
+        pregunta: "¿Cuál es el período presidencial en Guatemala y puede el Presidente reelegirse?",
+        opciones: {
+          A: "Cuatro años; la reelección está absolutamente prohibida, incluso para familiares del Presidente.",
+          B: "Seis años con posibilidad de una reelección no consecutiva.",
+          C: "Cinco años con reelección permitida una sola vez de forma consecutiva."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 184 de la CPRG fija un período de cuatro años para el Presidente y Vicepresidente, sin posibilidad de reelección. El artículo 186 prohíbe postularse como candidato a quien haya ejercido la presidencia; esta prohibición se extiende a parientes del Presidente o Vicepresidente en ejercicio. La reelección o continuismo es considerada uno de los vicios políticos más graves que la Constitución busca evitar."
+      },
+      {
+        id: 15,
+        pregunta: "¿Cuál es la función del Ejército de Guatemala según la Constitución?",
+        opciones: {
+          A: "Defender la soberanía nacional, la integridad territorial y mantener la paz, el orden y el respeto a la Constitución.",
+          B: "Apoyar al gobierno en funciones de policía y control del orden público como función principal.",
+          C: "Estar bajo las órdenes directas del Congreso para ser usado como fuerza de seguridad interna."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 244 de la CPRG establece que el Ejército de Guatemala es una institución destinada a mantener la independencia, la soberanía y el honor de Guatemala, la integridad del territorio, la paz y la seguridad interior y exterior. Es único e indivisible, esencialmente profesional, apolítico, obediente y no deliberante. Su subordinación al poder civil es un principio constitucional fundamental post-1985."
+      }
+    ]
+  },
+
+  // ── FASE 3: Derecho Procesal ampliado ────────────────────────────────────────
+  {
+    id: "derecho-procesal-ampliado",
+    tema: "Derecho Procesal — Prueba, Recursos y Procesos Especiales",
+    descripcion: "Medios de prueba, juicio ejecutivo, proceso oral, recursos extraordinarios, nulidades y procedimiento abreviado penal en Guatemala.",
+    icono: "ClipboardList",
+    categoria: "Procesal",
+    totalPreguntas: 15,
+    preguntas: [
+      {
+        id: 1,
+        pregunta: "¿Cuáles son los medios de prueba admitidos en el proceso civil guatemalteco?",
+        opciones: {
+          A: "Declaración de las partes, declaración de testigos, dictamen de expertos, reconocimiento judicial, documentos, medios científicos y presunciones.",
+          B: "Solo la prueba documental y la declaración testimonial, sin admitir medios tecnológicos.",
+          C: "Únicamente prueba documental notarial y dictamen pericial de instituciones estatales."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 128 del CPCYM enumera los medios de prueba: declaración de las partes (confesión), declaración de testigos, dictamen de expertos, reconocimiento judicial, documentos, medios científicos de reproducción (audio, video, etc.) y presunciones. El juez valora la prueba conforme a las reglas de la sana crítica razonada, salvo que la ley señale una valoración tasada (como en la prueba documental pública)."
+      },
+      {
+        id: 2,
+        pregunta: "¿Qué es el juicio ejecutivo en el proceso civil guatemalteco?",
+        opciones: {
+          A: "El proceso de ejecución forzada que se promueve con base en un título ejecutivo que trae aparejada ejecución, para el cobro de obligaciones líquidas y exigibles.",
+          B: "El procedimiento penal especial para juzgar delitos económicos de forma expedita.",
+          C: "El juicio que se tramita exclusivamente ante los juzgados de ejecución del Organismo Judicial."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El juicio ejecutivo (artículos 294-320 del CPCYM) permite ejecutar créditos documentados en títulos que la ley reconoce como ejecutivos: sentencias firmes, confesión judicial, documentos suscritos ante notario, cheques y pagarés, entre otros. El deudor puede oponerse únicamente mediante excepciones tasadas en la ley. Si no se opone o no prospera su excepción, se procede al remate de bienes."
+      },
+      {
+        id: 3,
+        pregunta: "¿Qué es el recurso de casación en el proceso civil guatemalteco?",
+        opciones: {
+          A: "El recurso extraordinario que se interpone ante la Corte Suprema de Justicia contra sentencias de segunda instancia, por motivos de fondo (infracción de ley) o de forma (vicios procesales graves).",
+          B: "El recurso ordinario que sustituye a la apelación cuando el asunto supera cierto valor económico.",
+          C: "El recurso que solo puede interponerse contra sentencias penales condenatorias de larga duración."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La casación civil (artículos 619-632 del CPCYM) es un recurso extraordinario: solo procede por motivos taxativos. La casación de fondo ataca la correcta aplicación del derecho sustantivo a los hechos; la casación de forma impugna vicios procesales graves. Se interpone ante la Sala de Apelaciones dentro de 15 días y conoce la Cámara Civil de la CSJ. Su función es unificar la jurisprudencia nacional."
+      },
+      {
+        id: 4,
+        pregunta: "¿En qué consiste el procedimiento abreviado en el proceso penal guatemalteco?",
+        opciones: {
+          A: "Un proceso simplificado para delitos con pena máxima de 5 años o menos, donde el Ministerio Público puede solicitar al juez de primera instancia dictar sentencia sin debate oral.",
+          B: "El proceso penal de flagrancia que se tramita en 24 horas ante el juez de turno.",
+          C: "Un procedimiento especial exclusivo para menores de edad en conflicto con la ley penal."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El procedimiento abreviado (artículos 464-466 del CPP) procede cuando: (1) el Ministerio Público estima suficiente la imposición de pena no mayor de 5 años de prisión, (2) el imputado admite el hecho atribuido y (3) el defensor lo consiente. El juez de primera instancia dicta sentencia condenatoria o absolutoria en audiencia, sin necesidad de debate oral ante tribunal de sentencia. Reduce significativamente la carga del sistema."
+      },
+      {
+        id: 5,
+        pregunta: "¿Qué son las medidas sustitutivas a la prisión preventiva en el proceso penal guatemalteco?",
+        opciones: {
+          A: "Alternativas menos gravosas que la prisión preventiva, como arresto domiciliar, caución económica, presentación periódica ante el tribunal, entre otras.",
+          B: "Las sanciones que el juez impone al condenado en lugar de la pena de prisión.",
+          C: "Los acuerdos de reparación entre víctima e imputado que evitan la pena privativa de libertad."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 264 del CPP establece medidas sustitutivas a la prisión preventiva para cuando esta sea desproporcionada. El juez puede imponer una o varias: arresto domiciliar (con o sin monitoreo electrónico), obligación de presentarse periódicamente, prohibición de salir del país, caución económica, prohibición de acercarse a la víctima, entre otras. El objetivo es garantizar la comparecencia del imputado sin privarlo innecesariamente de su libertad."
+      },
+      {
+        id: 6,
+        pregunta: "¿Qué es la nulidad procesal en el Derecho guatemalteco y cuándo procede?",
+        opciones: {
+          A: "La ineficacia de los actos procesales que no reúnen los requisitos legales esenciales o que se realizan con violación de derechos fundamentales de las partes.",
+          B: "La anulación automática de toda sentencia cuando el proceso duró más de dos años.",
+          C: "El recurso que solo puede interponer el Ministerio Público contra resoluciones que absuelven al sindicado."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La nulidad procesal (artículo 613 del CPCYM y artículo 281 del CPP en materia penal) sanciona actos realizados sin cumplir formalidades esenciales o con violación al derecho de audiencia. Principio de convalidación: si la parte afectada no reclama oportunamente la nulidad, la convalida. El recurso de nulidad civil se interpone ante el tribunal que dictó la resolución dentro de los 2 días de su notificación."
+      },
+      {
+        id: 7,
+        pregunta: "¿Cuáles son los principios del proceso oral civil guatemalteco?",
+        opciones: {
+          A: "Oralidad, inmediación (el juez dirige y presencia directamente), concentración (en pocas audiencias) y publicidad.",
+          B: "Escritura, mediación y secreto procesal para proteger a las partes.",
+          C: "Solo oralidad y publicidad; la inmediación no es obligatoria en primera instancia."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El juicio oral civil (artículos 199-228 del CPCYM) se rige por: oralidad (las actuaciones son verbales en audiencia), inmediación (el juez que recibe la prueba debe dictar la sentencia), concentración (la prueba y los alegatos se realizan en la misma audiencia) y publicidad (cualquier persona puede presenciar las audiencias). Aplica para: alimentos, rendición de cuentas, jactancia, interdictos y asuntos de menor cuantía."
+      },
+      {
+        id: 8,
+        pregunta: "¿Qué es la excepción de prescripción en el proceso civil guatemalteco?",
+        opciones: {
+          A: "Una excepción perentoria que extingue la acción cuando ha transcurrido el plazo legal sin ejercitarla, destruyendo el derecho mismo.",
+          B: "Una excepción dilatoria que solo suspende temporalmente el proceso hasta que el demandante acredite que su acción no ha prescrito.",
+          C: "Un recurso que puede interponer el demandado en segunda instancia para que se declare la caducidad del proceso."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La prescripción extintiva (regulada en el Código Civil, artículos 1501-1515) es una excepción perentoria que, cuando prospera, destruye el derecho del actor por el transcurso del tiempo. El plazo general en materia civil es de diez años; existen plazos especiales menores. Se diferencia de la caducidad (que extingue el derecho de forma automática) y de las excepciones dilatorias (que solo demoran el proceso sin atacar el fondo)."
+      },
+      {
+        id: 9,
+        pregunta: "¿Qué es el proceso arbitral y en qué ley se regula en Guatemala?",
+        opciones: {
+          A: "Un mecanismo alternativo de solución de controversias donde las partes someten su disputa a árbitros; se regula en la Ley de Arbitraje, Decreto 67-95.",
+          B: "Un proceso judicial especial para resolver conflictos entre el Estado y empresas extranjeras, únicamente.",
+          C: "El procedimiento administrativo interno que resuelve conflictos entre instituciones del Gobierno Central."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La Ley de Arbitraje (Decreto 67-95) regula el arbitraje nacional e internacional en Guatemala, basada en la Ley Modelo UNCITRAL. Las partes pueden someter sus controversias a árbitros en lugar de tribunales judiciales mediante cláusula o compromiso arbitral. El laudo arbitral tiene la misma fuerza ejecutiva que una sentencia judicial y puede reconocerse en el extranjero. El arbitraje está prohibido en asuntos penales, de familia y los no disponibles por las partes."
+      },
+      {
+        id: 10,
+        pregunta: "¿Qué es el juicio sumario en el proceso civil guatemalteco y para qué materias aplica?",
+        opciones: {
+          A: "Un proceso simplificado de trámite breve para: asuntos de arrendamiento, responsabilidad civil de funcionarios, jactancia y deudas líquidas y exigibles.",
+          B: "El proceso exclusivo para asuntos penales de menor gravedad tramitados ante juzgados de paz.",
+          C: "Un procedimiento solo para demandas contra el Estado guatemalteco."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El juicio sumario (artículos 229-250 del CPCYM) es más rápido que el ordinario: el demandado tiene 5 días para contestar (vs. 9 en el ordinario). Aplica para: entrega de cosa mueble determinada, rescisión de contratos, deudas provenientes de documentos mercantiles, responsabilidad civil de funcionarios, asuntos de arrendamiento, y otros que la ley indique. Se distingue del ejecutivo en que sí hay etapa probatoria plena."
+      },
+      {
+        id: 11,
+        pregunta: "¿Cuál es el plazo para interponer el recurso de apelación en materia penal guatemalteca?",
+        opciones: {
+          A: "Tres días hábiles contados a partir de la última notificación.",
+          B: "Diez días hábiles desde la notificación de la resolución.",
+          C: "Quince días calendario a partir de la audiencia en que se dictó la resolución."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 404 del CPP establece que el recurso de apelación en materia penal debe interponerse dentro del plazo de tres días hábiles siguientes a la última notificación. A diferencia del proceso civil, en materia penal los plazos son más cortos para garantizar la celeridad del proceso y el pronto esclarecimiento de los hechos. El recurso se interpone ante el tribunal que dictó la resolución."
+      },
+      {
+        id: 12,
+        pregunta: "¿Qué es la conciliación en el proceso civil guatemalteco?",
+        opciones: {
+          A: "Un intento de acuerdo que el juez promueve entre las partes antes de entrar a conocer el fondo del asunto, cuyo resultado aprobado equivale a sentencia ejecutoriada.",
+          B: "Un proceso alternativo que reemplaza al juicio ordinario en todos los asuntos civiles de menor cuantía.",
+          C: "La mediación prejudicial obligatoria ante el RENAP antes de poder presentar cualquier demanda civil."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 97 del CPCYM obliga al juez a intentar la conciliación de las partes en la primera audiencia del juicio oral y puede proponerla en cualquier estado del proceso ordinario. Si las partes llegan a un acuerdo y el juez lo aprueba, el acta de conciliación tiene el valor de sentencia firme y es directamente ejecutable. La conciliación exitosa ahorra tiempo, costos y desgaste emocional a las partes."
+      },
+      {
+        id: 13,
+        pregunta: "¿Qué es el incidente en el proceso judicial guatemalteco?",
+        opciones: {
+          A: "Una cuestión accesoria que surge dentro del proceso principal y que tiene relación directa con él, resuelta por el mismo juez que conoce el asunto.",
+          B: "Un proceso autónomo e independiente que no guarda relación con ningún juicio en trámite.",
+          C: "El recurso que se interpone contra resoluciones interlocutorias en el proceso penal."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El incidente (Ley del Organismo Judicial, artículos 135-141) es una cuestión accesoria planteada durante el proceso que el juez debe resolver antes de continuar o al dictar sentencia. Puede ser de previo y especial pronunciamiento (se resuelve antes de seguir adelante) o para resolver con la sentencia principal. Ejemplos: incidentes sobre nulidades, competencia, acumulación de procesos o intervención de terceros."
+      },
+      {
+        id: 14,
+        pregunta: "¿Qué rige el principio de contradicción en el proceso guatemalteco?",
+        opciones: {
+          A: "Que toda prueba o argumento presentado por una parte debe ser comunicado a la contraria, dándole oportunidad de controvertirlo antes de que el juez lo considere.",
+          B: "Que el juez puede decretar prueba de oficio cuando considere que los alegatos de las partes son contradictorios entre sí.",
+          C: "Que las partes deben presentar argumentos opuestos obligatoriamente para que el proceso sea válido."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El principio de contradicción (audiencia bilateral) garantiza que ninguna prueba o acto procesal surta efecto sin que la parte contraria haya tenido la oportunidad de conocerlo y cuestionarlo. Es un corolario del derecho de defensa (artículo 12 CPRG): nadie puede ser condenado sin haber sido oído. Su violación puede generar nulidad del acto procesal y, en materia penal, configura violación al debido proceso."
+      },
+      {
+        id: 15,
+        pregunta: "¿Qué es el recurso de revisión en el proceso penal guatemalteco?",
+        opciones: {
+          A: "El recurso extraordinario que puede interponerse en cualquier tiempo para revisar una sentencia condenatoria firme, cuando aparecen hechos o pruebas nuevas que demuestran la inocencia del condenado.",
+          B: "El recurso ordinario que sustituye a la apelación en los procesos penales de mayor gravedad.",
+          C: "La facultad del MP de solicitar al juez que revise y corrija errores aritméticos en la sentencia condenatoria."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El recurso de revisión (artículos 453-462 del CPP) es el único medio que permite cuestionar una sentencia penal firme. Procede cuando: aparecen nuevos hechos o pruebas que el condenado no pudo presentar, se prueba que la sentencia se basó en prueba falsa, se declara falso el testimonio que sirvió de base, o cuando procede aplicar retroactivamente una ley penal más favorable. Lo conoce la CSJ y puede resultar en absolución o nuevo juicio."
+      }
+    ]
+  },
+
   // ── SESIÓN 1: INTRODUCCIÓN AL DERECHO LABORAL ────────────────────────────
   {
     id: "sesion-uno-derecho-laboral",
