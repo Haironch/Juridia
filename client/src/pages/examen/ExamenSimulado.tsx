@@ -14,6 +14,7 @@ interface ExamenPregunta {
   enunciado: string;
   opciones: string[];       // arreglo ordenado de textos
   correctaIdx: number;      // índice 0-based dentro del arreglo
+  explicacion: string;
 }
 
 interface Nivel {
@@ -97,6 +98,7 @@ function buildPool(categoriasSeleccionadas: string[]): ExamenPregunta[] {
         enunciado: p.pregunta,
         opciones: textos,
         correctaIdx,
+        explicacion: (p as any).explicacion ?? '',
       });
     }
   }
@@ -559,8 +561,9 @@ export default function ExamenSimulado() {
               const resp = respuestas[i];
               const acierto = resp === p.correctaIdx;
               return (
-                <div key={i} className="px-5 py-4">
-                  <div className="flex items-start gap-2 mb-2">
+                <div key={i} className="px-5 py-5">
+                  {/* Pregunta + ícono */}
+                  <div className="flex items-start gap-2 mb-3">
                     <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
                       acierto ? 'bg-emerald-500' : 'bg-red-400'
                     }`}>
@@ -568,16 +571,36 @@ export default function ExamenSimulado() {
                         ? <Check className="h-3 w-3 text-white" />
                         : <X className="h-3 w-3 text-white" />}
                     </div>
-                    <p className="text-sm text-[#13293d] font-medium leading-snug">{p.enunciado}</p>
+                    <p className="text-sm text-[#13293d] font-semibold leading-snug">{p.enunciado}</p>
                   </div>
-                  {!acierto && resp !== null && (
-                    <p className="text-xs text-red-600 ml-7 mb-1">
-                      Tu respuesta: {p.opciones[resp]}
-                    </p>
+
+                  {/* Respuestas */}
+                  <div className="ml-7 space-y-1 mb-3">
+                    {!acierto && resp !== null && (
+                      <div className="flex items-start gap-1.5">
+                        <X className="h-3.5 w-3.5 text-red-500 flex-shrink-0 mt-0.5" />
+                        <p className="text-xs text-red-600">
+                          <span className="font-medium">Tu respuesta:</span> {p.opciones[resp]}
+                        </p>
+                      </div>
+                    )}
+                    <div className="flex items-start gap-1.5">
+                      <Check className="h-3.5 w-3.5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                      <p className="text-xs text-emerald-700">
+                        <span className="font-medium">Correcta:</span> {p.opciones[p.correctaIdx]}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Explicación */}
+                  {p.explicacion && (
+                    <div className="ml-7 bg-[#f0f7ff] border border-[#d8e9f5] rounded-xl px-4 py-3">
+                      <p className="text-xs font-bold text-[#2a628f] uppercase tracking-wide mb-1">
+                        ¿Por qué?
+                      </p>
+                      <p className="text-xs text-[#16324f] leading-relaxed">{p.explicacion}</p>
+                    </div>
                   )}
-                  <p className="text-xs text-emerald-700 ml-7">
-                    Correcta: {p.opciones[p.correctaIdx]}
-                  </p>
                 </div>
               );
             })}
