@@ -22,6 +22,7 @@ interface CursoData {
   nivel: string;
   duracion: string;
   es_premium: number;
+  proximamente: number;
   categoria: string;
   categoriaIcono: string;
   modulos: Modulo[];
@@ -98,6 +99,32 @@ export default function CursoDetalle() {
   });
 
   if (isLoading) return <SkeletonDetalle />;
+
+  if (!isError && curso?.proximamente) {
+    return (
+      <div className="min-h-screen bg-[#d8e9f5] flex flex-col items-center justify-center px-4">
+        <div className="bg-white rounded-3xl border border-[#9ac1e2] shadow-xl p-10 max-w-md w-full text-center">
+          <div className="w-20 h-20 rounded-full bg-[#13293d] flex items-center justify-center mx-auto mb-6">
+            <Lock className="h-9 w-9 text-[#d8e9f5]" />
+          </div>
+          <span className="inline-block bg-[#13293d] text-white text-xs font-bold px-3 py-1 rounded-full mb-4 tracking-widest uppercase">
+            Próximamente
+          </span>
+          <h2 className="text-2xl font-bold text-[#13293d] mb-3">{curso.titulo}</h2>
+          <p className="text-[#16324f] text-sm leading-relaxed mb-8">
+            Este curso está en construcción. Estamos trabajando para traerte contenido de calidad muy pronto.
+          </p>
+          <Link
+            to="/cursos"
+            className="inline-flex items-center gap-2 bg-[#2a628f] text-white font-semibold px-6 py-3 rounded-xl hover:bg-[#18435a] transition-colors"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Ver cursos disponibles
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   if (isError || !curso) {
     return (

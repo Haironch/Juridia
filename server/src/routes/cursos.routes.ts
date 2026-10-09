@@ -20,7 +20,7 @@ router.get("/", async (_req: Request, res: Response) => {
     const result = await db.execute(`
       SELECT
         c.id, c.titulo, c.descripcion, c.nivel, c.duracion,
-        c.es_premium, c.thumbnail, c.createdAt,
+        c.es_premium, c.thumbnail, c.createdAt, c.proximamente,
         cat.nombre AS categoria, cat.icono AS categoriaIcono,
         COUNT(m.id) AS totalModulos
       FROM cursos c
@@ -53,7 +53,7 @@ router.get("/:id", async (req: Request, res: Response) => {
       sql: `
         SELECT
           c.id, c.titulo, c.descripcion, c.nivel, c.duracion,
-          c.es_premium, c.thumbnail, c.createdAt,
+          c.es_premium, c.thumbnail, c.createdAt, c.proximamente,
           cat.nombre AS categoria, cat.icono AS categoriaIcono
         FROM cursos c
         JOIN categorias_derecho cat ON c.categoria_id = cat.id

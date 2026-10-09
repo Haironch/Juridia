@@ -11,6 +11,7 @@ interface Curso {
   nivel: string;
   duracion: string;
   es_premium: number;
+  proximamente: number;
   categoria: string;
   categoriaIcono: string;
   totalModulos: number;
@@ -250,25 +251,38 @@ export default function Cursos() {
                   return (
                     <div
                       key={curso.id}
-                      className="bg-white rounded-2xl border border-[#9ac1e2] hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col overflow-hidden"
+                      className={`bg-white rounded-2xl border border-[#9ac1e2] flex flex-col overflow-hidden transition-all duration-300 ${
+                        curso.proximamente
+                          ? "opacity-75 cursor-not-allowed"
+                          : "hover:shadow-xl hover:-translate-y-1"
+                      }`}
                     >
                       {/* Card header con color por categoría */}
-                      <div className={`bg-gradient-to-br ${style.bg} px-5 py-5 flex items-start justify-between`}>
+                      <div className={`bg-gradient-to-br ${style.bg} px-5 py-5 flex items-start justify-between relative`}>
                         <div>
-                          <span className={`text-3xl leading-none`}>{curso.categoriaIcono}</span>
+                          <span className="text-3xl leading-none">{curso.categoriaIcono}</span>
                           <p className={`text-xs font-medium mt-2 ${style.text}`}>
                             {curso.categoria}
                           </p>
                         </div>
                         <div className="flex flex-col items-end gap-1.5">
-                          <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${getNivelBadge(curso.nivel)}`}>
-                            {curso.nivel}
-                          </span>
-                          {curso.es_premium === 1 && (
-                            <span className="flex items-center gap-1 text-xs font-semibold bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full">
+                          {curso.proximamente ? (
+                            <span className="flex items-center gap-1 text-xs font-bold bg-slate-800/80 text-white px-2.5 py-1 rounded-full backdrop-blur-sm">
                               <Lock className="h-3 w-3" />
-                              Premium
+                              Próximamente
                             </span>
+                          ) : (
+                            <>
+                              <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${getNivelBadge(curso.nivel)}`}>
+                                {curso.nivel}
+                              </span>
+                              {curso.es_premium === 1 && (
+                                <span className="flex items-center gap-1 text-xs font-semibold bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full">
+                                  <Lock className="h-3 w-3" />
+                                  Premium
+                                </span>
+                              )}
+                            </>
                           )}
                         </div>
                       </div>
@@ -297,13 +311,20 @@ export default function Cursos() {
                         </div>
 
                         {/* CTA */}
-                        <Link
-                          to={`/cursos/${curso.id}`}
-                          className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl font-semibold text-sm transition-colors bg-[#2a628f] text-white hover:bg-[#18435a]"
-                        >
-                          Ver curso
-                          <ChevronRight className="h-4 w-4" />
-                        </Link>
+                        {curso.proximamente ? (
+                          <div className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl font-semibold text-sm bg-slate-100 text-slate-400 select-none">
+                            <Lock className="h-4 w-4" />
+                            En construcción
+                          </div>
+                        ) : (
+                          <Link
+                            to={`/cursos/${curso.id}`}
+                            className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl font-semibold text-sm transition-colors bg-[#2a628f] text-white hover:bg-[#18435a]"
+                          >
+                            Ver curso
+                            <ChevronRight className="h-4 w-4" />
+                          </Link>
+                        )}
                       </div>
                     </div>
                   );
