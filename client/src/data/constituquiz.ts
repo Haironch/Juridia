@@ -746,6 +746,415 @@ export const quizTemas: QuizTema[] = [
     ]
   },
 
+  // ── FASE 2: Derecho Administrativo ampliado ──────────────────────────────────
+  {
+    id: "derecho-administrativo-ampliado",
+    tema: "Derecho Administrativo — Contratos, Servicio Civil y Entes del Estado",
+    descripcion: "Contratación pública (Guatecompras), servicio civil, Contraloría, Procuraduría y organización de la administración pública guatemalteca.",
+    icono: "Landmark",
+    categoria: "Administrativo",
+    totalPreguntas: 20,
+    preguntas: [
+      {
+        id: 1,
+        pregunta: "¿Qué es Guatecompras y cuál es su base legal?",
+        opciones: {
+          A: "El sistema electrónico de contrataciones y adquisiciones del Estado guatemalteco, regulado por la Ley de Contrataciones del Estado (Decreto 57-92).",
+          B: "Un banco estatal que financia los proyectos de infraestructura del Gobierno Central.",
+          C: "El registro electrónico de proveedores privados habilitados para exportar a Guatemala."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Guatecompras es el portal electrónico de transparencia en compras y contrataciones del sector público, administrado por el Ministerio de Finanzas. Se basa en la Ley de Contrataciones del Estado (Decreto 57-92) y permite que cualquier ciudadano consulte las compras del Estado. Su fin es garantizar transparencia, competencia y eficiencia en el uso de los fondos públicos."
+      },
+      {
+        id: 2,
+        pregunta: "¿Cuándo procede la licitación pública en la contratación estatal guatemalteca?",
+        opciones: {
+          A: "Cuando el monto del contrato supera el límite establecido por la Ley de Contrataciones, actualmente fijado en Q900,000.00.",
+          B: "Solo para obras de infraestructura que afecten a más de tres municipios.",
+          C: "En todos los contratos del Estado, sin importar el monto o naturaleza."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La Ley de Contrataciones del Estado (Decreto 57-92) y sus reformas establecen umbrales para los distintos procedimientos. La licitación pública aplica cuando el monto supera el límite legal vigente (Q900,000). Por debajo de ese umbral pueden usarse: cotización (Q90,001 a Q900,000) o compra directa (hasta Q90,000). Los montos exactos pueden actualizarse por acuerdos gubernativos."
+      },
+      {
+        id: 3,
+        pregunta: "¿Qué es el servicio civil en Guatemala y qué ley lo regula?",
+        opciones: {
+          A: "El régimen jurídico que regula el ingreso, permanencia y egreso de los trabajadores del Estado, regulado por la Ley de Servicio Civil (Decreto 1748).",
+          B: "El sistema de seguridad social de los empleados públicos administrado por el IGSS.",
+          C: "El régimen disciplinario aplicable exclusivamente a los miembros del Ejército de Guatemala."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La Ley de Servicio Civil (Decreto 1748) y su reglamento establecen el sistema de méritos para el empleo público. Regula: concursos de oposición para ingreso, clasificación de puestos, evaluación del desempeño, régimen disciplinario, traslados, ascensos y cesantías. La ONSEC (Oficina Nacional de Servicio Civil) es el ente rector. No todos los servidores públicos están bajo este régimen (algunos tienen leyes especiales)."
+      },
+      {
+        id: 4,
+        pregunta: "¿Qué función cumple la Procuraduría General de la Nación (PGN)?",
+        opciones: {
+          A: "Asesorar y representar legalmente al Estado de Guatemala en juicios y negocios jurídicos, y velar por los intereses del Estado.",
+          B: "Investigar y perseguir penalmente los delitos cometidos por funcionarios públicos.",
+          C: "Fiscalizar el uso de los fondos públicos y auditar las cuentas del Estado."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 252 de la CPRG establece que la PGN es la institución encargada de asesorar y representar al Estado en los asuntos jurídicos. El Procurador General es el mandatario legal del Estado. Sus funciones incluyen defender al Estado en juicios, emitir dictámenes jurídicos, representar al Estado en contratos y ser tutor de menores huérfanos o en abandono. No tiene funciones de persecución penal (eso corresponde al MP)."
+      },
+      {
+        id: 5,
+        pregunta: "¿Qué es la descentralización administrativa en Guatemala?",
+        opciones: {
+          A: "La transferencia de competencias, funciones, recursos y poder de decisión del Gobierno Central a los municipios y entidades autónomas.",
+          B: "La privatización de los servicios públicos previamente prestados por el Estado.",
+          C: "La división del territorio nacional en regiones administrativas sin transferencia de poder."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La Ley General de Descentralización (Decreto 14-2002) define la descentralización como el proceso por el cual el Ejecutivo transfiere a las municipalidades y entidades autónomas o descentralizadas atribuciones, funciones, recursos y poder de decisión. Su fin es acercar la administración pública al ciudadano. Se diferencia de la desconcentración (delegación dentro de la misma entidad sin transferencia de competencia)."
+      },
+      {
+        id: 6,
+        pregunta: "¿Qué es un acto administrativo y cuáles son sus elementos esenciales?",
+        opciones: {
+          A: "La declaración unilateral de voluntad de la administración pública que produce efectos jurídicos; sus elementos son: competencia, objeto, fin, forma y motivación.",
+          B: "Cualquier actuación de un funcionario público, incluyendo las puramente materiales como barrer una calle.",
+          C: "Solo las resoluciones dictadas por el Presidente de la República en Consejo de Ministros."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El acto administrativo es la manifestación de voluntad del Estado que crea, modifica o extingue situaciones jurídicas. Sus elementos esenciales son: competencia (el órgano debe estar facultado por ley), objeto lícito y posible, fin público, forma legal y motivación suficiente. La ausencia de cualquier elemento puede generar nulidad absoluta o relativa del acto."
+      },
+      {
+        id: 7,
+        pregunta: "¿Qué es el silencio administrativo positivo en el Derecho guatemalteco?",
+        opciones: {
+          A: "La presunción legal de que la administración ha aprobado una solicitud cuando no la resuelve dentro del plazo legal establecido.",
+          B: "La obligación de la administración de motivar siempre sus resoluciones desfavorables.",
+          C: "El derecho del administrado a no ser notificado cuando la resolución le es favorable."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El silencio administrativo positivo (artículo 28 de la CPRG y Ley de lo Contencioso Administrativo) opera cuando la administración no resuelve en el plazo legal: se presume aprobada la solicitud. El plazo general es de 30 días hábiles. En contraste, el silencio negativo (denegatorio ficto) opera en ciertos procedimientos y permite al interesado acudir a la vía contenciosa."
+      },
+      {
+        id: 8,
+        pregunta: "¿Cuál es la función del Organismo Ejecutivo en la organización administrativa de Guatemala?",
+        opciones: {
+          A: "Ejercer la dirección general del Estado, ejecutar las leyes, dirigir la política exterior y administrar los servicios públicos a través de los Ministerios de Estado.",
+          B: "Crear leyes, fiscalizar al gobierno y aprobar el presupuesto nacional.",
+          C: "Impartir justicia y controlar la constitucionalidad de las leyes."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El Organismo Ejecutivo (artículos 182-222 de la CPRG) está encabezado por el Presidente, secundado por el Vicepresidente y los Ministros de Estado. Ejecuta y hace cumplir las leyes, dirige la política general del Estado, conduce las relaciones exteriores y administra los recursos del Estado a través de los ministerios, secretarías y entidades descentralizadas."
+      },
+      {
+        id: 9,
+        pregunta: "¿Qué son las entidades autónomas del Estado guatemalteco?",
+        opciones: {
+          A: "Organismos estatales con personalidad jurídica propia, patrimonio propio y capacidad para administrarse, creadas por ley para prestar servicios especializados.",
+          B: "Organizaciones no gubernamentales que reciben financiamiento estatal para proyectos sociales.",
+          C: "Empresas privadas que operan bajo concesión estatal en servicios públicos esenciales."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Las entidades autónomas (como el IGSS, USAC, Banco de Guatemala, municipalidades) tienen personería jurídica propia, su propio presupuesto y autonomía para gobernarse. La autonomía puede ser plena (USAC) o funcional. Están sujetas a la fiscalización de la Contraloría General de Cuentas y a la ley que las crea, pero no a la jerarquía del Ejecutivo en su gestión."
+      },
+      {
+        id: 10,
+        pregunta: "¿Qué es la nulidad de pleno derecho en los actos administrativos?",
+        opciones: {
+          A: "La invalidez absoluta del acto por ausencia de algún requisito esencial, que opera sin necesidad de declaración judicial y no puede ser subsanada.",
+          B: "La anulación de un acto administrativo que solo puede decretarla el Presidente de la República.",
+          C: "La suspensión temporal de los efectos de un acto mientras se resuelve el recurso administrativo."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La nulidad de pleno derecho (nulidad absoluta) opera cuando el acto carece de un elemento esencial o viola normas imperativas. No requiere declaración judicial para operar, aunque generalmente se declara formalmente. No puede convalidarse ni sanearse. Se diferencia de la anulabilidad (nulidad relativa), que puede subsanarse y solo produce efectos desde su declaración."
+      },
+      {
+        id: 11,
+        pregunta: "¿Qué regula la Ley de Acceso a la Información Pública (Decreto 57-2008)?",
+        opciones: {
+          A: "El derecho de toda persona a solicitar y recibir información de cualquier institución pública, con excepciones para información clasificada.",
+          B: "El régimen de secreto de Estado aplicable a las comunicaciones del Gobierno Central.",
+          C: "Los procedimientos para proteger datos personales de ciudadanos en poder de empresas privadas."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El Decreto 57-2008 consagra el derecho de acceso a la información pública como derecho fundamental. Obliga a todas las instituciones del Estado a divulgar información activamente y a responder solicitudes en 10 días hábiles (prorrogables por 10 más). La información clasificada incluye: datos de seguridad nacional, información comercial confidencial y datos personales sensibles. El incumplimiento genera responsabilidad administrativa y penal."
+      },
+      {
+        id: 12,
+        pregunta: "¿Qué es la expropiación forzosa en el Derecho Administrativo guatemalteco?",
+        opciones: {
+          A: "La privación coactiva de la propiedad privada por causa de utilidad colectiva, beneficio social o interés público, mediante indemnización previa y justa.",
+          B: "La confiscación de bienes de personas condenadas por delitos graves sin compensación alguna.",
+          C: "La transferencia voluntaria de bienes privados al Estado a cambio de exenciones fiscales."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 40 de la CPRG y la Ley de Expropiación (Decreto 529) regulan la expropiación. Requisitos: (1) causa de utilidad colectiva o necesidad pública, (2) declaración legal que así lo establezca, (3) indemnización previa y justa. La Constitución prohíbe la confiscación. El propietario puede impugnar el monto de la indemnización pero no puede oponerse a la expropiación una vez declarada la utilidad pública."
+      },
+      {
+        id: 13,
+        pregunta: "¿Quién es el órgano superior de la administración pública central en Guatemala?",
+        opciones: {
+          A: "El Presidente de la República, como Jefe del Organismo Ejecutivo.",
+          B: "El Congreso de la República, como representante de la soberanía popular.",
+          C: "La Corte Suprema de Justicia, en su calidad de máximo tribunal del país."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 182 de la CPRG establece que el Presidente de la República es el Jefe del Estado, Jefe del Organismo Ejecutivo y Comandante General del Ejército. Es la máxima autoridad de la administración pública central y ejerce el poder ejecutivo junto al Vicepresidente y los Ministros de Estado. Preside el Consejo de Ministros y es responsable de la política general de gobierno."
+      },
+      {
+        id: 14,
+        pregunta: "¿Qué es el Ministerio Público (MP) en el sistema guatemalteco?",
+        opciones: {
+          A: "Una institución auxiliar de la administración pública y del Organismo Judicial, con autonomía funcional, encargada de la persecución penal.",
+          B: "El ministerio encargado de la defensa jurídica del Estado guatemalteco en juicios.",
+          C: "El órgano administrativo que supervisa a todos los jueces y magistrados del país."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 251 de la CPRG y la Ley Orgánica del MP (Decreto 40-94) establecen que el MP es autónomo, no pertenece al Organismo Ejecutivo ni al Judicial. Le corresponde investigar los delitos y ejercer la acción penal pública. El Fiscal General es electo por el Presidente de una nómina de seis candidatos presentada por una comisión de postulación."
+      },
+      {
+        id: 15,
+        pregunta: "¿Cuál es el procedimiento para que un contrato administrativo sea válido en Guatemala?",
+        opciones: {
+          A: "Debe cumplir el procedimiento de la Ley de Contrataciones (licitación, cotización o compra directa según el monto), aprobarse por la autoridad competente y registrarse.",
+          B: "Basta con la firma de cualquier funcionario del ministerio contratante y publicación en el diario oficial.",
+          C: "Solo requiere la autorización del Presidente de la República, sin importar el monto."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La validez de los contratos administrativos (Ley de Contrataciones, Decreto 57-92) exige: (1) competencia del funcionario contratante, (2) disponibilidad presupuestaria, (3) procedimiento de selección adecuado al monto (licitación, cotización o compra directa), (4) aprobación por autoridad superior y (5) registro en el sistema Guatecompras. Los contratos incumplan estos requisitos pueden ser impugnados o declarados nulos."
+      },
+      {
+        id: 16,
+        pregunta: "¿Qué es la Defensoría del Pueblo (Procurador de los Derechos Humanos) en Guatemala?",
+        opciones: {
+          A: "Un comisionado del Congreso de la República, con independencia funcional, que defiende los derechos constitucionales de los ciudadanos ante abusos de la administración pública.",
+          B: "Un órgano del Organismo Judicial encargado de tramitar quejas contra jueces corruptos.",
+          C: "El representante legal del Estado ante la Corte Interamericana de Derechos Humanos."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 274 de la CPRG y la Ley de la Comisión de Derechos Humanos (Decreto 54-86) crean al Procurador de los Derechos Humanos como comisionado del Congreso. Su función es supervisar la administración pública, investigar denuncias de violaciones a derechos constitucionales, formular recomendaciones y promover el respeto de los derechos humanos. No tiene poder coercitivo pero emite censuras públicas de gran impacto."
+      },
+      {
+        id: 17,
+        pregunta: "¿Qué es la responsabilidad patrimonial del Estado en Guatemala?",
+        opciones: {
+          A: "La obligación del Estado de reparar los daños causados a los particulares por el funcionamiento anormal de los servicios públicos o por actos ilícitos de sus funcionarios.",
+          B: "La responsabilidad personal e ilimitada de los funcionarios públicos por todos los actos de gobierno.",
+          C: "La garantía del Estado de cubrir las deudas privadas de las empresas públicas en caso de quiebra."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 155 de la CPRG establece la responsabilidad del Estado: cuando un dignatario, funcionario o trabajador del Estado cause daño por su actuación en ejercicio del cargo, el Estado indemnizará al perjudicado. La acción para exigir la responsabilidad patrimonial del Estado se ejerce en el proceso contencioso-administrativo o en la vía civil según el caso."
+      },
+      {
+        id: 18,
+        pregunta: "¿Qué función tiene el Organismo Legislativo en relación con la administración pública?",
+        opciones: {
+          A: "Crear el marco legal que rige a la administración, aprobar el presupuesto del Estado y fiscalizar al Organismo Ejecutivo.",
+          B: "Administrar directamente los servicios públicos e instituciones del Estado.",
+          C: "Nombrar y remover a todos los funcionarios de los tres organismos del Estado."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El Congreso de la República (artículos 157-181 de la CPRG) tiene tres funciones principales respecto a la administración: legislar (crear las normas que la administración debe cumplir), aprobar el presupuesto general del Estado, y fiscalizar al Ejecutivo mediante interpelaciones a Ministros, comisiones de investigación y el control político del gasto público."
+      },
+      {
+        id: 19,
+        pregunta: "¿En qué consiste el recurso de amparo frente a actos administrativos?",
+        opciones: {
+          A: "En la acción constitucional que protege al ciudadano contra actos de la administración que amenacen, restrinjan o violen sus derechos constitucionales.",
+          B: "En el recurso jerárquico especial que se interpone ante el Presidente de la República contra actos ministeriales.",
+          C: "En la acción penal que puede iniciar el afectado contra el funcionario que dicta el acto lesivo."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El amparo (artículos 265-276 de la CPRG y Ley de Amparo, Exhibición Personal y de Constitucionalidad, Decreto 1-86) protege a toda persona contra amenazas, restricciones o violaciones a sus derechos constitucionales por actos de autoridad. Contra actos administrativos procede el amparo cuando se agotan los recursos administrativos ordinarios o cuando el acto es de efecto inmediato. El amparo no es sustituto de los recursos ordinarios."
+      },
+      {
+        id: 20,
+        pregunta: "¿Cuál es el plazo para interponer el recurso de revocatoria contra actos administrativos en Guatemala?",
+        opciones: {
+          A: "Tres días hábiles siguientes a la notificación de la resolución.",
+          B: "Diez días hábiles siguientes a la notificación.",
+          C: "Treinta días calendario a partir de la fecha del acto."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 7 de la Ley de lo Contencioso Administrativo (Decreto 119-96) establece que el recurso de revocatoria debe interponerse dentro de los tres días hábiles siguientes a la notificación de la resolución. La brevedad del plazo exige atención inmediata al notificarse una resolución desfavorable. El incumplimiento del plazo provoca la firmeza del acto y la imposibilidad de impugnarlo en vía administrativa."
+      }
+    ]
+  },
+
+  // ── FASE 2: Derecho Tributario ampliado ──────────────────────────────────────
+  {
+    id: "derecho-tributario-ampliado",
+    tema: "Derecho Tributario — Obligación Tributaria y Tributos Específicos",
+    descripcion: "Hecho generador, base imponible, IUSI, ISR regímenes, sanciones tributarias y derechos del contribuyente en Guatemala.",
+    icono: "Receipt",
+    categoria: "Tributario",
+    totalPreguntas: 15,
+    preguntas: [
+      {
+        id: 1,
+        pregunta: "¿Qué es el hecho generador de la obligación tributaria?",
+        opciones: {
+          A: "El presupuesto legal cuya realización origina el nacimiento de la obligación de pagar un tributo.",
+          B: "La resolución administrativa que ordena al contribuyente pagar determinado impuesto.",
+          C: "El embargo preventivo que practica la SAT sobre bienes del contribuyente moroso."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 31 del Código Tributario (Decreto 6-91) define el hecho generador como el presupuesto establecido en la ley, cuya realización origina el nacimiento de la obligación tributaria. Ejemplo: en el IVA, el hecho generador es la venta de bienes o prestación de servicios; en el ISR, es la obtención de rentas. Sin hecho generador no puede exigirse ningún tributo."
+      },
+      {
+        id: 2,
+        pregunta: "¿Qué es la base imponible en Derecho Tributario?",
+        opciones: {
+          A: "La magnitud dineraria o de otra naturaleza que cuantifica el hecho generador y sobre la cual se aplica el tipo o tarifa para calcular el tributo.",
+          B: "El monto mínimo de ingresos que un contribuyente debe declarar para quedar exento de tributos.",
+          C: "El valor máximo que la administración tributaria puede cobrar sin autorización judicial."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La base imponible es la medida del hecho generador sobre la que se aplica la tarifa o tipo impositivo. Ejemplo: en el IVA, la base imponible es el precio de venta del bien o servicio; en el ISR régimen de utilidades, es la renta neta (ingresos menos deducciones). De la base imponible multiplicada por la tasa se obtiene el impuesto a pagar."
+      },
+      {
+        id: 3,
+        pregunta: "¿Qué grava el Impuesto Único Sobre Inmuebles (IUSI) y quién lo administra?",
+        opciones: {
+          A: "La propiedad, posesión o usufructo de bienes inmuebles en Guatemala; lo administran y recaudan las municipalidades.",
+          B: "Las ganancias obtenidas por la venta de propiedades inmobiliarias; lo recauda la SAT.",
+          C: "Los contratos de arrendamiento de bienes inmuebles con valor superior a Q500,000."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El IUSI (Ley del IUSI, Decreto 15-98) grava la propiedad, posesión y usufructo de bienes inmuebles situados en Guatemala. Las tasas son del 2‰ (inmuebles con valor hasta Q2,000) al 9‰ para los de mayor valor. Los municipios recaudan el IUSI y retienen un porcentaje para su financiamiento; el resto se distribuye a los Consejos de Desarrollo. El catastro y actualización de valores es responsabilidad del RIC y municipalidades."
+      },
+      {
+        id: 4,
+        pregunta: "¿Cuáles son los dos regímenes del ISR para actividades lucrativas en Guatemala?",
+        opciones: {
+          A: "Régimen sobre las utilidades de actividades lucrativas (25% sobre renta neta) y Régimen simplificado opcional (5% y 7% sobre ingresos brutos).",
+          B: "Régimen general (15% sobre ingresos) y Régimen especial (30% sobre ingresos de empresas extranjeras).",
+          C: "Régimen de retención en la fuente (10%) y Régimen de declaración anual (20%)."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La Ley de Actualización Tributaria (Decreto 10-2012) establece dos regímenes para actividades lucrativas: (1) Sobre utilidades: tasa del 25% sobre la renta neta (ingresos menos gastos deducibles), con declaración trimestral de pagos. (2) Simplificado opcional: 5% sobre ingresos de hasta Q30,000 mensuales y 7% sobre el excedente; sin necesidad de llevar contabilidad detallada. El contribuyente elige y puede cambiar de régimen una vez por año."
+      },
+      {
+        id: 5,
+        pregunta: "¿Qué es la prescripción tributaria en Guatemala y cuál es su plazo general?",
+        opciones: {
+          A: "La extinción del derecho de la SAT a exigir el pago de tributos no pagados, cuyo plazo general es de 4 años.",
+          B: "La anulación automática de multas tributarias cuando han transcurrido 2 años sin cobro.",
+          C: "El plazo de 10 años tras el cual la SAT no puede iniciar auditorías fiscales."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 47 del Código Tributario establece que el derecho de la administración tributaria para determinar obligaciones, cobrar tributos, intereses y sanciones prescribe en 4 años. El plazo se extiende a 8 años cuando el contribuyente no está registrado, no presenta declaraciones o utiliza facturas falsas. La prescripción se interrumpe por notificación de ajustes, demandas de cobro o reconocimiento de deuda."
+      },
+      {
+        id: 6,
+        pregunta: "¿Qué es una consulta tributaria y quién puede formularla?",
+        opciones: {
+          A: "El derecho del contribuyente a preguntar a la SAT sobre el régimen tributario aplicable a situaciones concretas futuras, obteniendo respuesta vinculante.",
+          B: "La facultad de la SAT de solicitar a los contribuyentes información sobre sus operaciones comerciales.",
+          C: "El procedimiento interno de la SAT para verificar la correcta aplicación de las leyes tributarias."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 102 del Código Tributario reconoce el derecho del contribuyente a formular consultas escritas sobre la aplicación de normas tributarias a situaciones concretas. La SAT debe responder en 30 días. La respuesta es vinculante para la SAT respecto a la situación consultada, lo que da seguridad jurídica al contribuyente que actúa conforme a la respuesta obtenida."
+      },
+      {
+        id: 7,
+        pregunta: "¿Qué es el principio de capacidad contributiva en materia tributaria?",
+        opciones: {
+          A: "El principio según el cual cada persona debe contribuir al sostenimiento del Estado en proporción a su capacidad económica real.",
+          B: "La obligación del Estado de cobrar los mismos impuestos a todos los ciudadanos por igual.",
+          C: "El derecho del contribuyente a negociar el monto de sus impuestos con la administración tributaria."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La capacidad contributiva (artículo 243 de la CPRG) es un principio constitucional tributario: el sistema debe ser justo y equitativo, y cada contribuyente tributa según su riqueza. Implica que los impuestos progresivos (como el ISR escalonado) son constitucionalmente válidos porque exigen más a quien más tiene. Prohíbe que los tributos sean confiscatorios o representen una carga desproporcionada."
+      },
+      {
+        id: 8,
+        pregunta: "¿Qué obligaciones formales tiene un contribuyente del IVA en Guatemala?",
+        opciones: {
+          A: "Inscribirse en el registro tributario, emitir facturas por cada venta o servicio, llevar libros contables habilitados y presentar declaraciones mensuales ante la SAT.",
+          B: "Solo presentar una declaración anual consolidada con el resumen de todas sus ventas del año.",
+          C: "Contratar a un auditor externo que certifique sus estados financieros ante la SAT trimestralmente."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Los contribuyentes del IVA deben: (1) inscribirse en el RTU de la SAT, (2) emitir facturas o documentos equivalentes autorizados por cada operación, (3) llevar los libros contables y de ventas/compras habilitados por la SAT, (4) presentar declaración mensual (formulario SAT-2046) pagando la diferencia entre IVA débito (cobrado en ventas) e IVA crédito (pagado en compras)."
+      },
+      {
+        id: 9,
+        pregunta: "¿Qué es el ajuste tributario y cómo puede impugnarse?",
+        opciones: {
+          A: "La determinación de diferencias entre lo declarado por el contribuyente y lo establecido por la SAT en auditoría; se impugna mediante recurso de revocatoria o recurso de revisión.",
+          B: "La rectificación voluntaria que hace el contribuyente de sus propias declaraciones antes de ser auditado.",
+          C: "La corrección automática que aplica la SAT a los errores aritméticos en las declaraciones."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El ajuste tributario es la diferencia que la SAT determina en auditoría entre el impuesto declarado y el que debió pagarse. Ante un ajuste, el contribuyente puede: (1) aceptarlo y pagar con reducción de sanción, (2) impugnarlo mediante recurso de revocatoria ante la SAT (30 días), (3) si se confirma, interponer recurso de revisión ante el Ministerio de Finanzas, y (4) acudir al contencioso-administrativo."
+      },
+      {
+        id: 10,
+        pregunta: "¿Qué es el Impuesto de Solidaridad (ISO) en Guatemala?",
+        opciones: {
+          A: "Un impuesto trimestral sobre los activos netos o los ingresos brutos de las empresas (el mayor), con tasa del 1%, acreditable al ISR.",
+          B: "Un tributo de emergencia que se aplica solo en períodos de crisis económica nacional.",
+          C: "El impuesto que pagan los empleados por encima de cierto nivel de ingresos para financiar el seguro social."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El ISO (Decreto 73-2008) es un impuesto que aplica a los contribuyentes del ISR del régimen de utilidades. Se paga trimestralmente sobre el mayor entre: (a) el 1% del total de activos netos del período anterior y (b) el 1% de los ingresos brutos del trimestre. El ISO pagado es acreditable contra el ISR anual, por lo que si el contribuyente paga suficiente ISR, el ISO no representa un costo adicional."
+      },
+      {
+        id: 11,
+        pregunta: "¿Cuáles son los derechos fundamentales del contribuyente ante la SAT?",
+        opciones: {
+          A: "Ser informado de sus obligaciones, ser tratado con respeto, solicitar consultas vinculantes, acceder al expediente, obtener devolución de créditos fiscales y ser notificado de ajustes con plazo para defenderse.",
+          B: "Solo el derecho a pagar en cuotas y a solicitar prórroga para presentar declaraciones.",
+          C: "Únicamente el derecho a apelar ante tribunales cuando ya se haya agotado toda la vía administrativa."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El Código Tributario (artículo 102) reconoce múltiples derechos al contribuyente: ser informado, obtener copias de su expediente, formular consultas vinculantes, ser notificado de ajustes antes de su firme aplicación, corregir errores sin sanción si es antes de ser citado, solicitar devoluciones de crédito fiscal, recurrir las resoluciones y obtener información sobre el estado de sus trámites."
+      },
+      {
+        id: 12,
+        pregunta: "¿Qué es la retención en la fuente del ISR en las relaciones laborales?",
+        opciones: {
+          A: "La obligación del empleador de deducir mensualmente del salario del trabajador el ISR correspondiente y enterarlo a la SAT.",
+          B: "La facultad del trabajador de retener parte de su salario para pagarlo directamente a la SAT.",
+          C: "El descuento que aplica la SAT a las empresas que no presentan planillas laborales."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "En el ISR de rentas del trabajo (Decreto 10-2012, Libro I), el empleador actúa como agente retenedor: calcula el ISR anual proyectado del trabajador, lo divide entre 12 meses y retiene esa cuota mensualmente. La tasa es del 5% sobre los primeros Q300,000 de renta imponible y 7% sobre el excedente. El empleador es responsable de enterar las retenciones a la SAT mensualmente."
+      },
+      {
+        id: 13,
+        pregunta: "¿Qué es la factura electrónica (FEL) en Guatemala?",
+        opciones: {
+          A: "El sistema de emisión y transmisión en línea de documentos tributarios (facturas, notas de crédito y débito) certificados por la SAT en tiempo real.",
+          B: "El comprobante escaneado de facturas físicas que el contribuyente sube mensualmente al portal de la SAT.",
+          C: "Un tipo de factura especial solo para exportaciones que se tramita ante el BANGUAT."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La Factura Electrónica en Línea (FEL), implementada gradualmente desde 2019, es el sistema por el que los documentos tributarios se generan digitalmente y se transmiten a la SAT en tiempo real para su certificación. Beneficios: mayor control del IVA, reducción de facturas falsas, agilización de devoluciones de crédito fiscal y simplificación contable para el contribuyente."
+      },
+      {
+        id: 14,
+        pregunta: "¿Qué sanción aplica el Código Tributario por no emitir facturas en Guatemala?",
+        opciones: {
+          A: "Multa equivalente al 100% del impuesto omitido y cierre temporal del establecimiento.",
+          B: "Solo una amonestación por escrito en la primera infracción.",
+          C: "Suspensión del número de identificación tributaria (NIT) por 90 días."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 94 del Código Tributario tipifica como infracción la omisión de emitir facturas. La sanción incluye multa equivalente al 100% del impuesto correspondiente a la operación no facturada y puede conllevar cierre temporal del establecimiento de hasta 10 días. En caso de reincidencia, el cierre puede ser definitivo. Además, pueden aplicarse consecuencias penales si el monto eludido supera los umbrales legales."
+      },
+      {
+        id: 15,
+        pregunta: "¿Qué es el crédito fiscal del IVA y cuándo procede su devolución?",
+        opciones: {
+          A: "El IVA pagado en las compras del contribuyente que puede descontarse del IVA cobrado en sus ventas; si el crédito supera el débito, procede solicitar devolución a la SAT.",
+          B: "Un bono tributario que el Estado otorga a las empresas exportadoras para incentivar sus ventas al extranjero.",
+          C: "La deuda que tiene el contribuyente con la SAT por impuestos no pagados en períodos anteriores."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El mecanismo del IVA funciona por débito-crédito: el IVA cobrado en ventas es el débito fiscal; el IVA pagado en compras es el crédito fiscal. Si el crédito supera el débito (común en exportadores que venden con tasa 0%), el contribuyente puede solicitar devolución a la SAT. La devolución se tramita ante la Unidad de Devoluciones de Crédito Fiscal y puede hacerse mediante compensación, acreditamiento o pago en efectivo."
+      }
+    ]
+  },
+
   // ─── DERECHO PROCESAL CIVIL ──────────────────────────────────────────────
   {
     id: "derecho-procesal-civil",
