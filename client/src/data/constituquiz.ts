@@ -68,8 +68,8 @@ export const quizTemas: QuizTema[] = [
   },
   {
     id: "derecho-penal",
-    tema: "Derecho Penal Guatemalteco",
-    descripcion: "Conceptos clave del Código Penal (Decreto 17-73): principios, delitos, sanciones y participación criminal.",
+    tema: "Derecho Penal — Principios y Teoría del Delito",
+    descripcion: "Principios fundamentales del Código Penal (Decreto 17-73): legalidad, delito, culpabilidad y formas de participación.",
     icono: "Shield",
     categoria: "Penal",
     totalPreguntas: 5,
@@ -1849,6 +1849,525 @@ export const quizTemas: QuizTema[] = [
         },
         respuestaCorrecta: "A",
         explicacion: "Está prohibido trabajar bajo efectos de alcohol o drogas."
+      }
+    ]
+  },
+
+  // ── FASE 1: Derecho Penal ampliado (Decreto 17-73) ──────────────────────────
+  {
+    id: "derecho-penal-delitos",
+    tema: "Derecho Penal — Delitos y Penas",
+    descripcion: "Tipos de delitos, penas, circunstancias modificativas y causas de justificación del Código Penal guatemalteco.",
+    icono: "Shield",
+    categoria: "Penal",
+    totalPreguntas: 25,
+    preguntas: [
+      {
+        id: 1,
+        pregunta: "¿Cuáles son las penas principales establecidas en el Código Penal guatemalteco?",
+        opciones: {
+          A: "Muerte, prisión, arresto y multa.",
+          B: "Prisión, arresto, trabajo comunitario y multa.",
+          C: "Solo privación de libertad y multa económica."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 41 del Código Penal establece como penas principales: la pena de muerte, la prisión, el arresto y la multa. La pena de muerte solo se aplica en los casos expresamente contemplados por la ley y con las garantías del debido proceso."
+      },
+      {
+        id: 2,
+        pregunta: "¿Qué es el dolo en el Derecho Penal guatemalteco?",
+        opciones: {
+          A: "La voluntad consciente de ejecutar u omitir el hecho descrito en la ley penal, con conocimiento de que es ilícito.",
+          B: "Cualquier resultado dañoso causado por el sujeto, independientemente de su intención.",
+          C: "La negligencia grave que provoca un resultado no querido pero previsible."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El dolo implica dos elementos: el cognitivo (conocer que el hecho es ilícito) y el volitivo (querer realizarlo). El artículo 11 del Código Penal establece que el delito es doloso cuando el resultado ha sido querido o cuando el agente se representó como posible y actuó aceptando esa posibilidad."
+      },
+      {
+        id: 3,
+        pregunta: "¿Qué es la culpa en materia penal?",
+        opciones: {
+          A: "La producción de un resultado dañoso por imprudencia, negligencia, impericia o inobservancia de reglamentos.",
+          B: "La intención deliberada de causar daño a otra persona.",
+          C: "La responsabilidad objetiva del empleador por actos de sus trabajadores."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 12 del Código Penal define el delito culposo como aquel en que el resultado, aunque no fue querido, se produce por imprudencia, negligencia o impericia. La culpa es menos grave que el dolo y generalmente conlleva penas menores."
+      },
+      {
+        id: 4,
+        pregunta: "¿Qué son las circunstancias agravantes según el Código Penal de Guatemala?",
+        opciones: {
+          A: "Condiciones o situaciones que aumentan la gravedad del delito y por ende pueden incrementar la pena dentro del mínimo y máximo legal.",
+          B: "Hechos posteriores al delito que permiten reducir automáticamente la pena impuesta.",
+          C: "Causas que eliminan la responsabilidad penal del sujeto activo."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 27 del Código Penal enumera las circunstancias agravantes, entre ellas: alevosía, premeditación, uso de veneno, ejecutar el delito por precio o recompensa, empleo de medios calamitosos, reincidencia, entre otras. El juez las pondera al graduar la pena dentro del rango legal."
+      },
+      {
+        id: 5,
+        pregunta: "¿Cuál es la pena mínima de prisión en Guatemala para que un delito sea considerado grave?",
+        opciones: {
+          A: "Cinco años de prisión.",
+          B: "Tres años de prisión.",
+          C: "Diez años de prisión."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Conforme al Código Procesal Penal y la jurisprudencia guatemalteca, los delitos graves son aquellos cuya pena máxima supera los cinco años de prisión. Esta distinción es relevante para determinar la aplicación de medidas de coerción como la prisión preventiva."
+      },
+      {
+        id: 6,
+        pregunta: "¿Qué es la legítima defensa como causa de justificación?",
+        opciones: {
+          A: "La repulsa de una agresión ilegítima, actual o inminente, no provocada por el defensor y proporcional al peligro.",
+          B: "El derecho a atacar preventivamente a quien se supone planea un delito.",
+          C: "La facultad del Estado de usar la fuerza para proteger a sus ciudadanos."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 24 del Código Penal establece tres requisitos para la legítima defensa: (1) agresión ilegítima, (2) necesidad racional del medio empleado para impedirla o repelerla, y (3) falta de provocación suficiente por parte del defensor. Quien actúa en legítima defensa no incurre en responsabilidad penal."
+      },
+      {
+        id: 7,
+        pregunta: "¿Qué establece el estado de necesidad como causa de justificación?",
+        opciones: {
+          A: "Que quien causa un daño para evitar uno mayor e inminente, al que ha sido extraño, no incurre en responsabilidad penal.",
+          B: "Que la necesidad económica extrema justifica cualquier delito patrimonial.",
+          C: "Que los funcionarios públicos pueden violar derechos fundamentales en situaciones de emergencia nacional."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 24 inc. 2 del Código Penal regula el estado de necesidad: el bien sacrificado debe ser de menor valor que el bien salvado, el peligro debe ser real e inminente, y el agente no debe haber provocado voluntariamente la situación de peligro."
+      },
+      {
+        id: 8,
+        pregunta: "¿Cuántos años de prisión contempla el delito de homicidio simple en Guatemala?",
+        opciones: {
+          A: "De 15 a 40 años de prisión.",
+          B: "De 6 a 15 años de prisión.",
+          C: "De 8 a 25 años de prisión."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 123 del Código Penal establece que el homicidio simple (matar a otro sin circunstancias calificativas) se sanciona con prisión de 15 a 40 años. Si concurren circunstancias agravantes específicas, puede constituir asesinato, con pena de 25 a 50 años o incluso pena de muerte."
+      },
+      {
+        id: 9,
+        pregunta: "¿Qué delito comete quien sustrae cosa mueble ajena usando violencia o amenazas sobre las personas?",
+        opciones: {
+          A: "Robo.",
+          B: "Hurto.",
+          C: "Estafa."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El robo (artículo 251 del Código Penal) se diferencia del hurto (artículo 246) en que en el robo se usa violencia o intimidación sobre las personas. El hurto es la sustracción sin violencia. La pena del robo va de 3 a 12 años de prisión, incrementándose si hay agravantes."
+      },
+      {
+        id: 10,
+        pregunta: "¿Qué es el peculado en el Código Penal guatemalteco?",
+        opciones: {
+          A: "La sustracción, apropiación o distracción de caudales o efectos públicos por un funcionario que los tiene bajo su custodia.",
+          B: "El cohecho o soborno de un funcionario público por un particular.",
+          C: "El tráfico de influencias para obtener resoluciones favorables del Estado."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El peculado está tipificado en el artículo 445 del Código Penal. Es un delito contra la administración pública cometido exclusivamente por funcionarios o empleados públicos que se apropian de fondos estatales que administran. Se sanciona con prisión de 3 a 10 años más inhabilitación."
+      },
+      {
+        id: 11,
+        pregunta: "¿Qué es el cohecho pasivo?",
+        opciones: {
+          A: "La aceptación de dádivas o promesas por parte de un funcionario público para realizar u omitir un acto propio de su cargo.",
+          B: "El ofrecimiento de dinero o regalos a un funcionario por parte de un particular.",
+          C: "La malversación de fondos públicos por omisión de un servidor del Estado."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El cohecho pasivo (artículo 439 del Código Penal) lo comete el funcionario que solicita o acepta dádivas para hacer o dejar de hacer algo en el ejercicio de sus funciones. Se sanciona con prisión de 1 a 4 años e inhabilitación. El cohecho activo lo comete quien ofrece o da la dádiva."
+      },
+      {
+        id: 12,
+        pregunta: "¿Cuál es la minoría de edad penal en Guatemala?",
+        opciones: {
+          A: "Menor de 18 años.",
+          B: "Menor de 16 años.",
+          C: "Menor de 14 años."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "En Guatemala, los menores de 18 años no son sujetos del Código Penal sino de la Ley de Protección Integral de la Niñez y Adolescencia (PINA) y la Ley de la Jurisdicción de la Niñez y la Adolescencia. Las medidas que se les aplican son socioeducativas, no penas propiamente dichas."
+      },
+      {
+        id: 13,
+        pregunta: "¿Qué es la reincidencia y cómo afecta la pena?",
+        opciones: {
+          A: "Cometer un nuevo delito después de haber sido condenado por sentencia firme por delito anterior; es una circunstancia agravante.",
+          B: "Cometer el mismo tipo de delito dos veces en el mismo año calendario.",
+          C: "Es una causal de extinción de la pena cuando el penado ha demostrado rehabilitación."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La reincidencia está regulada en el artículo 72 del Código Penal. Para que opere, debe existir sentencia condenatoria firme anterior y el nuevo delito debe cometerse antes de transcurridos diez años desde que el condenado cumplió la pena. Funciona como agravante genérica que permite elevar la pena."
+      },
+      {
+        id: 14,
+        pregunta: "¿Qué son las medidas de seguridad en el Derecho Penal guatemalteco?",
+        opciones: {
+          A: "Consecuencias jurídicas aplicables a inimputables o semiimputables peligrosos, orientadas a la prevención y rehabilitación, no al castigo.",
+          B: "Las medidas cautelares dictadas por el juez durante el proceso penal.",
+          C: "Las sanciones accesorias que acompañan obligatoriamente a toda pena de prisión."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "Las medidas de seguridad (artículos 87-96 del Código Penal) se aplican a quienes no son imputables (como personas con trastorno mental) pero representan un peligro para la sociedad. Su fin es terapéutico y de protección social, no retributivo. Incluyen internamiento en hospital psiquiátrico, entre otras."
+      },
+      {
+        id: 15,
+        pregunta: "¿Cuál es la pena establecida para el delito de estafa en Guatemala?",
+        opciones: {
+          A: "Prisión de 1 a 6 años y multa.",
+          B: "Solo multa económica equivalente al daño causado.",
+          C: "Arresto de 60 días y reparación civil."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 263 del Código Penal define la estafa como el engaño para obtener beneficio patrimonial propio o ajeno en perjuicio de otro. La pena es de 1 a 6 años de prisión más multa. Si el monto defraudado supera cierto umbral o afecta al Estado, puede agravarse."
+      },
+      {
+        id: 16,
+        pregunta: "¿Qué delito comete quien retiene indebidamente cosa mueble ajena que le fue confiada?",
+        opciones: {
+          A: "Apropiación indebida.",
+          B: "Hurto.",
+          C: "Robo con violencia."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La apropiación indebida (artículo 272 del Código Penal) se configura cuando quien tiene legítima posesión de un bien ajeno (por depósito, comisión, administración u otro título) se apropia de él o lo distrae en perjuicio de su dueño. Se diferencia del hurto en que la posesión inicial es lícita."
+      },
+      {
+        id: 17,
+        pregunta: "¿Qué se entiende por tentativa en el Código Penal guatemalteco?",
+        opciones: {
+          A: "El comienzo de ejecución de un delito que no llega a consumarse por causas ajenas a la voluntad del agente.",
+          B: "La planeación o preparación del delito sin llegar a ejecutarlo.",
+          C: "El desistimiento voluntario del autor antes de consumar el hecho punible."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 14 del Código Penal define la tentativa: hay actos ejecutivos (más que mera preparación), el delito no se consuma, y la no consumación es por causas externas al autor. La pena de la tentativa es inferior a la del delito consumado. Los actos preparatorios, en general, no son punibles."
+      },
+      {
+        id: 18,
+        pregunta: "¿Qué circunstancia exime de responsabilidad penal por inimputabilidad?",
+        opciones: {
+          A: "Padecer, al momento del hecho, trastorno mental que prive al sujeto de la capacidad de comprender la ilicitud del acto o de actuar conforme a esa comprensión.",
+          B: "Haber actuado bajo órdenes de un superior jerárquico en el ámbito militar.",
+          C: "Encontrarse en estado de embriaguez voluntaria al momento del hecho."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 23 del Código Penal establece que no es imputable quien, en el momento del hecho, no posea la capacidad de comprender el carácter ilícito del acto o de determinarse de acuerdo a esa comprensión, por enfermedad mental, desarrollo psíquico incompleto o perturbación grave de la conciencia. Se aplican medidas de seguridad."
+      },
+      {
+        id: 19,
+        pregunta: "¿Cuál es el bien jurídico protegido por el delito de violación sexual?",
+        opciones: {
+          A: "La libertad e indemnidad sexual de la persona.",
+          B: "El honor y la reputación de la víctima y su familia.",
+          C: "Exclusivamente la integridad física de la persona agredida."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El delito de violación (artículo 173 del Código Penal) protege la libertad sexual (derecho a decidir sobre la propia sexualidad) y la indemnidad sexual (en menores de edad, el derecho a un desarrollo sexual sano). La pena es de 6 a 10 años de prisión, elevándose significativamente cuando la víctima es menor de edad."
+      },
+      {
+        id: 20,
+        pregunta: "¿Qué es el delito de falsedad material?",
+        opciones: {
+          A: "Alterar, falsificar o fabricar un documento público o privado que pueda servir de prueba.",
+          B: "Declarar falsamente ante autoridad competente en un proceso judicial.",
+          C: "Usar un nombre falso o suplantar la identidad de otra persona."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La falsedad material (artículo 321 del Código Penal) consiste en la alteración física de un documento verdadero o la creación total de un documento falso. Se distingue de la falsedad ideológica (insertar declaraciones falsas en documento verdadero). Ambas están penadas en el Código Penal guatemalteco."
+      },
+      {
+        id: 21,
+        pregunta: "¿Cuál es la causa de extinción de la responsabilidad penal más común?",
+        opciones: {
+          A: "La muerte del imputado.",
+          B: "El pago voluntario de la multa antes del juicio.",
+          C: "La conmutación de la pena por trabajo comunitario."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 101 del Código Penal enumera las causas de extinción de la responsabilidad penal: muerte del procesado, amnistía, perdón del ofendido (en delitos de acción privada), prescripción, entre otras. La muerte del imputado es la más común, ya que la responsabilidad penal es estrictamente personal e intransmisible."
+      },
+      {
+        id: 22,
+        pregunta: "¿Qué distingue al asesinato del homicidio simple en el Código Penal guatemalteco?",
+        opciones: {
+          A: "La concurrencia de circunstancias calificativas como alevosía, premeditación, precio, recompensa o promesa, o medios de peligro común.",
+          B: "Que el asesinato siempre se planea con antelación mínima de 24 horas.",
+          C: "El asesinato solo puede cometerse contra funcionarios públicos o familiares directos."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 132 del Código Penal tipifica el asesinato cuando al homicidio se agregan: alevosía, premeditación conocida, medios de peligro común, precio/recompensa/promesa remuneratoria, ensañamiento, o preparación de otro delito. La pena del asesinato es de 25 a 50 años; puede aplicarse pena de muerte en ciertos supuestos."
+      },
+      {
+        id: 23,
+        pregunta: "¿Qué es el tráfico de drogas o estupefacientes como delito en Guatemala?",
+        opciones: {
+          A: "La producción, fabricación, distribución, transporte, comercio o almacenamiento ilegal de drogas o estupefacientes, regulado por la Ley contra la Narcoactividad (Decreto 48-92).",
+          B: "Solo la venta al menudeo de sustancias prohibidas en la vía pública.",
+          C: "Exclusivamente la importación o exportación de drogas a través de fronteras guatemaltecas."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "En Guatemala, los delitos de narcotráfico se regulan principalmente por el Decreto 48-92 (Ley contra la Narcoactividad), no por el Código Penal ordinario. Esta ley tipifica múltiples conductas: siembra, cultivo, fabricación, distribución, transporte, financiamiento, lavado de activos relacionado, entre otras, con penas que pueden superar los 25 años de prisión."
+      },
+      {
+        id: 24,
+        pregunta: "¿Qué son las penas accesorias en el Código Penal guatemalteco?",
+        opciones: {
+          A: "Inhabilitación absoluta o especial, comiso y pérdida de objetos del delito, que acompañan a la pena principal.",
+          B: "Sanciones que sustituyen a la pena principal cuando el juez lo considere conveniente.",
+          C: "Medidas de seguridad aplicadas exclusivamente a inimputables."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 42 del Código Penal enumera las penas accesorias: inhabilitación absoluta, inhabilitación especial, comiso y pérdida de los objetos o instrumentos del delito, expulsión de extranjeros del territorio nacional, pago de costas y gastos procesales, y publicación de la sentencia. Se imponen junto con la pena principal."
+      },
+      {
+        id: 25,
+        pregunta: "¿Cuál es el plazo de prescripción para un delito sancionado con pena de muerte o prisión mayor de 25 años?",
+        opciones: {
+          A: "25 años.",
+          B: "15 años.",
+          C: "Los delitos con pena de muerte son imprescriptibles."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 107 del Código Penal establece que la acción penal prescribe en un plazo igual al máximo de la pena fijada, con un tope de 25 años para los delitos más graves. Sin embargo, los crímenes de lesa humanidad, genocidio y desaparición forzada son imprescriptibles conforme al derecho internacional incorporado al ordenamiento guatemalteco."
+      }
+    ]
+  },
+
+  // ── FASE 1: Derecho Mercantil ampliado (Código de Comercio Decreto 2-70) ─────
+  {
+    id: "derecho-mercantil-contratos",
+    tema: "Derecho Mercantil — Sociedades y Contratos",
+    descripcion: "Código de Comercio de Guatemala (Decreto 2-70): sociedades mercantiles, títulos de crédito y contratos comerciales.",
+    icono: "Briefcase",
+    categoria: "Mercantil",
+    totalPreguntas: 20,
+    preguntas: [
+      {
+        id: 1,
+        pregunta: "¿Qué es un comerciante individual según el Código de Comercio de Guatemala?",
+        opciones: {
+          A: "La persona individual que ejerce en nombre propio y con fines de lucro cualquier actividad que la ley califica de mercantil.",
+          B: "Cualquier persona que realice una venta ocasional de bienes.",
+          C: "El representante legal de una sociedad mercantil constituida en Guatemala."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 2 del Código de Comercio (Decreto 2-70) define al comerciante individual como la persona que ejerce en nombre propio, con fines de lucro y de manera habitual, actividades mercantiles. Debe inscribirse en el Registro Mercantil para obtener su patente de comercio."
+      },
+      {
+        id: 2,
+        pregunta: "¿Cuáles son los tipos de sociedades mercantiles reconocidos en Guatemala?",
+        opciones: {
+          A: "Sociedad Colectiva, Sociedad en Comandita Simple, Sociedad de Responsabilidad Limitada, Sociedad Anónima y Sociedad en Comandita por Acciones.",
+          B: "Solo Sociedad Anónima y Sociedad de Responsabilidad Limitada.",
+          C: "Sociedad Anónima, Cooperativa, Asociación Civil y Fundación."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 10 del Código de Comercio reconoce cinco tipos de sociedades mercantiles: Sociedad Colectiva, Sociedad en Comandita Simple, Sociedad de Responsabilidad Limitada (SRL), Sociedad Anónima (SA) y Sociedad en Comandita por Acciones. La SA es la más común en la práctica comercial guatemalteca."
+      },
+      {
+        id: 3,
+        pregunta: "¿Cuál es la característica principal de la Sociedad Anónima en Guatemala?",
+        opciones: {
+          A: "La responsabilidad de los socios está limitada al monto de las acciones que han suscrito.",
+          B: "Los socios responden solidaria e ilimitadamente con su patrimonio personal.",
+          C: "Requiere mínimo 10 socios fundadores para su constitución."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "En la Sociedad Anónima (artículo 86 del Código de Comercio), el capital está dividido en acciones y la responsabilidad de cada accionista se limita al valor de las acciones que suscribió. Este es el tipo societario que mejor protege el patrimonio personal de los socios frente a deudas empresariales."
+      },
+      {
+        id: 4,
+        pregunta: "¿Qué es un título de crédito según el Código de Comercio de Guatemala?",
+        opciones: {
+          A: "El documento necesario para ejercitar el derecho literal y autónomo que en él se consigna.",
+          B: "Cualquier contrato escrito que genera obligaciones de pago entre comerciantes.",
+          C: "El certificado emitido por un banco que garantiza la solvencia de un deudor."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 386 del Código de Comercio define los títulos de crédito con tres características: literalidad (el derecho se ejerce según lo escrito), autonomía (cada tenedor tiene un derecho independiente) e incorporación (el derecho está incorporado al documento). Ejemplos: cheque, pagaré, letra de cambio."
+      },
+      {
+        id: 5,
+        pregunta: "¿Cuál es el plazo de prescripción de la acción cambiaria directa del cheque?",
+        opciones: {
+          A: "6 meses desde la fecha de presentación o del vencimiento del plazo de presentación.",
+          B: "1 año desde la fecha de emisión del cheque.",
+          C: "3 años desde la fecha de emisión del cheque."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El artículo 511 del Código de Comercio establece que la acción cambiaria directa contra el librador del cheque prescribe en 6 meses contados desde que venza el plazo de presentación. El cheque debe presentarse al pago dentro de los 15 días siguientes a su creación si es pagadero en el mismo lugar de emisión."
+      },
+      {
+        id: 6,
+        pregunta: "¿Qué es el contrato de seguro en el Código de Comercio guatemalteco?",
+        opciones: {
+          A: "Aquel por el que el asegurador, mediante el cobro de una prima, se obliga a indemnizar al asegurado o beneficiario por los daños causados por un siniestro.",
+          B: "El contrato por el cual una empresa garantiza la fidelidad de sus empleados ante terceros.",
+          C: "El acuerdo entre banco y cliente para proteger depósitos ante quiebra bancaria."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El contrato de seguro (artículo 874 del Código de Comercio) tiene elementos esenciales: el riesgo asegurable, la prima (contraprestación del asegurado), la obligación del asegurador de indemnizar y el interés asegurable. En Guatemala, las aseguradoras deben estar autorizadas por la Superintendencia de Bancos."
+      },
+      {
+        id: 7,
+        pregunta: "¿Qué es el contrato de depósito mercantil?",
+        opciones: {
+          A: "Aquel en que el depositario recibe mercancías o bienes muebles ajenos para su custodia y devolución, con o sin remuneración.",
+          B: "El acuerdo por el cual un banco recibe dinero de un cliente generando intereses.",
+          C: "El contrato por el que un almacén general expide certificados de depósito negociables."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El depósito mercantil (artículo 715 del Código de Comercio) obliga al depositario a guardar y conservar el bien depositado y devolverlo cuando el depositante lo solicite. Se diferencia del depósito bancario y del depósito en almacenes generales, que tienen regulaciones específicas."
+      },
+      {
+        id: 8,
+        pregunta: "¿Cuál es el capital mínimo para constituir una Sociedad Anónima en Guatemala?",
+        opciones: {
+          A: "No existe un mínimo legal establecido en el Código de Comercio para el capital social.",
+          B: "Q50,000.00 como capital mínimo autorizado.",
+          C: "Q100,000.00 totalmente suscrito y pagado al momento de la constitución."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El Código de Comercio guatemalteco no establece un capital mínimo para constituir una Sociedad Anónima, a diferencia de otros países. Sin embargo, al momento de la constitución, el capital autorizado debe estar suscrito en su totalidad y pagado al menos en un 25%. Lo relevante es que sea suficiente para el objeto social."
+      },
+      {
+        id: 9,
+        pregunta: "¿Qué es la letra de cambio como título de crédito?",
+        opciones: {
+          A: "Un título de crédito que contiene la orden incondicional de pagar una suma determinada de dinero a su vencimiento.",
+          B: "Una promesa unilateral de pago emitida por el deudor a favor del acreedor.",
+          C: "Un documento bancario que certifica que el librador tiene fondos suficientes para el pago."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La letra de cambio (artículos 441-487 del Código de Comercio) involucra tres sujetos: el librador (quien ordena el pago), el librado o girado (a quien se ordena pagar) y el tomador o beneficiario. Es diferente al pagaré, que es una promesa de pago directa del suscriptor sin intervención de un tercero."
+      },
+      {
+        id: 10,
+        pregunta: "¿Qué función cumple el Registro Mercantil en Guatemala?",
+        opciones: {
+          A: "Llevar la matrícula de comerciantes individuales y sociales, y registrar actos y contratos mercantiles para darles publicidad y oponibilidad frente a terceros.",
+          B: "Fiscalizar y sancionar las prácticas comerciales desleales entre empresas.",
+          C: "Administrar la quiebra y liquidación de sociedades mercantiles insolventes."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El Registro Mercantil (artículo 333 del Código de Comercio) tiene función de publicidad registral: los actos inscritos son oponibles a terceros. Registra la constitución, modificación y disolución de sociedades, poderes mercantiles, marcas comerciales, nombres comerciales y contratos de empresa, entre otros."
+      },
+      {
+        id: 11,
+        pregunta: "¿Qué es el contrato de franquicia en el Derecho Mercantil guatemalteco?",
+        opciones: {
+          A: "Aquel por el cual el franquiciante otorga al franquiciado el derecho de usar su marca, sistema de negocios y know-how a cambio de regalías.",
+          B: "La autorización estatal para operar un servicio público en régimen de monopolio.",
+          C: "El contrato de representación exclusiva de una empresa extranjera en Guatemala."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La franquicia es un contrato mercantil atípico en Guatemala (no está específicamente regulado en el Código de Comercio pero es válido conforme al principio de libertad contractual del artículo 1517 del Código Civil). El franquiciado paga regalías o royalties y debe operar bajo los estándares del franquiciante."
+      },
+      {
+        id: 12,
+        pregunta: "¿Cómo se denomina el órgano máximo de una Sociedad Anónima en Guatemala?",
+        opciones: {
+          A: "Asamblea General de Accionistas.",
+          B: "Junta Directiva.",
+          C: "Consejo de Administración."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La Asamblea General de Accionistas (artículo 132 del Código de Comercio) es el órgano soberano de la SA. Puede ser ordinaria (se reúne anualmente para conocer estados financieros, distribución de utilidades y nombramiento de administradores) o extraordinaria (para modificaciones estatutarias, fusiones, disolución, etc.)."
+      },
+      {
+        id: 13,
+        pregunta: "¿Qué es el contrato de fideicomiso mercantil?",
+        opciones: {
+          A: "Aquel por el cual el fideicomitente transfiere bienes a un fiduciario para que los administre o disponga en beneficio de un fideicomisario.",
+          B: "El mandato especial que otorga un comerciante a otro para representarlo ante terceros.",
+          C: "El contrato de garantía por el cual un tercero responde por las deudas del deudor principal."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El fideicomiso (artículo 766 del Código de Comercio) implica la transferencia de la propiedad fiduciaria al fiduciario (generalmente un banco), quien la administra con un fin específico en beneficio del fideicomisario. Es muy usado en Guatemala para garantías bancarias, administración de patrimonios y proyectos inmobiliarios."
+      },
+      {
+        id: 14,
+        pregunta: "¿Qué es la quiebra en el Derecho Mercantil guatemalteco?",
+        opciones: {
+          A: "El estado jurídico de un comerciante declarado judicialmente insolvente, que no puede pagar sus deudas líquidas y exigibles.",
+          B: "La liquidación voluntaria de una sociedad acordada por sus socios.",
+          C: "La suspensión temporal de pagos autorizada por la Superintendencia de Bancos."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La quiebra (artículos 347-386 del Código de Comercio y Código Procesal Civil y Mercantil) es un proceso judicial universal que afecta todo el patrimonio del deudor. Puede ser voluntaria (solicitada por el propio deudor) o necesaria (solicitada por un acreedor). Implica el desapoderamiento del deudor y la administración por un síndico."
+      },
+      {
+        id: 15,
+        pregunta: "¿Cuál es la función del pagaré como título de crédito?",
+        opciones: {
+          A: "Documentar la promesa incondicional del suscriptor de pagar una suma determinada de dinero a quien se designe como beneficiario.",
+          B: "Ordenar a un banco el pago inmediato de una suma de dinero a la vista.",
+          C: "Garantizar el cumplimiento de una obligación mediante la entrega de bienes muebles."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El pagaré (artículos 490-495 del Código de Comercio) es un título de crédito que contiene la promesa del suscriptor (deudor) de pagar incondicionalmente una suma de dinero. Solo involucra dos partes: el suscriptor y el beneficiario. Es ampliamente usado en Guatemala para documentar créditos bancarios y comerciales."
+      },
+      {
+        id: 16,
+        pregunta: "¿Qué es el aval en los títulos de crédito?",
+        opciones: {
+          A: "La garantía personal que otorga un tercero (avalista) para el pago total o parcial de un título de crédito.",
+          B: "La aceptación por el librado de pagar una letra de cambio a su vencimiento.",
+          C: "El endoso en blanco que transfiere la propiedad de un título de crédito."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El aval (artículo 407 del Código de Comercio) es una garantía cambiaria: el avalista se obliga solidariamente con el avalado al pago del título. Es autónomo (su obligación subsiste aunque la del avalado sea nula por causa distinta a vicios de forma) y debe constar por escrito en el mismo documento o en hoja adjunta."
+      },
+      {
+        id: 17,
+        pregunta: "¿Qué es el endoso en un título de crédito?",
+        opciones: {
+          A: "La declaración escrita en el título por la cual el tenedor transmite a otro los derechos que confiere el documento.",
+          B: "La firma del librado que acepta pagar el título a su vencimiento.",
+          C: "La garantía solidaria que otorga un tercero para asegurar el pago del título."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El endoso (artículo 419 del Código de Comercio) es el mecanismo de circulación de los títulos de crédito a la orden. El endosante transfiere el título y garantiza su pago. Puede ser en blanco (solo firma), al portador o nominativo. El endoso en procuración solo da facultades de cobro sin transferir la propiedad."
+      },
+      {
+        id: 18,
+        pregunta: "¿Cuál es la diferencia entre Sociedad Colectiva y Sociedad de Responsabilidad Limitada?",
+        opciones: {
+          A: "En la Colectiva los socios responden ilimitada y solidariamente con su patrimonio; en la SRL la responsabilidad es limitada al capital aportado.",
+          B: "La Colectiva requiere más de 20 socios y la SRL puede funcionar con un solo socio.",
+          C: "Solo la SRL puede emitir acciones negociables en bolsa de valores."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La Sociedad Colectiva (artículo 59 del Código de Comercio) implica responsabilidad ilimitada y solidaria de todos los socios frente a terceros: cada socio responde con su patrimonio personal. En la SRL (artículo 78), los socios solo arriesgan el capital que aportaron. La SRL no puede tener más de 20 socios."
+      },
+      {
+        id: 19,
+        pregunta: "¿Qué es la competencia desleal en el Derecho Mercantil guatemalteco?",
+        opciones: {
+          A: "Todo acto de competencia contrario a los usos honestos en materia comercial, como imitar signos distintivos, difundir informaciones falsas o aprovecharse del esfuerzo ajeno.",
+          B: "La reducción de precios por debajo del costo de producción para eliminar competidores del mercado.",
+          C: "La publicidad comparativa que menciona el nombre de un competidor sin su autorización."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "La competencia desleal en Guatemala se regula en la Ley de Protección al Consumidor y Usuario y en normas sectoriales. Incluye conductas como: confusión con productos ajenos, denigración de competidores, actos de imitación, explotación de reputación ajena y violación de secretos empresariales."
+      },
+      {
+        id: 20,
+        pregunta: "¿Cuándo se considera perfeccionado un contrato mercantil en Guatemala?",
+        opciones: {
+          A: "Cuando las partes consienten en el objeto y la causa, aunque no se haya cumplido formalidad alguna, salvo que la ley exija forma especial.",
+          B: "Solo al entregarse la cosa o pagarse el precio pactado entre las partes.",
+          C: "Únicamente cuando se protocoliza ante notario y se inscribe en el Registro Mercantil."
+        },
+        respuestaCorrecta: "A",
+        explicacion: "El principio de consensualismo rige los contratos mercantiles en Guatemala: se perfeccionan por el mero consentimiento (artículo 1518 del Código Civil, aplicable supletoriamente). La excepción son los contratos formales que la ley exige escritura pública o registro. En materia mercantil, la agilidad del tráfico comercial favorece la informalidad."
       }
     ]
   }
