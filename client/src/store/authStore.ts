@@ -111,10 +111,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
       if (error) {
-        const msg = error.message.includes('Invalid login')
+        const msg = error.message.includes('Invalid login') || error.message.includes('invalid_credentials')
           ? 'Correo o contraseña incorrectos.'
           : error.message;
         throw new Error(msg);
+      }
+
+      if (!data.session) {
+        throw new Error('Correo o contraseña incorrectos.');
       }
 
       const token = data.session.access_token;

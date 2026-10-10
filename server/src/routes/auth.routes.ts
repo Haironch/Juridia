@@ -23,34 +23,48 @@ router.post('/sync', async (req: Request, res: Response) => {
   const now = new Date().toISOString();
 
   try {
-    // Ver si ya existe en Turso
-    const existing = await db.execute({
-      sql: 'SELECT id, email, nombre, apellido, rol, racha_actual, racha_maxima FROM usuarios WHERE id = ? LIMIT 1',
+    const hoy = now.split('T')[0];
+    const ayer = new Date(Date.now() - 86_400_000).toISOString().split('T')[0];
+
+    // 1. Buscar por Supabase UUID (flujo normal)
+    let existing = await db.execute({
+      sql: 'SELECT id, email, nombre, apellido, rol, racha_actual, racha_maxima, ultimo_dia_actividad FROM usuarios WHERE id = ? LIMIT 1',
       args: [supaUser.id],
     });
 
-    if (existing.rows.length > 0) {
-      // Actualizar racha de días consecutivos
-      const user = existing.rows[0] as any;
-      const hoy = now.split('T')[0];
-      const ayer = new Date(Date.now() - 86_400_000).toISOString().split('T')[0];
-
-      const rachaRes = await db.execute({
-        sql: 'SELECT racha_actual, racha_maxima, ultimo_dia_actividad FROM usuarios WHERE id = ?',
-        args: [supaUser.id],
+    // 2. Si no encontrado por id, buscar por email (usuario registrado por flujo legacy)
+    if (existing.rows.length === 0 && supaUser.email) {
+      const byEmail = await db.execute({
+        sql: 'SELECT id, email, nombre, apellido, rol, racha_actual, racha_maxima, ultimo_dia_actividad FROM usuarios WHERE email = ? LIMIT 1',
+        args: [supaUser.email],
       });
-      const r = rachaRes.rows[0] as any;
-      const ultimoDia = r?.ultimo_dia_actividad as string | null;
+      if (byEmail.rows.length > 0) {
+        // Migrar el id legacy → Supabase UUID para que futuros logins vayan por el flujo normal
+        await db.execute({
+          sql: 'UPDATE usuarios SET id = ?, updatedAt = ? WHERE email = ?',
+          args: [supaUser.id, now, supaUser.email],
+        });
+        // Re-leer con el nuevo id
+        existing = await db.execute({
+          sql: 'SELECT id, email, nombre, apellido, rol, racha_actual, racha_maxima, ultimo_dia_actividad FROM usuarios WHERE id = ? LIMIT 1',
+          args: [supaUser.id],
+        });
+      }
+    }
+
+    if (existing.rows.length > 0) {
+      const user = existing.rows[0] as any;
+      const ultimoDia = user.ultimo_dia_actividad as string | null;
 
       let nuevaRacha: number;
       if (ultimoDia === hoy) {
-        nuevaRacha = (r?.racha_actual as number) || 1;
+        nuevaRacha = (user.racha_actual as number) || 1;
       } else if (ultimoDia === ayer) {
-        nuevaRacha = ((r?.racha_actual as number) || 0) + 1;
+        nuevaRacha = ((user.racha_actual as number) || 0) + 1;
       } else {
         nuevaRacha = 1;
       }
-      const nuevaRachaMaxima = Math.max((r?.racha_maxima as number) || 0, nuevaRacha);
+      const nuevaRachaMaxima = Math.max((user.racha_maxima as number) || 0, nuevaRacha);
 
       await db.execute({
         sql: `UPDATE usuarios SET ultimo_acceso = ?, updatedAt = ?,
