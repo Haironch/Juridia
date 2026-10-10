@@ -4,6 +4,7 @@ import {
   BookOpen, MagnifyingGlass, X, CaretDown, CaretUp, Copy, Check,
   ArrowLeft, ArrowSquareOut, ListChecks, Lightbulb, Clock,
   ArrowRight, Cards, CheckCircle, Circle, Trophy, Star,
+  Brain, ArrowCounterClockwise, Question,
 } from "@phosphor-icons/react";
 import {
   resumenes, articulosClave, guias, AREAS_FILTRO,
@@ -52,6 +53,175 @@ function useProgress(key: string) {
   };
 
   return { leidos, toggle };
+}
+
+// ─── Componente: Mini Quiz ───────────────────────────────────────────────────
+
+function MiniQuiz({ preguntas, color }: { preguntas: Resumen["preguntas"]; color: string }) {
+  const c = COLOR_MAP[color] ?? COLOR_MAP.blue;
+  const [iniciado, setIniciado] = useState(false);
+  const [idx, setIdx] = useState(0);
+  const [seleccion, setSeleccion] = useState<number | null>(null);
+  const [correctas, setCorrectas] = useState(0);
+  const [terminado, setTerminado] = useState(false);
+
+  const reiniciar = () => {
+    setIdx(0);
+    setSeleccion(null);
+    setCorrectas(0);
+    setTerminado(false);
+    setIniciado(true);
+  };
+
+  if (!iniciado) {
+    return (
+      <div className={`rounded-2xl border-2 border-dashed ${c.border} ${c.bg} px-5 py-4 flex items-center justify-between gap-4`}>
+        <div className="flex items-center gap-3">
+          <Brain weight="duotone" className={`h-6 w-6 ${c.text} flex-shrink-0`} />
+          <div>
+            <p className="text-sm font-bold text-[#13293d]">¿Entendiste el tema?</p>
+            <p className="text-xs text-[#5a8aaa]">{preguntas.length} preguntas rápidas para comprobarlo</p>
+          </div>
+        </div>
+        <button
+          onClick={() => setIniciado(true)}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold ${c.badge} border ${c.border} hover:opacity-80 transition-opacity whitespace-nowrap`}
+        >
+          <Question weight="bold" className="h-4 w-4" />
+          Iniciar quiz
+        </button>
+      </div>
+    );
+  }
+
+  const pregunta = preguntas[idx];
+
+  if (terminado) {
+    const pct = Math.round((correctas / preguntas.length) * 100);
+    const emoji = pct === 100 ? "🏆" : pct >= 60 ? "👍" : "📖";
+    const msg =
+      pct === 100 ? "¡Perfecto! Dominaste este tema." :
+      pct >= 60   ? "Buen trabajo. Repasa las que fallaste." :
+                    "Sigue estudiando y vuelve a intentarlo.";
+    return (
+      <div className={`rounded-2xl border ${c.border} ${c.bg} px-5 py-5 text-center space-y-3`}>
+        <p className="text-3xl">{emoji}</p>
+        <p className="text-lg font-bold text-[#13293d]">
+          {correctas}/{preguntas.length} correctas
+        </p>
+        <div className="h-2 bg-white/60 rounded-full overflow-hidden mx-auto max-w-xs">
+          <div
+            className={`h-full rounded-full transition-all duration-700 ${
+              pct === 100 ? "bg-green-500" : pct >= 60 ? "bg-[#2a628f]" : "bg-red-400"
+            }`}
+            style={{ width: `${pct}%` }}
+          />
+        </div>
+        <p className="text-sm text-[#16324f]">{msg}</p>
+        <button
+          onClick={reiniciar}
+          className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold border ${c.border} ${c.badge} hover:opacity-80 transition-opacity`}
+        >
+          <ArrowCounterClockwise weight="bold" className="h-4 w-4" />
+          Intentar de nuevo
+        </button>
+      </div>
+    );
+  }
+
+  const confirmar = (i: number) => {
+    if (seleccion !== null) return;
+    setSeleccion(i);
+    if (i === pregunta.correcta) setCorrectas((n) => n + 1);
+  };
+
+  const siguiente = () => {
+    if (idx + 1 >= preguntas.length) {
+      setTerminado(true);
+    } else {
+      setIdx((n) => n + 1);
+      setSeleccion(null);
+    }
+  };
+
+  return (
+    <div className={`rounded-2xl border ${c.border} overflow-hidden`}>
+      {/* Cabecera */}
+      <div className={`${c.bg} px-5 py-3 flex items-center justify-between`}>
+        <div className="flex items-center gap-2">
+          <Brain weight="duotone" className={`h-4 w-4 ${c.text}`} />
+          <span className="text-xs font-bold text-[#13293d]">Quiz rápido</span>
+        </div>
+        <span className="text-xs text-[#5a8aaa]">Pregunta {idx + 1} de {preguntas.length}</span>
+      </div>
+
+      {/* Pregunta */}
+      <div className="bg-white px-5 py-4 space-y-4">
+        <p className="text-sm font-semibold text-[#13293d] leading-relaxed">{pregunta.pregunta}</p>
+
+        {/* Opciones */}
+        <div className="space-y-2">
+          {pregunta.opciones.map((op, i) => {
+            const esCorrecta = i === pregunta.correcta;
+            const esSeleccionada = i === seleccion;
+            const respondido = seleccion !== null;
+
+            let cls = "border text-left w-full px-4 py-2.5 rounded-xl text-sm transition-all ";
+            if (!respondido) {
+              cls += "border-[#9ac1e2] hover:border-[#2a628f] hover:bg-[#f0f7ff] text-[#16324f]";
+            } else if (esCorrecta) {
+              cls += "border-green-400 bg-green-50 text-green-800 font-semibold";
+            } else if (esSeleccionada) {
+              cls += "border-red-300 bg-red-50 text-red-700";
+            } else {
+              cls += "border-[#d8e9f5] text-[#5a8aaa] opacity-60";
+            }
+
+            return (
+              <button key={i} onClick={() => confirmar(i)} disabled={respondido} className={cls}>
+                <span className="flex items-center gap-3">
+                  <span className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 text-xs font-bold ${
+                    !respondido ? "border-[#9ac1e2] text-[#5a8aaa]" :
+                    esCorrecta ? "border-green-500 bg-green-500 text-white" :
+                    esSeleccionada ? "border-red-400 bg-red-400 text-white" :
+                    "border-[#d8e9f5] text-[#9ac1e2]"
+                  }`}>
+                    {!respondido ? String.fromCharCode(65 + i) :
+                      esCorrecta ? "✓" : esSeleccionada ? "✗" : String.fromCharCode(65 + i)}
+                  </span>
+                  {op}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Explicación + siguiente */}
+        {seleccion !== null && (
+          <div className="space-y-3">
+            <div className={`rounded-xl px-4 py-3 flex gap-2 text-xs leading-relaxed ${
+              seleccion === pregunta.correcta
+                ? "bg-green-50 border border-green-200 text-green-800"
+                : "bg-red-50 border border-red-200 text-red-800"
+            }`}>
+              <Lightbulb weight="duotone" className="h-4 w-4 flex-shrink-0 mt-0.5" />
+              {pregunta.explicacion}
+            </div>
+            <button
+              onClick={siguiente}
+              className={`w-full py-2.5 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 bg-gradient-to-r ${c.gradient} text-white hover:opacity-90 transition-opacity`}
+            >
+              {idx + 1 >= preguntas.length ? (
+                <><Trophy weight="duotone" className="h-4 w-4" /> Ver resultado</>
+              ) : (
+                <>Siguiente pregunta <ArrowRight weight="bold" className="h-4 w-4" /></>
+              )}
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
 
 // ─── Componente: Tarjeta de Resumen ─────────────────────────────────────────
@@ -144,6 +314,9 @@ function ResumenCard({ r, leido, onToggle }: { r: Resumen; leido: boolean; onTog
             <Lightbulb weight="duotone" className={`h-4 w-4 ${c.text} flex-shrink-0 mt-0.5`} />
             <p className="text-xs text-[#16324f] leading-relaxed">{r.dato_clave}</p>
           </div>
+
+          {/* Mini Quiz */}
+          <MiniQuiz preguntas={r.preguntas} color={r.color} />
 
           {/* Botón marcar */}
           <button

@@ -1,5 +1,12 @@
 // ─── Tipos ────────────────────────────────────────────────────────────────────
 
+export interface MiniPregunta {
+  pregunta: string;
+  opciones: string[];
+  correcta: number;
+  explicacion: string;
+}
+
 export interface Resumen {
   id: string;
   area: string;
@@ -11,6 +18,7 @@ export interface Resumen {
   principios: string[];
   articulos_clave: { numero: string; texto: string }[];
   dato_clave: string;
+  preguntas: MiniPregunta[];
 }
 
 export interface ArticuloClave {
@@ -67,6 +75,38 @@ export const resumenes: Resumen[] = [
     ],
     dato_clave:
       "La Corte de Constitucionalidad (CC) es el tribunal permanente que defiende el orden constitucional. Sus resoluciones en inconstitucionalidad general son vinculantes para todos.",
+    preguntas: [
+      {
+        pregunta: "¿En qué año entró en vigencia la Constitución actual de Guatemala?",
+        opciones: ["14 de enero de 1986", "31 de mayo de 1985", "1 de enero de 1993", "15 de septiembre de 1982"],
+        correcta: 0,
+        explicacion: "Fue promulgada el 31 de mayo de 1985, pero entró en vigor el 14 de enero de 1986 con la toma de posesión del gobierno civil.",
+      },
+      {
+        pregunta: "¿Cuál es el plazo máximo de detención sin ser presentado ante juez?",
+        opciones: ["6 horas", "24 horas", "48 horas", "12 horas"],
+        correcta: 0,
+        explicacion: "El Art. 6 CPRG establece que la detención preventiva no puede exceder de 6 horas sin ser puesta a disposición de autoridad judicial.",
+      },
+      {
+        pregunta: "¿Qué artículo establece la supremacía constitucional?",
+        opciones: ["Art. 175", "Art. 141", "Art. 44", "Art. 265"],
+        correcta: 0,
+        explicacion: "El Art. 175 establece que ninguna ley puede contradecir la Constitución y que las leyes contrarias son nulas ipso jure (de pleno derecho).",
+      },
+      {
+        pregunta: "Para reformar la Constitución de Guatemala se requiere:",
+        opciones: ["2/3 del Congreso + referendo popular", "Mayoría simple del Congreso", "Solo referendo popular", "Aprobación de la CC"],
+        correcta: 0,
+        explicacion: "El Art. 280 exige que las reformas sean aprobadas por las 2/3 partes del Congreso y luego ratificadas por referendo popular.",
+      },
+      {
+        pregunta: "¿Cuántos artículos tiene la Constitución Política de Guatemala?",
+        opciones: ["281 artículos", "300 artículos", "250 artículos", "320 artículos"],
+        correcta: 0,
+        explicacion: "La CPRG tiene 281 artículos organizados en una parte dogmática (derechos y garantías) y una parte orgánica (estructura del Estado).",
+      },
+    ],
   },
   {
     id: "penal",
@@ -99,6 +139,32 @@ export const resumenes: Resumen[] = [
     ],
     dato_clave:
       "El Ministerio Público (MP) ejerce la persecución penal pública. El imputado tiene derecho a defensor desde el momento de la detención (art. 92 CPP).",
+    preguntas: [
+      {
+        pregunta: "El principio 'nullum crimen sine lege' significa:",
+        opciones: ["No hay delito sin ley previa que lo defina", "No hay pena sin juez competente", "No hay juicio sin abogado", "No hay culpa sin dolo probado"],
+        correcta: 0,
+        explicacion: "El Art. 1 del Código Penal consagra este principio de legalidad: nadie puede ser penado por un hecho no tipificado como delito en ley anterior a su comisión.",
+      },
+      {
+        pregunta: "¿Cuál es la pena para el homicidio simple en Guatemala?",
+        opciones: ["8 a 15 años de prisión", "25 a 50 años de prisión", "5 a 10 años de prisión", "15 a 25 años de prisión"],
+        correcta: 0,
+        explicacion: "El Art. 107 del Código Penal establece que quien cause la muerte de otra persona será sancionado con 8 a 15 años de prisión. La pena de asesinato (con agravantes) es de 25 a 50 años.",
+      },
+      {
+        pregunta: "¿Qué exime de responsabilidad penal según el Art. 23 CP?",
+        opciones: ["La legítima defensa", "El estado de ebriedad", "La pobreza extrema", "La orden de un superior"],
+        correcta: 0,
+        explicacion: "El Art. 23 establece que no es imputable quien actúe en legítima defensa de su persona, bienes o derechos, siempre que se cumplan los requisitos (agresión ilegítima, necesidad racional, falta de provocación).",
+      },
+      {
+        pregunta: "¿Cuál es la diferencia entre dolo y culpa en el Código Penal?",
+        opciones: ["Dolo: intención de cometer el delito; culpa: omisión de la diligencia debida", "Dolo: actuar sin intención; culpa: actuar con malicia", "Dolo: delito grave; culpa: falta leve", "Son sinónimos en la ley guatemalteca"],
+        correcta: 0,
+        explicacion: "Arts. 8 y 9 CP: el dolo requiere intención de causar el resultado (Art. 8), mientras que la culpa ocurre cuando se produce el resultado por omitir la diligencia o cuidado que debía tenerse (Art. 9).",
+      },
+    ],
   },
   {
     id: "civil",
@@ -131,6 +197,32 @@ export const resumenes: Resumen[] = [
     ],
     dato_clave:
       "En Guatemala el matrimonio civil se celebra ante el Registro Civil. Los bienes del matrimonio se rigen por el régimen de comunidad absoluta salvo pacto en contrario (capitulaciones).",
+    preguntas: [
+      {
+        pregunta: "¿Cuándo comienza la personalidad civil según el Código Civil guatemalteco?",
+        opciones: ["Con el nacimiento", "Desde la concepción", "Al cumplir 18 años", "Con la inscripción en el Registro Civil"],
+        correcta: 0,
+        explicacion: "El Art. 1 del Código Civil establece que la personalidad civil comienza con el nacimiento y termina con la muerte. La personalidad civil otorga capacidad de ser sujeto de derechos y obligaciones.",
+      },
+      {
+        pregunta: "¿Cuál es el plazo de prescripción ordinaria para acciones personales según el Código Civil?",
+        opciones: ["10 años", "5 años", "2 años", "15 años"],
+        correcta: 0,
+        explicacion: "El Art. 1785 CC establece que las acciones personales prescriben en 10 años. Existen plazos especiales más cortos para ciertos tipos de acciones.",
+      },
+      {
+        pregunta: "¿Qué establece el Art. 1517 del Código Civil sobre el contrato?",
+        opciones: ["Es un acuerdo de voluntades que crea, modifica o extingue obligaciones", "Es un acto unilateral del Estado", "Requiere siempre escritura pública", "Solo pueden celebrarlo mayores de 21 años"],
+        correcta: 0,
+        explicacion: "El contrato se define como el acuerdo entre dos o más personas para crear, modificar o extinguir una obligación. La autonomía de la voluntad es principio central del Derecho Civil.",
+      },
+      {
+        pregunta: "Según el Código Civil, ¿quién está obligado a reparar el daño causado a otro?",
+        opciones: ["Toda persona que cause daño, sea intencional o por descuido", "Solo quien actúa con intención de dañar", "Solo el empleador, nunca el trabajador", "Nadie, si actuó de buena fe"],
+        correcta: 0,
+        explicacion: "El Art. 1645 CC establece la responsabilidad extracontractual: toda persona que cause daño o perjuicio a otra, sea intencionalmente o por descuido, está obligada a repararlo.",
+      },
+    ],
   },
   {
     id: "laboral",
@@ -163,6 +255,38 @@ export const resumenes: Resumen[] = [
     ],
     dato_clave:
       "El Salario Mínimo se fija anualmente por el Gobierno. Existen tres categorías: actividades agrícolas, no agrícolas y exportación/maquila. El Bono 14 (Decreto 42-92) es equivalente a un salario mensual, pagado en julio.",
+    preguntas: [
+      {
+        pregunta: "¿Cuántos días hábiles de vacaciones corresponden al trabajador por año de trabajo?",
+        opciones: ["15 días hábiles", "10 días hábiles", "20 días hábiles", "30 días calendarios"],
+        correcta: 0,
+        explicacion: "El Art. 126 del Código de Trabajo garantiza 15 días hábiles de vacaciones remuneradas después de cada año de trabajo continuo al servicio del mismo patrono.",
+      },
+      {
+        pregunta: "La indemnización por despido injustificado equivale a:",
+        opciones: ["1 mes de salario por cada año laborado", "2 meses de salario por cada año", "6 meses de salario fijos", "3 meses independientemente del tiempo"],
+        correcta: 0,
+        explicacion: "El Art. 82 CT establece que si el empleador termina el contrato sin causa justificada, debe pagar al trabajador una indemnización equivalente a un mes de salario por cada año de trabajo continuo.",
+      },
+      {
+        pregunta: "¿Qué significa el principio 'in dubio pro operario' en el Derecho Laboral?",
+        opciones: ["La duda se resuelve siempre a favor del trabajador", "El patrón tiene más derechos procesales", "El contrato verbal no genera obligaciones", "Se presume culpa del empleador en todo caso"],
+        correcta: 0,
+        explicacion: "Este principio establece que cuando una norma laboral admita varias interpretaciones, debe aplicarse la más favorable al trabajador. Es expresión del carácter tutelar del Derecho Laboral.",
+      },
+      {
+        pregunta: "¿Cuál es la jornada ordinaria diurna máxima según el Código de Trabajo?",
+        opciones: ["8 horas diarias, 44 semanales", "10 horas diarias, 50 semanales", "8 horas diarias, 40 semanales", "6 horas diarias, 36 semanales"],
+        correcta: 0,
+        explicacion: "El Art. 130 CT fija la jornada ordinaria diurna en un máximo de 8 horas diarias y 44 horas semanales. La jornada nocturna (18:00-06:00) es de 6 horas diarias.",
+      },
+      {
+        pregunta: "¿Cuándo se paga el Bono 14 y a qué equivale?",
+        opciones: ["En julio, equivale a un salario mensual", "En diciembre, equivale a un salario mensual", "En enero, equivale a medio salario", "En julio, equivale a dos salarios"],
+        correcta: 0,
+        explicacion: "El Bono 14 (Decreto 42-92) es una prestación laboral obligatoria equivalente al 100% del salario mensual, pagadera en la primera quincena de julio. El Aguinaldo también equivale a un salario, pero se paga en diciembre.",
+      },
+    ],
   },
   {
     id: "mercantil",
@@ -195,6 +319,32 @@ export const resumenes: Resumen[] = [
     ],
     dato_clave:
       "El Registro Mercantil es la institución donde se inscriben las empresas y sociedades. Toda sociedad debe inscribirse antes de operar. El número de patente es la identificación oficial del negocio.",
+    preguntas: [
+      {
+        pregunta: "En una Sociedad Anónima, ¿hasta qué monto responden los accionistas por las deudas sociales?",
+        opciones: ["Solo hasta el monto de sus acciones suscritas", "Con todo su patrimonio personal", "Con el doble del capital aportado", "No responden en ningún caso"],
+        correcta: 0,
+        explicacion: "El Art. 87 del Código de Comercio establece la responsabilidad limitada como característica esencial de la SA: los socios solo responden hasta el monto de las acciones que hubieren suscrito.",
+      },
+      {
+        pregunta: "¿Cuál es el plazo de prescripción del cheque en Guatemala?",
+        opciones: ["6 meses desde la fecha de emisión", "1 año desde la emisión", "3 meses desde la presentación", "2 años desde la emisión"],
+        correcta: 0,
+        explicacion: "El Art. 441 CM establece que el cheque presentado al cobro después de 6 meses desde su creación pierde su acción cambiaria. Por ello es importante cobrar los cheques a tiempo.",
+      },
+      {
+        pregunta: "¿Qué es la letra de cambio según el Código de Comercio?",
+        opciones: ["Una orden incondicional de pago a cargo de un tercero", "Una promesa personal de pago", "Un contrato de seguro", "Un título de participación en sociedad"],
+        correcta: 0,
+        explicacion: "El Art. 294 CM define la letra de cambio como un título de crédito que contiene una orden incondicional de pago. A diferencia del pagaré (promesa de pago), la letra involucra a un girador que ordena pagar a un girado.",
+      },
+      {
+        pregunta: "¿Dónde deben inscribirse obligatoriamente las sociedades mercantiles antes de operar?",
+        opciones: ["Registro Mercantil", "Registro Civil", "SAT únicamente", "Ministerio de Economía"],
+        correcta: 0,
+        explicacion: "Toda sociedad mercantil debe inscribirse en el Registro Mercantil antes de iniciar operaciones. El Registro otorga la patente de comercio que es la identificación oficial del negocio.",
+      },
+    ],
   },
   {
     id: "administrativo",
@@ -227,6 +377,32 @@ export const resumenes: Resumen[] = [
     ],
     dato_clave:
       "Guatecompras (www.guatecompras.gt) es el sistema de contrataciones del Estado. Toda compra pública superior a Q30,000 debe publicarse allí. La transparencia en el gasto público es un derecho ciudadano (Ley de Acceso a la Información, Decreto 57-2008).",
+    preguntas: [
+      {
+        pregunta: "¿En qué plazo debe interponerse el recurso de revocatoria contra un acto administrativo?",
+        opciones: ["3 días hábiles desde la notificación", "10 días hábiles", "30 días calendarios", "15 días hábiles"],
+        correcta: 0,
+        explicacion: "El Art. 7 de la Ley de lo Contencioso-Administrativo establece un plazo de solo 3 días hábiles para interponer el recurso de revocatoria. Este plazo es fatal: si se vence, el acto queda firme.",
+      },
+      {
+        pregunta: "¿Qué institución fiscaliza el uso de los fondos públicos en Guatemala?",
+        opciones: ["Contraloría General de Cuentas", "Ministerio de Finanzas", "SAT", "Procuraduría General de la Nación"],
+        correcta: 0,
+        explicacion: "El Art. 232 CPRG establece que la Contraloría General de Cuentas es la institución técnica descentralizada con funciones fiscalizadoras de los ingresos, egresos y todo interés hacendario.",
+      },
+      {
+        pregunta: "El principio de legalidad administrativa significa que la Administración Pública:",
+        opciones: ["Solo puede hacer lo que la ley expresamente le permite", "Puede hacer todo lo que la ley no prohíba", "Actúa con discrecionalidad absoluta", "No está sujeta a control judicial"],
+        correcta: 0,
+        explicacion: "A diferencia del principio de libertad de los particulares (pueden hacer todo lo no prohibido), la Administración solo puede actuar dentro de lo que la ley le autoriza expresamente. Este es el principio de juridicidad o legalidad administrativa.",
+      },
+      {
+        pregunta: "¿Qué establece el Art. 155 CPRG respecto a los funcionarios públicos?",
+        opciones: ["El Estado puede repetir contra el funcionario que causó el daño", "Los funcionarios no tienen responsabilidad personal", "Solo el Estado responde por actos de funcionarios", "Los funcionarios responden solidariamente con el Estado siempre"],
+        correcta: 0,
+        explicacion: "El Art. 155 CPRG establece el derecho de repetición: cuando el Estado pague una indemnización por actos ilícitos de sus funcionarios, puede luego demandar al funcionario responsable para recuperar lo pagado.",
+      },
+    ],
   },
   {
     id: "tributario",
@@ -259,6 +435,32 @@ export const resumenes: Resumen[] = [
     ],
     dato_clave:
       "La Factura Electrónica en Línea (FEL) es obligatoria desde 2019 para la mayoría de contribuyentes. Todo ciudadano puede verificar la validez de una factura en el portal de la SAT (portal.sat.gob.gt).",
+    preguntas: [
+      {
+        pregunta: "¿A qué institución corresponde exclusivamente crear impuestos en Guatemala?",
+        opciones: ["Al Congreso de la República", "Al Presidente de la República", "A la SAT", "Al Ministerio de Finanzas Públicas"],
+        correcta: 0,
+        explicacion: "El Art. 239 CPRG establece el principio de legalidad tributaria: corresponde con exclusividad al Congreso decretar impuestos ordinarios y extraordinarios. La SAT solo los administra y recauda.",
+      },
+      {
+        pregunta: "¿Cuál es la tasa del Impuesto al Valor Agregado (IVA) en Guatemala?",
+        opciones: ["12%", "15%", "10%", "18%"],
+        correcta: 0,
+        explicacion: "El Art. 10 de la Ley del IVA establece una tasa del 12% sobre el precio de venta de bienes y la prestación de servicios. Del 12%, el 1.5% se destina al fondo de paz para el financiamiento de la educación y el deporte.",
+      },
+      {
+        pregunta: "¿En cuántos años prescribe el derecho de la SAT para fiscalizar o cobrar tributos?",
+        opciones: ["4 años", "5 años", "10 años", "2 años"],
+        correcta: 0,
+        explicacion: "El Art. 47 del Código Tributario establece que el derecho de la Administración Tributaria para hacer verificaciones, ajustes o determinaciones de obligaciones tributarias prescribe en 4 años.",
+      },
+      {
+        pregunta: "¿Qué es el 'hecho generador' según el Código Tributario?",
+        opciones: ["El presupuesto legal cuya realización origina la obligación tributaria", "El momento en que se paga el impuesto", "La sanción por no pagar impuestos", "La declaración ante la SAT"],
+        correcta: 0,
+        explicacion: "El Art. 31 CT define el hecho generador como el presupuesto establecido por la ley para tipificar el tributo, cuya realización origina el nacimiento de la obligación tributaria. Por ejemplo, en el IVA el hecho generador es la venta de bienes o prestación de servicios.",
+      },
+    ],
   },
 ];
 
