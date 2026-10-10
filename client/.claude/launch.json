@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "juridia-client",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "cwd": "/Users/haironchavez/Desktop/Proyectos 2026/Academy /derecho-gt/client",
+      "port": 5173
+    }
+  ]
+}
