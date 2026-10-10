@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useEffect, useRef } from "react";
+import { QueryClient, QueryClientProvider, useQueryClient } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { supabase } from "./lib/supabase";
 import { useAuthStore } from "./store/authStore";
@@ -50,9 +50,20 @@ const queryClient = new QueryClient({
   },
 });
 
-function App() {
+function AppInner() {
   const updateToken = useAuthStore((s) => s.updateToken);
   const logout = useAuthStore((s) => s.logout);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const qc = useQueryClient();
+  const prevAuth = useRef(isAuthenticated);
+
+  // Clear React Query cache on logout so user-specific data never leaks to the next session
+  useEffect(() => {
+    if (prevAuth.current && !isAuthenticated) {
+      qc.clear();
+    }
+    prevAuth.current = isAuthenticated;
+  }, [isAuthenticated, qc]);
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
@@ -71,60 +82,66 @@ function App() {
   }, [updateToken, logout]);
 
   return (
+    <BrowserRouter>
+      <Routes>
+        {/* ── Pantalla de entrada (Beta Landing) ── */}
+        <Route path="/" element={<BetaLanding />} />
+
+        {/* ── OAuth callback y recuperación de contraseña — fuera de SessionGuard ── */}
+        <Route path="/auth/callback" element={<AuthCallback />} />
+        <Route path="/nueva-password" element={<NuevaPassword />} />
+
+        {/* ── Admin — login público, panel protegido por AdminGuard ── */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+        <Route element={<AdminGuard />}>
+          <Route element={<AdminLayout />}>
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/usuarios" element={<AdminUsuarios />} />
+            <Route path="/admin/cursos" element={<AdminCursos />} />
+          </Route>
+        </Route>
+
+        {/* ── Rutas principales — requieren haber pasado por BetaLanding ── */}
+        <Route element={<SessionGuard />}>
+          <Route element={<MainLayout />}>
+            <Route path="/inicio" element={<Home />} />
+            <Route path="/cursos" element={<Cursos />} />
+            <Route path="/cursos/:id" element={<CursoDetalle />} />
+            <Route path="/cursos/:cursoId/leccion/:moduloId" element={<LeccionViewer />} />
+            <Route path="/cursos/:cursoId/evaluacion" element={<EvaluacionFinal />} />
+            <Route path="/foros" element={<Foros />} />
+            <Route path="/foros/:id" element={<ForoDetalle />} />
+            <Route path="/planes" element={<PlanesEstudio />} />
+            <Route path="/planes/:id" element={<PlanDetalle />} />
+            <Route path="/material" element={<MaterialEstudio />} />
+            <Route path="/premium" element={<Premium />} />
+            <Route path="/registro" element={<Registro />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/olvide-password" element={<OlvidePassword />} />
+            <Route path="/progreso" element={<Progreso />} />
+            <Route path="/glosario" element={<Glosario />} />
+            <Route path="/constituquiz" element={<ConstituQuizHome />} />
+            <Route path="/constituquiz/estudio/:temaId" element={<QuizStudyMode />} />
+            <Route path="/constituquiz/practica/:temaId" element={<QuizPracticeMode />} />
+            <Route path="/constituquiz/resultados/:temaId" element={<QuizResults />} />
+            <Route path="/casos" element={<CasosHome />} />
+            <Route path="/casos/:id" element={<CasoDetalle />} />
+            <Route path="/examen" element={<ExamenSimulado />} />
+            <Route path="/historia" element={<Timeline />} />
+            <Route path="/liquidacion" element={<CalculadoraLiquidacion />} />
+            <Route path="/documentos" element={<GeneradorDocumentos />} />
+          </Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+function App() {
+  return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Routes>
-          {/* ── Pantalla de entrada (Beta Landing) ── */}
-          <Route path="/" element={<BetaLanding />} />
-
-          {/* ── OAuth callback y recuperación de contraseña — fuera de SessionGuard ── */}
-          <Route path="/auth/callback" element={<AuthCallback />} />
-          <Route path="/nueva-password" element={<NuevaPassword />} />
-
-          {/* ── Admin — login público, panel protegido por AdminGuard ── */}
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
-          <Route element={<AdminGuard />}>
-            <Route element={<AdminLayout />}>
-              <Route path="/admin/dashboard" element={<AdminDashboard />} />
-              <Route path="/admin/usuarios" element={<AdminUsuarios />} />
-              <Route path="/admin/cursos" element={<AdminCursos />} />
-            </Route>
-          </Route>
-
-          {/* ── Rutas principales — requieren haber pasado por BetaLanding ── */}
-          <Route element={<SessionGuard />}>
-            <Route element={<MainLayout />}>
-              <Route path="/inicio" element={<Home />} />
-              <Route path="/cursos" element={<Cursos />} />
-              <Route path="/cursos/:id" element={<CursoDetalle />} />
-              <Route path="/cursos/:cursoId/leccion/:moduloId" element={<LeccionViewer />} />
-              <Route path="/cursos/:cursoId/evaluacion" element={<EvaluacionFinal />} />
-              <Route path="/foros" element={<Foros />} />
-              <Route path="/foros/:id" element={<ForoDetalle />} />
-              <Route path="/planes" element={<PlanesEstudio />} />
-              <Route path="/planes/:id" element={<PlanDetalle />} />
-              <Route path="/material" element={<MaterialEstudio />} />
-              <Route path="/premium" element={<Premium />} />
-              <Route path="/registro" element={<Registro />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/olvide-password" element={<OlvidePassword />} />
-              <Route path="/progreso" element={<Progreso />} />
-              <Route path="/glosario" element={<Glosario />} />
-              <Route path="/constituquiz" element={<ConstituQuizHome />} />
-              <Route path="/constituquiz/estudio/:temaId" element={<QuizStudyMode />} />
-              <Route path="/constituquiz/practica/:temaId" element={<QuizPracticeMode />} />
-              <Route path="/constituquiz/resultados/:temaId" element={<QuizResults />} />
-              <Route path="/casos" element={<CasosHome />} />
-              <Route path="/casos/:id" element={<CasoDetalle />} />
-              <Route path="/examen" element={<ExamenSimulado />} />
-              <Route path="/historia" element={<Timeline />} />
-              <Route path="/liquidacion" element={<CalculadoraLiquidacion />} />
-              <Route path="/documentos" element={<GeneradorDocumentos />} />
-            </Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <AppInner />
     </QueryClientProvider>
   );
 }
