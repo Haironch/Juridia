@@ -1,22 +1,25 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import {
   BookOpen, MagnifyingGlass, X, CaretDown, CaretUp, Copy, Check,
   ArrowLeft, ArrowSquareOut, ListChecks, Lightbulb, Clock,
+  ArrowRight, Cards, CheckCircle, Circle, Trophy, Star,
 } from "@phosphor-icons/react";
 import {
   resumenes, articulosClave, guias, AREAS_FILTRO,
   type Resumen, type ArticuloClave, type GuiaPractica,
 } from "../../data/material";
 
-const COLOR_MAP: Record<string, { bg: string; border: string; badge: string; text: string; dot: string }> = {
-  blue:   { bg: "bg-blue-50",   border: "border-blue-200",   badge: "bg-blue-100 text-blue-700",   text: "text-blue-700",   dot: "bg-blue-500" },
-  red:    { bg: "bg-red-50",    border: "border-red-200",    badge: "bg-red-100 text-red-700",     text: "text-red-700",    dot: "bg-red-500" },
-  green:  { bg: "bg-green-50",  border: "border-green-200",  badge: "bg-green-100 text-green-700", text: "text-green-700",  dot: "bg-green-500" },
-  teal:   { bg: "bg-teal-50",   border: "border-teal-200",   badge: "bg-teal-100 text-teal-700",   text: "text-teal-700",   dot: "bg-teal-500" },
-  amber:  { bg: "bg-amber-50",  border: "border-amber-200",  badge: "bg-amber-100 text-amber-700", text: "text-amber-700",  dot: "bg-amber-500" },
-  purple: { bg: "bg-purple-50", border: "border-purple-200", badge: "bg-purple-100 text-purple-700", text: "text-purple-700", dot: "bg-purple-500" },
-  orange: { bg: "bg-orange-50", border: "border-orange-200", badge: "bg-orange-100 text-orange-700", text: "text-orange-700", dot: "bg-orange-500" },
+// ─── Color map ───────────────────────────────────────────────────────────────
+
+const COLOR_MAP: Record<string, { bg: string; border: string; badge: string; text: string; dot: string; gradient: string }> = {
+  blue:   { bg: "bg-blue-50",   border: "border-blue-200",   badge: "bg-blue-100 text-blue-700",   text: "text-blue-700",   dot: "bg-blue-500",   gradient: "from-blue-600 to-blue-800" },
+  red:    { bg: "bg-red-50",    border: "border-red-200",    badge: "bg-red-100 text-red-700",     text: "text-red-700",    dot: "bg-red-500",    gradient: "from-red-600 to-red-800" },
+  green:  { bg: "bg-green-50",  border: "border-green-200",  badge: "bg-green-100 text-green-700", text: "text-green-700",  dot: "bg-green-500",  gradient: "from-green-600 to-green-800" },
+  teal:   { bg: "bg-teal-50",   border: "border-teal-200",   badge: "bg-teal-100 text-teal-700",   text: "text-teal-700",   dot: "bg-teal-500",   gradient: "from-teal-600 to-teal-800" },
+  amber:  { bg: "bg-amber-50",  border: "border-amber-200",  badge: "bg-amber-100 text-amber-700", text: "text-amber-700",  dot: "bg-amber-500",  gradient: "from-amber-500 to-amber-700" },
+  purple: { bg: "bg-purple-50", border: "border-purple-200", badge: "bg-purple-100 text-purple-700", text: "text-purple-700", dot: "bg-purple-500", gradient: "from-purple-600 to-purple-800" },
+  orange: { bg: "bg-orange-50", border: "border-orange-200", badge: "bg-orange-100 text-orange-700", text: "text-orange-700", dot: "bg-orange-500", gradient: "from-orange-500 to-orange-700" },
 };
 
 const AREA_COLOR: Record<string, string> = {
@@ -29,31 +32,73 @@ const AREA_COLOR: Record<string, string> = {
   Tributario:     "bg-orange-100 text-orange-700 border-orange-200",
 };
 
-// ─── Componente: Tarjeta de Resumen ──────────────────────────────────────────
+// ─── Hook: localStorage progress ────────────────────────────────────────────
 
-function ResumenCard({ r }: { r: Resumen }) {
+function useProgress(key: string) {
+  const [leidos, setLeidos] = useState<Set<string>>(() => {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? new Set(JSON.parse(raw)) : new Set();
+    } catch { return new Set(); }
+  });
+
+  const toggle = (id: string) => {
+    setLeidos((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      try { localStorage.setItem(key, JSON.stringify([...next])); } catch {}
+      return next;
+    });
+  };
+
+  return { leidos, toggle };
+}
+
+// ─── Componente: Tarjeta de Resumen ─────────────────────────────────────────
+
+function ResumenCard({ r, leido, onToggle }: { r: Resumen; leido: boolean; onToggle: () => void }) {
   const [abierto, setAbierto] = useState(false);
   const c = COLOR_MAP[r.color] ?? COLOR_MAP.blue;
 
   return (
-    <div className={`bg-white rounded-2xl border ${c.border} shadow-sm overflow-hidden`}>
+    <div className={`bg-white rounded-2xl border-2 shadow-sm overflow-hidden transition-all duration-200 ${
+      leido ? "border-green-300 opacity-90" : c.border
+    }`}>
+      {/* Cabecera coloreada */}
+      <div className={`bg-gradient-to-r ${c.gradient} px-5 py-4 flex items-center gap-3`}>
+        <span className="text-2xl">{r.icono}</span>
+        <div className="flex-1 min-w-0">
+          <h3 className="text-base font-bold text-white leading-tight">{r.area}</h3>
+          <p className="text-xs text-white/70 mt-0.5 truncate">{r.decreto}</p>
+        </div>
+        <button
+          onClick={(e) => { e.stopPropagation(); onToggle(); }}
+          title={leido ? "Marcar como no leído" : "Marcar como leído"}
+          className="flex-shrink-0 p-1.5 rounded-lg bg-white/20 hover:bg-white/30 transition-colors"
+        >
+          {leido
+            ? <CheckCircle weight="fill" className="h-5 w-5 text-green-300" />
+            : <Circle weight="regular" className="h-5 w-5 text-white/60" />}
+        </button>
+      </div>
+
+      {/* Cuerpo */}
       <button
         onClick={() => setAbierto((p) => !p)}
-        className="w-full text-left px-5 py-5 flex items-start gap-4"
+        className="w-full text-left px-5 py-4 flex items-start gap-3"
       >
-        <div className={`w-11 h-11 rounded-xl ${c.bg} ${c.border} border flex items-center justify-center flex-shrink-0 text-xl`}>
-          {r.icono}
-        </div>
         <div className="flex-1 min-w-0">
-          <div className="flex flex-wrap items-center gap-2 mb-1">
-            <h3 className="text-base font-bold text-[#13293d]">{r.area}</h3>
+          <p className="text-sm text-[#16324f] leading-relaxed line-clamp-2">{r.descripcion}</p>
+          <div className="flex items-center gap-3 mt-2">
+            <span className="text-xs text-[#5a8aaa] flex items-center gap-1">
+              <Star weight="duotone" className={`h-3.5 w-3.5 ${c.text}`} />
+              {r.principios.length} principios
+            </span>
+            <span className="text-xs text-[#5a8aaa]">·</span>
+            <span className="text-xs text-[#5a8aaa]">{r.articulos_clave.length} artículos clave</span>
           </div>
-          <p className="text-xs text-[#5a8aaa] font-medium">{r.decreto}</p>
-          {!abierto && (
-            <p className="text-sm text-[#16324f] mt-1.5 line-clamp-2 leading-relaxed">{r.descripcion}</p>
-          )}
         </div>
-        <div className="flex-shrink-0 mt-0.5">
+        <div className="flex-shrink-0 mt-1">
           {abierto
             ? <CaretUp weight="bold" className="h-4 w-4 text-[#5a8aaa]" />
             : <CaretDown weight="bold" className="h-4 w-4 text-[#5a8aaa]" />}
@@ -66,24 +111,28 @@ function ResumenCard({ r }: { r: Resumen }) {
 
           {/* Principios */}
           <div>
-            <p className="text-xs font-bold text-[#2a628f] uppercase tracking-wider mb-2">Principios fundamentales</p>
-            <ul className="space-y-1.5">
+            <p className="text-xs font-bold text-[#2a628f] uppercase tracking-wider mb-3">
+              Principios fundamentales
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {r.principios.map((p) => (
-                <li key={p} className="flex items-start gap-2 text-sm text-[#16324f]">
-                  <span className={`w-1.5 h-1.5 rounded-full ${c.dot} mt-1.5 flex-shrink-0`} />
-                  {p}
-                </li>
+                <div key={p} className={`flex items-start gap-2 text-xs ${c.bg} ${c.border} border rounded-lg px-3 py-2`}>
+                  <span className={`w-1.5 h-1.5 rounded-full ${c.dot} mt-1 flex-shrink-0`} />
+                  <span className="text-[#16324f] leading-snug">{p}</span>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
 
           {/* Artículos clave */}
           <div>
-            <p className="text-xs font-bold text-[#2a628f] uppercase tracking-wider mb-2">Artículos más citados</p>
+            <p className="text-xs font-bold text-[#2a628f] uppercase tracking-wider mb-3">
+              Artículos más citados
+            </p>
             <div className="space-y-2">
               {r.articulos_clave.map((a) => (
                 <div key={a.numero} className={`rounded-xl ${c.bg} px-4 py-3 flex gap-3`}>
-                  <span className={`text-xs font-bold ${c.text} flex-shrink-0 pt-0.5 w-20`}>{a.numero}</span>
+                  <span className={`text-xs font-bold ${c.text} flex-shrink-0 w-16`}>{a.numero}</span>
                   <span className="text-xs text-[#16324f] leading-relaxed">{a.texto}</span>
                 </div>
               ))}
@@ -95,16 +144,33 @@ function ResumenCard({ r }: { r: Resumen }) {
             <Lightbulb weight="duotone" className={`h-4 w-4 ${c.text} flex-shrink-0 mt-0.5`} />
             <p className="text-xs text-[#16324f] leading-relaxed">{r.dato_clave}</p>
           </div>
+
+          {/* Botón marcar */}
+          <button
+            onClick={onToggle}
+            className={`w-full py-2.5 rounded-xl text-sm font-semibold transition-colors flex items-center justify-center gap-2 ${
+              leido
+                ? "bg-green-50 text-green-700 border border-green-200 hover:bg-green-100"
+                : `${c.bg} ${c.text} border ${c.border} hover:opacity-80`
+            }`}
+          >
+            {leido ? (
+              <><CheckCircle weight="fill" className="h-4 w-4" /> Leído — clic para desmarcar</>
+            ) : (
+              <><Circle weight="regular" className="h-4 w-4" /> Marcar como leído</>
+            )}
+          </button>
         </div>
       )}
     </div>
   );
 }
 
-// ─── Componente: Tarjeta de Artículo ─────────────────────────────────────────
+// ─── Componente: Tarjeta de Artículo (lista) ─────────────────────────────────
 
 function ArticuloCard({ a }: { a: ArticuloClave }) {
   const [copiado, setCopiado] = useState(false);
+  const colorClass = AREA_COLOR[a.area] ?? "bg-gray-100 text-gray-600 border-gray-200";
 
   const copiar = () => {
     navigator.clipboard.writeText(`${a.articulo} ${a.codigo}: ${a.texto}`);
@@ -112,10 +178,8 @@ function ArticuloCard({ a }: { a: ArticuloClave }) {
     setTimeout(() => setCopiado(false), 1800);
   };
 
-  const colorClass = AREA_COLOR[a.area] ?? "bg-gray-100 text-gray-600 border-gray-200";
-
   return (
-    <div className="bg-white rounded-2xl border border-[#9ac1e2] shadow-sm p-4 flex gap-3">
+    <div className="bg-white rounded-2xl border border-[#9ac1e2] shadow-sm p-4 flex gap-3 hover:border-[#2a628f]/40 hover:shadow-md transition-all">
       <div className="flex-1 min-w-0">
         <div className="flex flex-wrap items-center gap-2 mb-2">
           <span className="text-sm font-bold text-[#2a628f]">{a.articulo}</span>
@@ -123,7 +187,7 @@ function ArticuloCard({ a }: { a: ArticuloClave }) {
           <span className={`text-xs font-medium px-2 py-0.5 rounded-full border ${colorClass}`}>{a.area}</span>
         </div>
         <p className="text-sm text-[#16324f] leading-relaxed">{a.texto}</p>
-        <p className="text-xs text-[#5a8aaa] mt-1.5 font-medium">{a.relevancia}</p>
+        <p className="text-xs text-[#5a8aaa] mt-1.5 italic">{a.relevancia}</p>
       </div>
       <button
         onClick={copiar}
@@ -138,30 +202,161 @@ function ArticuloCard({ a }: { a: ArticuloClave }) {
   );
 }
 
-// ─── Componente: Tarjeta de Guía ─────────────────────────────────────────────
+// ─── Componente: Modo Flashcard ───────────────────────────────────────────────
 
-function GuiaCard({ g }: { g: GuiaPractica }) {
-  const [abierto, setAbierto] = useState(false);
-  const colorClass = AREA_COLOR[g.area] ?? "bg-gray-100 text-gray-600 border-gray-200";
+function FlashcardMode({ articulos }: { articulos: ArticuloClave[] }) {
+  const [idx, setIdx] = useState(0);
+  const [volteado, setVolteado] = useState(false);
+  const [vistos, setVistos] = useState<Set<number>>(new Set());
+
+  useEffect(() => { setVolteado(false); }, [idx]);
+
+  const card = articulos[idx];
+  if (!card) return null;
+
+  const colorClass = AREA_COLOR[card.area] ?? "bg-gray-100 text-gray-600 border-gray-200";
+  const pct = Math.round((vistos.size / articulos.length) * 100);
+
+  const marcarVisto = () => setVistos((p) => { const n = new Set(p); n.add(idx); return n; });
+  const prev = () => setIdx((i) => (i > 0 ? i - 1 : articulos.length - 1));
+  const next = () => { marcarVisto(); setIdx((i) => (i < articulos.length - 1 ? i + 1 : 0)); };
 
   return (
-    <div className="bg-white rounded-2xl border border-[#9ac1e2] shadow-sm overflow-hidden">
+    <div className="space-y-5">
+      {/* Barra de progreso */}
+      <div className="flex items-center gap-3">
+        <div className="flex-1 h-2 bg-[#d8e9f5] rounded-full overflow-hidden">
+          <div
+            className="h-full bg-[#2a628f] rounded-full transition-all duration-500"
+            style={{ width: `${pct}%` }}
+          />
+        </div>
+        <span className="text-xs font-semibold text-[#5a8aaa] whitespace-nowrap">
+          {vistos.size}/{articulos.length} vistos
+        </span>
+      </div>
+
+      {/* Tarjeta flip */}
+      <div
+        className="cursor-pointer select-none"
+        style={{ perspective: "1000px" }}
+        onClick={() => { setVolteado((v) => !v); if (!volteado) marcarVisto(); }}
+      >
+        <div
+          className="relative w-full transition-transform duration-500"
+          style={{
+            transformStyle: "preserve-3d",
+            transform: volteado ? "rotateY(180deg)" : "rotateY(0deg)",
+            minHeight: "220px",
+          }}
+        >
+          {/* Frente */}
+          <div
+            className="absolute inset-0 bg-gradient-to-br from-[#2a628f] to-[#13293d] rounded-2xl p-8 flex flex-col items-center justify-center text-center"
+            style={{ backfaceVisibility: "hidden" }}
+          >
+            <span className={`text-xs font-medium px-2.5 py-1 rounded-full border ${colorClass} mb-4`}>
+              {card.area}
+            </span>
+            <p className="text-2xl font-bold text-white mb-2">{card.articulo}</p>
+            <p className="text-sm text-[#9ac1e2]">{card.codigo}</p>
+            <p className="text-xs text-white/50 mt-6">Toca para ver el texto</p>
+          </div>
+
+          {/* Reverso */}
+          <div
+            className="absolute inset-0 bg-white border-2 border-[#9ac1e2] rounded-2xl p-8 flex flex-col items-center justify-center text-center"
+            style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+          >
+            <span className={`text-xs font-medium px-2.5 py-1 rounded-full border ${colorClass} mb-4`}>
+              {card.area} · {card.articulo}
+            </span>
+            <p className="text-base font-medium text-[#13293d] leading-relaxed mb-3">{card.texto}</p>
+            <p className="text-xs text-[#5a8aaa] italic">{card.relevancia}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Controles */}
+      <div className="flex items-center justify-between gap-4">
+        <button
+          onClick={prev}
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-[#9ac1e2] text-sm font-medium text-[#2a628f] hover:bg-[#d8e9f5] transition-colors"
+        >
+          <ArrowLeft weight="bold" className="h-4 w-4" /> Anterior
+        </button>
+
+        <span className="text-sm font-semibold text-[#5a8aaa]">
+          {idx + 1} / {articulos.length}
+        </span>
+
+        <button
+          onClick={next}
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#2a628f] text-white text-sm font-medium hover:bg-[#18435a] transition-colors"
+        >
+          Siguiente <ArrowRight weight="bold" className="h-4 w-4" />
+        </button>
+      </div>
+
+      {vistos.size === articulos.length && (
+        <div className="bg-green-50 border border-green-200 rounded-2xl px-6 py-4 flex items-center gap-3 text-sm text-green-700 font-medium">
+          <Trophy weight="duotone" className="h-5 w-5 text-green-600 flex-shrink-0" />
+          ¡Revisaste todos los artículos de esta selección!
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Componente: Tarjeta de Guía ─────────────────────────────────────────────
+
+function GuiaCard({ g, completada, onToggle }: { g: GuiaPractica; completada: boolean; onToggle: () => void }) {
+  const [abierto, setAbierto] = useState(false);
+  const [stepsCheck, setStepsCheck] = useState<Set<number>>(() => {
+    try {
+      const raw = localStorage.getItem(`guia_steps_${g.id}`);
+      return raw ? new Set(JSON.parse(raw)) : new Set();
+    } catch { return new Set(); }
+  });
+
+  const colorClass = AREA_COLOR[g.area] ?? "bg-gray-100 text-gray-600 border-gray-200";
+  const stepsPct = g.pasos.length > 0 ? Math.round((stepsCheck.size / g.pasos.length) * 100) : 0;
+
+  const toggleStep = (num: number) => {
+    setStepsCheck((prev) => {
+      const next = new Set(prev);
+      if (next.has(num)) next.delete(num); else next.add(num);
+      try { localStorage.setItem(`guia_steps_${g.id}`, JSON.stringify([...next])); } catch {}
+      return next;
+    });
+  };
+
+  return (
+    <div className={`bg-white rounded-2xl border-2 shadow-sm overflow-hidden transition-all duration-200 ${
+      completada ? "border-green-300" : "border-[#9ac1e2]"
+    }`}>
       <button
         onClick={() => setAbierto((p) => !p)}
         className="w-full text-left px-5 py-5 flex items-start gap-4"
       >
-        <div className="w-10 h-10 rounded-xl bg-[#d8e9f5] flex items-center justify-center flex-shrink-0">
+        <div className="w-11 h-11 rounded-xl bg-[#d8e9f5] flex items-center justify-center flex-shrink-0 relative">
           <ListChecks weight="duotone" className="h-5 w-5 text-[#2a628f]" />
+          {completada && (
+            <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+              <Check weight="bold" className="h-2.5 w-2.5 text-white" />
+            </div>
+          )}
         </div>
         <div className="flex-1 min-w-0">
-          <div className="flex flex-wrap items-center gap-2 mb-1">
-            <h3 className="text-base font-bold text-[#13293d]">{g.titulo}</h3>
-          </div>
-          <div className="flex flex-wrap gap-2 mt-1">
+          <h3 className="text-base font-bold text-[#13293d] leading-tight">{g.titulo}</h3>
+          <div className="flex flex-wrap gap-2 mt-1.5">
             <span className={`text-xs font-medium px-2 py-0.5 rounded-full border ${colorClass}`}>{g.area}</span>
             <span className="text-xs text-[#5a8aaa] flex items-center gap-1">
               <Clock weight="duotone" className="h-3 w-3" />{g.duracion}
             </span>
+            {stepsPct > 0 && (
+              <span className="text-xs text-green-600 font-medium">{stepsPct}% completado</span>
+            )}
           </div>
           {!abierto && (
             <p className="text-sm text-[#16324f] mt-1.5 line-clamp-2 leading-relaxed">{g.descripcion}</p>
@@ -178,23 +373,53 @@ function GuiaCard({ g }: { g: GuiaPractica }) {
         <div className="px-5 pb-6 space-y-5 border-t border-[#d8e9f5]">
           <p className="text-sm text-[#16324f] leading-relaxed pt-4">{g.descripcion}</p>
 
-          {/* Pasos */}
-          <div>
-            <p className="text-xs font-bold text-[#2a628f] uppercase tracking-wider mb-3">Pasos a seguir</p>
-            <div className="space-y-3">
-              {g.pasos.map((paso) => (
-                <div key={paso.numero} className="flex gap-3">
-                  <div className="w-6 h-6 rounded-full bg-[#2a628f] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
-                    {paso.numero}
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-[#13293d] mb-0.5">{paso.titulo}</p>
-                    <p className="text-sm text-[#16324f] leading-relaxed">{paso.detalle}</p>
-                  </div>
-                </div>
-              ))}
+          {/* Progreso de pasos */}
+          {g.pasos.length > 0 && (
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <p className="text-xs font-bold text-[#2a628f] uppercase tracking-wider">
+                  Pasos a seguir
+                </p>
+                <span className="text-xs text-[#5a8aaa]">{stepsCheck.size}/{g.pasos.length}</span>
+              </div>
+              <div className="h-1.5 bg-[#d8e9f5] rounded-full mb-4 overflow-hidden">
+                <div
+                  className="h-full bg-[#2a628f] rounded-full transition-all duration-500"
+                  style={{ width: `${stepsPct}%` }}
+                />
+              </div>
+              <div className="space-y-3">
+                {g.pasos.map((paso) => {
+                  const checked = stepsCheck.has(paso.numero);
+                  return (
+                    <div
+                      key={paso.numero}
+                      className={`flex gap-3 p-3 rounded-xl cursor-pointer transition-colors ${
+                        checked ? "bg-green-50 border border-green-200" : "hover:bg-[#f0f7ff]"
+                      }`}
+                      onClick={() => toggleStep(paso.numero)}
+                    >
+                      <div className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 transition-colors ${
+                        checked ? "bg-green-500" : "bg-[#2a628f]"
+                      }`}>
+                        {checked
+                          ? <Check weight="bold" className="h-3.5 w-3.5 text-white" />
+                          : <span className="text-white text-xs font-bold">{paso.numero}</span>}
+                      </div>
+                      <div>
+                        <p className={`text-sm font-semibold mb-0.5 ${checked ? "text-green-700 line-through" : "text-[#13293d]"}`}>
+                          {paso.titulo}
+                        </p>
+                        <p className={`text-sm leading-relaxed ${checked ? "text-green-600/70" : "text-[#16324f]"}`}>
+                          {paso.detalle}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Requisitos */}
           <div>
@@ -214,6 +439,21 @@ function GuiaCard({ g }: { g: GuiaPractica }) {
             <Lightbulb weight="duotone" className="h-4 w-4 text-[#2a628f] flex-shrink-0 mt-0.5" />
             <p className="text-xs text-[#16324f] leading-relaxed">{g.consejo}</p>
           </div>
+
+          <button
+            onClick={onToggle}
+            className={`w-full py-2.5 rounded-xl text-sm font-semibold transition-colors flex items-center justify-center gap-2 ${
+              completada
+                ? "bg-green-50 text-green-700 border border-green-200 hover:bg-green-100"
+                : "bg-[#d8e9f5] text-[#2a628f] border border-[#9ac1e2] hover:bg-[#c8dff0]"
+            }`}
+          >
+            {completada ? (
+              <><CheckCircle weight="fill" className="h-4 w-4" /> Guía completada — clic para desmarcar</>
+            ) : (
+              <><Circle weight="regular" className="h-4 w-4" /> Marcar guía como completada</>
+            )}
+          </button>
         </div>
       )}
     </div>
@@ -228,6 +468,10 @@ export default function MaterialEstudio() {
   const [tab, setTab] = useState<Tab>("resumenes");
   const [busqueda, setBusqueda] = useState("");
   const [areaFiltro, setAreaFiltro] = useState<string>("Todas");
+  const [modoFlash, setModoFlash] = useState(false);
+
+  const { leidos: resumenesLeidos, toggle: toggleResumen } = useProgress("material_resumenes_leidos");
+  const { leidos: guiasCompletadas, toggle: toggleGuia } = useProgress("material_guias_completadas");
 
   const resumenesFiltered = useMemo(() => {
     const q = busqueda.toLowerCase();
@@ -263,16 +507,21 @@ export default function MaterialEstudio() {
     });
   }, [busqueda, areaFiltro]);
 
-  const tabs: { id: Tab; label: string; count: number }[] = [
-    { id: "resumenes", label: "Resúmenes", count: resumenesFiltered.length },
-    { id: "articulos", label: "Artículos clave", count: articulosFiltered.length },
-    { id: "guias",     label: "Guías prácticas", count: guiasFiltered.length },
+  const tabs: { id: Tab; label: string; icon: ReactNode; count: number }[] = [
+    { id: "resumenes", label: "Resúmenes",       icon: <BookOpen weight="duotone" className="h-4 w-4" />,    count: resumenesFiltered.length },
+    { id: "articulos", label: "Artículos clave", icon: <Copy weight="duotone" className="h-4 w-4" />,        count: articulosFiltered.length },
+    { id: "guias",     label: "Guías prácticas", icon: <ListChecks weight="duotone" className="h-4 w-4" />,  count: guiasFiltered.length },
   ];
+
+  // Progreso total
+  const totalLeidos = resumenesLeidos.size + guiasCompletadas.size;
+  const totalItems  = resumenes.length + guias.length;
+  const progresoPct = totalItems > 0 ? Math.round((totalLeidos / totalItems) * 100) : 0;
 
   return (
     <div className="min-h-screen bg-[#d8e9f5]">
-      {/* Header */}
-      <div className="bg-gradient-to-br from-[#13293d] via-[#18435a] to-[#2a628f] py-14">
+      {/* Hero */}
+      <div className="bg-gradient-to-br from-[#13293d] via-[#18435a] to-[#2a628f] py-12">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
             to="/inicio"
@@ -281,7 +530,8 @@ export default function MaterialEstudio() {
             <ArrowLeft weight="bold" className="h-4 w-4" />
             Volver al inicio
           </Link>
-          <div className="flex items-start gap-4">
+
+          <div className="flex items-start gap-4 mb-6">
             <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center flex-shrink-0">
               <BookOpen weight="duotone" className="h-6 w-6 text-white" />
             </div>
@@ -295,26 +545,48 @@ export default function MaterialEstudio() {
             </div>
           </div>
 
-          {/* Stats */}
-          <div className="flex flex-wrap gap-4 mt-8">
-            {[
-              { n: "7", label: "Áreas del derecho" },
-              { n: "28+", label: "Artículos de referencia" },
-              { n: "5", label: "Guías paso a paso" },
-            ].map(({ n, label }) => (
-              <div key={label} className="bg-white/10 rounded-xl px-4 py-2.5">
-                <span className="text-white font-bold text-lg">{n}</span>
-                <span className="text-[#9ac1e2] text-sm ml-2">{label}</span>
+          {/* Estadísticas + progreso */}
+          <div className="bg-white/10 rounded-2xl p-5">
+            <div className="flex flex-wrap gap-4 mb-4">
+              {[
+                { n: resumenes.length.toString(),      label: "Resúmenes de área" },
+                { n: `${articulosClave.length}+`,      label: "Artículos de referencia" },
+                { n: guias.length.toString(),          label: "Guías paso a paso" },
+              ].map(({ n, label }) => (
+                <div key={label} className="flex items-baseline gap-2">
+                  <span className="text-white font-bold text-xl">{n}</span>
+                  <span className="text-[#9ac1e2] text-sm">{label}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Barra de progreso personal */}
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="text-xs font-semibold text-[#9ac1e2]">Tu progreso</span>
+                <span className="text-xs font-bold text-white">{totalLeidos}/{totalItems} completados</span>
               </div>
-            ))}
+              <div className="h-2.5 bg-white/20 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-green-400 rounded-full transition-all duration-700"
+                  style={{ width: `${progresoPct}%` }}
+                />
+              </div>
+              {progresoPct === 100 && (
+                <p className="text-xs text-green-300 mt-1.5 flex items-center gap-1.5">
+                  <Trophy weight="duotone" className="h-3.5 w-3.5" />
+                  ¡Completaste todo el material!
+                </p>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
       {/* Barra de búsqueda y filtros */}
-      <div className="bg-white border-b border-[#9ac1e2] sticky top-0 z-10">
+      <div className="bg-white border-b border-[#9ac1e2] sticky top-0 z-10 shadow-sm">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-3 space-y-3">
-          {/* Search */}
+          {/* Búsqueda */}
           <div className="relative">
             <MagnifyingGlass weight="bold" className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#5a8aaa]" />
             <input
@@ -331,36 +603,44 @@ export default function MaterialEstudio() {
             )}
           </div>
 
-          {/* Tabs + filtro de área */}
-          <div className="flex items-center justify-between gap-3 flex-wrap">
-            <div className="flex gap-1">
-              {tabs.map((t) => (
-                <button
-                  key={t.id}
-                  onClick={() => setTab(t.id)}
-                  className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-colors flex items-center gap-1.5 ${
-                    tab === t.id
-                      ? "bg-[#2a628f] text-white"
-                      : "text-[#5a8aaa] hover:bg-[#d8e9f5]"
-                  }`}
-                >
-                  {t.label}
-                  <span className={`text-xs font-bold px-1.5 py-0.5 rounded-full ${tab === t.id ? "bg-white/20" : "bg-[#d8e9f5] text-[#2a628f]"}`}>
-                    {t.count}
-                  </span>
-                </button>
-              ))}
-            </div>
+          {/* Tabs */}
+          <div className="flex items-center gap-1 overflow-x-auto pb-0.5">
+            {tabs.map((t) => (
+              <button
+                key={t.id}
+                onClick={() => { setTab(t.id); setModoFlash(false); }}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold whitespace-nowrap transition-colors ${
+                  tab === t.id
+                    ? "bg-[#2a628f] text-white"
+                    : "text-[#5a8aaa] hover:bg-[#d8e9f5]"
+                }`}
+              >
+                {t.icon}
+                {t.label}
+                <span className={`text-xs font-bold px-1.5 py-0.5 rounded-full ${
+                  tab === t.id ? "bg-white/20" : "bg-[#d8e9f5] text-[#2a628f]"
+                }`}>
+                  {t.count}
+                </span>
+              </button>
+            ))}
+          </div>
 
-            <select
-              value={areaFiltro}
-              onChange={(e) => setAreaFiltro(e.target.value)}
-              className="text-sm border border-[#9ac1e2] rounded-lg px-3 py-1.5 bg-white text-[#13293d] focus:outline-none focus:ring-2 focus:ring-[#2a628f]/30"
-            >
-              {AREAS_FILTRO.map((a) => (
-                <option key={a} value={a}>{a}</option>
-              ))}
-            </select>
+          {/* Filtro de área — chips */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1">
+            {AREAS_FILTRO.map((a) => (
+              <button
+                key={a}
+                onClick={() => setAreaFiltro(a)}
+                className={`text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap transition-colors border ${
+                  areaFiltro === a
+                    ? "bg-[#13293d] text-white border-[#13293d]"
+                    : "bg-white text-[#5a8aaa] border-[#9ac1e2] hover:border-[#2a628f] hover:text-[#2a628f]"
+                }`}
+              >
+                {a}
+              </button>
+            ))}
           </div>
         </div>
       </div>
@@ -374,7 +654,14 @@ export default function MaterialEstudio() {
             {resumenesFiltered.length === 0 ? (
               <EmptyState mensaje="No se encontraron resúmenes para tu búsqueda." />
             ) : (
-              resumenesFiltered.map((r) => <ResumenCard key={r.id} r={r} />)
+              resumenesFiltered.map((r) => (
+                <ResumenCard
+                  key={r.id}
+                  r={r}
+                  leido={resumenesLeidos.has(r.id)}
+                  onToggle={() => toggleResumen(r.id)}
+                />
+              ))
             )}
           </div>
         )}
@@ -382,16 +669,33 @@ export default function MaterialEstudio() {
         {/* ── Tab: Artículos clave ── */}
         {tab === "articulos" && (
           <div>
-            <p className="text-sm text-[#5a8aaa] mb-4">
-              {articulosFiltered.length} artículo{articulosFiltered.length !== 1 ? "s" : ""} — haz clic en <Copy weight="duotone" className="inline h-3.5 w-3.5" /> para copiar
-            </p>
-            <div className="space-y-3">
-              {articulosFiltered.length === 0 ? (
-                <EmptyState mensaje="No se encontraron artículos para tu búsqueda." />
-              ) : (
-                articulosFiltered.map((a) => <ArticuloCard key={a.id} a={a} />)
-              )}
+            {/* Cabecera con toggle de modo */}
+            <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
+              <p className="text-sm text-[#5a8aaa]">
+                {articulosFiltered.length} artículo{articulosFiltered.length !== 1 ? "s" : ""}
+              </p>
+              <button
+                onClick={() => setModoFlash((v) => !v)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-colors border ${
+                  modoFlash
+                    ? "bg-[#2a628f] text-white border-[#2a628f]"
+                    : "bg-white text-[#2a628f] border-[#9ac1e2] hover:bg-[#d8e9f5]"
+                }`}
+              >
+                <Cards weight="duotone" className="h-4 w-4" />
+                {modoFlash ? "Modo lista" : "Modo repaso (flash)"}
+              </button>
             </div>
+
+            {articulosFiltered.length === 0 ? (
+              <EmptyState mensaje="No se encontraron artículos para tu búsqueda." />
+            ) : modoFlash ? (
+              <FlashcardMode articulos={articulosFiltered} />
+            ) : (
+              <div className="space-y-3">
+                {articulosFiltered.map((a) => <ArticuloCard key={a.id} a={a} />)}
+              </div>
+            )}
           </div>
         )}
 
@@ -401,7 +705,14 @@ export default function MaterialEstudio() {
             {guiasFiltered.length === 0 ? (
               <EmptyState mensaje="No se encontraron guías para tu búsqueda." />
             ) : (
-              guiasFiltered.map((g) => <GuiaCard key={g.id} g={g} />)
+              guiasFiltered.map((g) => (
+                <GuiaCard
+                  key={g.id}
+                  g={g}
+                  completada={guiasCompletadas.has(g.id)}
+                  onToggle={() => toggleGuia(g.id)}
+                />
+              ))
             )}
           </div>
         )}
@@ -413,21 +724,21 @@ export default function MaterialEstudio() {
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {[
-              { label: "Portal SAT — Tributación", url: "https://portal.sat.gob.gt" },
-              { label: "Registro Mercantil", url: "https://registromercantil.gob.gt" },
-              { label: "Guatecompras", url: "https://www.guatecompras.gt" },
-              { label: "CC — Jurisprudencia", url: "https://cc.gob.gt" },
-              { label: "Organismo Judicial", url: "https://oj.gob.gt" },
-              { label: "Congreso — Leyes vigentes", url: "https://www.congreso.gob.gt" },
+              { label: "Portal SAT — Tributación",   url: "https://portal.sat.gob.gt" },
+              { label: "Registro Mercantil",         url: "https://registromercantil.gob.gt" },
+              { label: "Guatecompras",               url: "https://www.guatecompras.gt" },
+              { label: "CC — Jurisprudencia",        url: "https://cc.gob.gt" },
+              { label: "Organismo Judicial",         url: "https://oj.gob.gt" },
+              { label: "Congreso — Leyes vigentes",  url: "https://www.congreso.gob.gt" },
             ].map(({ label, url }) => (
               <a
                 key={url}
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-sm text-[#2a628f] hover:text-[#18435a] transition-colors"
+                className="flex items-center gap-2 text-sm text-[#2a628f] hover:text-[#18435a] transition-colors group"
               >
-                <ArrowSquareOut weight="duotone" className="h-3.5 w-3.5 flex-shrink-0" />
+                <ArrowSquareOut weight="duotone" className="h-3.5 w-3.5 flex-shrink-0 group-hover:translate-x-0.5 transition-transform" />
                 {label}
               </a>
             ))}
