@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { LogIn, Mail, Lock, Eye, EyeOff, Scale, AlertCircle } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 
@@ -7,13 +7,12 @@ export default function Login() {
   const navigate = useNavigate();
   const { iniciarSesion, loginConGoogle, isLoading, isAuthenticated, error, clearError } = useAuthStore();
   const [googleLoading, setGoogleLoading] = useState(false);
-
-  if (isAuthenticated) {
-    navigate('/inicio', { replace: true });
-    return null;
-  }
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ email: '', password: '' });
+
+  if (isAuthenticated) {
+    return <Navigate to="/inicio" replace />;
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });

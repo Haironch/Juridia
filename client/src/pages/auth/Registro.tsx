@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { UserPlus, Mail, Lock, User, Eye, EyeOff, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 
@@ -7,11 +7,6 @@ export default function Registro() {
   const navigate = useNavigate();
   const { registrar, loginConGoogle, isLoading, isAuthenticated, error, clearError } = useAuthStore();
   const [googleLoading, setGoogleLoading] = useState(false);
-
-  if (isAuthenticated) {
-    navigate('/inicio', { replace: true });
-    return null;
-  }
   const [showPassword, setShowPassword] = useState(false);
   const [localError, setLocalError] = useState('');
   const [emailEnviado, setEmailEnviado] = useState(false);
@@ -22,6 +17,10 @@ export default function Registro() {
     password: '',
     confirmPassword: '',
   });
+
+  if (isAuthenticated) {
+    return <Navigate to="/inicio" replace />;
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
