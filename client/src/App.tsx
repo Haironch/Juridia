@@ -60,7 +60,11 @@ function App() {
         updateToken(session.access_token);
       }
       if (event === 'SIGNED_OUT') {
-        logout();
+        // Guard: if already logged out (e.g. triggered by our own logout() call)
+        // skip to avoid calling supabase.auth.signOut() a second time
+        if (useAuthStore.getState().isAuthenticated) {
+          logout();
+        }
       }
     });
     return () => subscription.unsubscribe();

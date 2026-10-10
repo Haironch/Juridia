@@ -49,10 +49,11 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   logout: async () => {
-    await supabase.auth.signOut();
+    // Clear state first so UI updates immediately and re-entrant calls are no-ops
     localStorage.removeItem('token');
     localStorage.removeItem('auth_user');
     set({ user: null, token: null, isAuthenticated: false, error: null });
+    try { await supabase.auth.signOut(); } catch { /* already signed out */ }
   },
 
   setUser: (user) => {
