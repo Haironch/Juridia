@@ -2,25 +2,12 @@ import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import {
   BookOpen, Search, X, ChevronDown, ChevronUp, Copy, Check,
-  Scale, Shield, FileText, Briefcase, Building2, Landmark, Coins,
   ArrowLeft, ExternalLink, ListChecks, Lightbulb, Clock,
 } from "lucide-react";
 import {
   resumenes, articulosClave, guias, AREAS_FILTRO,
   type Resumen, type ArticuloClave, type GuiaPractica,
 } from "../../data/material";
-
-// ─── Helpers ─────────────────────────────────────────────────────────────────
-
-const AREA_ICON: Record<string, React.ReactNode> = {
-  "Derecho Constitucional": <Scale className="h-5 w-5" />,
-  "Derecho Penal":          <Shield className="h-5 w-5" />,
-  "Derecho Civil":          <FileText className="h-5 w-5" />,
-  "Derecho Laboral":        <Briefcase className="h-5 w-5" />,
-  "Derecho Mercantil":      <Building2 className="h-5 w-5" />,
-  "Derecho Administrativo": <Landmark className="h-5 w-5" />,
-  "Derecho Tributario":     <Coins className="h-5 w-5" />,
-};
 
 const COLOR_MAP: Record<string, { bg: string; border: string; badge: string; text: string; dot: string }> = {
   blue:   { bg: "bg-blue-50",   border: "border-blue-200",   badge: "bg-blue-100 text-blue-700",   text: "text-blue-700",   dot: "bg-blue-500" },
