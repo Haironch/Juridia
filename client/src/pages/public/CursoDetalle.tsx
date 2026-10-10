@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -72,10 +73,47 @@ function SkeletonDetalle() {
   );
 }
 
+function LoginRequiredModal({ titulo, onClose }: { titulo: string; onClose: () => void }) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
+      <div className="relative z-10 bg-white rounded-2xl shadow-2xl p-7 max-w-sm w-full text-center">
+        <div className="w-14 h-14 rounded-full bg-[#d8e9f5] flex items-center justify-center mx-auto mb-4">
+          <Lock weight="duotone" className="h-7 w-7 text-[#2a628f]" />
+        </div>
+        <h3 className="text-lg font-bold text-[#13293d] mb-2">Necesitas iniciar sesión</h3>
+        <p className="text-sm text-[#16324f] mb-1">Para acceder a</p>
+        <p className="text-sm font-semibold text-[#2a628f] mb-5">"{titulo}"</p>
+        <p className="text-xs text-[#67a2d3] mb-6">
+          Crea una cuenta gratuita o inicia sesión para acceder a este módulo y seguir tu progreso.
+        </p>
+        <div className="flex flex-col gap-3">
+          <Link
+            to="/registro"
+            className="w-full py-2.5 bg-[#2a628f] text-white text-sm font-bold rounded-xl hover:bg-[#18435a] transition-colors"
+          >
+            Crear cuenta gratis
+          </Link>
+          <Link
+            to="/login"
+            className="w-full py-2.5 border border-[#9ac1e2] text-[#2a628f] text-sm font-semibold rounded-xl hover:bg-[#f0f7fc] transition-colors"
+          >
+            Iniciar sesión
+          </Link>
+        </div>
+        <button onClick={onClose} className="mt-4 text-xs text-[#9ac1e2] hover:text-[#67a2d3] transition-colors">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function CursoDetalle() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { token, isAuthenticated } = useAuthStore();
+  const [loginAlertTitulo, setLoginAlertTitulo] = useState<string | null>(null);
 
   const { data: curso, isLoading, isError } = useQuery({
     queryKey: ["curso", id],
@@ -169,6 +207,12 @@ export default function CursoDetalle() {
 
   return (
     <div className="min-h-screen bg-[#d8e9f5]">
+      {loginAlertTitulo && (
+        <LoginRequiredModal
+          titulo={loginAlertTitulo}
+          onClose={() => setLoginAlertTitulo(null)}
+        />
+      )}
       {/* Hero */}
       <div className="bg-gradient-to-br from-[#2a628f] via-[#18435a] to-[#13293d] relative overflow-hidden">
         {/* Decorative circles */}
@@ -267,9 +311,22 @@ export default function CursoDetalle() {
               <BookOpen weight="duotone" className="h-5 w-5 text-[#2a628f]" />
               Tu camino de aprendizaje
             </h2>
-            <p className="text-sm text-[#67a2d3] mb-6">
+            <p className="text-sm text-[#67a2d3] mb-4">
               Completa cada lección y su quiz para desbloquear la siguiente
             </p>
+
+            {!isAuthenticated && (
+              <div className="flex items-start gap-3 bg-[#f0f7fc] border border-[#9ac1e2] rounded-xl px-4 py-3 mb-6">
+                <Lock weight="duotone" className="h-5 w-5 text-[#2a628f] flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-sm font-semibold text-[#13293d]">Inicia sesión para acceder a todas las lecciones</p>
+                  <p className="text-xs text-[#67a2d3] mt-0.5">
+                    Crea una cuenta gratis y lleva el seguimiento de tu progreso.{" "}
+                    <Link to="/registro" className="text-[#2a628f] font-semibold hover:underline">Regístrate aquí</Link>
+                  </p>
+                </div>
+              </div>
+            )}
 
             {/* Mapa de niveles */}
             <div className="relative">
@@ -358,15 +415,16 @@ export default function CursoDetalle() {
                               <CaretRight weight="bold" className="h-3.5 w-3.5" />
                             </button>
                           )}
-                          {!isAuthenticated && i === 0 && (
-                            <Link
-                              to="/login"
+                          {!isAuthenticated && (
+                            <button
+                              onClick={() => setLoginAlertTitulo(modulo.titulo)}
                               className="flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-xl bg-[#2a628f] text-white hover:bg-[#18435a] transition-all shadow-sm flex-shrink-0"
                             >
-                              Comenzar <CaretRight weight="bold" className="h-3.5 w-3.5" />
-                            </Link>
+                              {i === 0 ? "Comenzar" : "Ver módulo"}
+                              <CaretRight weight="bold" className="h-3.5 w-3.5" />
+                            </button>
                           )}
-                          {estado === "bloqueado" && (
+                          {estado === "bloqueado" && isAuthenticated && (
                             <div className="flex-shrink-0 text-[#c8dff0]">
                               <Lock weight="duotone" className="h-4 w-4" />
                             </div>

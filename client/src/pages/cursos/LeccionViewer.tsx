@@ -1,6 +1,6 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
@@ -45,6 +45,15 @@ export default function LeccionViewer() {
   const [resultado, setResultado] = useState<QuizResultado | null>(null);
 
   const authHeaders = { Authorization: `Bearer ${token}` };
+
+  // Reset state whenever the module changes (React Router reuses the component instance)
+  useEffect(() => {
+    setFase("lectura");
+    setSeccionIdx(0);
+    setQuizIdx(0);
+    setRespuestas({});
+    setResultado(null);
+  }, [moduloId]);
 
   const { data, isLoading, isError } = useQuery<ModuloData>({
     queryKey: ["leccion", cursoId, moduloId],
