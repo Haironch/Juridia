@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Scale, Target, Eye } from "lucide-react";
+import { Scales, Target, Eye } from "@phosphor-icons/react";
 
 export default function BetaLanding() {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ export default function BetaLanding() {
 
           {/* Logo / Brand */}
           <div className="flex items-center justify-center space-x-2 mb-6">
-            <Scale className="h-9 w-9 text-[#2a628f]" />
+            <Scales weight="duotone" className="h-9 w-9 text-[#2a628f]" />
             <span className="text-2xl font-bold text-[#13293d]">Derecho GT</span>
           </div>
 
@@ -59,7 +59,7 @@ export default function BetaLanding() {
             <div className="p-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-9 h-9 rounded-xl bg-[#d8e9f5] flex items-center justify-center flex-shrink-0 group-hover:bg-[#2a628f] transition-colors duration-300">
-                  <Target className="h-4 w-4 text-[#2a628f] group-hover:text-white transition-colors duration-300" />
+                  <Target weight="duotone" className="h-4 w-4 text-[#2a628f] group-hover:text-white transition-colors duration-300" />
                 </div>
                 <span className="text-xs font-bold tracking-widest text-[#2a628f] uppercase">Misión</span>
               </div>
@@ -75,7 +75,7 @@ export default function BetaLanding() {
             <div className="p-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-9 h-9 rounded-xl bg-[#d8e9f5] flex items-center justify-center flex-shrink-0 group-hover:bg-[#2a628f] transition-colors duration-300">
-                  <Eye className="h-4 w-4 text-[#2a628f] group-hover:text-white transition-colors duration-300" />
+                  <Eye weight="duotone" className="h-4 w-4 text-[#2a628f] group-hover:text-white transition-colors duration-300" />
                 </div>
                 <span className="text-xs font-bold tracking-widest text-[#2a628f] uppercase">Visión</span>
               </div>

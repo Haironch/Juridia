@@ -4,9 +4,9 @@ import { useState, useMemo } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
-  ArrowLeft, ArrowRight, CheckCircle2, XCircle,
-  Clock, AlertCircle, ChevronRight, Trophy, Star,
-} from "lucide-react";
+  ArrowLeft, ArrowRight, CheckCircle, XCircle,
+  Clock, Warning, CaretRight, Trophy, Star,
+} from "@phosphor-icons/react";
 import api from "../../services/api";
 import { useAuthStore } from "../../store/authStore";
 
@@ -103,7 +103,7 @@ export default function LeccionViewer() {
     return (
       <div className="min-h-screen bg-[#d8e9f5] flex items-center justify-center">
         <div className="text-center">
-          <AlertCircle className="h-10 w-10 text-[#9ac1e2] mx-auto mb-3" />
+          <Warning weight="duotone" className="h-10 w-10 text-[#9ac1e2] mx-auto mb-3" />
           <p className="text-[#13293d] font-semibold mb-2">No se pudo cargar la lección</p>
           <Link to={`/cursos/${cursoId}`} className="text-[#2a628f] text-sm hover:underline">
             ← Volver al curso
@@ -172,7 +172,7 @@ export default function LeccionViewer() {
           to={`/cursos/${cursoId}`}
           className="flex items-center gap-1.5 text-[#2a628f] hover:text-[#13293d] text-sm font-medium transition-colors"
         >
-          <ArrowLeft className="h-4 w-4" />
+          <ArrowLeft weight="bold" className="h-4 w-4" />
           <span className="hidden sm:inline">Volver al curso</span>
         </Link>
         <div className="flex-1 min-w-0">
@@ -181,7 +181,7 @@ export default function LeccionViewer() {
         </div>
         {modulo.duracion_estimada > 0 && (
           <div className="flex items-center gap-1 text-xs text-[#67a2d3] flex-shrink-0">
-            <Clock className="h-3.5 w-3.5" />
+            <Clock weight="duotone" className="h-3.5 w-3.5" />
             {modulo.duracion_estimada} min
           </div>
         )}
@@ -255,7 +255,7 @@ export default function LeccionViewer() {
               disabled={seccionIdx === 0}
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-[#9ac1e2] text-[#2a628f] text-sm font-semibold bg-white hover:bg-[#f0f7fc] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             >
-              <ArrowLeft className="h-4 w-4" />
+              <ArrowLeft weight="bold" className="h-4 w-4" />
               Anterior
             </button>
 
@@ -270,7 +270,7 @@ export default function LeccionViewer() {
               }`}
             >
               {enUltimaSeccion ? "Responder quiz" : "Siguiente"}
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight weight="bold" className="h-4 w-4" />
             </button>
           </div>
         </div>
@@ -343,9 +343,9 @@ export default function LeccionViewer() {
                   Enviando...
                 </>
               ) : enUltimaPregunta ? (
-                <>Ver resultado <ChevronRight className="h-4 w-4" /></>
+                <>Ver resultado <CaretRight weight="bold" className="h-4 w-4" /></>
               ) : (
-                <>Siguiente <ArrowRight className="h-4 w-4" /></>
+                <>Siguiente <ArrowRight weight="bold" className="h-4 w-4" /></>
               )}
             </button>
           </div>
@@ -382,13 +382,13 @@ export default function LeccionViewer() {
               className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-gradient-to-br from-[#2a628f] to-[#13293d] flex items-center justify-center shadow-2xl"
               style={{ animation: "celebPop 0.55s cubic-bezier(0.175,0.885,0.32,1.275) forwards" }}
             >
-              <Trophy className="h-12 w-12 sm:h-14 sm:w-14 text-yellow-300" />
+              <Trophy weight="duotone" className="h-12 w-12 sm:h-14 sm:w-14 text-yellow-300" />
             </div>
             <div
               className="absolute -top-1 -right-1 w-9 h-9 bg-yellow-400 rounded-full flex items-center justify-center shadow-md"
               style={{ animation: "starPop 0.4s 0.3s cubic-bezier(0.175,0.885,0.32,1.275) both" }}
             >
-              <Star className="h-4 w-4 text-white fill-white" />
+              <Star weight="duotone" className="h-4 w-4 text-white fill-white" />
             </div>
           </div>
 
@@ -419,7 +419,7 @@ export default function LeccionViewer() {
             className="w-full max-w-xs flex items-center justify-center gap-2 py-3.5 bg-[#2a628f] text-white rounded-2xl font-bold text-base hover:bg-[#18435a] transition-colors shadow-xl"
           >
             {siguienteModuloId ? "Siguiente lección" : "Ir al examen final"}
-            <ChevronRight className="h-5 w-5" />
+            <CaretRight weight="bold" className="h-5 w-5" />
           </button>
         </div>
       </div>
@@ -435,7 +435,7 @@ export default function LeccionViewer() {
           {/* Banner de puntaje */}
           <div className="bg-red-50 border border-red-200 rounded-2xl p-6 text-center mb-8">
             <div className="w-14 h-14 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-3">
-              <XCircle className="h-7 w-7 text-red-500" />
+              <XCircle weight="duotone" className="h-7 w-7 text-red-500" />
             </div>
             <p className="text-4xl font-bold text-red-700 mb-1">{resultado.puntaje}%</p>
             <p className="text-sm font-semibold text-red-600 mb-1">
@@ -477,7 +477,7 @@ export default function LeccionViewer() {
                               : "border-[#d8e9f5] text-[#d8e9f5]"
                           }`}>
                             {esLaCorrecta
-                              ? <CheckCircle2 className="h-3 w-3" />
+                              ? <CheckCircle weight="duotone" className="h-3 w-3" />
                               : ["A","B","C","D"][opcion.orden - 1]}
                           </span>
                           {opcion.texto}
@@ -490,8 +490,8 @@ export default function LeccionViewer() {
                       esCorrecta ? "bg-emerald-50 text-emerald-800" : "bg-amber-50 text-amber-800"
                     }`}>
                       {esCorrecta
-                        ? <CheckCircle2 className="h-4 w-4 flex-shrink-0 mt-0.5" />
-                        : <XCircle className="h-4 w-4 flex-shrink-0 mt-0.5" />}
+                        ? <CheckCircle weight="duotone" className="h-4 w-4 flex-shrink-0 mt-0.5" />
+                        : <XCircle weight="duotone" className="h-4 w-4 flex-shrink-0 mt-0.5" />}
                       <span>{pregunta.explicacion}</span>
                     </div>
                   )}
@@ -505,7 +505,7 @@ export default function LeccionViewer() {
             className="w-full flex items-center justify-center gap-2 py-3.5 bg-[#2a628f] text-white rounded-2xl font-bold text-sm hover:bg-[#18435a] transition-colors shadow-lg"
           >
             Intentar de nuevo
-            <ArrowRight className="h-4 w-4" />
+            <ArrowRight weight="bold" className="h-4 w-4" />
           </button>
         </div>
       </div>

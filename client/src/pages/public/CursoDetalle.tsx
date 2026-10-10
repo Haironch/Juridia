@@ -1,10 +1,10 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import {
-  ArrowLeft, Clock, Layers, Lock, BookOpen,
-  CheckCircle2, PlayCircle, FileText, Award,
-  ChevronRight, AlertCircle,
-} from "lucide-react";
+  ArrowLeft, Clock, Stack, Lock, BookOpen,
+  CheckCircle, PlayCircle, FileText, Medal,
+  CaretRight, Warning,
+} from "@phosphor-icons/react";
 import api from "../../services/api";
 import { useAuthStore } from "../../store/authStore";
 
@@ -105,7 +105,7 @@ export default function CursoDetalle() {
       <div className="min-h-screen bg-[#d8e9f5] flex flex-col items-center justify-center px-4">
         <div className="bg-white rounded-3xl border border-[#9ac1e2] shadow-xl p-10 max-w-md w-full text-center">
           <div className="w-20 h-20 rounded-full bg-[#13293d] flex items-center justify-center mx-auto mb-6">
-            <Lock className="h-9 w-9 text-[#d8e9f5]" />
+            <Lock weight="duotone" className="h-9 w-9 text-[#d8e9f5]" />
           </div>
           <span className="inline-block bg-[#13293d] text-white text-xs font-bold px-3 py-1 rounded-full mb-4 tracking-widest uppercase">
             Próximamente
@@ -118,7 +118,7 @@ export default function CursoDetalle() {
             to="/cursos"
             className="inline-flex items-center gap-2 bg-[#2a628f] text-white font-semibold px-6 py-3 rounded-xl hover:bg-[#18435a] transition-colors"
           >
-            <ArrowLeft className="h-4 w-4" />
+            <ArrowLeft weight="bold" className="h-4 w-4" />
             Ver cursos disponibles
           </Link>
         </div>
@@ -130,7 +130,7 @@ export default function CursoDetalle() {
     return (
       <div className="min-h-screen bg-[#d8e9f5] flex items-center justify-center">
         <div className="text-center">
-          <AlertCircle className="h-10 w-10 text-[#9ac1e2] mx-auto mb-3" />
+          <Warning weight="duotone" className="h-10 w-10 text-[#9ac1e2] mx-auto mb-3" />
           <p className="text-[#13293d] font-semibold mb-2">Curso no encontrado</p>
           <Link to="/cursos" className="text-[#2a628f] text-sm hover:underline">← Volver a cursos</Link>
         </div>
@@ -180,7 +180,7 @@ export default function CursoDetalle() {
             to="/cursos"
             className="inline-flex items-center gap-1.5 text-[#89c2d9] hover:text-white text-sm mb-6 transition-colors"
           >
-            <ArrowLeft className="h-4 w-4" />
+            <ArrowLeft weight="bold" className="h-4 w-4" />
             Todos los cursos
           </Link>
 
@@ -199,7 +199,7 @@ export default function CursoDetalle() {
                 )}
                 {curso.es_premium === 1 && (
                   <span className="flex items-center gap-1 text-xs font-semibold text-white bg-white/20 px-2.5 py-1 rounded-full">
-                    <Lock className="h-3 w-3" /> Premium
+                    <Lock weight="duotone" className="h-3 w-3" /> Premium
                   </span>
                 )}
               </div>
@@ -212,9 +212,9 @@ export default function CursoDetalle() {
               </p>
 
               <div className="flex flex-wrap gap-5 text-sm text-[#89c2d9]">
-                <div className="flex items-center gap-2"><Layers className="h-4 w-4" /><span>{totalModulos} lecciones</span></div>
-                <div className="flex items-center gap-2"><Clock className="h-4 w-4" /><span>{curso.duracion}</span></div>
-                <div className="flex items-center gap-2"><FileText className="h-4 w-4" /><span>Certificado incluido</span></div>
+                <div className="flex items-center gap-2"><Stack weight="duotone" className="h-4 w-4" /><span>{totalModulos} lecciones</span></div>
+                <div className="flex items-center gap-2"><Clock weight="duotone" className="h-4 w-4" /><span>{curso.duracion}</span></div>
+                <div className="flex items-center gap-2"><FileText weight="duotone" className="h-4 w-4" /><span>Certificado incluido</span></div>
               </div>
             </div>
 
@@ -264,7 +264,7 @@ export default function CursoDetalle() {
             )}
 
             <h2 className="text-xl font-bold text-[#13293d] mb-2 flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-[#2a628f]" />
+              <BookOpen weight="duotone" className="h-5 w-5 text-[#2a628f]" />
               Tu camino de aprendizaje
             </h2>
             <p className="text-sm text-[#67a2d3] mb-6">
@@ -295,9 +295,9 @@ export default function CursoDetalle() {
                             : "bg-white border-[#d8e9f5] text-[#b2cfe8]"
                         }`}>
                           {estado === "completado"
-                            ? <CheckCircle2 className="h-5 w-5" />
+                            ? <CheckCircle weight="duotone" className="h-5 w-5" />
                             : estado === "bloqueado"
-                            ? <Lock className="h-4 w-4" />
+                            ? <Lock weight="duotone" className="h-4 w-4" />
                             : <span className="text-base">{icono}</span>}
                         </div>
                         {/* Pulso en disponible */}
@@ -332,7 +332,7 @@ export default function CursoDetalle() {
                             <div className="flex items-center gap-2 mt-1.5">
                               {modulo.duracion_estimada > 0 && (
                                 <span className={`text-xs flex items-center gap-1 ${estado === "bloqueado" ? "text-[#b8d5e8]" : "text-[#67a2d3]"}`}>
-                                  <Clock className="h-3 w-3" />{modulo.duracion_estimada} min
+                                  <Clock weight="duotone" className="h-3 w-3" />{modulo.duracion_estimada} min
                                 </span>
                               )}
                               {puntaje !== null && puntaje !== undefined && (
@@ -355,7 +355,7 @@ export default function CursoDetalle() {
                               }`}
                             >
                               {estado === "completado" ? "Repasar" : "Iniciar"}
-                              <ChevronRight className="h-3.5 w-3.5" />
+                              <CaretRight weight="bold" className="h-3.5 w-3.5" />
                             </button>
                           )}
                           {!isAuthenticated && i === 0 && (
@@ -363,12 +363,12 @@ export default function CursoDetalle() {
                               to="/login"
                               className="flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-xl bg-[#2a628f] text-white hover:bg-[#18435a] transition-all shadow-sm flex-shrink-0"
                             >
-                              Comenzar <ChevronRight className="h-3.5 w-3.5" />
+                              Comenzar <CaretRight weight="bold" className="h-3.5 w-3.5" />
                             </Link>
                           )}
                           {estado === "bloqueado" && (
                             <div className="flex-shrink-0 text-[#c8dff0]">
-                              <Lock className="h-4 w-4" />
+                              <Lock weight="duotone" className="h-4 w-4" />
                             </div>
                           )}
                         </div>
@@ -387,7 +387,7 @@ export default function CursoDetalle() {
                         ? "bg-[#2a628f] border-[#2a628f] text-white shadow-lg ring-4 ring-[#2a628f]/20"
                         : "bg-white border-[#d8e9f5] text-[#9ac1e2]"
                     }`}>
-                      <Award className="h-5 w-5" />
+                      <Medal weight="duotone" className="h-5 w-5" />
                     </div>
 
                     <div className={`flex-1 bg-white rounded-2xl border p-4 transition-all ${
@@ -416,7 +416,7 @@ export default function CursoDetalle() {
                             className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-[#2a628f] text-white hover:bg-[#18435a] transition-colors flex-shrink-0"
                           >
                             {tieneCertificado ? "Ver" : "Presentar"}
-                            <ChevronRight className="h-3.5 w-3.5" />
+                            <CaretRight weight="bold" className="h-3.5 w-3.5" />
                           </button>
                         )}
                       </div>
@@ -440,7 +440,7 @@ export default function CursoDetalle() {
                 }}
                 className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-sm bg-[#2a628f] text-white hover:bg-[#18435a] transition-colors shadow-lg"
               >
-                <PlayCircle className="h-5 w-5" />
+                <PlayCircle weight="duotone" className="h-5 w-5" />
                 {tieneCertificado ? "Ver certificado" : todosAprobados ? "Presentar examen final" : aprobados > 0 ? "Continuar curso" : "Comenzar curso"}
               </button>
             ) : (
@@ -448,7 +448,7 @@ export default function CursoDetalle() {
                 to="/login"
                 className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-sm bg-[#2a628f] text-white hover:bg-[#18435a] transition-colors shadow-lg"
               >
-                <PlayCircle className="h-5 w-5" />
+                <PlayCircle weight="duotone" className="h-5 w-5" />
                 Inicia sesión para comenzar
               </Link>
             )}
@@ -506,7 +506,7 @@ export default function CursoDetalle() {
             }}
             className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl font-bold text-sm bg-[#2a628f] text-white active:bg-[#18435a] transition-colors"
           >
-            <PlayCircle className="h-5 w-5" />
+            <PlayCircle weight="duotone" className="h-5 w-5" />
             {tieneCertificado ? "Ver certificado" : todosAprobados ? "Presentar examen final" : aprobados > 0 ? "Continuar" : "Comenzar curso"}
           </button>
         </div>

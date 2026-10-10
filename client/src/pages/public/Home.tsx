@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { BookOpen, Users, Award, TrendingUp, Brain, BarChart2, MessageSquare, ArrowRight } from "lucide-react";
+import {
+  BookOpenText, UsersThree, SealCheck, TrendUp,
+  Brain, ChartBar, ChatCircleText, ArrowRight,
+} from "@phosphor-icons/react";
 import { useAuthStore } from "../../store/authStore";
 import MascotaLex from "../../components/mascota/MascotaLex";
 
@@ -98,7 +101,7 @@ export default function Home() {
           <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             <div className="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow border border-[#9ac1e2]">
               <div className="flex items-center justify-center h-12 w-12 rounded-md bg-[#8bbde0] text-[#13293d] mb-4">
-                <BookOpen className="h-6 w-6" />
+                <BookOpenText weight="duotone" className="h-6 w-6" />
               </div>
               <h3 className="text-lg font-medium text-[#13293d]">
                 Preguntas Interactivas
@@ -111,7 +114,7 @@ export default function Home() {
 
             <div className="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow border border-[#9ac1e2]">
               <div className="flex items-center justify-center h-12 w-12 rounded-md bg-[#8bbde0] text-[#13293d] mb-4">
-                <Users className="h-6 w-6" />
+                <UsersThree weight="duotone" className="h-6 w-6" />
               </div>
               <h3 className="text-lg font-medium text-[#13293d]">
                 Foros Especializados
@@ -124,7 +127,7 @@ export default function Home() {
 
             <div className="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow border border-[#9ac1e2]">
               <div className="flex items-center justify-center h-12 w-12 rounded-md bg-[#8bbde0] text-[#13293d] mb-4">
-                <Award className="h-6 w-6" />
+                <SealCheck weight="duotone" className="h-6 w-6" />
               </div>
               <h3 className="text-lg font-medium text-[#13293d]">
                 Material Verificado
@@ -136,7 +139,7 @@ export default function Home() {
 
             <div className="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow border border-[#9ac1e2]">
               <div className="flex items-center justify-center h-12 w-12 rounded-md bg-[#8bbde0] text-[#13293d] mb-4">
-                <TrendingUp className="h-6 w-6" />
+                <TrendUp weight="duotone" className="h-6 w-6" />
               </div>
               <h3 className="text-lg font-medium text-[#13293d]">
                 Seguimiento de Progreso
@@ -166,13 +169,13 @@ export default function Home() {
               to="/constituquiz"
               className="group bg-gradient-to-br from-[#2a628f] to-[#18435a] rounded-2xl p-6 text-white hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
             >
-              <Brain className="h-10 w-10 mb-4 opacity-90" />
+              <Brain weight="duotone" className="h-10 w-10 mb-4 opacity-90" />
               <h3 className="text-lg font-bold mb-1">ConstituQuiz</h3>
               <p className="text-sm text-[#b2d3ea] mb-4">
                 Practica con quizzes y tarjetas de estudio interactivas.
               </p>
               <div className="flex items-center text-sm font-medium">
-                Empezar ahora <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                Empezar ahora <ArrowRight weight="bold" className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
               </div>
             </Link>
 
@@ -180,13 +183,13 @@ export default function Home() {
               to="/progreso"
               className="group bg-white rounded-2xl p-6 border border-[#9ac1e2] hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
             >
-              <BarChart2 className="h-10 w-10 mb-4 text-[#2a628f]" />
+              <ChartBar weight="duotone" className="h-10 w-10 mb-4 text-[#2a628f]" />
               <h3 className="text-lg font-bold text-[#13293d] mb-1">Mi Progreso</h3>
               <p className="text-sm text-[#16324f] mb-4">
                 Revisa tus estadísticas, puntajes y áreas de mejora.
               </p>
               <div className="flex items-center text-sm font-medium text-[#2a628f]">
-                Ver estadísticas <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                Ver estadísticas <ArrowRight weight="bold" className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
               </div>
             </Link>
 
@@ -194,13 +197,13 @@ export default function Home() {
               to="/foros"
               className="group bg-white rounded-2xl p-6 border border-[#9ac1e2] hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
             >
-              <MessageSquare className="h-10 w-10 mb-4 text-[#2a628f]" />
+              <ChatCircleText weight="duotone" className="h-10 w-10 mb-4 text-[#2a628f]" />
               <h3 className="text-lg font-bold text-[#13293d] mb-1">Foros</h3>
               <p className="text-sm text-[#16324f] mb-4">
                 Comparte dudas y aprende con otros estudiantes de derecho.
               </p>
               <div className="flex items-center text-sm font-medium text-[#2a628f]">
-                Ver foros <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                Ver foros <ArrowRight weight="bold" className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
               </div>
             </Link>
           </div>
@@ -245,7 +248,7 @@ export default function Home() {
               to="/constituquiz"
               className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-[#13293d] bg-white hover:bg-[#bdd5eb] transition-colors"
             >
-              <Brain className="h-5 w-5 mr-2" />
+              <Brain weight="duotone" className="h-5 w-5 mr-2" />
               Ir a ConstituQuiz
             </Link>
             <Link

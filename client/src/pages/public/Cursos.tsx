@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { BookOpen, Clock, Lock, ChevronRight, Search, Layers } from "lucide-react";
+import {
+  BookOpen, Clock, Lock, CaretRight, MagnifyingGlass, Stack,
+} from "@phosphor-icons/react";
 import api from "../../services/api";
 
 interface Curso {
@@ -142,7 +144,7 @@ export default function Cursos() {
 
           {/* Search */}
           <div className="relative max-w-xl">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#67a2d3]" />
+            <MagnifyingGlass weight="bold" className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#67a2d3]" />
             <input
               type="text"
               placeholder="Buscar cursos o áreas del derecho..."
@@ -240,7 +242,7 @@ export default function Cursos() {
 
             {filtrados.length === 0 ? (
               <div className="text-center py-16">
-                <BookOpen className="h-12 w-12 text-[#9ac1e2] mx-auto mb-4" />
+                <BookOpen weight="duotone" className="h-12 w-12 text-[#9ac1e2] mx-auto mb-4" />
                 <p className="text-[#13293d] font-semibold mb-1">Sin resultados</p>
                 <p className="text-[#67a2d3] text-sm">Intenta con otros filtros.</p>
               </div>
@@ -268,7 +270,7 @@ export default function Cursos() {
                         <div className="flex flex-col items-end gap-1.5">
                           {curso.proximamente ? (
                             <span className="flex items-center gap-1 text-xs font-bold bg-slate-800/80 text-white px-2.5 py-1 rounded-full backdrop-blur-sm">
-                              <Lock className="h-3 w-3" />
+                              <Lock weight="duotone" className="h-3 w-3" />
                               Próximamente
                             </span>
                           ) : (
@@ -278,7 +280,7 @@ export default function Cursos() {
                               </span>
                               {curso.es_premium === 1 && (
                                 <span className="flex items-center gap-1 text-xs font-semibold bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full">
-                                  <Lock className="h-3 w-3" />
+                                  <Lock weight="duotone" className="h-3 w-3" />
                                   Premium
                                 </span>
                               )}
@@ -301,11 +303,11 @@ export default function Cursos() {
                         {/* Stats */}
                         <div className="flex items-center gap-4 text-xs text-[#67a2d3] mb-4">
                           <div className="flex items-center gap-1">
-                            <Layers className="h-3.5 w-3.5" />
+                            <Stack weight="duotone" className="h-3.5 w-3.5" />
                             {curso.totalModulos} módulos
                           </div>
                           <div className="flex items-center gap-1">
-                            <Clock className="h-3.5 w-3.5" />
+                            <Clock weight="duotone" className="h-3.5 w-3.5" />
                             {curso.duracion}
                           </div>
                         </div>
@@ -313,7 +315,7 @@ export default function Cursos() {
                         {/* CTA */}
                         {curso.proximamente ? (
                           <div className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl font-semibold text-sm bg-slate-100 text-slate-400 select-none">
-                            <Lock className="h-4 w-4" />
+                            <Lock weight="duotone" className="h-4 w-4" />
                             En construcción
                           </div>
                         ) : (
@@ -322,7 +324,7 @@ export default function Cursos() {
                             className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl font-semibold text-sm transition-colors bg-[#2a628f] text-white hover:bg-[#18435a]"
                           >
                             Ver curso
-                            <ChevronRight className="h-4 w-4" />
+                            <CaretRight weight="bold" className="h-4 w-4" />
                           </Link>
                         )}
                       </div>

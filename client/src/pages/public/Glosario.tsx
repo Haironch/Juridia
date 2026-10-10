@@ -1,5 +1,7 @@
 import { useState, useMemo, useRef } from "react";
-import { Search, X, BookText, ChevronDown, ChevronUp, Copy, Check } from "lucide-react";
+import {
+  MagnifyingGlass, X, BookBookmark, CaretDown, CaretUp, Copy, Check,
+} from "@phosphor-icons/react";
 import { terminosJuridicos, CATEGORIAS_GLOSARIO } from "../../data/glosario";
 
 // ── Colores por categoría ──────────────────────────────────────────────────
@@ -61,15 +63,15 @@ function TerminoCard({ termino, definicion, fuente, categoria, ejemplo }: {
             className="p-1.5 rounded-lg text-[#9ac1e2] hover:text-[#2a628f] hover:bg-[#eaf4fb] transition-colors"
           >
             {copiado ? (
-              <Check className="h-3.5 w-3.5 text-green-500" />
+              <Check weight="bold" className="h-3.5 w-3.5 text-green-500" />
             ) : (
-              <Copy className="h-3.5 w-3.5" />
+              <Copy weight="duotone" className="h-3.5 w-3.5" />
             )}
           </button>
           {expandido ? (
-            <ChevronUp className="h-4 w-4 text-[#9ac1e2]" />
+            <CaretUp weight="bold" className="h-4 w-4 text-[#9ac1e2]" />
           ) : (
-            <ChevronDown className="h-4 w-4 text-[#9ac1e2]" />
+            <CaretDown weight="bold" className="h-4 w-4 text-[#9ac1e2]" />
           )}
         </div>
       </button>
@@ -155,7 +157,7 @@ export default function Glosario() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="flex items-center justify-center gap-3 mb-4">
             <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-              <BookText className="h-9 w-9 text-white" />
+              <BookBookmark weight="duotone" className="h-9 w-9 text-white" />
             </div>
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">
@@ -173,7 +175,7 @@ export default function Glosario() {
         {/* ── Buscador ───────────────────────────────────────────────────────── */}
         <div className="space-y-4 mb-8">
           <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#67a2d3] pointer-events-none" />
+            <MagnifyingGlass weight="bold" className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#67a2d3] pointer-events-none" />
             <input
               type="text"
               value={busqueda}
@@ -186,7 +188,7 @@ export default function Glosario() {
                 onClick={() => setBusqueda("")}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-[#9ac1e2] hover:text-[#2a628f] transition-colors"
               >
-                <X className="h-4 w-4" />
+                <X weight="bold" className="h-4 w-4" />
               </button>
             )}
           </div>
@@ -212,7 +214,7 @@ export default function Glosario() {
                 onClick={limpiar}
                 className="ml-auto flex items-center gap-1 text-sm text-[#2a628f] hover:text-[#13293d] font-medium transition-colors"
               >
-                <X className="h-3.5 w-3.5" />
+                <X weight="bold" className="h-3.5 w-3.5" />
                 Limpiar
               </button>
             )}
@@ -274,7 +276,7 @@ export default function Glosario() {
         ) : (
           /* Estado vacío */
           <div className="text-center py-16 bg-white rounded-2xl border border-[#9ac1e2] shadow-sm">
-            <Search className="h-14 w-14 text-[#9ac1e2] mx-auto mb-4" />
+            <MagnifyingGlass weight="bold" className="h-14 w-14 text-[#9ac1e2] mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-[#13293d] mb-2">
               No encontramos términos
             </h3>
@@ -286,7 +288,7 @@ export default function Glosario() {
               onClick={limpiar}
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#2a628f] text-white rounded-lg text-sm font-medium hover:bg-[#18435a] transition-colors"
             >
-              <X className="h-4 w-4" />
+              <X weight="bold" className="h-4 w-4" />
               Limpiar filtros
             </button>
           </div>

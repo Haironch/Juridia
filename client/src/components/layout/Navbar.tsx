@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
-  Scale, BookOpen, LogIn, UserPlus, LogOut, Menu, X,
-  MessageSquare, FileText, Brain, BarChart2, UserCircle,
-  BookText, ChevronDown, GraduationCap, Wrench, Gavel,
-  ClipboardList, Clock, Calculator, Calendar,
-} from "lucide-react";
+  Scales, BookOpen, ChatDots, FileText, Brain, ChartBar,
+  UserCircle, BookBookmark, GraduationCap, Wrench, Gavel,
+  ClipboardText, Clock, Calculator, CalendarBlank, CaretDown,
+} from "@phosphor-icons/react";
+import {
+  IconLogin, IconLogout, IconUserPlus, IconMenu2, IconX,
+} from "@tabler/icons-react";
 import { useAuthStore } from "../../store/authStore";
 
 const HINT_KEY = "navMenuHintSeen";
@@ -49,7 +51,7 @@ function NavDropdown({ label, icon, items }: NavDropdownProps) {
       >
         {icon}
         {label}
-        <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
+        <CaretDown weight="bold" className={`h-3.5 w-3.5 transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
         {/* Indicador activo */}
         {isActive && (
           <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#13293d] rounded-full" />
@@ -88,20 +90,20 @@ function NavDropdown({ label, icon, items }: NavDropdownProps) {
 }
 
 const APRENDER_ITEMS: DropdownItem[] = [
-  { to: "/cursos",      label: "Cursos",              icon: <GraduationCap className="h-4 w-4" />, description: "Formación estructurada por temas" },
-  { to: "/material",    label: "Material de Estudio", icon: <FileText className="h-4 w-4" />,      description: "Documentos, leyes y recursos" },
-  { to: "/constituquiz",label: "ConstituQuiz",         icon: <Brain className="h-4 w-4" />,         description: "Practica con preguntas y quizzes" },
-  { to: "/casos",       label: "Casos Prácticos",     icon: <Gavel className="h-4 w-4" />,          description: "Lee el caso y responde preguntas" },
-  { to: "/examen",      label: "Examen Simulado",     icon: <ClipboardList className="h-4 w-4" />,  description: "Simulacro con tiempo límite" },
-  { to: "/historia",    label: "Historia del Derecho",icon: <Clock className="h-4 w-4" />,          description: "Línea de tiempo visual" },
+  { to: "/cursos",      label: "Cursos",              icon: <GraduationCap weight="duotone" className="h-4 w-4" />, description: "Formación estructurada por temas" },
+  { to: "/material",    label: "Material de Estudio", icon: <FileText weight="duotone" className="h-4 w-4" />,      description: "Documentos, leyes y recursos" },
+  { to: "/constituquiz",label: "ConstituQuiz",         icon: <Brain weight="duotone" className="h-4 w-4" />,         description: "Practica con preguntas y quizzes" },
+  { to: "/casos",       label: "Casos Prácticos",     icon: <Gavel weight="duotone" className="h-4 w-4" />,          description: "Lee el caso y responde preguntas" },
+  { to: "/examen",      label: "Examen Simulado",     icon: <ClipboardText weight="duotone" className="h-4 w-4" />,  description: "Simulacro con tiempo límite" },
+  { to: "/historia",    label: "Historia del Derecho",icon: <Clock weight="duotone" className="h-4 w-4" />,          description: "Línea de tiempo visual" },
 ];
 
 const HERRAMIENTAS_ITEMS: DropdownItem[] = [
-  { to: "/planes",      label: "Planes de Estudio",    icon: <Calendar className="h-4 w-4" />,  description: "Calendario personalizado para tu examen" },
-  { to: "/glosario",    label: "Glosario Jurídico",    icon: <BookText className="h-4 w-4" />,  description: "Términos y definiciones legales" },
-  { to: "/liquidacion", label: "Calcula tu Liquidación",icon: <Calculator className="h-4 w-4" />,description: "Estima tu liquidación laboral" },
-  { to: "/documentos",  label: "Generador de Documentos",icon: <FileText className="h-4 w-4" />,description: "Crea documentos legales básicos" },
-  { to: "/progreso",    label: "Mi Progreso",          icon: <BarChart2 className="h-4 w-4" />, description: "Estadísticas de tu aprendizaje" },
+  { to: "/planes",      label: "Planes de Estudio",    icon: <CalendarBlank weight="duotone" className="h-4 w-4" />,  description: "Calendario personalizado para tu examen" },
+  { to: "/glosario",    label: "Glosario Jurídico",    icon: <BookBookmark weight="duotone" className="h-4 w-4" />,  description: "Términos y definiciones legales" },
+  { to: "/liquidacion", label: "Calcula tu Liquidación",icon: <Calculator weight="duotone" className="h-4 w-4" />,description: "Estima tu liquidación laboral" },
+  { to: "/documentos",  label: "Generador de Documentos",icon: <FileText weight="duotone" className="h-4 w-4" />,description: "Crea documentos legales básicos" },
+  { to: "/progreso",    label: "Mi Progreso",          icon: <ChartBar weight="duotone" className="h-4 w-4" />, description: "Estadísticas de tu aprendizaje" },
 ];
 
 export default function Navbar() {
@@ -152,13 +154,13 @@ export default function Navbar() {
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/inicio" className="flex items-center space-x-2">
-              <Scale className="h-8 w-8 text-[#13293d]" />
+              <Scales weight="duotone" className="h-8 w-8 text-[#13293d]" />
               <span className="text-xl font-semibold text-[#13293d]">Derecho GT</span>
             </Link>
 
             {/* Desktop links */}
             <div className="hidden md:ml-10 md:flex md:items-center md:space-x-6 h-16">
-              <NavDropdown label="Aprender"     icon={<BookOpen className="h-4 w-4" />} items={APRENDER_ITEMS} />
+              <NavDropdown label="Aprender"     icon={<BookOpen weight="duotone" className="h-4 w-4" />} items={APRENDER_ITEMS} />
 
               {/* Comunidad con indicador activo */}
               <Link
@@ -167,14 +169,14 @@ export default function Navbar() {
                   forosActive ? "text-[#13293d]" : "text-[#16324f] hover:text-[#13293d]"
                 }`}
               >
-                <MessageSquare className="h-4 w-4" />
+                <ChatDots weight="duotone" className="h-4 w-4" />
                 Comunidad
                 {forosActive && (
                   <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#13293d] rounded-full" />
                 )}
               </Link>
 
-              <NavDropdown label="Herramientas" icon={<Wrench className="h-4 w-4" />} items={HERRAMIENTAS_ITEMS} />
+              <NavDropdown label="Herramientas" icon={<Wrench weight="duotone" className="h-4 w-4" />} items={HERRAMIENTAS_ITEMS} />
             </div>
           </div>
 
@@ -183,16 +185,16 @@ export default function Navbar() {
             {!isAuthenticated ? (
               <>
                 <Link to="/registro" className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-[#2a628f] hover:bg-[#18435a] transition-colors">
-                  <UserPlus className="h-4 w-4 mr-1" /> Registrarse
+                  <IconUserPlus className="h-4 w-4 mr-1" /> Registrarse
                 </Link>
                 <Link to="/login" className="inline-flex items-center px-4 py-2 text-sm font-medium text-[#16324f] hover:text-[#13293d] transition-colors">
-                  <LogIn className="h-4 w-4 mr-1" /> Iniciar Sesión
+                  <IconLogin className="h-4 w-4 mr-1" /> Iniciar Sesión
                 </Link>
               </>
             ) : (
               <>
                 <div className="flex items-center gap-2 text-sm text-[#16324f]">
-                  <UserCircle className="h-5 w-5 text-[#2a628f]" />
+                  <UserCircle weight="duotone" className="h-5 w-5 text-[#2a628f]" />
                   <span className="font-medium text-[#13293d]">
                     {user?.nombre ? `${user.nombre} ${user.apellido ?? ""}`.trim() : user?.email}
                   </span>
@@ -203,7 +205,7 @@ export default function Navbar() {
                   )}
                 </div>
                 <button onClick={logout} className="inline-flex items-center px-4 py-2 text-sm font-medium text-[#16324f] hover:text-red-600 transition-colors">
-                  <LogOut className="h-4 w-4 mr-1" /> Cerrar Sesión
+                  <IconLogout className="h-4 w-4 mr-1" /> Cerrar Sesión
                 </button>
               </>
             )}
@@ -216,7 +218,7 @@ export default function Navbar() {
               className={`relative inline-flex items-center justify-center p-2 rounded-md text-[#16324f] hover:text-[#13293d] hover:bg-[#67a2d3] transition-colors ${nudgeActive ? "animate-nav-nudge" : ""}`}
               aria-label="Abrir menú de navegación"
             >
-              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {mobileMenuOpen ? <IconX className="h-6 w-6" /> : <IconMenu2 className="h-6 w-6" />}
               {showDot && !mobileMenuOpen && (
                 <span className="absolute top-1 right-1 flex h-2.5 w-2.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2a628f] opacity-60" />
@@ -236,7 +238,7 @@ export default function Navbar() {
           {isAuthenticated && (
             <div className="px-4 py-3 bg-[#7ab8d4] flex items-center gap-3 border-b border-[#67a2d3]">
               <div className="w-9 h-9 rounded-full bg-[#2a628f] flex items-center justify-center flex-shrink-0">
-                <UserCircle className="h-5 w-5 text-white" />
+                <UserCircle weight="duotone" className="h-5 w-5 text-white" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-semibold text-[#13293d] truncate">
@@ -268,10 +270,10 @@ export default function Navbar() {
                     }`}
                   >
                     <span className="flex items-center gap-2.5">
-                      <BookOpen className="h-5 w-5" />
+                      <BookOpen weight="duotone" className="h-5 w-5" />
                       Aprender
                     </span>
-                    <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${mobileExpanded === "aprender" ? "rotate-180" : ""}`} />
+                    <CaretDown weight="bold" className={`h-4 w-4 transition-transform duration-200 ${mobileExpanded === "aprender" ? "rotate-180" : ""}`} />
                   </button>
                   {mobileExpanded === "aprender" && (
                     <div className="ml-3 space-y-0.5 border-l-2 border-[#2a628f]/30 pl-3">
@@ -309,7 +311,7 @@ export default function Navbar() {
                     active ? "bg-[#2a628f] text-white" : "text-[#16324f] hover:text-[#13293d] hover:bg-[#67a2d3]"
                   }`}
                 >
-                  <MessageSquare className="h-5 w-5" />
+                  <ChatDots weight="duotone" className="h-5 w-5" />
                   Comunidad
                   {active && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-white" />}
                 </Link>
@@ -330,10 +332,10 @@ export default function Navbar() {
                     }`}
                   >
                     <span className="flex items-center gap-2.5">
-                      <Wrench className="h-5 w-5" />
+                      <Wrench weight="duotone" className="h-5 w-5" />
                       Herramientas
                     </span>
-                    <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${mobileExpanded === "herramientas" ? "rotate-180" : ""}`} />
+                    <CaretDown weight="bold" className={`h-4 w-4 transition-transform duration-200 ${mobileExpanded === "herramientas" ? "rotate-180" : ""}`} />
                   </button>
                   {mobileExpanded === "herramientas" && (
                     <div className="ml-3 space-y-0.5 border-l-2 border-[#2a628f]/30 pl-3">
@@ -367,10 +369,10 @@ export default function Navbar() {
             {!isAuthenticated ? (
               <>
                 <Link to="/registro" className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white bg-[#2a628f] hover:bg-[#18435a] transition-colors">
-                  <UserPlus className="h-4 w-4" /> Registrarse
+                  <IconUserPlus className="h-4 w-4" /> Registrarse
                 </Link>
                 <Link to="/login" className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-[#16324f] hover:bg-[#67a2d3] transition-colors">
-                  <LogIn className="h-4 w-4" /> Iniciar Sesión
+                  <IconLogin className="h-4 w-4" /> Iniciar Sesión
                 </Link>
               </>
             ) : (
@@ -378,7 +380,7 @@ export default function Navbar() {
                 onClick={() => { logout(); }}
                 className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-red-600 hover:bg-red-50 transition-colors"
               >
-                <LogOut className="h-4 w-4" /> Cerrar Sesión
+                <IconLogout className="h-4 w-4" /> Cerrar Sesión
               </button>
             )}
           </div>

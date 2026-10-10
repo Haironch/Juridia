@@ -1,9 +1,9 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import {
-  BookOpen, Search, X, ChevronDown, ChevronUp, Copy, Check,
-  ArrowLeft, ExternalLink, ListChecks, Lightbulb, Clock,
-} from "lucide-react";
+  BookOpen, MagnifyingGlass, X, CaretDown, CaretUp, Copy, Check,
+  ArrowLeft, ArrowSquareOut, ListChecks, Lightbulb, Clock,
+} from "@phosphor-icons/react";
 import {
   resumenes, articulosClave, guias, AREAS_FILTRO,
   type Resumen, type ArticuloClave, type GuiaPractica,
@@ -55,8 +55,8 @@ function ResumenCard({ r }: { r: Resumen }) {
         </div>
         <div className="flex-shrink-0 mt-0.5">
           {abierto
-            ? <ChevronUp className="h-4 w-4 text-[#5a8aaa]" />
-            : <ChevronDown className="h-4 w-4 text-[#5a8aaa]" />}
+            ? <CaretUp weight="bold" className="h-4 w-4 text-[#5a8aaa]" />
+            : <CaretDown weight="bold" className="h-4 w-4 text-[#5a8aaa]" />}
         </div>
       </button>
 
@@ -92,7 +92,7 @@ function ResumenCard({ r }: { r: Resumen }) {
 
           {/* Dato clave */}
           <div className={`rounded-xl border ${c.border} ${c.bg} px-4 py-3 flex gap-3`}>
-            <Lightbulb className={`h-4 w-4 ${c.text} flex-shrink-0 mt-0.5`} />
+            <Lightbulb weight="duotone" className={`h-4 w-4 ${c.text} flex-shrink-0 mt-0.5`} />
             <p className="text-xs text-[#16324f] leading-relaxed">{r.dato_clave}</p>
           </div>
         </div>
@@ -131,8 +131,8 @@ function ArticuloCard({ a }: { a: ArticuloClave }) {
         className="flex-shrink-0 self-start p-1.5 rounded-lg hover:bg-[#d8e9f5] transition-colors"
       >
         {copiado
-          ? <Check className="h-4 w-4 text-green-600" />
-          : <Copy className="h-4 w-4 text-[#5a8aaa]" />}
+          ? <Check weight="bold" className="h-4 w-4 text-green-600" />
+          : <Copy weight="duotone" className="h-4 w-4 text-[#5a8aaa]" />}
       </button>
     </div>
   );
@@ -151,7 +151,7 @@ function GuiaCard({ g }: { g: GuiaPractica }) {
         className="w-full text-left px-5 py-5 flex items-start gap-4"
       >
         <div className="w-10 h-10 rounded-xl bg-[#d8e9f5] flex items-center justify-center flex-shrink-0">
-          <ListChecks className="h-5 w-5 text-[#2a628f]" />
+          <ListChecks weight="duotone" className="h-5 w-5 text-[#2a628f]" />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-2 mb-1">
@@ -160,7 +160,7 @@ function GuiaCard({ g }: { g: GuiaPractica }) {
           <div className="flex flex-wrap gap-2 mt-1">
             <span className={`text-xs font-medium px-2 py-0.5 rounded-full border ${colorClass}`}>{g.area}</span>
             <span className="text-xs text-[#5a8aaa] flex items-center gap-1">
-              <Clock className="h-3 w-3" />{g.duracion}
+              <Clock weight="duotone" className="h-3 w-3" />{g.duracion}
             </span>
           </div>
           {!abierto && (
@@ -169,8 +169,8 @@ function GuiaCard({ g }: { g: GuiaPractica }) {
         </div>
         <div className="flex-shrink-0 mt-0.5">
           {abierto
-            ? <ChevronUp className="h-4 w-4 text-[#5a8aaa]" />
-            : <ChevronDown className="h-4 w-4 text-[#5a8aaa]" />}
+            ? <CaretUp weight="bold" className="h-4 w-4 text-[#5a8aaa]" />
+            : <CaretDown weight="bold" className="h-4 w-4 text-[#5a8aaa]" />}
         </div>
       </button>
 
@@ -211,7 +211,7 @@ function GuiaCard({ g }: { g: GuiaPractica }) {
 
           {/* Consejo */}
           <div className="rounded-xl border border-[#9ac1e2] bg-[#f0f7ff] px-4 py-3 flex gap-3">
-            <Lightbulb className="h-4 w-4 text-[#2a628f] flex-shrink-0 mt-0.5" />
+            <Lightbulb weight="duotone" className="h-4 w-4 text-[#2a628f] flex-shrink-0 mt-0.5" />
             <p className="text-xs text-[#16324f] leading-relaxed">{g.consejo}</p>
           </div>
         </div>
@@ -278,12 +278,12 @@ export default function MaterialEstudio() {
             to="/inicio"
             className="inline-flex items-center gap-2 text-[#9ac1e2] hover:text-white text-sm mb-8 transition-colors"
           >
-            <ArrowLeft className="h-4 w-4" />
+            <ArrowLeft weight="bold" className="h-4 w-4" />
             Volver al inicio
           </Link>
           <div className="flex items-start gap-4">
             <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center flex-shrink-0">
-              <BookOpen className="h-6 w-6 text-white" />
+              <BookOpen weight="duotone" className="h-6 w-6 text-white" />
             </div>
             <div>
               <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">
@@ -316,7 +316,7 @@ export default function MaterialEstudio() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-3 space-y-3">
           {/* Search */}
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#5a8aaa]" />
+            <MagnifyingGlass weight="bold" className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#5a8aaa]" />
             <input
               type="text"
               placeholder="Buscar por artículo, área o tema…"
@@ -326,7 +326,7 @@ export default function MaterialEstudio() {
             />
             {busqueda && (
               <button onClick={() => setBusqueda("")} className="absolute right-3 top-1/2 -translate-y-1/2">
-                <X className="h-4 w-4 text-[#5a8aaa]" />
+                <X weight="bold" className="h-4 w-4 text-[#5a8aaa]" />
               </button>
             )}
           </div>
@@ -383,7 +383,7 @@ export default function MaterialEstudio() {
         {tab === "articulos" && (
           <div>
             <p className="text-sm text-[#5a8aaa] mb-4">
-              {articulosFiltered.length} artículo{articulosFiltered.length !== 1 ? "s" : ""} — haz clic en <Copy className="inline h-3.5 w-3.5" /> para copiar
+              {articulosFiltered.length} artículo{articulosFiltered.length !== 1 ? "s" : ""} — haz clic en <Copy weight="duotone" className="inline h-3.5 w-3.5" /> para copiar
             </p>
             <div className="space-y-3">
               {articulosFiltered.length === 0 ? (
@@ -427,7 +427,7 @@ export default function MaterialEstudio() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-sm text-[#2a628f] hover:text-[#18435a] transition-colors"
               >
-                <ExternalLink className="h-3.5 w-3.5 flex-shrink-0" />
+                <ArrowSquareOut weight="duotone" className="h-3.5 w-3.5 flex-shrink-0" />
                 {label}
               </a>
             ))}
@@ -441,7 +441,7 @@ export default function MaterialEstudio() {
 function EmptyState({ mensaje }: { mensaje: string }) {
   return (
     <div className="text-center py-16">
-      <BookOpen className="h-10 w-10 text-[#9ac1e2] mx-auto mb-3" />
+      <BookOpen weight="duotone" className="h-10 w-10 text-[#9ac1e2] mx-auto mb-3" />
       <p className="text-sm text-[#5a8aaa]">{mensaje}</p>
     </div>
   );
