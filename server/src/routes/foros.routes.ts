@@ -365,12 +365,19 @@ router.delete('/:id', authenticate, async (req: AuthRequest, res: Response) => {
       return;
     }
 
-    const esAdmin = usuario.rol === 'SUPER_ADMIN';
+    const esAdmin = usuario.rol === 'SUPER_ADMIN' || usuario.rol === 'ADMIN';
     if (post.rows[0].usuario_id !== usuario.id && !esAdmin) {
       res.status(403).json({ ok: false, error: 'Sin permisos para eliminar este post' });
       return;
     }
 
+    // Borrar respuestas, votos y el post (CASCADE no está garantizado en Turso)
+    await db.execute({ sql: `DELETE FROM votos_foro WHERE referencia_id = ? AND tipo_ref = 'post'`, args: [id] });
+    await db.execute({
+      sql: `DELETE FROM votos_foro WHERE referencia_id IN (SELECT id FROM respuestas_foro WHERE post_id = ?) AND tipo_ref = 'respuesta'`,
+      args: [id],
+    });
+    await db.execute({ sql: 'DELETE FROM respuestas_foro WHERE post_id = ?', args: [id] });
     await db.execute({ sql: 'DELETE FROM posts_foro WHERE id = ?', args: [id] });
     res.json({ ok: true });
   } catch (err) {

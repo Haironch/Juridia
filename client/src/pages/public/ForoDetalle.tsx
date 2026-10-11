@@ -277,7 +277,9 @@ export default function ForoDetalle() {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });
-      return res.json();
+      const json = await res.json();
+      if (!json.ok) throw new Error(json.error ?? 'Error al eliminar');
+      return json;
     },
     onSuccess: () => navigate('/foros'),
   });
@@ -411,11 +413,18 @@ export default function ForoDetalle() {
                     }
                   }}
                   disabled={eliminarMutation.isPending}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold border border-red-200 text-red-600 hover:bg-red-50 transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold border border-red-200 text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50"
                 >
-                  <Trash weight="duotone" className="h-4 w-4" />
-                  Eliminar
+                  {eliminarMutation.isPending
+                    ? <CircleNotch weight="bold" className="h-4 w-4 animate-spin" />
+                    : <Trash weight="duotone" className="h-4 w-4" />}
+                  {eliminarMutation.isPending ? 'Eliminando...' : 'Eliminar'}
                 </button>
+              )}
+              {eliminarMutation.isError && (
+                <span className="text-xs text-red-600">
+                  {(eliminarMutation.error as Error).message}
+                </span>
               )}
             </div>
           </div>
