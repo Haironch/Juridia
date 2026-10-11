@@ -19,7 +19,7 @@ export const authenticate = async (req: AuthRequest, res: Response, next: NextFu
 
     // Buscar perfil en Turso para obtener rol y datos extra
     const result = await db.execute({
-      sql: 'SELECT id, email, rol FROM usuarios WHERE id = ? LIMIT 1',
+      sql: 'SELECT id, email, rol, nombre, apellido FROM usuarios WHERE id = ? LIMIT 1',
       args: [data.user.id],
     });
 
@@ -29,7 +29,13 @@ export const authenticate = async (req: AuthRequest, res: Response, next: NextFu
     }
 
     const perfil = result.rows[0] as any;
-    req.user = { id: perfil.id, email: perfil.email, rol: perfil.rol as RolUsuario };
+    req.user = {
+      id: perfil.id,
+      email: perfil.email,
+      rol: perfil.rol as RolUsuario,
+      nombre: perfil.nombre ?? undefined,
+      apellido: perfil.apellido ?? undefined,
+    };
     next();
   } catch (error) {
     res.status(401).json({ error: 'Token inválido' });

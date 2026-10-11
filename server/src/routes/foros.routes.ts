@@ -146,7 +146,7 @@ router.post('/', authenticate, async (req: AuthRequest, res: Response) => {
   const { titulo, contenido, categoria } = parsed.data;
   const usuario = req.user!;
   const id = randomUUID();
-  const nombre = usuario.email;
+  const nombre = [usuario.nombre, usuario.apellido].filter(Boolean).join(' ') || usuario.email;
   const ts = now();
 
   try {
@@ -180,7 +180,7 @@ router.post('/:id/respuestas', authenticate, async (req: AuthRequest, res: Respo
   const { contenido } = parsed.data;
   const usuario = req.user!;
   const respuestaId = randomUUID();
-  const nombre = usuario.email;
+  const nombre = [usuario.nombre, usuario.apellido].filter(Boolean).join(' ') || usuario.email;
   const ts = now();
 
   try {
