@@ -118,8 +118,8 @@ function ModalNuevoPost({ onClose, onSuccess }: ModalProps) {
     onError: (e: Error) => setError(e.message),
   });
 
-  const tituloOk    = titulo.trim().length >= 10;
-  const contenidoOk = contenido.trim().length >= 20;
+  const tituloOk    = titulo.trim().length > 0;
+  const contenidoOk = contenido.trim().length > 0;
   const categoriaOk = !!categoria;
 
   return (
@@ -180,8 +180,8 @@ function ModalNuevoPost({ onClose, onSuccess }: ModalProps) {
               className="w-full px-3 py-2.5 border border-[#9ac1e2] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#2a628f]"
             />
             <div className="flex justify-between mt-1.5">
-              <span className={`text-xs ${tituloOk ? 'text-emerald-600' : 'text-[#9ac1e2]'}`}>
-                {tituloOk ? '✓ Listo' : 'Mínimo 10 caracteres'}
+              <span className={`text-xs ${titulo.trim().length >= 10 ? 'text-emerald-600' : 'text-[#9ac1e2]'}`}>
+                {titulo.trim().length >= 10 ? '✓ Mínimo cumplido' : 'Mínimo 10 caracteres'}
               </span>
               <span className="text-xs text-[#9ac1e2]">{titulo.length}/200</span>
             </div>
@@ -200,8 +200,8 @@ function ModalNuevoPost({ onClose, onSuccess }: ModalProps) {
               className="w-full px-3 py-2.5 border border-[#9ac1e2] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#2a628f] resize-none"
             />
             <div className="flex justify-between mt-1.5">
-              <span className={`text-xs ${contenidoOk ? 'text-emerald-600' : 'text-[#9ac1e2]'}`}>
-                {contenidoOk ? '✓ Listo' : 'Mínimo 20 caracteres'}
+              <span className={`text-xs ${contenido.trim().length >= 20 ? 'text-emerald-600' : 'text-[#9ac1e2]'}`}>
+                {contenido.trim().length >= 20 ? '✓ Mínimo cumplido' : 'Mínimo 20 caracteres'}
               </span>
               <span className="text-xs text-[#9ac1e2]">{contenido.length}/5000</span>
             </div>
