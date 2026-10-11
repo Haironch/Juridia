@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
-  ArrowLeft, Calendar, CheckCircle2, BookOpen,
-  Loader2, AlertCircle, Zap, Download, Trash2, ExternalLink, Target, Clock,
-} from 'lucide-react';
+  ArrowLeft, CalendarBlank, CheckCircle, BookOpen,
+  CircleNotch, WarningCircle, Lightning, DownloadSimple, Trash,
+  ArrowSquareOut, Target, Clock,
+} from '@phosphor-icons/react';
 import { useAuthStore } from '../../store/authStore';
 import { generarPlanPDF } from '../../utils/generarPlanPDFProfesional';
 
@@ -172,7 +173,7 @@ function TarjetaSemana({ semana, onToggle, isToggling }: {
             )}
             {completada && (
               <span className="inline-flex items-center gap-1 text-xs font-medium text-green-700 bg-green-100 px-2 py-0.5 rounded">
-                <CheckCircle2 className="h-3.5 w-3.5" /> Completada
+                <CheckCircle weight="bold" className="h-3.5 w-3.5" /> Completada
               </span>
             )}
           </div>
@@ -187,7 +188,7 @@ function TarjetaSemana({ semana, onToggle, isToggling }: {
 
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-[#9ac1e2]">
             <span className="inline-flex items-center gap-1">
-              <Calendar className="h-3.5 w-3.5" />
+              <CalendarBlank className="h-3.5 w-3.5" />
               {new Date(semana.fecha_inicio).toLocaleDateString('es-GT', { month: 'short', day: 'numeric' })}
               {' - '}
               {new Date(semana.fecha_fin).toLocaleDateString('es-GT', { month: 'short', day: 'numeric' })}
@@ -213,8 +214,8 @@ function TarjetaSemana({ semana, onToggle, isToggling }: {
           title={completada ? 'Marcar como no completada' : 'Marcar como completada'}
         >
           {isToggling
-            ? <Loader2 className="h-5 w-5 animate-spin" />
-            : <CheckCircle2 className={`h-5 w-5 ${completada ? '' : 'opacity-50'}`} />
+            ? <CircleNotch weight="bold" className="h-5 w-5 animate-spin" />
+            : <CheckCircle weight="bold" className={`h-5 w-5 ${completada ? '' : 'opacity-50'}`} />
           }
         </button>
       </button>
@@ -278,7 +279,7 @@ function TarjetaSemana({ semana, onToggle, isToggling }: {
                       )}
                     </div>
                     {ruta && (
-                      <ExternalLink className="h-3.5 w-3.5 text-[#9ac1e2] group-hover:text-[#2a628f] transition-colors ml-2 shrink-0 mt-1" />
+                      <ArrowSquareOut className="h-3.5 w-3.5 text-[#9ac1e2] group-hover:text-[#2a628f] transition-colors ml-2 shrink-0 mt-1" />
                     )}
                   </div>
                 );
@@ -390,7 +391,7 @@ export default function PlanDetalle() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-[#d8e9f5] flex items-center justify-center">
-        <Loader2 className="h-10 w-10 text-[#2a628f] animate-spin" />
+        <CircleNotch weight="bold" className="h-10 w-10 text-[#2a628f] animate-spin" />
       </div>
     );
   }
@@ -398,7 +399,7 @@ export default function PlanDetalle() {
   if (isError || !plan) {
     return (
       <div className="min-h-screen bg-[#d8e9f5] flex flex-col items-center justify-center gap-4">
-        <AlertCircle className="h-12 w-12 text-red-500" />
+        <WarningCircle className="h-12 w-12 text-red-500" />
         <p className="text-[#13293d] font-medium">Plan no encontrado</p>
         <Link to="/planes" className="text-[#2a628f] underline text-sm">
           Volver a mis planes
@@ -465,7 +466,7 @@ export default function PlanDetalle() {
                   }}
                   className="flex items-center gap-1 px-3 py-1.5 bg-white/20 hover:bg-white/30 rounded text-sm transition-colors"
                 >
-                  <Download className="h-4 w-4" />
+                  <DownloadSimple className="h-4 w-4" />
                   PDF
                 </button>
                 <button
@@ -478,8 +479,8 @@ export default function PlanDetalle() {
                   className="flex items-center gap-1 px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 disabled:opacity-50 rounded text-sm transition-colors"
                 >
                   {eliminarMutation.isPending
-                    ? <Loader2 className="h-4 w-4 animate-spin" />
-                    : <Trash2 className="h-4 w-4" />
+                    ? <CircleNotch weight="bold" className="h-4 w-4 animate-spin" />
+                    : <Trash weight="bold" className="h-4 w-4" />
                   }
                   Eliminar
                 </button>
@@ -504,7 +505,7 @@ export default function PlanDetalle() {
         <div className="space-y-3">
           {semanas.length === 0 ? (
             <div className="text-center py-12 text-[#16324f]">
-              <AlertCircle className="h-10 w-10 mx-auto mb-3 text-[#9ac1e2]" />
+              <WarningCircle className="h-10 w-10 mx-auto mb-3 text-[#9ac1e2]" />
               <p>No hay semanas en este plan</p>
             </div>
           ) : (
@@ -523,7 +524,7 @@ export default function PlanDetalle() {
         {semanasCompletas > 0 && (
           <div className="mt-12 bg-white rounded-2xl border border-[#9ac1e2] p-6">
             <div className="flex items-start gap-4">
-              <Zap className="h-6 w-6 text-orange-500 shrink-0 mt-1" />
+              <Lightning className="h-6 w-6 text-orange-500 shrink-0 mt-1" />
               <div className="flex-1">
                 <h3 className="font-bold text-[#13293d] mb-2">¿Dudas en el camino?</h3>
                 <p className="text-sm text-[#16324f] mb-4">
