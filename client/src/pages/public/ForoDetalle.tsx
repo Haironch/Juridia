@@ -281,7 +281,10 @@ export default function ForoDetalle() {
       if (!json.ok) throw new Error(json.error ?? 'Error al eliminar');
       return json;
     },
-    onSuccess: () => navigate('/foros'),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['foros'] });
+      navigate('/foros');
+    },
   });
 
   const puedeEliminar =
