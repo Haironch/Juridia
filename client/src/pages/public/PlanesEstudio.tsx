@@ -49,14 +49,6 @@ const EXAMEN_COLOR: Record<string, { bg: string; text: string; dot: string }> = 
   laboral: { bg: 'bg-green-100',  text: 'text-green-700',  dot: 'bg-green-500'  },
 };
 
-function semanasHastaFecha(fecha: string): number {
-  const hoy = new Date();
-  hoy.setHours(0, 0, 0, 0);
-  const target = new Date(fecha);
-  const diff = Math.ceil((target.getTime() - hoy.getTime()) / (1000 * 60 * 60 * 24 * 7));
-  return Math.max(0, diff);
-}
-
 function diasHastaFecha(fecha: string): number {
   const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
   return Math.ceil((new Date(fecha).getTime() - hoy.getTime()) / (1000 * 60 * 60 * 24));
@@ -86,14 +78,13 @@ function ModalNuevoPlan({ onClose, onSuccess }: ModalProps) {
   const [fechaExamen, setFechaExamen] = useState('');
   const [error, setError] = useState('');
 
-  const semanasDisponiblesReales = fechaExamen ? semanasHastaFecha(fechaExamen) : null;
-
-  const errorFecha =
-    semanasDisponiblesReales !== null && semanasDisponiblesReales < semanas
-      ? semanasDisponiblesReales === 0
-        ? 'La fecha de examen ya pasó o es esta semana. Elige una fecha futura.'
-        : `Tu examen es en ${semanasDisponiblesReales} semana${semanasDisponiblesReales !== 1 ? 's' : ''}, pero el plan requiere ${semanas}. Reduce las semanas o elige una fecha más lejana.`
-      : null;
+  // Fecha mínima = hoy + semanas seleccionadas
+  const minFecha = (() => {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    d.setDate(d.getDate() + semanas * 7);
+    return d.toISOString().split('T')[0];
+  })();
 
   const mutation = useMutation({
     mutationFn: async () => {
@@ -115,7 +106,7 @@ function ModalNuevoPlan({ onClose, onSuccess }: ModalProps) {
     onError: (e: Error) => setError(e.message),
   });
 
-  const puedeCrear = !!fechaExamen && !errorFecha && !mutation.isPending;
+  const puedeCrear = !!fechaExamen && !mutation.isPending;
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 px-4 pb-4 sm:pb-0">
@@ -176,19 +167,13 @@ function ModalNuevoPlan({ onClose, onSuccess }: ModalProps) {
             <input
               type="date"
               value={fechaExamen}
+              min={minFecha}
               onChange={(e) => setFechaExamen(e.target.value)}
-              className={`w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 ${
-                errorFecha
-                  ? 'border-red-400 focus:ring-red-300'
-                  : 'border-[#9ac1e2] focus:ring-[#2a628f]'
-              }`}
+              className="w-full px-3 py-2 border border-[#9ac1e2] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#2a628f]"
             />
-            {errorFecha && (
-              <div className="mt-2 p-2.5 bg-red-50 border border-red-200 rounded-lg flex gap-2 text-xs text-red-700">
-                <WarningCircle weight="bold" className="h-3.5 w-3.5 shrink-0 mt-0.5" />
-                {errorFecha}
-              </div>
-            )}
+            <p className="text-xs text-[#9ac1e2] mt-1">
+              Mínimo {semanas} semana{semanas !== 1 ? 's' : ''} desde hoy
+            </p>
           </div>
 
           <div>
@@ -201,7 +186,17 @@ function ModalNuevoPlan({ onClose, onSuccess }: ModalProps) {
                 min="4"
                 max="16"
                 value={semanas}
-                onChange={(e) => setSemanas(Number(e.target.value))}
+                onChange={(e) => {
+                  const nuevas = Number(e.target.value);
+                  setSemanas(nuevas);
+                  // limpiar fecha si ya no cumple el nuevo mínimo
+                  if (fechaExamen) {
+                    const minNuevo = new Date();
+                    minNuevo.setHours(0, 0, 0, 0);
+                    minNuevo.setDate(minNuevo.getDate() + nuevas * 7);
+                    if (new Date(fechaExamen) < minNuevo) setFechaExamen('');
+                  }
+                }}
                 className="flex-1 accent-[#2a628f]"
               />
               <span className="text-2xl font-bold text-[#2a628f] w-12 text-center">{semanas}</span>
