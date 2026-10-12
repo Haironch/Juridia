@@ -15,9 +15,12 @@ export interface PlanParaPDF {
     }>;
     tips?: string[];
     lecturaRecomendada?: { titulo: string; articulo: string; tiempo: string };
+    fecha_inicio?: string;
+    fecha_fin?: string;
   }>;
 }
 
+// ── Constants ─────────────────────────────────────────────────────────────────
 const NOMBRES_EXAMEN: Record<string, string> = {
   privado: 'Examen Privado',
   civil: 'Derecho Civil',
@@ -31,372 +34,682 @@ const NOMBRES_FASE: Record<string, string> = {
   avanzada: 'Avanzado',
 };
 
-const TIPO_EMOJI: Record<string, string> = {
-  glosario: '📚', quiz: '❓', caso: '⚖️', documento: '📄',
-  material: '📖', lectura: '📖', tip: '💡', actividad: '✍️',
-};
+// 16 semana colors (bg / accent) - soft, print-friendly
+const WEEK_COLORS = [
+  { bg: '#dbeafe', accent: '#1d4ed8', light: '#eff6ff' },
+  { bg: '#d1fae5', accent: '#065f46', light: '#ecfdf5' },
+  { bg: '#fef3c7', accent: '#92400e', light: '#fffbeb' },
+  { bg: '#fce7f3', accent: '#9d174d', light: '#fdf4ff' },
+  { bg: '#ede9fe', accent: '#5b21b6', light: '#f5f3ff' },
+  { bg: '#fee2e2', accent: '#991b1b', light: '#fff1f2' },
+  { bg: '#cffafe', accent: '#164e63', light: '#ecfeff' },
+  { bg: '#dcfce7', accent: '#14532d', light: '#f0fdf4' },
+  { bg: '#fef9c3', accent: '#713f12', light: '#fefce8' },
+  { bg: '#f0abfc', accent: '#701a75', light: '#fdf4ff' },
+  { bg: '#bfdbfe', accent: '#1e3a8a', light: '#eff6ff' },
+  { bg: '#bbf7d0', accent: '#064e3b', light: '#f0fdf4' },
+  { bg: '#fed7aa', accent: '#7c2d12', light: '#fff7ed' },
+  { bg: '#e9d5ff', accent: '#4c1d95', light: '#faf5ff' },
+  { bg: '#fecaca', accent: '#7f1d1d', light: '#fef2f2' },
+  { bg: '#a5f3fc', accent: '#0c4a6e', light: '#ecfeff' },
+];
 
-function distribuirRecursos(recursos: PlanParaPDF['semanas'][0]['recursos']): string[][] {
-  const dias: string[][] = [[], [], [], [], []];
-  recursos.forEach((r, i) => dias[i % 5].push(`${TIPO_EMOJI[r.tipo] ?? '•'} ${r.nombre}`));
-  const labels = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
-  return dias.map((d, i) => d.length ? d : [`${labels[i]}: Repaso y práctica`]);
+const DIAS_SEMANA = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+// ── Date helpers ──────────────────────────────────────────────────────────────
+function parseDate(s: string): Date {
+  // "YYYY-MM-DD" or ISO string
+  const d = new Date(s.includes('T') ? s : s + 'T12:00:00');
+  return d;
 }
 
+function toYMD(d: Date): string {
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function addDays(d: Date, n: number): Date {
+  const r = new Date(d); r.setDate(r.getDate() + n); return r;
+}
+
+function diffDays(a: Date, b: Date): number {
+  return Math.round((b.getTime() - a.getTime()) / 86400000);
+}
+
+function formatDate(d: Date, opts?: Intl.DateTimeFormatOptions): string {
+  return d.toLocaleDateString('es-GT', opts ?? { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+function formatShort(d: Date): string {
+  return d.toLocaleDateString('es-GT', { day: 'numeric', month: 'short' });
+}
+
+// Build a map: "YYYY-MM-DD" -> week number (1-based)
+function buildDayMap(semanas: PlanParaPDF['semanas']): Record<string, number> {
+  const map: Record<string, number> = {};
+  for (const s of semanas) {
+    if (!s.fecha_inicio || !s.fecha_fin) continue;
+    let cur = parseDate(s.fecha_inicio);
+    const end = parseDate(s.fecha_fin);
+    while (cur <= end) {
+      map[toYMD(cur)] = s.numero_semana;
+      cur = addDays(cur, 1);
+    }
+  }
+  return map;
+}
+
+// Generate month grid HTML
+function renderMonth(year: number, month: number, dayMap: Record<string, number>, examYMD: string | null): string {
+  const firstDay = new Date(year, month, 1);
+  const lastDay  = new Date(year, month + 1, 0);
+  const startDow = firstDay.getDay(); // 0=Sun
+
+  let cells = '';
+  // Empty cells before month start
+  for (let i = 0; i < startDow; i++) {
+    cells += `<div class="cal-cell empty"></div>`;
+  }
+
+  for (let d = 1; d <= lastDay.getDate(); d++) {
+    const ymd = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const weekNum = dayMap[ymd];
+    const isExam = ymd === examYMD;
+    const col = weekNum ? WEEK_COLORS[(weekNum - 1) % WEEK_COLORS.length] : null;
+
+    let style = '';
+    let cls = 'cal-cell';
+    if (isExam) {
+      cls += ' exam-day';
+    } else if (col) {
+      style = `background:${col.bg};border-color:${col.accent}44;`;
+      cls += ' study-day';
+    }
+
+    const weekLabel = weekNum ? `<span class="cal-week-lbl" style="background:${col!.accent};color:#fff">S${weekNum}</span>` : '';
+    const examLabel = isExam ? `<span class="cal-exam-lbl">EXAMEN</span>` : '';
+
+    cells += `
+      <div class="${cls}" style="${style}">
+        <div class="cal-day-top">
+          <span class="cal-day-num${isExam ? ' exam-num' : weekNum ? ' study-num' : ''}">${d}</span>
+          ${weekLabel}${examLabel}
+        </div>
+        <div class="cal-check-row">
+          <span class="cal-circle"></span>
+        </div>
+      </div>`;
+  }
+
+  // Fill trailing cells to complete grid
+  const total = startDow + lastDay.getDate();
+  const trailing = total % 7 === 0 ? 0 : 7 - (total % 7);
+  for (let i = 0; i < trailing; i++) {
+    cells += `<div class="cal-cell empty"></div>`;
+  }
+
+  return `
+    <div class="month-block">
+      <div class="month-name">${MESES[month]} ${year}</div>
+      <div class="cal-grid">
+        ${DIAS_SEMANA.map(d => `<div class="cal-dow">${d}</div>`).join('')}
+        ${cells}
+      </div>
+    </div>`;
+}
+
+// ── Resource type labels ──────────────────────────────────────────────────────
+const TIPO_LABEL: Record<string, string> = {
+  glosario: 'Glosario', quiz: 'Quiz', caso: 'Caso práctico',
+  documento: 'Documento', material: 'Material', lectura: 'Lectura',
+  tip: 'Tip', actividad: 'Actividad',
+};
+
+// ── Build HTML ────────────────────────────────────────────────────────────────
 function buildHTML(plan: PlanParaPDF): string {
   const nombreExamen = NOMBRES_EXAMEN[plan.examen] ?? plan.examen;
   const nombreFase   = NOMBRES_FASE[plan.fase]   ?? plan.fase;
-  const hoy = new Date().toLocaleDateString('es-GT', { day: 'numeric', month: 'long', year: 'numeric' });
-  const totalRecursos  = plan.semanas.reduce((a, s) => a + s.recursos.length, 0);
-  const totalObjetivos = plan.semanas.reduce((a, s) => a + (s.objetivos?.length ?? 0), 0);
-  const DIAS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
-  const CHECKS = ['Leí los recursos', 'Completé los objetivos', 'Hice la lectura recomendada', 'Practiqué casos/quiz', 'Anoté los tips', 'Evalué mi comprensión'];
+  const hoy = new Date();
+  const hoyStr = formatDate(hoy);
 
+  const planStart = plan.semanas[0]?.fecha_inicio
+    ? parseDate(plan.semanas[0].fecha_inicio)
+    : hoy;
+  const planEnd = plan.semanas[plan.semanas.length - 1]?.fecha_fin
+    ? parseDate(plan.semanas[plan.semanas.length - 1].fecha_fin!)
+    : addDays(hoy, plan.semanas.length * 7);
+
+  const examDate = plan.fechaExamen ? parseDate(plan.fechaExamen) : null;
+  const examYMD  = examDate ? toYMD(examDate) : null;
+  const diasAlExamen = examDate ? diffDays(hoy, examDate) : null;
+
+  const dayMap = buildDayMap(plan.semanas);
+  const totalRecursos = plan.semanas.reduce((a, s) => a + s.recursos.length, 0);
+
+  // ── PORTADA ───────────────────────────────────────────────────────────────
   const portada = `
     <section class="pagina portada">
-      <div class="portada-deco d1"></div>
-      <div class="portada-deco d2"></div>
+      <div class="portada-blob b1"></div>
+      <div class="portada-blob b2"></div>
       <header class="portada-top">
-        <span class="brand">Juridia<em>.</em></span>
-        <span class="portada-fecha">Generado el ${hoy}</span>
+        <div class="brand-mark">Juridia<span class="brand-dot">.</span></div>
+        <span class="portada-fecha-lbl">Generado el ${hoyStr}</span>
       </header>
       <main class="portada-main">
-        <p class="portada-label">Plan de estudio personalizado</p>
-        <h1 class="portada-titulo">${nombreExamen}</h1>
-        <p class="portada-sub">Nivel ${nombreFase} &nbsp;·&nbsp; ${plan.semanas.length} semanas</p>
-        <div class="pills">
-          <span class="pill">📚 ${plan.semanas.length} semanas</span>
-          <span class="pill">🎯 Nivel ${nombreFase}</span>
-          <span class="pill">⚖️ ${nombreExamen}</span>
-          ${plan.fechaExamen ? `<span class="pill">📅 Examen: ${new Date(plan.fechaExamen).toLocaleDateString('es-GT', { day: 'numeric', month: 'short', year: 'numeric' })}</span>` : ''}
-          <span class="pill">📋 ${totalRecursos} recursos</span>
+        <p class="portada-eyebrow">Plan de Estudio Personalizado</p>
+        <h1 class="portada-h1">${nombreExamen}</h1>
+        <p class="portada-h2">Nivel ${nombreFase}</p>
+        <div class="portada-rule"></div>
+        <div class="portada-chips">
+          <span class="p-chip">${plan.semanas.length} semanas</span>
+          <span class="p-chip">${totalRecursos} recursos</span>
+          ${examDate ? `<span class="p-chip exam-chip">Examen: ${formatShort(examDate)}</span>` : ''}
+          ${diasAlExamen !== null ? `<span class="p-chip count-chip">${diasAlExamen} días</span>` : ''}
         </div>
-        <div class="divider-line"></div>
-        <p class="portada-desc">Documento generado automáticamente con tu plan estructurado, calendario semanal, recursos y checklist de avance.</p>
       </main>
       <footer class="portada-footer">
-        <span class="footer-url">juridia-eta.vercel.app · Plataforma de Derecho Guatemalteco</span>
-        <span class="footer-badge">hairch.dev</span>
+        <div class="portada-footer-left">
+          <span class="footer-brand">juridia-eta.vercel.app</span>
+          <span class="footer-sub">Plataforma de Derecho Guatemalteco</span>
+        </div>
+        <div class="footer-badge-pill">hairch.dev</div>
       </footer>
     </section>`;
 
-  const intro = `
+  // ── RESUMEN ───────────────────────────────────────────────────────────────
+  const leyendaColores = plan.semanas.slice(0, 8).map(s => {
+    const col = WEEK_COLORS[(s.numero_semana - 1) % WEEK_COLORS.length];
+    return `<div class="leyenda-item">
+      <span class="leyenda-dot" style="background:${col.accent}"></span>
+      <span class="leyenda-s">S${s.numero_semana}</span>
+      <span class="leyenda-t">${s.titulo}</span>
+    </div>`;
+  }).join('');
+
+  const tablaResumen = plan.semanas.map(s => {
+    const col = WEEK_COLORS[(s.numero_semana - 1) % WEEK_COLORS.length];
+    const fi = s.fecha_inicio ? formatShort(parseDate(s.fecha_inicio)) : '—';
+    const ff = s.fecha_fin   ? formatShort(parseDate(s.fecha_fin))   : '—';
+    return `<tr>
+      <td><span class="tag-s" style="background:${col.bg};color:${col.accent};border:1px solid ${col.accent}44">S${s.numero_semana}</span></td>
+      <td class="td-titulo">${s.titulo}</td>
+      <td class="td-fecha">${fi} – ${ff}</td>
+      <td class="td-rec">${s.recursos.length}</td>
+      <td><span class="chk-sq"></span></td>
+    </tr>`;
+  }).join('');
+
+  const resumen = `
     <section class="pagina interna">
-      <header class="page-header">
-        <span class="brand sm">Juridia<em>.</em></span>
-        <span class="page-meta">${nombreExamen} · Nivel ${nombreFase} · ${plan.semanas.length} semanas</span>
-      </header>
+      ${pageHeader(nombreExamen, nombreFase, 'Resumen del plan')}
       <div class="page-body">
-        <div class="intro-box">
-          <h2 class="intro-titulo">Bienvenido a Juridia</h2>
-          <p class="intro-texto">
-            Juridia es una plataforma gratuita creada por <strong>Hairch.dev</strong>, con el valioso aporte de <strong>Anderson</strong>,
-            pensada para apoyar a estudiantes de Derecho en la planificación de su preparación para exámenes privados.
-          </p>
-          <p class="intro-texto" style="margin-top:10px">
-            Hemos preparado este documento como una guía práctica para ayudarte a organizar tu estudio de forma estratégica
-            y eficiente. Además, incluimos un horario estructurado según las semanas que seleccionaste, para que puedas
-            imprimirlo, llevar un mejor control de tu progreso y avanzar día a día hacia tu meta.
-          </p>
-          <p class="intro-texto" style="margin-top:10px">
-            Nuestro objetivo es brindarte una herramienta clara, útil y accesible para optimizar tu tiempo y fortalecer
-            tu preparación académica.
-          </p>
-          <p class="intro-firma">✨ Haz que cada día de estudio cuente.</p>
+        <div class="stats-row">
+          <div class="stat-box">
+            <span class="stat-n">${plan.semanas.length}</span>
+            <span class="stat-l">Semanas</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-n">${totalRecursos}</span>
+            <span class="stat-l">Recursos</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-n">${plan.semanas.reduce((a,s)=>a+(s.objetivos?.length??0),0)}</span>
+            <span class="stat-l">Objetivos</span>
+          </div>
+          ${diasAlExamen !== null ? `<div class="stat-box accent-box">
+            <span class="stat-n">${diasAlExamen}</span>
+            <span class="stat-l">Días al examen</span>
+          </div>` : ''}
         </div>
 
-        <div class="stat-grid">
-          <div class="stat-card"><div class="stat-num">${plan.semanas.length}</div><div class="stat-lbl">Semanas</div></div>
-          <div class="stat-card"><div class="stat-num">${totalRecursos}</div><div class="stat-lbl">Recursos</div></div>
-          <div class="stat-card"><div class="stat-num">${totalObjetivos}</div><div class="stat-lbl">Objetivos</div></div>
-        </div>
+        ${plan.semanas.length > 8 ? '' : `<div class="leyenda-block">${leyendaColores}</div>`}
 
-        <h3 class="sec-titulo">📅 Calendario del Plan de Estudio</h3>
-        <table class="cal-table">
+        <div class="section-head">Cronograma de semanas</div>
+        <table class="resumen-table">
           <thead>
-            <tr><th style="width:44px">#</th><th>Tema de la semana</th><th style="width:80px;text-align:center">Recursos</th><th style="width:80px;text-align:center">Completada</th></tr>
+            <tr>
+              <th style="width:44px">Sem.</th>
+              <th>Tema</th>
+              <th style="width:100px">Fechas</th>
+              <th style="width:50px;text-align:center">Rec.</th>
+              <th style="width:60px;text-align:center">Hecho</th>
+            </tr>
           </thead>
-          <tbody>
-            ${plan.semanas.map(s => `
-              <tr>
-                <td><b class="s-num">S${s.numero_semana}</b></td>
-                <td class="s-titulo">${s.titulo}</td>
-                <td style="text-align:center;font-weight:700;color:#2a628f">${s.recursos.length}</td>
-                <td style="text-align:center"><span class="chk-box"></span></td>
-              </tr>`).join('')}
-          </tbody>
+          <tbody>${tablaResumen}</tbody>
         </table>
+
+        ${examDate ? `
+        <div class="exam-banner">
+          <div class="exam-banner-icon">📅</div>
+          <div>
+            <p class="exam-banner-label">Fecha del examen</p>
+            <p class="exam-banner-date">${formatDate(examDate, { weekday:'long', day:'numeric', month:'long', year:'numeric' })}</p>
+          </div>
+          ${diasAlExamen !== null ? `<div class="exam-banner-count"><span class="exam-count-n">${diasAlExamen}</span><span class="exam-count-l">días</span></div>` : ''}
+        </div>` : ''}
       </div>
-      <footer class="page-footer">
-        <span>Juridia · ${nombreExamen} — Nivel ${nombreFase}</span>
-        <span>hairch.dev · ${hoy}</span>
-      </footer>
+      ${pageFooter(nombreExamen, nombreFase, hoyStr)}
     </section>`;
 
-  const semanas = plan.semanas.map(s => {
-    const diasRecursos = distribuirRecursos(s.recursos);
+  // ── CALENDARIO DE CONTEO ──────────────────────────────────────────────────
+  // Determine which months to show
+  const calStart = planStart;
+  const calEnd   = examDate ? examDate : planEnd;
+
+  const months: Array<[number,number]> = [];
+  let cur = new Date(calStart.getFullYear(), calStart.getMonth(), 1);
+  const endMonth = new Date(calEnd.getFullYear(), calEnd.getMonth(), 1);
+  while (cur <= endMonth) {
+    months.push([cur.getFullYear(), cur.getMonth()]);
+    cur = new Date(cur.getFullYear(), cur.getMonth() + 1, 1);
+  }
+
+  // Split months into pages (2 per page)
+  const calPagesHTML: string[] = [];
+  for (let i = 0; i < months.length; i += 2) {
+    const slice = months.slice(i, i + 2);
+    const monthsHTML = slice.map(([y, m]) => renderMonth(y, m, dayMap, examYMD)).join('');
+
+    // Legend for this spread
+    const legendItems = plan.semanas.map(s => {
+      const col = WEEK_COLORS[(s.numero_semana - 1) % WEEK_COLORS.length];
+      return `<span class="spread-legend-item"><span class="spread-dot" style="background:${col.accent}"></span>Sem. ${s.numero_semana}: ${s.titulo.length > 28 ? s.titulo.slice(0,28)+'…' : s.titulo}</span>`;
+    }).join('');
+
+    calPagesHTML.push(`
+      <section class="pagina interna">
+        ${pageHeader(nombreExamen, nombreFase, 'Calendario de estudio')}
+        <div class="page-body cal-page-body">
+          <div class="spread-legend">${legendItems}${examYMD ? `<span class="spread-legend-item"><span class="spread-dot exam-dot"></span>Día de examen</span>` : ''}</div>
+          <div class="months-wrapper">
+            ${monthsHTML}
+          </div>
+          <p class="cal-instructions">Marca el círculo de cada día que estudies. Los días coloreados pertenecen a la semana indicada.</p>
+        </div>
+        ${pageFooter(nombreExamen, nombreFase, hoyStr)}
+      </section>`);
+  }
+
+  // ── PÁGINAS POR SEMANA ────────────────────────────────────────────────────
+  const semanasHTML = plan.semanas.map(s => {
+    const col = WEEK_COLORS[(s.numero_semana - 1) % WEEK_COLORS.length];
+    const fi = s.fecha_inicio ? parseDate(s.fecha_inicio) : null;
+    const ff = s.fecha_fin   ? parseDate(s.fecha_fin)   : null;
+    const fechaRango = fi && ff
+      ? `${formatDate(fi, { weekday:'short', day:'numeric', month:'short' })} — ${formatDate(ff, { weekday:'short', day:'numeric', month:'short' })}`
+      : '';
+
+    // Distribute resources across Mon-Sun (7 days)
+    const diasNombres = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
+    const diasRec: string[][] = diasNombres.map(() => []);
+    s.recursos.forEach((r, i) => {
+      diasRec[i % 5].push(`${r.nombre}`); // Mon–Fri
+    });
+
+    const diasHTML = diasNombres.map((dia, i) => {
+      const items = diasRec[i];
+      const isWeekend = i >= 5;
+      return `
+        <div class="dia-box${isWeekend ? ' dia-weekend' : ''}">
+          <div class="dia-name" style="${!isWeekend ? `background:${col.accent};color:#fff` : ''}">${dia}</div>
+          <div class="dia-content">
+            ${items.length
+              ? items.map(it => `<div class="dia-task"><span class="dia-circle"></span><span>${it}</span></div>`).join('')
+              : `<div class="dia-free">${isWeekend ? 'Descanso / Repaso' : 'Práctica libre'}</div>`}
+          </div>
+        </div>`;
+    }).join('');
+
+    const objetivosHTML = s.objetivos?.length
+      ? s.objetivos.map(o => `<div class="obj-item"><span class="obj-chk"></span><span>${o}</span></div>`).join('')
+      : '';
+
+    const recursosHTML = s.recursos.map(r => `
+      <div class="rec-item">
+        <span class="rec-chk"></span>
+        <div class="rec-info">
+          <span class="rec-name">${r.nombre}</span>
+          <span class="rec-meta">${TIPO_LABEL[r.tipo] ?? r.tipo}${r.duracion ? ` · ${r.duracion}` : ''}${r.descripcion ? ` · ${r.descripcion.slice(0,55)}${r.descripcion.length>55?'…':''}` : ''}</span>
+        </div>
+      </div>`).join('');
+
+    const tipsHTML = s.tips?.length
+      ? s.tips.map(t => `<div class="tip-item">→ ${t}</div>`).join('')
+      : '';
+
+    const lecturaHTML = s.lecturaRecomendada
+      ? `<div class="lectura-box">
+          <span class="lectura-title">${s.lecturaRecomendada.titulo}</span>
+          <span class="lectura-ref">${s.lecturaRecomendada.articulo}</span>
+          <span class="lectura-time">⏱ ${s.lecturaRecomendada.tiempo}</span>
+        </div>`
+      : '';
+
     return `
       <section class="pagina interna">
-        <header class="page-header">
-          <span class="brand sm">Juridia<em>.</em></span>
-          <span class="page-meta">${nombreExamen} · Nivel ${nombreFase} · Semana ${s.numero_semana} de ${plan.semanas.length}</span>
-        </header>
-        <div class="page-body">
-          <div class="semana-card">
-            <div class="semana-head">
-              <div>
-                <p class="semana-num-lbl">Semana ${s.numero_semana} de ${plan.semanas.length}</p>
-                <h2 class="semana-titulo">${s.titulo}</h2>
-              </div>
-              <span class="semana-nivel">${nombreFase}</span>
+        ${pageHeader(nombreExamen, nombreFase, `Semana ${s.numero_semana} de ${plan.semanas.length}`)}
+        <div class="page-body semana-body">
+
+          <!-- Semana header -->
+          <div class="semana-hdr" style="border-left:4px solid ${col.accent};background:${col.light}">
+            <div class="semana-hdr-left">
+              <span class="semana-tag" style="background:${col.accent};color:#fff">Semana ${s.numero_semana}</span>
+              <h2 class="semana-h2">${s.titulo}</h2>
+              ${fechaRango ? `<p class="semana-fechas">${fechaRango}</p>` : ''}
             </div>
-            <div class="semana-body">
-              <p class="semana-desc">${s.descripcion}</p>
+            <span class="semana-nivel-badge">${nombreFase}</span>
+          </div>
 
-              ${s.objetivos?.length ? `
-                <p class="blk-titulo">📌 Objetivos</p>
-                ${s.objetivos.map(o => `<div class="obj-row"><span class="obj-dot"></span><span>${o}</span></div>`).join('')}` : ''}
+          <p class="semana-desc">${s.descripcion}</p>
 
-              <p class="blk-titulo">📚 Recursos</p>
-              ${s.recursos.map(r => `
-                <div class="rec-row">
-                  <div class="rec-left">
-                    <span class="rec-chk"></span>
-                    <div>
-                      <div class="rec-nombre">${TIPO_EMOJI[r.tipo] ?? '•'} ${r.nombre}</div>
-                      <div class="rec-tipo">${r.tipo}${r.descripcion ? ` · ${r.descripcion.substring(0, 60)}${r.descripcion.length > 60 ? '…' : ''}` : ''}</div>
-                    </div>
-                  </div>
-                  ${r.duracion ? `<span class="rec-dur">${r.duracion}</span>` : ''}
-                </div>`).join('')}
-
-              <p class="blk-titulo">📅 Plan por días</p>
-              <div class="dias-grid">
-                ${DIAS.map((d, i) => `
-                  <div class="dia-col">
-                    <div class="dia-head">${d}</div>
-                    <div class="dia-body">${diasRecursos[i].map(x => `<div class="dia-item">${x}</div>`).join('')}</div>
-                  </div>`).join('')}
-              </div>
-
-              ${s.tips?.length ? `
-                <p class="blk-titulo">💡 Tips</p>
-                ${s.tips.map(t => `<div class="tip-row">→ ${t}</div>`).join('')}` : ''}
-
-              ${s.lecturaRecomendada ? `
-                <p class="blk-titulo">📖 Lectura recomendada</p>
-                <div class="lectura-box">
-                  <b class="lectura-titulo">${s.lecturaRecomendada.titulo}</b>
-                  <p class="lectura-det">${s.lecturaRecomendada.articulo}</p>
-                  <p class="lectura-meta">⏱ ${s.lecturaRecomendada.tiempo}</p>
-                </div>` : ''}
-
-              <div class="chklist-box">
-                <p class="chklist-titulo">✅ Mi progreso esta semana</p>
-                <div class="chklist-grid">
-                  ${CHECKS.map(c => `<div class="chk-item"><span class="chk-box"></span><span>${c}</span></div>`).join('')}
+          <div class="two-col">
+            <div class="col-left">
+              ${objetivosHTML ? `<div class="blk-title">Objetivos de la semana</div>${objetivosHTML}` : ''}
+              <div class="blk-title" style="margin-top:${objetivosHTML?'10px':'0'}">Recursos</div>
+              ${recursosHTML}
+              ${tipsHTML ? `<div class="blk-title" style="margin-top:10px">Tips</div>${tipsHTML}` : ''}
+              ${lecturaHTML ? `<div class="blk-title" style="margin-top:10px">Lectura recomendada</div>${lecturaHTML}` : ''}
+            </div>
+            <div class="col-right">
+              <div class="blk-title">Plan diario</div>
+              <div class="dias-wrapper">${diasHTML}</div>
+              <div class="notas-box">
+                <p class="notas-label">Notas de la semana</p>
+                <div class="notas-lines">
+                  <div class="nota-line"></div>
+                  <div class="nota-line"></div>
+                  <div class="nota-line"></div>
+                  <div class="nota-line"></div>
                 </div>
               </div>
             </div>
           </div>
+
         </div>
-        <footer class="page-footer">
-          <span>Juridia · ${nombreExamen} — Nivel ${nombreFase}</span>
-          <span>Semana ${s.numero_semana} · hairch.dev</span>
-        </footer>
+        ${pageFooter(nombreExamen, nombreFase, `Semana ${s.numero_semana} · hairch.dev`)}
       </section>`;
   }).join('');
+
+  // ── CSS ───────────────────────────────────────────────────────────────────
+  const css = `
+/* Reset */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html, body { background:#e5e7eb; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color:#1e293b; font-size:11px; line-height:1.55; }
+
+/* Page */
+.pagina {
+  width:210mm; min-height:297mm;
+  display:flex; flex-direction:column;
+  background:#fff;
+  page-break-after:always; page-break-inside:avoid;
+  margin:0 auto 20px;
+  box-shadow:0 2px 12px rgba(0,0,0,.12);
+}
+.pagina:last-child { page-break-after:avoid; margin-bottom:0; }
+
+/* ── COVER ─────────────────────────────────────────────────── */
+.portada {
+  background:linear-gradient(145deg,#0d1f35 0%,#13293d 40%,#18435a 70%,#2a628f 100%);
+  color:#fff; position:relative; overflow:hidden;
+}
+.portada-blob { position:absolute; border-radius:50%; pointer-events:none; }
+.b1 { width:320px;height:320px;background:rgba(154,193,226,.06);top:-80px;right:-80px; }
+.b2 { width:280px;height:280px;background:rgba(255,255,255,.04);bottom:30px;left:-100px; }
+.portada-top {
+  padding:32px 44px 0; display:flex; justify-content:space-between;
+  align-items:center; position:relative; z-index:2;
+}
+.brand-mark { font-size:20px; font-weight:800; letter-spacing:-.5px; color:#fff; }
+.brand-dot { color:#9ac1e2; }
+.portada-fecha-lbl { font-size:9.5px; color:rgba(255,255,255,.35); }
+.portada-main {
+  flex:1; padding:48px 44px; position:relative; z-index:2;
+  display:flex; flex-direction:column; justify-content:center;
+}
+.portada-eyebrow {
+  font-size:9px; font-weight:700; letter-spacing:3.5px; text-transform:uppercase;
+  color:#9ac1e2; margin-bottom:14px;
+}
+.portada-h1 {
+  font-size:40px; font-weight:800; line-height:1.05;
+  letter-spacing:-1.5px; color:#fff; margin-bottom:8px;
+}
+.portada-h2 { font-size:18px; font-weight:300; color:rgba(255,255,255,.6); margin-bottom:32px; }
+.portada-rule { width:40px; height:3px; background:linear-gradient(90deg,#9ac1e2,transparent); border-radius:2px; margin-bottom:28px; }
+.portada-chips { display:flex; flex-wrap:wrap; gap:8px; }
+.p-chip {
+  background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.18);
+  border-radius:100px; padding:5px 13px; font-size:10.5px; font-weight:500; color:rgba(255,255,255,.85);
+}
+.exam-chip { background:rgba(220,38,38,.25); border-color:rgba(252,165,165,.4); }
+.count-chip { background:rgba(251,191,36,.2); border-color:rgba(253,224,71,.4); color:#fde68a; }
+.portada-footer {
+  padding:18px 44px; border-top:1px solid rgba(255,255,255,.08);
+  display:flex; justify-content:space-between; align-items:center; position:relative; z-index:2;
+}
+.portada-footer-left { display:flex; flex-direction:column; gap:2px; }
+.footer-brand { font-size:10px; color:rgba(255,255,255,.4); }
+.footer-sub { font-size:9px; color:rgba(255,255,255,.25); }
+.footer-badge-pill {
+  background:rgba(154,193,226,.12); border:1px solid rgba(154,193,226,.25);
+  border-radius:6px; padding:4px 12px; font-size:9.5px; color:#9ac1e2; font-weight:600;
+}
+
+/* ── INTERNAL PAGES ────────────────────────────────────────── */
+.page-header {
+  background:linear-gradient(90deg,#0d1f35 0%,#1a3a5c 60%,#2a628f 100%);
+  padding:13px 32px; display:flex; justify-content:space-between; align-items:center; flex-shrink:0;
+}
+.ph-brand { font-size:12px; font-weight:800; color:#fff; letter-spacing:-.2px; }
+.ph-brand span { color:#9ac1e2; }
+.ph-meta { font-size:9px; color:rgba(255,255,255,.55); text-align:right; }
+.page-body { flex:1; padding:18px 32px 12px; overflow:hidden; }
+.page-footer {
+  padding:8px 32px; border-top:1px solid #e2e8f0; background:#f8fafc;
+  display:flex; justify-content:space-between; flex-shrink:0;
+  font-size:9px; color:#94a3b8;
+}
+
+/* ── RESUMEN ───────────────────────────────────────────────── */
+.stats-row { display:flex; gap:10px; margin-bottom:14px; }
+.stat-box {
+  flex:1; background:#f1f5f9; border-radius:8px; padding:10px;
+  text-align:center; border:1px solid #e2e8f0;
+}
+.accent-box { background:linear-gradient(135deg,#13293d,#2a628f); border:none; }
+.accent-box .stat-n, .accent-box .stat-l { color:#fff; }
+.stat-n { display:block; font-size:22px; font-weight:800; color:#0d1f35; line-height:1; }
+.stat-l { display:block; font-size:8.5px; text-transform:uppercase; letter-spacing:1px; color:#64748b; margin-top:3px; }
+
+.leyenda-block { display:flex; flex-wrap:wrap; gap:4px 12px; margin-bottom:12px; padding:8px 12px; background:#f8fafc; border-radius:7px; border:1px solid #e2e8f0; }
+.leyenda-item { display:flex; align-items:center; gap:4px; font-size:9.5px; color:#374151; }
+.leyenda-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.leyenda-s { font-weight:700; color:#0d1f35; }
+.leyenda-t { color:#64748b; }
+
+.section-head {
+  font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px;
+  color:#475569; margin-bottom:7px; padding-bottom:5px;
+  border-bottom:2px solid #e2e8f0;
+}
+
+.resumen-table { width:100%; border-collapse:collapse; font-size:10px; }
+.resumen-table thead tr { background:linear-gradient(90deg,#0d1f35,#2a628f); }
+.resumen-table thead th { padding:7px 9px; text-align:left; font-size:9px; font-weight:600; color:#fff; }
+.resumen-table tbody tr:nth-child(even) { background:#f8fafc; }
+.resumen-table tbody td { padding:6px 9px; border-bottom:1px solid #e9ecef; vertical-align:middle; }
+.tag-s { display:inline-block; padding:2px 7px; border-radius:100px; font-size:9px; font-weight:700; }
+.td-titulo { font-weight:500; color:#1e293b; }
+.td-fecha { color:#64748b; font-size:9.5px; white-space:nowrap; }
+.td-rec { text-align:center; font-weight:700; color:#2a628f; }
+.chk-sq { display:inline-block; width:12px; height:12px; border:1.5px solid #cbd5e1; border-radius:3px; }
+
+.exam-banner {
+  margin-top:14px; display:flex; align-items:center; gap:14px;
+  background:linear-gradient(90deg,#0d1f35,#1a3a5c);
+  border-radius:9px; padding:12px 18px; color:#fff;
+}
+.exam-banner-icon { font-size:22px; flex-shrink:0; }
+.exam-banner-label { font-size:9px; text-transform:uppercase; letter-spacing:1.5px; color:#9ac1e2; margin-bottom:2px; }
+.exam-banner-date { font-size:13px; font-weight:700; }
+.exam-banner-count { margin-left:auto; text-align:center; }
+.exam-count-n { display:block; font-size:28px; font-weight:800; line-height:1; }
+.exam-count-l { font-size:8.5px; text-transform:uppercase; letter-spacing:1px; color:#9ac1e2; }
+
+/* ── CALENDARIO ────────────────────────────────────────────── */
+.cal-page-body { display:flex; flex-direction:column; padding-bottom:8px; }
+.spread-legend {
+  display:flex; flex-wrap:wrap; gap:4px 14px;
+  margin-bottom:10px; padding:6px 10px;
+  background:#f8fafc; border-radius:6px; border:1px solid #e2e8f0;
+}
+.spread-legend-item { display:flex; align-items:center; gap:4px; font-size:9px; color:#374151; }
+.spread-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.exam-dot { background:#dc2626; }
+
+.months-wrapper { display:grid; grid-template-columns:1fr 1fr; gap:12px; flex:1; }
+.month-block { }
+.month-name { font-size:12px; font-weight:700; color:#0d1f35; margin-bottom:6px; padding-bottom:5px; border-bottom:2px solid #e2e8f0; }
+.cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
+.cal-dow {
+  text-align:center; font-size:8px; font-weight:700; text-transform:uppercase;
+  color:#94a3b8; padding:3px 0; letter-spacing:.5px;
+}
+.cal-cell {
+  min-height:32px; border:1px solid #e9ecef; border-radius:4px;
+  padding:2px 3px; display:flex; flex-direction:column; justify-content:space-between;
+  background:#fff;
+}
+.cal-cell.empty { background:transparent; border-color:transparent; }
+.cal-cell.study-day { border-width:1.5px; }
+.cal-cell.exam-day { background:#fef2f2; border:2px solid #dc2626 !important; }
+.cal-day-top { display:flex; justify-content:space-between; align-items:flex-start; }
+.cal-day-num { font-size:9.5px; font-weight:600; color:#374151; }
+.study-num { color:#1e293b; font-weight:700; }
+.exam-num { color:#dc2626; font-weight:800; font-size:10px; }
+.cal-week-lbl {
+  font-size:7px; font-weight:700; padding:1px 3px; border-radius:3px;
+  line-height:1.2; flex-shrink:0;
+}
+.cal-exam-lbl {
+  font-size:6px; font-weight:800; color:#dc2626; line-height:1.2;
+  text-transform:uppercase; letter-spacing:.3px;
+}
+.cal-check-row { display:flex; align-items:center; justify-content:center; padding-bottom:1px; }
+.cal-circle {
+  width:11px; height:11px; border-radius:50%;
+  border:1.5px solid #cbd5e1; background:#fff;
+}
+.cal-cell.study-day .cal-circle { border-color:currentColor; opacity:.6; }
+.cal-cell.exam-day .cal-circle { border-color:#dc2626; }
+.cal-instructions { font-size:8.5px; color:#94a3b8; text-align:center; margin-top:8px; font-style:italic; }
+
+/* ── SEMANA PAGES ──────────────────────────────────────────── */
+.semana-body { padding-bottom:8px; }
+.semana-hdr {
+  display:flex; align-items:flex-start; justify-content:space-between;
+  padding:10px 14px; border-radius:8px; margin-bottom:8px;
+}
+.semana-hdr-left { display:flex; flex-direction:column; gap:3px; }
+.semana-tag { font-size:8.5px; font-weight:700; padding:2px 8px; border-radius:100px; display:inline-block; width:fit-content; letter-spacing:.3px; }
+.semana-h2 { font-size:14px; font-weight:800; color:#0d1f35; line-height:1.2; }
+.semana-fechas { font-size:9.5px; color:#64748b; }
+.semana-nivel-badge {
+  font-size:9px; font-weight:600; padding:3px 9px; border-radius:5px;
+  background:rgba(255,255,255,.7); color:#475569; border:1px solid #cbd5e1;
+  white-space:nowrap; flex-shrink:0; margin-top:2px;
+}
+.semana-desc { font-size:10.5px; color:#475569; line-height:1.65; margin-bottom:10px; }
+
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.blk-title {
+  font-size:8.5px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px;
+  color:#64748b; margin-bottom:5px; display:flex; align-items:center; gap:6px;
+}
+.blk-title::after { content:''; flex:1; height:1px; background:#e2e8f0; }
+
+.obj-item { display:flex; gap:6px; align-items:flex-start; margin-bottom:3px; background:#f0fdf4; border-left:3px solid #22c55e; padding:4px 8px; border-radius:0 5px 5px 0; }
+.obj-chk { width:11px; height:11px; border:1.5px solid #86efac; border-radius:3px; background:#fff; flex-shrink:0; margin-top:1px; }
+
+.rec-item { display:flex; gap:6px; align-items:flex-start; margin-bottom:3px; padding:4px 7px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:5px; }
+.rec-chk { width:11px; height:11px; border:1.5px solid #cbd5e1; border-radius:3px; background:#fff; flex-shrink:0; margin-top:2px; }
+.rec-info { display:flex; flex-direction:column; min-width:0; }
+.rec-name { font-size:10px; font-weight:600; color:#1e293b; }
+.rec-meta { font-size:9px; color:#94a3b8; }
+
+.tip-item { background:#fffbeb; border-left:3px solid #f59e0b; padding:4px 8px; border-radius:0 5px 5px 0; font-size:10px; color:#44403c; margin-bottom:3px; }
+
+.lectura-box { background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:7px 10px; }
+.lectura-title { display:block; font-size:9.5px; font-weight:700; color:#15803d; margin-bottom:1px; }
+.lectura-ref { display:block; font-size:9px; color:#374151; }
+.lectura-time { display:block; font-size:9px; color:#6b7280; }
+
+/* Daily plan */
+.dias-wrapper { display:flex; flex-direction:column; gap:3px; margin-bottom:8px; }
+.dia-box { border:1px solid #e2e8f0; border-radius:5px; overflow:hidden; }
+.dia-weekend { opacity:.75; }
+.dia-name { padding:3px 7px; font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; background:#f1f5f9; color:#64748b; }
+.dia-content { padding:4px 7px; min-height:18px; }
+.dia-task { display:flex; gap:5px; align-items:flex-start; font-size:9.5px; color:#374151; margin-bottom:1px; }
+.dia-circle { width:10px; height:10px; border:1.5px solid #cbd5e1; border-radius:50%; flex-shrink:0; margin-top:1px; }
+.dia-free { font-size:9px; color:#94a3b8; font-style:italic; }
+
+.notas-box { border:1.5px dashed #e2e8f0; border-radius:6px; padding:7px 10px; }
+.notas-label { font-size:8.5px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#94a3b8; margin-bottom:6px; }
+.nota-line { height:1px; background:#e2e8f0; margin-bottom:10px; }
+
+/* Print */
+@page { size:A4; margin:0; }
+@media print {
+  html, body { background:#fff; }
+  .pagina { margin:0; box-shadow:none; page-break-after:always; page-break-inside:avoid; }
+  .pagina:last-child { page-break-after:avoid; }
+  body { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+}`;
 
   return `<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Plan de Estudio Juridia — ${nombreExamen}</title>
-<style>
-/* ── Reset ── */
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:'Segoe UI',system-ui,sans-serif; color:#1e293b; background:#fff; font-size:13px; line-height:1.55; }
-
-/* ── Página: cada section = 1 hoja A4 ── */
-.pagina {
-  width:210mm; min-height:297mm;
-  display:flex; flex-direction:column;
-  page-break-after:always; page-break-inside:avoid;
-  overflow:hidden; background:#fff;
-}
-.pagina:last-child { page-break-after:avoid; }
-
-/* ── PORTADA ── */
-.portada {
-  background:linear-gradient(150deg,#0f2942 0%,#1a4a6e 45%,#2a628f 100%);
-  color:#fff; position:relative;
-}
-.portada-deco { position:absolute; border-radius:50%; pointer-events:none; }
-.d1 { width:280px;height:280px; background:rgba(255,255,255,.04); top:-70px; right:-70px; }
-.d2 { width:340px;height:340px; background:rgba(255,255,255,.03); bottom:40px; left:-110px; }
-.portada-top {
-  padding:36px 48px 0; display:flex; justify-content:space-between;
-  align-items:center; position:relative; z-index:2;
-}
-.portada-fecha { font-size:10.5px; color:rgba(255,255,255,.4); }
-.portada-main {
-  flex:1; padding:52px 48px; position:relative; z-index:2;
-  display:flex; flex-direction:column; justify-content:center;
-}
-.portada-label { font-size:9.5px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:#9ac1e2; margin-bottom:12px; }
-.portada-titulo { font-size:42px; font-weight:800; line-height:1.1; letter-spacing:-1.5px; margin-bottom:8px; }
-.portada-sub { font-size:18px; font-weight:300; color:rgba(255,255,255,.7); margin-bottom:36px; }
-.pills { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:40px; }
-.pill {
-  background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2);
-  border-radius:100px; padding:6px 14px; font-size:11px; font-weight:500;
-}
-.divider-line { width:48px; height:3px; background:linear-gradient(90deg,#9ac1e2,transparent); border-radius:2px; margin-bottom:18px; }
-.portada-desc { font-size:11.5px; color:rgba(255,255,255,.55); max-width:380px; line-height:1.7; }
-.portada-footer {
-  padding:22px 48px; border-top:1px solid rgba(255,255,255,.1);
-  display:flex; justify-content:space-between; align-items:center; position:relative; z-index:2;
-}
-.footer-url { font-size:10px; color:rgba(255,255,255,.35); }
-.footer-badge {
-  background:rgba(154,193,226,.15); border:1px solid rgba(154,193,226,.3);
-  border-radius:5px; padding:4px 11px; font-size:10px; color:#9ac1e2; font-weight:600;
-}
-
-/* ── Branding ── */
-.brand { font-size:19px; font-weight:800; color:#fff; letter-spacing:-.3px; }
-.brand em { color:#9ac1e2; font-style:normal; }
-.brand.sm { font-size:13px; }
-
-/* ── Páginas internas ── */
-.page-header {
-  background:linear-gradient(90deg,#0f2942,#2a628f);
-  padding:16px 36px; display:flex; justify-content:space-between; align-items:center; flex-shrink:0;
-}
-.page-meta { font-size:10px; color:rgba(255,255,255,.6); }
-.page-body { flex:1; padding:22px 36px 14px; overflow:hidden; }
-.page-footer {
-  padding:9px 36px; border-top:1px solid #e2e8f0; background:#f8fafc;
-  display:flex; justify-content:space-between; flex-shrink:0;
-  font-size:9.5px; color:#94a3b8;
-}
-
-/* ── Intro ── */
-.intro-box {
-  background:linear-gradient(135deg,#f0f7ff,#e8f4fd);
-  border-left:4px solid #2a628f; border-radius:9px;
-  padding:20px 24px; margin-bottom:18px;
-}
-.intro-titulo { font-size:16px; font-weight:700; color:#0f2942; margin-bottom:8px; }
-.intro-texto { font-size:11.5px; color:#475569; line-height:1.75; }
-.intro-firma { margin-top:12px; font-size:11px; font-weight:600; color:#2a628f; }
-
-/* ── Stats ── */
-.stat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:11px; margin-bottom:18px; }
-.stat-card {
-  background:linear-gradient(135deg,#0f2942,#2a628f);
-  border-radius:8px; padding:14px; color:#fff; text-align:center;
-}
-.stat-num { font-size:24px; font-weight:800; line-height:1; margin-bottom:3px; }
-.stat-lbl { font-size:9px; color:rgba(255,255,255,.65); text-transform:uppercase; letter-spacing:1px; }
-
-/* ── Tabla calendario ── */
-.sec-titulo { font-size:13px; font-weight:700; color:#0f2942; margin-bottom:8px; padding-bottom:6px; border-bottom:2px solid #e2e8f0; }
-.cal-table { width:100%; border-collapse:collapse; font-size:10.5px; }
-.cal-table thead tr { background:linear-gradient(90deg,#0f2942,#2a628f); color:#fff; }
-.cal-table thead th { padding:8px 10px; text-align:left; font-weight:600; font-size:10px; }
-.cal-table tbody tr:nth-child(even) { background:#f8fafc; }
-.cal-table tbody td { padding:7px 10px; border-bottom:1px solid #e2e8f0; vertical-align:middle; }
-.s-num { color:#2a628f; font-size:10.5px; }
-.s-titulo { color:#1e293b; font-weight:500; line-height:1.3; }
-.chk-box { display:inline-block; width:13px; height:13px; border:1.5px solid #cbd5e1; border-radius:3px; background:#fff; }
-
-/* ── Semana card ── */
-.semana-card { border:1.5px solid #e2e8f0; border-radius:10px; overflow:hidden; }
-.semana-head {
-  background:linear-gradient(90deg,#0f2942,#1e4a70);
-  padding:12px 18px; display:flex; justify-content:space-between; align-items:flex-start;
-}
-.semana-num-lbl { font-size:9px; font-weight:700; color:#9ac1e2; text-transform:uppercase; letter-spacing:2px; margin-bottom:3px; }
-.semana-titulo { font-size:13px; font-weight:700; color:#fff; line-height:1.3; max-width:380px; }
-.semana-nivel {
-  background:rgba(154,193,226,.15); border:1px solid rgba(154,193,226,.25);
-  border-radius:5px; padding:3px 8px; font-size:9.5px; color:#9ac1e2; flex-shrink:0;
-}
-.semana-body { padding:14px 18px; }
-.semana-desc { font-size:11px; color:#64748b; line-height:1.65; margin-bottom:10px; }
-
-/* Bloque título */
-.blk-titulo {
-  font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px;
-  color:#2a628f; margin:10px 0 6px;
-  display:flex; align-items:center; gap:6px;
-}
-.blk-titulo::after { content:''; flex:1; height:1px; background:#e2e8f0; }
-
-/* Objetivos */
-.obj-row {
-  display:flex; align-items:flex-start; gap:7px;
-  background:#f0fdf4; border-left:3px solid #22c55e;
-  padding:5px 9px; border-radius:0 5px 5px 0; font-size:10.5px; margin-bottom:3px;
-}
-.obj-dot { width:5px; height:5px; border-radius:50%; background:#22c55e; margin-top:4px; flex-shrink:0; }
-
-/* Recursos */
-.rec-row {
-  display:flex; align-items:center; justify-content:space-between;
-  background:#f8fafc; border:1px solid #e2e8f0; padding:5px 9px;
-  border-radius:6px; gap:8px; margin-bottom:3px;
-}
-.rec-left { display:flex; align-items:center; gap:7px; flex:1; min-width:0; }
-.rec-chk { width:11px; height:11px; border:1.5px solid #cbd5e1; border-radius:3px; background:#fff; flex-shrink:0; }
-.rec-nombre { font-size:10.5px; color:#1e293b; font-weight:500; }
-.rec-tipo { font-size:9.5px; color:#94a3b8; }
-.rec-dur { font-size:9.5px; color:#2a628f; font-weight:700; white-space:nowrap; flex-shrink:0; }
-
-/* Días */
-.dias-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:5px; margin-bottom:4px; }
-.dia-col { background:#f8fafc; border-radius:6px; border:1px solid #e2e8f0; overflow:hidden; }
-.dia-head { background:#1e4a70; padding:4px; text-align:center; font-size:8px; font-weight:700; color:#fff; text-transform:uppercase; }
-.dia-body { padding:5px; display:flex; flex-direction:column; gap:3px; min-height:44px; }
-.dia-item { font-size:8px; color:#374151; line-height:1.35; padding:2px 4px; background:#fff; border-radius:3px; border:1px solid #e9edf2; }
-
-/* Tips */
-.tip-row { background:#fffbeb; border-left:3px solid #f59e0b; padding:5px 9px; border-radius:0 5px 5px 0; font-size:10.5px; color:#44403c; margin-bottom:3px; }
-
-/* Lectura */
-.lectura-box { background:#f0fdf4; border:1px solid #bbf7d0; border-radius:7px; padding:9px 12px; margin-bottom:4px; }
-.lectura-titulo { font-size:10px; font-weight:700; color:#15803d; display:block; margin-bottom:2px; }
-.lectura-det { font-size:10px; color:#374151; margin-bottom:2px; }
-.lectura-meta { font-size:9.5px; color:#6b7280; }
-
-/* Checklist */
-.chklist-box { border:1.5px dashed #cbd5e1; border-radius:7px; padding:9px 13px; margin-top:8px; background:#fafafa; }
-.chklist-titulo { font-size:9px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:1px; margin-bottom:7px; }
-.chklist-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:4px; }
-.chk-item { display:flex; align-items:center; gap:6px; font-size:10px; color:#475569; }
-
-/* ── PRINT ── */
-@page { size:A4; margin:0; }
-@media print {
-  body { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-  .pagina { page-break-after:always; page-break-inside:avoid; }
-  .pagina:last-child { page-break-after:avoid; }
-}
-</style>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Plan de Estudio — ${nombreExamen} · Juridia</title>
+<style>${css}</style>
 </head>
 <body>
   ${portada}
-  ${intro}
-  ${semanas}
+  ${resumen}
+  ${calPagesHTML.join('')}
+  ${semanasHTML}
 </body>
 </html>`;
 }
 
+// ── Helper builders ───────────────────────────────────────────────────────────
+function pageHeader(examen: string, fase: string, pageName: string): string {
+  return `
+    <header class="page-header">
+      <div class="ph-brand">Juridia<span>.</span></div>
+      <div class="ph-meta">
+        <div>${examen} · ${fase}</div>
+        <div>${pageName}</div>
+      </div>
+    </header>`;
+}
+
+function pageFooter(examen: string, fase: string, right: string): string {
+  return `
+    <footer class="page-footer">
+      <span>Juridia · ${examen} — ${fase}</span>
+      <span>${right}</span>
+    </footer>`;
+}
+
+// ── Export ────────────────────────────────────────────────────────────────────
 export async function generarPlanPDF(plan: PlanParaPDF): Promise<void> {
   const html = buildHTML(plan);
 
-  const win = window.open('', '_blank', `width=900,height=700,scrollbars=yes`);
+  const win = window.open('', '_blank', 'width=960,height=760,scrollbars=yes');
   if (!win) {
     alert('El navegador bloqueó la ventana emergente. Permite ventanas emergentes para este sitio e intenta de nuevo.');
     return;
@@ -406,11 +719,10 @@ export async function generarPlanPDF(plan: PlanParaPDF): Promise<void> {
   win.document.write(html);
   win.document.close();
 
-  // Esperar a que carguen fuentes e imágenes, luego disparar impresión
   win.addEventListener('load', () => {
     setTimeout(() => {
       win.focus();
       win.print();
-    }, 600);
+    }, 700);
   });
 }

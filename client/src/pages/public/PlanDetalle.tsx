@@ -460,6 +460,8 @@ export default function PlanDetalle() {
                           recursos: s.recursos,
                           tips: s.tips,
                           lecturaRecomendada: s.lecturaRecomendada,
+                          fecha_inicio: s.fecha_inicio,
+                          fecha_fin: s.fecha_fin,
                         })),
                       });
                     }
