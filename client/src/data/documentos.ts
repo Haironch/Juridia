@@ -62,12 +62,12 @@ const estilosBase = `
     h1 { text-align: center; font-size: 14pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 28px; }
     h2 { font-size: 12pt; font-weight: bold; margin-top: 20px; margin-bottom: 8px; }
     p { margin: 9px 0; text-align: justify; }
-    .firma { margin-top: 56px; }
+    .firma { margin-top: 56px; break-inside: avoid; page-break-inside: avoid; }
     .firma-linea { border-top: 1px solid #111; width: 260px; margin-bottom: 4px; }
     .firma p { margin: 2px 0; }
-    .clausula { margin: 14px 0; }
+    .clausula { margin: 14px 0; break-inside: avoid; page-break-inside: avoid; }
     .clausula-num { font-weight: bold; }
-    .partes { display: flex; gap: 48px; margin-top: 52px; }
+    .partes { display: flex; gap: 48px; margin-top: 52px; break-inside: avoid; page-break-inside: avoid; }
     .parte { flex: 1; }
     ul { margin: 8px 0; padding-left: 20px; }
     li { margin: 4px 0; }
