@@ -94,7 +94,6 @@ function renderCalendarPage(
   examYMD: string | null,
   nombreExamen: string, nombreFase: string,
   plan: PlanParaPDF,
-  hoyStr: string
 ): string {
   const first = new Date(year, month, 1);
   const last  = new Date(year, month+1, 0);
@@ -333,7 +332,7 @@ function buildHTML(plan: PlanParaPDF): string {
     cur = new Date(cur.getFullYear(), cur.getMonth()+1, 1);
   }
   const calPages = months.map(([y,m]) =>
-    renderCalendarPage(y, m, dayMap, examYMD, nombreExamen, nombreFase, plan, hoyStr)
+    renderCalendarPage(y, m, dayMap, examYMD, nombreExamen, nombreFase, plan)
   ).join('');
 
   // ── PÁGINAS POR SEMANA ────────────────────────────────────────────────────

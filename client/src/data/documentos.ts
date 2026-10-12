@@ -321,7 +321,6 @@ export const plantillasDocumentos: PlantillaDocumento[] = [
       const inicio = v.fecha_ingreso ? new Date(v.fecha_ingreso + 'T00:00:00') : null;
       const fin = v.fecha_terminacion ? new Date(v.fecha_terminacion + 'T00:00:00') : null;
       const sal = parseFloat(v.salario_mensual) || 0;
-      const salDia = sal / 30;
 
       let diasTotal = 0, anosStr = '—', indem = 0, aguinaldo = 0, bono14 = 0, vac = 0;
       if (inicio && fin && fin > inicio) {
