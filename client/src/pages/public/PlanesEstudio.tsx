@@ -163,20 +163,6 @@ function ModalNuevoPlan({ onClose, onSuccess }: ModalProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-[#13293d] mb-1">Fecha del examen</label>
-            <input
-              type="date"
-              value={fechaExamen}
-              min={minFecha}
-              onChange={(e) => setFechaExamen(e.target.value)}
-              className="w-full px-3 py-2 border border-[#9ac1e2] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#2a628f]"
-            />
-            <p className="text-xs text-[#9ac1e2] mt-1">
-              Mínimo {semanas} semana{semanas !== 1 ? 's' : ''} desde hoy
-            </p>
-          </div>
-
-          <div>
             <label className="block text-sm font-medium text-[#13293d] mb-1">
               Semanas disponibles para estudiar
             </label>
@@ -189,7 +175,6 @@ function ModalNuevoPlan({ onClose, onSuccess }: ModalProps) {
                 onChange={(e) => {
                   const nuevas = Number(e.target.value);
                   setSemanas(nuevas);
-                  // limpiar fecha si ya no cumple el nuevo mínimo
                   if (fechaExamen) {
                     const minNuevo = new Date();
                     minNuevo.setHours(0, 0, 0, 0);
@@ -202,6 +187,20 @@ function ModalNuevoPlan({ onClose, onSuccess }: ModalProps) {
               <span className="text-2xl font-bold text-[#2a628f] w-12 text-center">{semanas}</span>
             </div>
             <p className="text-xs text-[#9ac1e2] mt-1">Mínimo 4, máximo 16 semanas</p>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-[#13293d] mb-1">Fecha del examen</label>
+            <input
+              type="date"
+              value={fechaExamen}
+              min={minFecha}
+              onChange={(e) => setFechaExamen(e.target.value)}
+              className="w-full px-3 py-2 border border-[#9ac1e2] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#2a628f]"
+            />
+            <p className="text-xs text-[#9ac1e2] mt-1">
+              Elige una fecha a partir del {new Date(minFecha).toLocaleDateString('es-GT', { day: 'numeric', month: 'long' })}
+            </p>
           </div>
         </div>
 
