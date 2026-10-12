@@ -16,7 +16,7 @@ import {
   FolderOpen,
 } from '@phosphor-icons/react';
 import { IconX } from '@tabler/icons-react';
-import { plantillasDocumentos, type PlantillaDocumento } from '../../data/documentos';
+import { plantillasDocumentos, PAGE_SIZES, type PlantillaDocumento, type TamañoPagina } from '../../data/documentos';
 
 // ── Tipos y constantes ────────────────────────────────────────────────────────
 
@@ -217,6 +217,7 @@ function EditorDocumento({
 }) {
   const [valores, setValores] = useState<Record<string, string>>({});
   const [mostrarVista, setMostrarVista] = useState(false);
+  const [tamano, setTamano] = useState<TamañoPagina>('oficio');
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const set = (id: string) => (
@@ -228,10 +229,10 @@ function EditorDocumento({
   const progreso = requeridos.length > 0 ? Math.round((completados / requeridos.length) * 100) : 100;
   const camposCompletos = completados === requeridos.length;
 
-  const htmlGenerado = useMemo(
-    () => (camposCompletos ? plantilla.generar(valores) : ''),
-    [camposCompletos, valores, plantilla]
-  );
+  const htmlGenerado = useMemo(() => {
+    if (!camposCompletos) return '';
+    return plantilla.generar(valores).replace('PAGE_SIZE_PLACEHOLDER', PAGE_SIZES[tamano]);
+  }, [camposCompletos, valores, plantilla, tamano]);
 
   const imprimir = () => {
     const iframe = iframeRef.current;
@@ -378,18 +379,36 @@ function EditorDocumento({
         {/* Vista previa */}
         {mostrarVista && htmlGenerado && (
           <div className="bg-white rounded-2xl border border-[#d8e9f5] shadow-sm overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-4 bg-gradient-to-r from-[#2a628f] to-[#18435a]">
+            <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-4 bg-gradient-to-r from-[#2a628f] to-[#18435a]">
               <h2 className="font-bold text-white text-sm flex items-center gap-2">
                 <FileText size={16} weight="bold" />
                 Vista previa
               </h2>
-              <button
-                onClick={imprimir}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white text-[#2a628f] font-semibold text-sm hover:bg-[#d8e9f5] transition-colors"
-              >
-                <Printer size={16} weight="bold" />
-                Imprimir / Guardar PDF
-              </button>
+              <div className="flex items-center gap-2">
+                {/* Toggle tamaño */}
+                <div className="flex rounded-lg overflow-hidden border border-white/20 text-xs font-semibold">
+                  {(['oficio', 'carta'] as TamañoPagina[]).map((t) => (
+                    <button
+                      key={t}
+                      onClick={() => setTamano(t)}
+                      className={`px-3 py-1.5 transition-colors ${
+                        tamano === t
+                          ? 'bg-white text-[#2a628f]'
+                          : 'bg-white/10 text-white hover:bg-white/20'
+                      }`}
+                    >
+                      {t === 'oficio' ? 'Oficio' : 'Carta'}
+                    </button>
+                  ))}
+                </div>
+                <button
+                  onClick={imprimir}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white text-[#2a628f] font-semibold text-sm hover:bg-[#d8e9f5] transition-colors"
+                >
+                  <Printer size={16} weight="bold" />
+                  Imprimir / PDF
+                </button>
+              </div>
             </div>
 
             <iframe

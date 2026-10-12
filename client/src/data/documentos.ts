@@ -34,28 +34,45 @@ const val = (v: Record<string, string>, key: string, fallback = '_______________
   v[key]?.trim() || fallback;
 
 // ── Estilos base compartidos para el HTML generado ───────────────────────────
+// PAGE_SIZE_PLACEHOLDER is replaced at render time with the actual @page rule.
+
+export const PAGE_SIZES = {
+  oficio: '@page { size: 216mm 330mm portrait; margin: 0; }',
+  carta:  '@page { size: 215.9mm 279.4mm portrait; margin: 0; }',
+} as const;
+
+export type TamañoPagina = keyof typeof PAGE_SIZES;
 
 const estilosBase = `
   <style>
-    body { font-family: 'Times New Roman', serif; font-size: 12pt; color: #111; line-height: 1.7; margin: 0; padding: 0; }
-    .doc { max-width: 720px; margin: 0 auto; padding: 48px 56px; background: #fff; }
-    .doc-header { text-align: right; margin-bottom: 32px; }
+    PAGE_SIZE_PLACEHOLDER
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Times New Roman', serif;
+      font-size: 12pt;
+      color: #111;
+      line-height: 1.7;
+      margin: 0;
+      padding: 22mm 25mm 20mm 25mm;
+      background: #fff;
+    }
+    .doc { width: 100%; }
+    .doc-header { text-align: right; margin-bottom: 28px; }
     .doc-header p { margin: 2px 0; font-size: 11pt; }
-    h1 { text-align: center; font-size: 14pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 32px; }
-    h2 { font-size: 12pt; font-weight: bold; margin-top: 24px; margin-bottom: 8px; }
-    p { margin: 10px 0; text-align: justify; }
-    .firma { margin-top: 64px; }
+    h1 { text-align: center; font-size: 14pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 28px; }
+    h2 { font-size: 12pt; font-weight: bold; margin-top: 20px; margin-bottom: 8px; }
+    p { margin: 9px 0; text-align: justify; }
+    .firma { margin-top: 56px; }
     .firma-linea { border-top: 1px solid #111; width: 260px; margin-bottom: 4px; }
     .firma p { margin: 2px 0; }
-    .clausula { margin: 16px 0; }
+    .clausula { margin: 14px 0; }
     .clausula-num { font-weight: bold; }
-    .partes { display: flex; gap: 48px; margin-top: 56px; }
+    .partes { display: flex; gap: 48px; margin-top: 52px; }
     .parte { flex: 1; }
     ul { margin: 8px 0; padding-left: 20px; }
     li { margin: 4px 0; }
     @media print {
-      body { margin: 0; }
-      .doc { padding: 24px 36px; box-shadow: none; }
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     }
   </style>
 `;
