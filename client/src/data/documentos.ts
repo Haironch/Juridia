@@ -36,9 +36,11 @@ const val = (v: Record<string, string>, key: string, fallback = '_______________
 // ── Estilos base compartidos para el HTML generado ───────────────────────────
 // PAGE_SIZE_PLACEHOLDER is replaced at render time with the actual @page rule.
 
+// top: 8mm → too narrow for browser URL header to render, so it gets clipped.
+// sides/bottom: 22mm → proper margins on every page including page 2+.
 export const PAGE_SIZES = {
-  oficio: '@page { size: 216mm 330mm portrait; margin: 0; }',
-  carta:  '@page { size: 215.9mm 279.4mm portrait; margin: 0; }',
+  oficio: '@page { size: 216mm 330mm portrait; margin: 20mm 22mm; }',
+  carta:  '@page { size: 215.9mm 279.4mm portrait; margin: 20mm 22mm; }',
 } as const;
 
 export type TamañoPagina = keyof typeof PAGE_SIZES;
@@ -53,10 +55,10 @@ const estilosBase = `
       color: #111;
       line-height: 1.7;
       margin: 0;
-      padding: 22mm 25mm 20mm 25mm;
+      padding: 0;
       background: #fff;
     }
-    .doc { width: 100%; }
+    .doc { width: 100%; padding: 0; }
     .doc-header { text-align: right; margin-bottom: 28px; }
     .doc-header p { margin: 2px 0; font-size: 11pt; }
     h1 { text-align: center; font-size: 14pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 28px; }

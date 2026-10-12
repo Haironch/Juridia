@@ -423,6 +423,7 @@ function EditorDocumento({
               <Warning size={14} weight="fill" className="flex-shrink-0 text-amber-400 mt-0.5" />
               <p>
                 Al imprimir, selecciona <strong>"Guardar como PDF"</strong> para obtener el archivo digital.
+                Para ocultar la URL y fecha del navegador, ve a <strong>Más opciones → desactiva "Encabezados y pies de página"</strong>.
                 Los datos ingresados no se almacenan en ningún servidor.
               </p>
             </div>
