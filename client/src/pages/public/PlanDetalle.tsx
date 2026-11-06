@@ -8,8 +8,9 @@ import {
 } from '@phosphor-icons/react';
 import { useAuthStore } from '../../store/authStore';
 import { generarPlanPDF } from '../../utils/generarPlanPDFProfesional';
+import { API_URL } from '../../config/api';
 
-const API = import.meta.env.VITE_API_URL ?? '';
+const API = API_URL;
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 interface SemanaRecurso {

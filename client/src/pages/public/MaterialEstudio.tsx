@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, type ReactNode } from "react";
+import { useState, useMemo, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import {
   BookOpen, MagnifyingGlass, X, CaretDown, CaretUp, Copy, Check,
@@ -47,7 +47,7 @@ function useProgress(key: string) {
     setLeidos((prev) => {
       const next = new Set(prev);
       if (next.has(id)) next.delete(id); else next.add(id);
-      try { localStorage.setItem(key, JSON.stringify([...next])); } catch {}
+      try { localStorage.setItem(key, JSON.stringify([...next])); } catch { /* almacenamiento no disponible */ }
       return next;
     });
   };
@@ -382,8 +382,6 @@ function FlashcardMode({ articulos }: { articulos: ArticuloClave[] }) {
   const [volteado, setVolteado] = useState(false);
   const [vistos, setVistos] = useState<Set<number>>(new Set());
 
-  useEffect(() => { setVolteado(false); }, [idx]);
-
   const card = articulos[idx];
   if (!card) return null;
 
@@ -391,8 +389,8 @@ function FlashcardMode({ articulos }: { articulos: ArticuloClave[] }) {
   const pct = Math.round((vistos.size / articulos.length) * 100);
 
   const marcarVisto = () => setVistos((p) => { const n = new Set(p); n.add(idx); return n; });
-  const prev = () => setIdx((i) => (i > 0 ? i - 1 : articulos.length - 1));
-  const next = () => { marcarVisto(); setIdx((i) => (i < articulos.length - 1 ? i + 1 : 0)); };
+  const prev = () => { setVolteado(false); setIdx((i) => (i > 0 ? i - 1 : articulos.length - 1)); };
+  const next = () => { marcarVisto(); setVolteado(false); setIdx((i) => (i < articulos.length - 1 ? i + 1 : 0)); };
 
   return (
     <div className="space-y-5">
@@ -499,7 +497,7 @@ function GuiaCard({ g, completada, onToggle }: { g: GuiaPractica; completada: bo
     setStepsCheck((prev) => {
       const next = new Set(prev);
       if (next.has(num)) next.delete(num); else next.add(num);
-      try { localStorage.setItem(`guia_steps_${g.id}`, JSON.stringify([...next])); } catch {}
+      try { localStorage.setItem(`guia_steps_${g.id}`, JSON.stringify([...next])); } catch { /* almacenamiento no disponible */ }
       return next;
     });
   };

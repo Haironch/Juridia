@@ -19,6 +19,10 @@ export interface PlanParaPDF {
   }>;
 }
 
+type Html2Pdf = () => {
+  set: (opt: object) => { from: (el: HTMLElement) => { save: () => void } };
+};
+
 export async function generarPlanPDF(plan: PlanParaPDF) {
   // Cargar html2pdf desde CDN
   const script = document.createElement('script');
@@ -26,7 +30,7 @@ export async function generarPlanPDF(plan: PlanParaPDF) {
 
   return new Promise((resolve) => {
     script.onload = () => {
-      const html2pdf = (window as any).html2pdf;
+      const html2pdf = (window as unknown as { html2pdf: Html2Pdf }).html2pdf;
 
   // Crear contenido HTML del plan
   const contenido = `

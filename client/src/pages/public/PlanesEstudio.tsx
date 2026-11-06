@@ -8,8 +8,9 @@ import {
 } from '@phosphor-icons/react';
 import { IconX } from '@tabler/icons-react';
 import { useAuthStore } from '../../store/authStore';
+import { API_URL } from '../../config/api';
 
-const API = import.meta.env.VITE_API_URL ?? '';
+const API = API_URL;
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 interface Plan {

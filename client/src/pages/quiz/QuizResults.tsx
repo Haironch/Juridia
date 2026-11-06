@@ -15,7 +15,7 @@ export default function QuizResults() {
   // redirects back to Results before the new quiz can start.
   useEffect(() => {
     return () => resetQuiz();
-  }, []);
+  }, [resetQuiz]);
 
   const tema = quizTemas.find(t => t.id === temaId);
   const score = getScore();

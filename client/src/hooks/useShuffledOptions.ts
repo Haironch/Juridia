@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useState } from 'react';
 
 export interface ShuffledOption {
   key: string;   // clave original — solo para validación interna
@@ -22,12 +22,19 @@ export function useShuffledOptions(
   opciones: Record<string, string>,
   questionId: number
 ): ShuffledOption[] {
-  return useMemo(() => {
-    const entries = Object.entries(opciones).map(([key, text]) => ({ key, text }));
-    const shuffled = fisherYates(entries);
-    return shuffled.map((opt, i) => ({
-      ...opt,
-      label: String.fromCharCode(65 + i), // A, B, C… según posición
-    }));
-  }, [questionId]); // eslint-disable-line react-hooks/exhaustive-deps
+  const [state, setState] = useState(() => ({ questionId, options: shuffleOptions(opciones) }));
+  if (state.questionId !== questionId) {
+    const next = { questionId, options: shuffleOptions(opciones) };
+    setState(next);
+    return next.options;
+  }
+  return state.options;
+}
+
+function shuffleOptions(opciones: Record<string, string>): ShuffledOption[] {
+  const entries = Object.entries(opciones).map(([key, text]) => ({ key, text }));
+  return fisherYates(entries).map((opt, i) => ({
+    ...opt,
+    label: String.fromCharCode(65 + i), // A, B, C… según posición
+  }));
 }

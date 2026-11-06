@@ -19,18 +19,16 @@ const NAV_ITEMS = [
   { to: '/admin/cursos', label: 'Cursos', icon: BookOpen },
 ];
 
-export default function AdminLayout() {
-  const { user, logout } = useAuthStore();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+interface SidebarProps {
+  mobile?: boolean;
+  pathname: string;
+  user: ReturnType<typeof useAuthStore.getState>['user'];
+  onNavigate: () => void;
+  onLogout: () => void;
+}
 
-  const handleLogout = () => {
-    logout();
-    navigate('/admin/login', { replace: true });
-  };
-
-  const Sidebar = ({ mobile = false }: { mobile?: boolean }) => (
+function Sidebar({ mobile = false, pathname, user, onNavigate, onLogout }: SidebarProps) {
+  return (
     <div className={`flex flex-col h-full ${mobile ? '' : 'w-64'}`}>
       {/* Logo */}
       <div className="flex items-center gap-3 px-6 py-5 border-b border-white/10">
@@ -49,12 +47,12 @@ export default function AdminLayout() {
       {/* Nav */}
       <nav className="flex-1 px-3 py-4 space-y-1">
         {NAV_ITEMS.map(({ to, label, icon: Icon }) => {
-          const active = location.pathname === to;
+          const active = pathname === to;
           return (
             <Link
               key={to}
               to={to}
-              onClick={() => setSidebarOpen(false)}
+              onClick={onNavigate}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group ${
                 active
                   ? 'bg-white/15 text-white'
@@ -78,7 +76,7 @@ export default function AdminLayout() {
           <p className="text-[#9ac1e2] text-xs mt-0.5">{user?.rol?.replace('_', ' ')}</p>
         </div>
         <button
-          onClick={handleLogout}
+          onClick={onLogout}
           className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[#9ac1e2] hover:bg-white/10 hover:text-red-400 transition-all duration-200"
         >
           <LogOut className="h-4 w-4" />
@@ -87,12 +85,24 @@ export default function AdminLayout() {
       </div>
     </div>
   );
+}
+
+export default function AdminLayout() {
+  const { user, logout } = useAuthStore();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/admin/login', { replace: true });
+  };
 
   return (
     <div className="flex h-screen bg-[#f0f7ff] overflow-hidden">
       {/* Sidebar desktop */}
       <aside className="hidden md:flex flex-col bg-gradient-to-b from-[#13293d] to-[#18435a] w-64 flex-shrink-0">
-        <Sidebar />
+        <Sidebar pathname={location.pathname} user={user} onNavigate={() => setSidebarOpen(false)} onLogout={handleLogout} />
       </aside>
 
       {/* Mobile overlay */}
@@ -117,7 +127,7 @@ export default function AdminLayout() {
             <X className="h-5 w-5" />
           </button>
         </div>
-        <Sidebar mobile />
+        <Sidebar mobile pathname={location.pathname} user={user} onNavigate={() => setSidebarOpen(false)} onLogout={handleLogout} />
       </aside>
 
       {/* Main content */}

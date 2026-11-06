@@ -58,8 +58,8 @@ export default function Registro() {
         password: formData.password,
       });
       navigate('/inicio');
-    } catch (err: any) {
-      if (err.message === 'VERIFY_EMAIL') {
+    } catch (err) {
+      if (err instanceof Error && err.message === 'VERIFY_EMAIL') {
         setEmailEnviado(true);
       }
       // otros errores ya quedan en el store

@@ -98,7 +98,7 @@ function buildPool(categoriasSeleccionadas: string[]): ExamenPregunta[] {
         enunciado: p.pregunta,
         opciones: textos,
         correctaIdx,
-        explicacion: (p as any).explicacion ?? '',
+        explicacion: p.explicacion ?? '',
       });
     }
   }

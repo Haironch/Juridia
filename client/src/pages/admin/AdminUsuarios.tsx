@@ -4,8 +4,8 @@ import {
   RefreshCw, X,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
+import { API_URL } from '../../config/api';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
 interface Usuario {
   id: string;

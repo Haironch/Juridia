@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { supabase } from '../lib/supabase';
+import { API_URL } from '../config/api';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
 interface Usuario {
   id: string;
@@ -96,10 +96,11 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       localStorage.setItem('token', token);
       localStorage.setItem('auth_user', JSON.stringify(perfil));
       set({ user: perfil, token, isAuthenticated: true, isLoading: false });
-    } catch (err: any) {
-      const msg = err.message === 'VERIFY_EMAIL'
+    } catch (err) {
+      const errMsg = err instanceof Error ? err.message : '';
+      const msg = errMsg === 'VERIFY_EMAIL'
         ? 'VERIFY_EMAIL'
-        : err.message || 'Error al crear la cuenta.';
+        : errMsg || 'Error al crear la cuenta.';
       set({ isLoading: false, error: msg === 'VERIFY_EMAIL' ? null : msg });
       throw new Error(msg);
     }
@@ -127,8 +128,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       localStorage.setItem('token', token);
       localStorage.setItem('auth_user', JSON.stringify(perfil));
       set({ user: perfil, token, isAuthenticated: true, isLoading: false });
-    } catch (err: any) {
-      const msg = err.message || 'Correo o contraseña incorrectos.';
+    } catch (err) {
+      const msg = (err instanceof Error && err.message) || 'Correo o contraseña incorrectos.';
       set({ isLoading: false, error: msg });
       throw new Error(msg);
     }
@@ -142,8 +143,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       });
       if (error) throw new Error(error.message);
       set({ isLoading: false });
-    } catch (err: any) {
-      set({ isLoading: false, error: err.message });
+    } catch (err) {
+      set({ isLoading: false, error: err instanceof Error ? err.message : 'Error al enviar el correo.' });
       throw err;
     }
   },

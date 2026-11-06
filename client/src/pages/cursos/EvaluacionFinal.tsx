@@ -160,7 +160,7 @@ export default function EvaluacionFinal() {
   const { data: progresoData } = useQuery({
     queryKey: ["curso-progreso", cursoId],
     queryFn: async () => {
-      const res = await api.get<{ ok: boolean; data: { modulos: any[]; certificado: any } }>(
+      const res = await api.get<{ ok: boolean; data: { modulos: unknown[]; certificado: { codigo_unico: string; puntaje_final: number; emitido_en: string } | null } }>(
         `/api/cursos/${cursoId}/progreso`,
         { headers: authHeaders }
       );

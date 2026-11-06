@@ -38,7 +38,7 @@ export default function QuizPracticeMode() {
     if (tema) {
       startQuiz(tema.id, tema.preguntas);
     }
-  }, [temaId]);
+  }, [tema, startQuiz]);
 
   useEffect(() => {
     if (quizCompleted && temaId) {

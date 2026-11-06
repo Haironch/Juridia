@@ -15,8 +15,8 @@ export default function OlvidePassword() {
     try {
       await recuperarPassword(email);
       setEnviado(true);
-    } catch (err: any) {
-      setError(err.message || 'Error al enviar el correo.');
+    } catch (err) {
+      setError((err instanceof Error && err.message) || 'Error al enviar el correo.');
     }
   };
 

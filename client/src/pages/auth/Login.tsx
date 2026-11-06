@@ -34,7 +34,7 @@ export default function Login() {
     try {
       await loginConGoogle();
       // Supabase redirige al navegador; la página no continúa aquí
-    } catch (err: any) {
+    } catch {
       setGoogleLoading(false);
     }
   };

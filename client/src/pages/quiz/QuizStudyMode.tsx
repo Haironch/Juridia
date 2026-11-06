@@ -24,7 +24,7 @@ export default function QuizStudyMode() {
     if (tema) {
       startStudy(tema.id, tema.preguntas);
     }
-  }, [temaId]);
+  }, [tema, startStudy]);
 
   if (!tema) {
     navigate('/constituquiz');

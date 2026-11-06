@@ -39,7 +39,12 @@ function NavDropdown({ label, icon, items }: NavDropdownProps) {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  useEffect(() => { setOpen(false); }, [location.pathname]);
+  // Cerrar el dropdown al cambiar de ruta
+  const [prevPath, setPrevPath] = useState(location.pathname);
+  if (prevPath !== location.pathname) {
+    setPrevPath(location.pathname);
+    setOpen(false);
+  }
 
   return (
     <div ref={ref} className="relative">
@@ -119,16 +124,21 @@ export default function Navbar() {
     : null;
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(initialGroup);
 
-  const [showDot, setShowDot] = useState(false);
+  const [showDot, setShowDot] = useState(
+    () => window.innerWidth < 768 && !sessionStorage.getItem(HINT_KEY)
+  );
   const [nudgeActive, setNudgeActive] = useState(false);
 
   // Cerrar menú móvil al cambiar de ruta
-  useEffect(() => { setMobileMenuOpen(false); }, [location.pathname]);
+  const [prevPath, setPrevPath] = useState(location.pathname);
+  if (prevPath !== location.pathname) {
+    setPrevPath(location.pathname);
+    setMobileMenuOpen(false);
+  }
 
   useEffect(() => {
     if (window.innerWidth >= 768) return;
     if (sessionStorage.getItem(HINT_KEY)) return;
-    setShowDot(true);
     const t = setTimeout(() => {
       setNudgeActive(true);
       setTimeout(() => setNudgeActive(false), 750);
