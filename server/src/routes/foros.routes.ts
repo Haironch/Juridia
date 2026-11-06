@@ -365,7 +365,7 @@ router.delete('/:id', authenticate, async (req: AuthRequest, res: Response) => {
       return;
     }
 
-    const esAdmin = usuario.rol === 'SUPER_ADMIN' || usuario.rol === 'ADMIN';
+    const esAdmin = usuario.rol === 'SUPER_ADMIN' || usuario.rol === 'ADMIN_CONTENIDO';
     if (post.rows[0].usuario_id !== usuario.id && !esAdmin) {
       res.status(403).json({ ok: false, error: 'Sin permisos para eliminar este post' });
       return;

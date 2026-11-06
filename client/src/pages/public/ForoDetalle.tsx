@@ -107,7 +107,7 @@ function RespuestaCard({
   const { user, isAuthenticated } = useAuthStore();
   const esSolucion   = respuesta.es_solucion === 1;
   const esAuthorPost = isAuthenticated && user?.id === postAutorId;
-  const esAdmin      = user?.rol === 'SUPER_ADMIN' || user?.rol === 'ADMIN';
+  const esAdmin      = user?.rol === 'SUPER_ADMIN' || user?.rol === 'ADMIN_CONTENIDO';
   const puedeMarcar  = esAuthorPost || esAdmin;
   const votosMostrados = votosLocales[respuesta.id] ?? respuesta.votos;
 
@@ -289,10 +289,10 @@ export default function ForoDetalle() {
 
   const puedeEliminar =
     isAuthenticated && post &&
-    (user?.id === post.usuario_id || user?.rol === 'SUPER_ADMIN' || user?.rol === 'ADMIN');
+    (user?.id === post.usuario_id || user?.rol === 'SUPER_ADMIN' || user?.rol === 'ADMIN_CONTENIDO');
 
   const esAuthorPost        = isAuthenticated && post && user?.id === post.usuario_id;
-  const esAdmin             = user?.rol === 'SUPER_ADMIN' || user?.rol === 'ADMIN';
+  const esAdmin             = user?.rol === 'SUPER_ADMIN' || user?.rol === 'ADMIN_CONTENIDO';
   const puedeMarcarSolucion = esAuthorPost || esAdmin;
 
   if (isLoading) {
